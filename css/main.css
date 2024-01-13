@@ -1,0 +1,93 @@
+:root {
+    --primary: #EF233C;
+    --secondary: #8D99AE;
+    --tertiary: #D90429;
+    --light: #EDF2F4;
+    --dark: #2B2D42;
+
+    --primary-hover: #a7182a;;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+}
+
+/* text color  */
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+.text-secondary {
+    color: var(--secondary) !important;
+}
+
+.text-light {
+    color: var(--light) !important;
+}
+
+.text-dark {
+    color: var(--dark) !important;
+}
+
+.active, .nav-link:hover {
+    color: var(--primary) !important;
+}
+
+/* border color */
+
+/* background */
+
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+
+.bg-secondary {
+    background-color: var(--secondary) !important;
+}
+
+.bg-tertiary {
+    background-color: var(--tertiary) !important;
+}
+
+.bg-smoke {
+    background-color: whitesmoke;
+}
+
+/* font size */
+
+.fs-7 {
+    font-size: .85rem;
+}
+
+/* buttons */
+
+.btn-primary {
+    background-color: var(--primary);
+    border: var(--primary);
+    height: 38px;
+}
+
+.btn-primary:hover {
+    background-color: var(--tertiary);
+    border: var(--primary-hover);
+    height: 38px;
+}
+
+/* html tags */
+
+body {
+    background-color: whitesmoke;
+}
+
+/* user module css */
+
+.custom-size {
+    max-width: 450px !important;
+    min-width: 300px !important;
+    min-height: 300px !important;
+}
