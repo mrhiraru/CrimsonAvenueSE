@@ -14,5 +14,4 @@
     <link rel="stylesheet" href="../css/main.css">
     <!-- apexchart -->
     <link rel="stylesheet" href="../vendor/apexchart/dist/apexcharts.css">
-    <link rel="stylesheet" href="../css/maxine.css">
 </head>
