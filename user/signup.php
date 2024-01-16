@@ -40,7 +40,7 @@ require_once('../includes/head.php');
                             }
 
                             if(isset($_POST['email']) && strcmp(validate_email($_POST['email']), 'success') != 0){
-                                
+                                //verify email(check if affiliation is student email must be @wmsu.edu.ph)
                             }
                         ?>
                     </div>
