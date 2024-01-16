@@ -31,6 +31,18 @@ require_once('../includes/head.php');
                     <div class="mb-2 p-0 col-12">
                         <input type="email" name="email" placeholder="Email" class="form-control">
                         <p class="fs-7 text-primary m-0 ps-2">Email you've entered is invalid.</p>
+                        <?php 
+                            $new_account = new Account();
+                            if(isset($_POST['email'])){
+                                $new_account->email = htmlentities($_POST['email']);
+                            }else{
+                                $new_account->email = '';
+                            }
+
+                            if(isset($_POST['email']) && strcmp(validate_email($_POST['email']), 'success') != 0){
+                                
+                            }
+                        ?>
                     </div>
                     <div class="mb-2 p-0 col-12">
                         <input type="password" name="password" placeholder="Password" class="form-control">
