@@ -125,7 +125,7 @@ require_once('../includes/head.php');
                     <p class="fs-7 text-primary m-0 ps-2">First name you've entered is invalid.</p>
                 </div>
                 <div class="mb-2 p-0 col-12">
-                    <input type="text" name="middle-name" placeholder="Middle Name(Optional)" class="form-control">
+                    <input type="text" name="middle-name" placeholder="Middle Name (Optional)" class="form-control">
                     <p class="fs-7 text-primary m-0 ps-2">Middle name you've entered is invalid.</p>
                 </div>
                 <div class="mb-2 p-0 col-12">
