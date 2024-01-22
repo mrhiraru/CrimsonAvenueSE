@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once("./classes/account.class.php");
 require_once("./tools/functions.php");
 
@@ -13,7 +15,11 @@ if (isset($_POST['signup'])) {
         $account->affiliation = '';
     }
     $account->firstname = htmlentities($_POST['first-name']);
-    $account->middlename = htmlentities($_POST['middle-name']);
+    if (isset($_POST['middle-name'])) {
+        $account->middlename = htmlentities($_POST['middle-name']);
+    } else {
+        $account->middlename = '';
+    }
     $account->lastname = htmlentities($_POST['last-name']);
     if (isset($_POST['gender'])) {
         $account->gender = htmlentities($_POST['gender']);
@@ -46,6 +52,8 @@ if (isset($_POST['signup'])) {
         validate_field($_POST['terms'])
     ) {
         if ($account->add()) {
+            $_SESSION['email'] = $account->email;
+            $_SESSION['name'] = $account->lastname . ',' . $account->firstname . $account->middlename;
             header('location: verify.php');
         } else {
             echo 'An error occured while adding in the database.';
@@ -175,7 +183,7 @@ require_once('../includes/head.php');
                     <?php
                     // if (isset($_POST['middle-name']) && !validate_field($_POST['middle-name'])) {
                     ?>
-                        <!-- <p class="fs-7 text-primary m-0 ps-2">Middle name you've entered is invalid.</p> -->
+                    <!-- <p class="fs-7 text-primary m-0 ps-2">Middle name you've entered is invalid.</p> -->
                     <?php
                     // }
                     ?>
