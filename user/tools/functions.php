@@ -29,7 +29,8 @@ function validate_email($email)
     }
 }
 
-function validate_wmsu_email($email){
+function validate_wmsu_email($email)
+{
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $pattern = '/@wmsu\.edu\.ph$/i';
 
@@ -66,3 +67,4 @@ function validate_cpw($password, $cpassword)
         return false;
     }
 }
+

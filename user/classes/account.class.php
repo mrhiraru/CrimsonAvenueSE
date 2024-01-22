@@ -27,7 +27,7 @@ class Account
 
     function add()
     {
-        $sql = "INSERT INTO account (email, password, affiliation, firstname, middlename, lastname, gender, college, department, contact, user_role, verification_status) VALUES (:email, :password, :affiliation, :firstname, :middlename, :lastname, :gender, :college, :department, :contact, :user_role, :verification_status)";
+        $sql = "INSERT INTO account (email, password, affiliation, firstname, middlename, lastname, gender, college, department, contact, user_role) VALUES (:email, :password, :affiliation, :firstname, :middlename, :lastname, :gender, :college, :department, :contact, :user_role)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':email', $this->email);
@@ -42,11 +42,24 @@ class Account
         $query->bindParam('department', $this->department);
         $query->bindParam('contact', $this->contact);
         $query->bindParam('user_role', $this->user_role);
-        $query->bindParam('verification_status', $this->verification_status);
 
         if ($query->execute()) {
             return true;
         } else {
+            return false;
+        }
+    }
+
+    function verify(){
+        $sql = "UPDATE account SET verfication_status = :verification_status WHERE account_id = :account_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':verification_status', $this->verification_status);
+        $query->bindParam(':account_id', $this->account_id);
+
+        if($query->execute()){
+            return true;
+        }else{
             return false;
         }
     }
