@@ -68,3 +68,7 @@ function validate_cpw($password, $cpassword)
     }
 }
 
+function generate_code() {
+    $code = random_int(100000, 999999);
+    return $code;
+}

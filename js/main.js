@@ -24,3 +24,4 @@ function showFields(val) {
     department_field.classList.remove("active");
   }
 }
+

@@ -1,3 +1,12 @@
+<?php 
+require_once("./classes/account.class.php");
+require_once("./tools/functions.php");
+
+$verification_code = generate_code();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
@@ -17,7 +26,9 @@ require_once('../includes/head.php');
                         <span class="text-primary fw-semibold ">example@email.com</span>
                         Enter the code below to verify your account.
                     </label>
-                    <input type="text" name="code" placeholder="Verification Code" class="form-control text-center">
+                    <input type="text" maxlength="6" pattern="\d{6}" name="code" placeholder="Verification Code" class="form-control text-center" oninput="validateinput(this)" value="<?php if (isset($_POST['contact'])) {
+                                                                                                                                                                                            echo $_POST['contact'];
+                                                                                                                                                                                        } ?>">
                     <?php
                     if (isset($_POST['code']) && !validate_field($_POST['code'])) {
                     ?>
