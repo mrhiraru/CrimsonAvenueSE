@@ -35,7 +35,7 @@ if (isset($_POST['signup'])) {
         validate_field($account->password) &&
         validate_field($account->affiliation) &&
         validate_field($account->firstname) &&
-        validate_field($account->middlename) &&
+        // validate_field($account->middlename) &&
         validate_field($account->lastname) &&
         validate_field($account->gender) &&
         validate_field($account->college) &&
@@ -161,7 +161,7 @@ require_once('../includes/head.php');
                                                                                                                     echo $_POST['first-name'];
                                                                                                                 } ?>">
                     <?php
-                    if (isset($_POST['firstname']) && !validate_field($_POST['firstname'])) {
+                    if (isset($_POST['first-name']) && !validate_field($_POST['first-name'])) {
                     ?>
                         <p class="fs-7 text-primary m-0 ps-2">First name you've entered is invalid.</p>
                     <?php
@@ -173,11 +173,11 @@ require_once('../includes/head.php');
                                                                                                                                 echo $_POST['middle-name'];
                                                                                                                             } ?>">
                     <?php
-                    if (isset($_POST['firstname']) && !validate_field($_POST['firstname'])) {
+                    // if (isset($_POST['middle-name']) && !validate_field($_POST['middle-name'])) {
                     ?>
-                        <p class="fs-7 text-primary m-0 ps-2">Middle name you've entered is invalid.</p>
+                        <!-- <p class="fs-7 text-primary m-0 ps-2">Middle name you've entered is invalid.</p> -->
                     <?php
-                    }
+                    // }
                     ?>
                 </div>
                 <div class="mb-2 p-0 col-12">
@@ -185,7 +185,7 @@ require_once('../includes/head.php');
                                                                                                                 echo $_POST['last-name'];
                                                                                                             } ?>">
                     <?php
-                    if (isset($_POST['firstname']) && !validate_field($_POST['firstname'])) {
+                    if (isset($_POST['last-name']) && !validate_field($_POST['last-name'])) {
                     ?>
                         <p class="fs-7 text-primary m-0 ps-2">Last name you've entered is invalid.</p>
                     <?php
