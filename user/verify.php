@@ -18,7 +18,13 @@ require_once('../includes/head.php');
                         Enter the code below to verify your account.
                     </label>
                     <input type="text" name="code" placeholder="Verification Code" class="form-control text-center">
-                    <p class="fs-7 text-primary m-0 ps-2">Verification code you've entered is invalid.</p>
+                    <?php
+                    if (isset($_POST['code']) && !validate_field($_POST['code'])) {
+                    ?>
+                        <p class="fs-7 text-primary m-0 ps-2">Verification code is required.</p>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <div class="mb-2 p-0 col-12">
                     <input type="submit" class="btn btn-primary w-100 fw-semibold" name="verify" value="Verify">

@@ -118,7 +118,7 @@ require_once('../includes/head.php');
                     <?php
                     if (isset($_POST['password']) && isset($_POST['confirm-password']) && !validate_cpw($_POST['password'], $_POST['confirm-password'])) {
                     ?>
-                        <p class="fs-7 text-primary m-0 ps-2">Password you've entered didn't match.</p>
+                        <p class="fs-7 text-primary m-0 ps-2">Password did not match.</p>
                     <?php
                     }
                     ?>
@@ -163,7 +163,7 @@ require_once('../includes/head.php');
                     <?php
                     if (isset($_POST['first-name']) && !validate_field($_POST['first-name'])) {
                     ?>
-                        <p class="fs-7 text-primary m-0 ps-2">First name you've entered is invalid.</p>
+                        <p class="fs-7 text-primary m-0 ps-2">First name is required.</p>
                     <?php
                     }
                     ?>
@@ -187,7 +187,7 @@ require_once('../includes/head.php');
                     <?php
                     if (isset($_POST['last-name']) && !validate_field($_POST['last-name'])) {
                     ?>
-                        <p class="fs-7 text-primary m-0 ps-2">Last name you've entered is invalid.</p>
+                        <p class="fs-7 text-primary m-0 ps-2">Last name is required.</p>
                     <?php
                     }
                     ?>
@@ -265,7 +265,7 @@ require_once('../includes/head.php');
                     <?php
                     if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
                     ?>
-                        <p class="fs-7 text-primary m-0 ps-2">Contact number you've entered is invalid.</p>
+                        <p class="fs-7 text-primary m-0 ps-2">Contact number is invalid.</p>
                     <?php
                     }
                     ?>

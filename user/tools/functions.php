@@ -17,7 +17,7 @@ function validate_email($email)
         $email = trim($email); // Trim whitespace
         // Check if the email is not empty
         if (empty($email)) {
-            return "Email can't be empty";
+            return "Email is required";
         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             // Check if the email has a valid format
             return "Email you've entered is invalid format.";
@@ -49,7 +49,7 @@ function validate_password($password)
     $password = htmlentities($password);
 
     if (strlen(trim($password)) < 1) {
-        return "Password you've entered is invalid.";
+        return "Password is required.";
     } elseif (strlen($password) < 8) {
         return "Password must be at least 8 characters long.";
     } else {
