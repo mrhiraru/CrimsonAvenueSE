@@ -1,0 +1,5 @@
+<?php 
+
+    // for phpmailer function
+
+?>
