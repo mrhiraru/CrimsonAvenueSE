@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 require_once("./classes/account.class.php");
@@ -11,13 +11,20 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
-require 'vendor/autoload.php';
+require_once('../vendor/autoload.php');
 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
 // Generate 6 digit code
 $verification_code = generate_code();
+
+if (!isset($_SESSION['code'])) {
+    $_SESSION['code'] = $verification_code;
+} else if (isset($_POST['resend'])) {
+    $_SESSION['code'] = $verification_code;
+}
+echo $_SESSION['code'];
 
 try {
     //Server settings
@@ -79,7 +86,7 @@ require_once('../includes/head.php');
                                                                                                                                                                                             echo $_POST['contact'];
                                                                                                                                                                                         } ?>">
                     <?php
-                    if (isset($_POST['code']) && !validate_field($_POST['code'])) {
+                    if (isset($_POST['code']) && !validate_field($_POST['code']) && isset($_POST['verify'])) {
                     ?>
                         <p class="fs-7 text-primary m-0 ps-2">Verification code is required.</p>
                     <?php
@@ -89,8 +96,10 @@ require_once('../includes/head.php');
                 <div class="mb-2 p-0 col-12">
                     <input type="submit" class="btn btn-primary w-100 fw-semibold" name="verify" value="Verify">
                 </div>
+                <div class="p-0 col-12 text-center">
+                    <p class="fs-7 text-dark m-0">Didn't received verification code? <input type="submit" class="text-primary text-decoration-none fw-semibold border-0 bg-light" name="resend" value="Resend Code"> </p>
+                </div>
             </form>
-            <p class="fs-7 text-dark m-0">Didn't received verification code? <a href="" class="text-primary text-decoration-none fw-semibold">Resend Code</a>.</p>
         </div>
     </main>
     <?php
