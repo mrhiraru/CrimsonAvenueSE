@@ -83,7 +83,7 @@ require_once('../includes/head.php');
                 <div class="mb-2 p-0 col-12">
                     <label for="code" class="form-label text-center text-dark fs-7">
                         We've sent you 6-digit code to
-                        <span class="text-primary fw-semibold ">example@email.com</span>
+                        <span class="text-primary fw-semibold "><?= $_SESSION['email'] ?></span>
                         Enter the code below to verify your account.
                     </label>
                     <input type="text" maxlength="6" pattern="\d{6}" name="code" placeholder="Verification Code" class="form-control text-center" oninput="validateinput(this)" value="<?php if (isset($_POST['contact'])) {
@@ -101,8 +101,11 @@ require_once('../includes/head.php');
                     <input type="submit" class="btn btn-primary w-100 fw-semibold" name="verify" value="Verify">
                 </div>
                 <div class="p-0 col-12 text-center">
-                    <?php // add 15 sec timer if resend is clicked ?>
-                    <p class="fs-7 text-dark m-0">Didn't received verification code? <input type="submit" class="text-primary text-decoration-none fw-semibold border-0 bg-light" id="input_resend" name="resend" onclick="" value="Resend Code"> </p>
+                    <?php // add 15 sec timer if resend is clicked 
+                    ?>
+                    <p class="fs-7 text-dark m-0">Didn't received verification code?
+                        <input type="submit" class="text-primary text-decoration-none fw-semibold border-0 bg-light" id="input_resend" name="resend" onclick="" value="Resend Code">
+                    </p>
                 </div>
             </form>
         </div>
