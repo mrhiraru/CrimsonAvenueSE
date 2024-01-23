@@ -21,8 +21,12 @@ $verification_code = generate_code();
 
 if (!isset($_SESSION['code'])) {
     $_SESSION['code'] = $verification_code;
+
+    //call mailer function here from mailer.php
 } else if (isset($_POST['resend'])) {
     $_SESSION['code'] = $verification_code;
+
+    //call mailer function here from mailer.php
 }
 echo $_SESSION['code'];
 
