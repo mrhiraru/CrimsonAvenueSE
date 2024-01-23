@@ -101,6 +101,7 @@ require_once('../includes/head.php');
                     <input type="submit" class="btn btn-primary w-100 fw-semibold" name="verify" value="Verify">
                 </div>
                 <div class="p-0 col-12 text-center">
+                    <?php // add 15 sec timer if resend is clicked ?>
                     <p class="fs-7 text-dark m-0">Didn't received verification code? <input type="submit" class="text-primary text-decoration-none fw-semibold border-0 bg-light" name="resend" value="Resend Code"> </p>
                 </div>
             </form>
