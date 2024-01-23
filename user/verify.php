@@ -28,7 +28,7 @@ if (!isset($_SESSION['code'])) {
 
     //call mailer function here from mailer.php
 }
-echo $_SESSION['code'];
+echo $_SESSION['code'].' ';
 
 try {
     //Server settings
@@ -47,8 +47,8 @@ try {
     $mail->addReplyTo('crimsonavenue@gmail.com', 'Crimson Avenue');
 
     //Attachments
-    $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-    $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+    $mail->addAttachment('../images/main/ca-icon-noword.png');         //Add attachments
+    $mail->addAttachment('../images/main/ca-icon-noword.png', 'ca-icon-noword.png');    //Optional name
 
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
