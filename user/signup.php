@@ -53,7 +53,7 @@ if (isset($_POST['signup'])) {
     ) {
         if ($account->add()) {
             $_SESSION['email'] = $account->email;
-            $_SESSION['name'] = $account->lastname . ',' . $account->firstname . $account->middlename;
+            $_SESSION['name'] = $account->firstname;
             header('location: verify.php');
         } else {
             echo 'An error occured while adding in the database.';
