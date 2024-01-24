@@ -54,7 +54,7 @@ if (isset($_POST['signup'])) {
         if ($account->add()) {
             $_SESSION['email'] = $account->email;
             $_SESSION['name'] = $account->firstname;
-            header('location: verify.php');
+            // header('location: verify.php');
         } else {
             echo 'An error occured while adding in the database.';
         }
@@ -75,6 +75,15 @@ require_once('../includes/head.php');
     <main class="row m-0 h-100 bg-tertiary d-flex align-items-center justify-content-center">
         <div class="col-10 custom-size my-5 px-3 py-3 px-md-5 bg-light shadow-lg rounded d-flex flex-column justify-content-center align-items-center">
             <img src="../images/main/ca-icon-noword.png" alt="" class=" img-thumbnail border border-0 bg-light mb-4">
+            <?php
+            if (isset($_POST['signup'])) {
+            ?>
+                <div class="alert alert-success" role="alert">
+                    Signup Successful! <a href="./login.php" class="alert-link">Login here</a> to verify your account.
+                </div>
+            <?php
+            }
+            ?>
             <form action="" method="post" class="row d-flex p-2 p-md-0">
 
                 <div class="mb-2 p-0 col-12">

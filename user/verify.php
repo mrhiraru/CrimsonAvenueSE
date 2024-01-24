@@ -14,8 +14,18 @@ if (!isset($_SESSION['code'])) {
 } else if (isset($_POST['resend'])) {
     $_SESSION['code'] = $verification_code;
     send_code($_SESSION['email'], $_SESSION['name'], $_SESSION['code']);
+} else if (isset($_POST['verify'])) {
+    $account = new Account();
+
+    $account->verification_status = 'Verified';
+    $code = htmlentities($_POST['code']);
+
+    if ($code == $_SESSION['code'] && validate_field($code)){
+        if ($account->verify()){
+            
+        }
+    }
 }
-echo $_SESSION['code'] . ' ';
 
 ?>
 
