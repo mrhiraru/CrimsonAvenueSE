@@ -50,7 +50,7 @@ if (isset($_POST['signup'])) {
         validate_password($account->password) &&
         validate_cpw($account->password, $_POST['confirm-password']) &&
         validate_email($account->email) == 'success' && !$account->is_email_exist() &&
-        validate_field($_POST['terms'])
+        isset($_POST['terms'])
     ) {
         if ($account->add()) {
             // $_SESSION['email'] = $account->email;
@@ -59,6 +59,8 @@ if (isset($_POST['signup'])) {
         } else {
             echo 'An error occured while adding in the database.';
         }
+    } else {
+        $error = 'Failed signing up';
     }
 }
 ?>
@@ -77,7 +79,7 @@ require_once('../includes/head.php');
         <div class="col-10 custom-size my-5 px-3 py-3 px-md-5 bg-light shadow-lg rounded d-flex flex-column justify-content-center align-items-center">
             <img src="../images/main/ca-icon-noword.png" alt="" class=" img-thumbnail border border-0 bg-light mb-4">
             <?php
-            if (isset($_POST['signup']) && isset($success)) {
+            if (isset($_POST['signup']) && !isset($error)) {
             ?>
                 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -295,7 +297,7 @@ require_once('../includes/head.php');
                     <?php
                     if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
                     ?>
-                        <p class="fs-7 text-primary m-0 ps-2">Contact number is invalid.</p>
+                        <p class="fs-7 text-primary m-0 ps-2">Contact number is required.</p>
                     <?php
                     }
                     ?>
@@ -304,9 +306,9 @@ require_once('../includes/head.php');
                     <p class="fs-7 text-dark m-0 d-flex justify-content-center">
                         <input class="form-check-input me-2 <?php if (!isset($_POST['terms']) && isset($_POST['signup'])) {
                                                                 echo "border-danger outline-danger";
-                                                            } ?>" type="checkbox" value="Agreed" id="terms" name="terms" required <?php if (isset($_POST['terms']) && $_POST['terms'] == 'Agreed') {
-                                                                                                                                        echo 'checked';
-                                                                                                                                    } ?>>
+                                                            } ?>" type="checkbox" value="Agreed" id="terms" name="terms" <?php if (isset($_POST['terms']) && $_POST['terms'] == 'Agreed') {
+                                                                                                                                echo 'checked';
+                                                                                                                            } ?>>
                         <label class="form-check-label" for="terms">
                             I agree with the
                             <a href="" class="text-primary text-decoration-none fw-semibold">Terms and Conditions</a>.

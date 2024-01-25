@@ -20,7 +20,7 @@ if (isset($_POST['login'])) {
         } else if ($_SESSIOn['user_role'] == 0) {
             // header to admin index
         }
-    }else{
+    } else {
         $error = 'Login failed: Invalid email or password.';
     }
 }
@@ -52,19 +52,24 @@ require_once('../includes/head.php');
                                                                                                                     echo $_POST['password'];
                                                                                                                 } ?>">
                 </div>
-                <div class="mb-2 col-12 text-end">
-                    <a href="" class="text-primary fs-7 text-decoration-none fw-semibold">Forgot Password?</a>
-                </div>
-                <div class="mb-2 col-12">
-                    <input type="submit" class="btn btn-primary w-100 fw-semibold"  name="login" value="Login">
-                </div>
+
                 <?php
                 if (isset($_POST['login']) && isset($error)) {
                 ?>
-                    <p class="fs-7 text-primary m-0 ps-2"><?= $error ?></p>
+                    <div class="mb-2 col-12">
+                        <p class="fs-7 text-primary m-0 ps-2 text-start">
+                            <?= $error ?>
+                        </p>
+                    </div>
                 <?php
                 }
                 ?>
+                <div class="mb-2 col-12 text-end ">
+                    <a href="" class="text-primary fs-7 pe-2 text-decoration-none fw-semibold">Forgot Password?</a>
+                </div>
+                <div class="mb-2 col-12">
+                    <input type="submit" class="btn btn-primary w-100 fw-semibold" name="login" value="Login">
+                </div>
             </form>
             <p class="fs-7 text-dark m-0">Don't have an account? <a href="./signup.php" class="text-primary text-decoration-none fw-semibold">Sign up Here</a>.</p>
         </div>
