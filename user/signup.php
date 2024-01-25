@@ -85,7 +85,9 @@ require_once('../includes/head.php');
                             <div class="modal-body">
                                 <div class="row d-flex">
                                     <div class="col-12 text-center">
-                                        <a href="./login.php" class="text-decoration-none text-dark"><p class="m-0">Account is successfully created! </br><span class="text-primary fw-bold">Click to Login</span></p></a>
+                                        <a href="./login.php" class="text-decoration-none text-dark">
+                                            <p class="m-0">Account is successfully created! </br><span class="text-primary fw-bold">Click to Login</span></p>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

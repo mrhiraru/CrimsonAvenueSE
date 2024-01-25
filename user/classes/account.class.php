@@ -25,6 +25,26 @@ class Account
         $this->db = new Database();
     }
 
+    function sign_in_account(){
+        $sql = "SELECT * FROM account WHERE email = :email LIMIT 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':email', $this->email);
+
+        if ($query->execute()){
+            $accountData = $query->fetch(PDO::FETCH_ASSOC);
+
+            if ($accountData && password_verify($this->password, $accountData['password'])) {
+                $this->account_id = $accountData['account_id'];
+                $this->user_role = $accountData['user_role'];
+                $this->firstname = $accountData['firstname'];
+                $this->middlename = $accountData['middlename'];
+                $this->lastname = $accountData['lastname'];
+                return true;
+            }
+        }
+    }
+
+
     function add()
     {
         $sql = "INSERT INTO account (email, password, affiliation, firstname, middlename, lastname, gender, college, department, contact, user_role) VALUES (:email, :password, :affiliation, :firstname, :middlename, :lastname, :gender, :college, :department, :contact, :user_role)";
