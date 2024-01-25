@@ -16,7 +16,7 @@ function send_code($email, $name, $code)
     $mail = new PHPMailer(true);
     try {
         //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -37,7 +37,7 @@ function send_code($email, $name, $code)
         $mail->AltBody = '<p> Hi ' . ucwords($name) . ',<br><br>Welcome to Crimson Avenue! Please verify your email to complete your sign-up.<br><br>Verification Code: <strong>' . $code . '</strong><br><a href="http://crimsonavenue.se.local/user/verify.php">http://crimsonavenue.se.local/user/verify.php</a><br><br>If you have any questions, contact us at [your support email/phone]. </p>';
 
         if ($mail->send()) {
-            echo 'Message has been sent';
+            //echo 'Message has been sent';
         };
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

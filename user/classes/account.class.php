@@ -39,6 +39,8 @@ class Account
                 $this->firstname = $accountData['firstname'];
                 $this->middlename = $accountData['middlename'];
                 $this->lastname = $accountData['lastname'];
+                $this->email = $accountData['email'];
+                $this->verification_status = $accountData['verification_status'];
                 return true;
             }
         }
