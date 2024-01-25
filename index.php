@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
+    header('location: ./user/verify.php');
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
@@ -41,7 +51,7 @@ require_once('./includes/head.php');
             </div>
         </main>
         <section>
-            
+
         </section>
     </div>
     <?php

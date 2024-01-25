@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+if (isset($_SESSION['user_role'])) {
+    header('location: ../index.php');
+}
+
 require_once("./classes/account.class.php");
 require_once("./tools/functions.php");
 
@@ -12,6 +16,8 @@ if (isset($_POST['login'])) {
     if ($account->sign_in_account()) {
         $_SESSION['user_role'] = $account->user_role;
         $_SESSION['account_id'] = $account->account_id;
+        $_SESSION['verification_status'] = $account->verification_status;
+        $_SESSION['email'] = $account->email;
         $_SESSION['name'] = ucwords($account->firstname . ' ' . $account->middlename[0] . '. ' . $account->lastname);
         if ($_SESSION['user_role'] == 2) {
             header('location: ../index.php');

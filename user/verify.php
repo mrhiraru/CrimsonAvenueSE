@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+if (isset($_SESSION['user_role']) && $_SESSION['verification_status'] == "Verified") {
+    header('location: ../index.php');
+} else if (!isset($_SESSION['user_role'])) {
+    header('location: ./user/login.php');
+}
+
 require_once("./classes/account.class.php");
 require_once("./tools/functions.php");
 require_once("./tools/mailer.php");
@@ -20,9 +26,8 @@ if (!isset($_SESSION['code'])) {
     $account->verification_status = 'Verified';
     $code = htmlentities($_POST['code']);
 
-    if ($code == $_SESSION['code'] && validate_field($code)){
-        if ($account->verify()){
-            
+    if ($code == $_SESSION['code'] && validate_field($code)) {
+        if ($account->verify()) {
         }
     }
 }
