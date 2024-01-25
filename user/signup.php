@@ -50,6 +50,7 @@ if (isset($_POST['signup'])) {
         validate_password($account->password) &&
         validate_cpw($account->password, $_POST['confirm-password']) &&
         validate_email($account->email) == 'success' && !$account->is_email_exist() &&
+        validate_wmsu_email($account->email, $account->affiliation) &&
         isset($_POST['terms'])
     ) {
         if ($account->add()) {
@@ -60,7 +61,7 @@ if (isset($_POST['signup'])) {
             echo 'An error occured while adding in the database.';
         }
     } else {
-        $error = 'Failed signing up';
+        $success = 'failed';
     }
 }
 ?>
@@ -74,21 +75,21 @@ $title = "Signup | Crimson Avenue";
 require_once('../includes/head.php');
 ?>
 
-<body>
+<body onload="affiliation_effect()">
     <main class="row m-0 h-100 bg-tertiary d-flex align-items-center justify-content-center">
         <div class="col-10 custom-size my-5 px-3 py-3 px-md-5 bg-light shadow-lg rounded d-flex flex-column justify-content-center align-items-center">
             <img src="../images/main/ca-icon-noword.png" alt="" class=" img-thumbnail border border-0 bg-light mb-4">
             <?php
-            if (isset($_POST['signup']) && !isset($error)) {
+            if (isset($_POST['signup']) && $success == 'success') {
             ?>
-                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                     <div class="modal-dialog modal-dialog-centered modal-sm">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="row d-flex">
                                     <div class="col-12 text-center">
                                         <a href="./login.php" class="text-decoration-none text-dark">
-                                            <p class="m-0">Account is successfully created! </br><span class="text-primary fw-bold">Click to Login</span></p>
+                                            <p class="m-0">Account is successfully created!</br><span class="text-primary fw-bold">Login to verify your account</span>.</p>
                                         </a>
                                     </div>
                                 </div>
@@ -123,7 +124,7 @@ require_once('../includes/head.php');
                     ?>
                         <p class="fs-7 text-primary m-0 ps-2">Email you've entered already exist.</p>
                     <?php
-                    } else if ((isset($_POST['affiliation']) && $_POST['affiliation'] == 'Student') && !validate_wmsu_email($_POST['email'])) {
+                    } else if ((isset($_POST['affiliation']) && $_POST['affiliation'] == 'Student') && !validate_wmsu_email($_POST['email'], $_POST['affiliation'])) {
                     ?>
                         <p class="fs-7 text-primary m-0 ps-2">Student must use wmsu email.</p>
                     <?php
@@ -157,25 +158,25 @@ require_once('../includes/head.php');
                 </div>
                 <div class="form-group m-0 mb-2 p-0 row col-12 d-flex justify-content-evenly">
                     <div class="m-0 p-0 col-auto">
-                        <input class="form-check-input" type="radio" name="affiliation" id="student" value="Student" onclick="showFields(1)" <?php if (isset($_POST['affiliation']) && $_POST['affiliation'] == 'Student') {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                } ?>>
+                        <input class="form-check-input" type="radio" name="affiliation" id="student" onclick="affiliation_effect()" value="Student" <?php if (isset($_POST['affiliation']) && $_POST['affiliation'] == 'Student') {
+                                                                                                                                                        echo 'checked';
+                                                                                                                                                    } ?>>
                         <label class="form-check-label" for="student">
                             Student
                         </label>
                     </div>
                     <div class="m-0 p-0 col-auto">
-                        <input class="form-check-input" type="radio" name="affiliation" id="faculty" value="Faculty" onclick="showFields(1)" <?php if (isset($_POST['affiliation']) && $_POST['affiliation'] == 'Faculty') {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                } ?>>
+                        <input class="form-check-input" type="radio" name="affiliation" id="faculty" onclick="affiliation_effect()" value="Faculty" <?php if (isset($_POST['affiliation']) && $_POST['affiliation'] == 'Faculty') {
+                                                                                                                                                        echo 'checked';
+                                                                                                                                                    } ?>>
                         <label class="form-check-label" for="faculty">
                             Faculty
                         </label>
                     </div>
                     <div class="m-0 p-0 col-auto">
-                        <input class="form-check-input" type="radio" name="affiliation" id="non-student" value="Non-student" onclick="showFields(2)" <?php if (isset($_POST['affiliation']) && $_POST['affiliation'] == 'Non-student') {
-                                                                                                                                                            echo 'checked';
-                                                                                                                                                        } ?>>
+                        <input class="form-check-input" type="radio" name="affiliation" id="non-student" onclick="affiliation_effect()" value="Non-student" <?php if (isset($_POST['affiliation']) && $_POST['affiliation'] == 'Non-student') {
+                                                                                                                                                                echo 'checked';
+                                                                                                                                                            } ?>>
                         <label class="form-check-label" for="non-student">
                             Non-student
                         </label>
@@ -257,7 +258,7 @@ require_once('../includes/head.php');
                     }
                     ?>
                 </div>
-                <div class="mb-2 p-0 col-12 d-none transition-showhide" id="college_div">
+                <div class="mb-2 p-0 col-12 d-none" id="college_div">
                     <select name="college" id="college" class="form-select">
                         <option value="">Select College</option>
                         <option value="Computing Studies" <?php if (isset($_POST['college']) && $_POST['college'] == 'Computing Studies') {
@@ -272,7 +273,7 @@ require_once('../includes/head.php');
                     }
                     ?>
                 </div>
-                <div class="mb-2 p-0 col-12 d-none transition-showhide" id="department_div">
+                <div class="mb-2 p-0 col-12 d-none" id="department_div">
                     <select name="department" id="department" class="form-select">
                         <option value="">Select Department</option>
                         <option value="Computer Science" <?php if (isset($_POST['department']) && $_POST['department'] == 'Computer Science') {

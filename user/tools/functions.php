@@ -29,18 +29,26 @@ function validate_email($email)
     }
 }
 
-function validate_wmsu_email($email)
+function validate_wmsu_email($email, $affiliation)
 {
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $pattern = '/@wmsu\.edu\.ph$/i';
+    // Check if the affiliation is 'Student'
+    if ($affiliation == 'Student') {
+        // Validate the email format
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $pattern = '/@wmsu\.edu\.ph$/i';
 
-        if (preg_match($pattern, $email)) {
-            return true;
+            // Check if the email matches the pattern
+            if (preg_match($pattern, $email)) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            return false; // Invalid email format
         }
     } else {
-        return false;
+        // For 'Non-student' and 'Faculty', no need to check the pattern, return true
+        return true;
     }
 }
 
@@ -68,7 +76,8 @@ function validate_cpw($password, $cpassword)
     }
 }
 
-function generate_code() {
+function generate_code()
+{
     $code = random_int(100000, 999999);
     return $code;
 }

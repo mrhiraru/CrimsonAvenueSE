@@ -46,7 +46,7 @@ require_once('../includes/head.php');
                 <div class="mb-2 p-0 col-12">
                     <label for="code" class="form-label text-center text-dark fs-7">
                         We've sent you 6-digit code to
-                        <span class="text-primary fw-semibold "><?= $_SESSION['email'] ?></span>
+                        <span class="text-primary fw-semibold "><?= $_SESSION['email'] ?></span>,
                         Enter the code below to verify your account.
                     </label>
                     <input type="text" maxlength="6" pattern="\d{6}" name="code" placeholder="Verification Code" class="form-control text-center" oninput="validateinput(this)" value="<?php if (isset($_POST['contact'])) {

@@ -97,14 +97,3 @@ body {
     min-width: 300px !important;
     min-height: 300px !important;
 }
-
-.transition-showhide {
-    transition: opacity 0.5s ease, max-height 0.5s ease;
-    opacity: 0;
-    max-height: 0;
-}
-
-.transition-showhide.active {
-    opacity: 1;
-    max-height: max-content;
-}

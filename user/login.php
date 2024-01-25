@@ -12,7 +12,7 @@ if (isset($_POST['login'])) {
     if ($account->sign_in_account()) {
         $_SESSION['user_role'] = $account->user_role;
         $_SESSION['account_id'] = $account->account_id;
-        $_SESSION['name'] = ucwords($account->firstname . ' ' . $account->middlename[0] . ' ' . $account->lastname);
+        $_SESSION['name'] = ucwords($account->firstname . ' ' . $account->middlename[0] . '. ' . $account->lastname);
         if ($_SESSION['user_role'] == 2) {
             header('location: ../index.php');
         } else if ($_SESSION['user_role'] == 1) {
