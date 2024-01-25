@@ -52,9 +52,9 @@ if (isset($_POST['signup'])) {
         validate_field($_POST['terms'])
     ) {
         if ($account->add()) {
-            $_SESSION['email'] = $account->email;
-            $_SESSION['name'] = $account->firstname;
-            // header('location: verify.php');
+            // $_SESSION['email'] = $account->email;
+            // $_SESSION['name'] = $account->firstname;
+            header('location: ./signup.php');
         } else {
             echo 'An error occured while adding in the database.';
         }
@@ -78,8 +78,21 @@ require_once('../includes/head.php');
             <?php
             if (isset($_POST['signup'])) {
             ?>
-                <div class="alert alert-success" role="alert">
+                <!-- <div class="alert alert-success" role="alert">
                     Signup Successful! <a href="./login.php" class="alert-link">Login here</a> to verify your account.
+                </div> -->
+                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="row d-flex">
+                                    <div class="col-12 text-center">
+                                        <p class="m-0">Account is successfully created! </br><a href="./login.php" class="text-primary fw-bold text-decoration-none">Click to Login</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             <?php
             }
@@ -106,7 +119,7 @@ require_once('../includes/head.php');
                     <?php
                     } else if ($new_account->is_email_exist() && $_POST['email']) {
                     ?>
-                        <p class="fs-7 text-primary m-0 ps-2">Email you've entered already exist</p>
+                        <p class="fs-7 text-primary m-0 ps-2">Email you've entered already exist.</p>
                     <?php
                     } else if ((isset($_POST['affiliation']) && $_POST['affiliation'] == 'Student') && !validate_wmsu_email($_POST['email'])) {
                     ?>
@@ -310,6 +323,11 @@ require_once('../includes/head.php');
     <?php
     require_once('../includes/js.php');
     ?>
+    <script>
+        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
+        myModal.show()
+    </script>
+
 </body>
 
 </html>

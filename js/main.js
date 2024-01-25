@@ -25,14 +25,13 @@ function showFields(val) {
   }
 }
 
-// resend timer 
-function resend_timer(){
+// resend timer
+function resend_timer() {
   var input_resend = document.getElementById("input_resend");
   var counter = 15;
   // add disabled attribute
   for (let i = counter; i > 0; i--) {
     // change value of resend to counter then wait 1 sec to change again
-    
   }
   // remove disabled attribute
 }
