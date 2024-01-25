@@ -48,13 +48,14 @@ if (isset($_POST['signup'])) {
         validate_field($account->department) &&
         validate_field($account->contact) &&
         validate_password($account->password) &&
+        validate_cpw($account->password, $_POST['confirm-password']) &&
         validate_email($account->email) == 'success' && !$account->is_email_exist() &&
         validate_field($_POST['terms'])
     ) {
         if ($account->add()) {
             // $_SESSION['email'] = $account->email;
             // $_SESSION['name'] = $account->firstname;
-            header('location: ./signup.php');
+            $success = 'success';
         } else {
             echo 'An error occured while adding in the database.';
         }
@@ -76,18 +77,15 @@ require_once('../includes/head.php');
         <div class="col-10 custom-size my-5 px-3 py-3 px-md-5 bg-light shadow-lg rounded d-flex flex-column justify-content-center align-items-center">
             <img src="../images/main/ca-icon-noword.png" alt="" class=" img-thumbnail border border-0 bg-light mb-4">
             <?php
-            if (isset($_POST['signup'])) {
+            if (isset($_POST['signup']) && isset($success)) {
             ?>
-                <!-- <div class="alert alert-success" role="alert">
-                    Signup Successful! <a href="./login.php" class="alert-link">Login here</a> to verify your account.
-                </div> -->
                 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-sm">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="row d-flex">
                                     <div class="col-12 text-center">
-                                        <p class="m-0">Account is successfully created! </br><a href="./login.php" class="text-primary fw-bold text-decoration-none">Click to Login</a></p>
+                                        <a href="./login.php" class="text-decoration-none text-dark"><p class="m-0">Account is successfully created! </br><span class="text-primary fw-bold">Click to Login</span></p></a>
                                     </div>
                                 </div>
                             </div>
