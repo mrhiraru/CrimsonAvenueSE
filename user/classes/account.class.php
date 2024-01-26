@@ -73,7 +73,7 @@ class Account
     }
 
     function verify(){
-        $sql = "UPDATE account SET verfication_status = :verification_status WHERE account_id = :account_id";
+        $sql = "UPDATE account SET verification_status = :verification_status WHERE account_id = :account_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':verification_status', $this->verification_status);

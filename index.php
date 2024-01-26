@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-var_dump($_SESSION['verification_status']);
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
 }

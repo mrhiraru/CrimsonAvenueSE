@@ -20,7 +20,7 @@
                         <h5 class="offcanvas-title fs-3 fw-bold text-primary" id="offcanvasNavbarLabel">Menu</h5>
                         <button type="button" class="btn-close m-0 p-0" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
-                    <div class="offcanvas-body p-0">
+                    <div class="offcanvas-body p-0 bg-white ">
                         <ul class="navbar-nav m-auto mb-2 mb-lg-0 p-0 w-100 d-flex justify-content-evenly">
                             <li class="nav-item text-lg-center text-start">
                                 <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $index_page ?>" href="../">Home</a>

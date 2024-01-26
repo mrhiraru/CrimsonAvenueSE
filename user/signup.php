@@ -58,8 +58,6 @@ if (isset($_POST['signup'])) {
         isset($_POST['terms'])
     ) {
         if ($account->add()) {
-            // $_SESSION['email'] = $account->email;
-            // $_SESSION['name'] = $account->firstname;
             $success = 'success';
         } else {
             echo 'An error occured while adding in the database.';
