@@ -4,7 +4,7 @@ session_start();
 if (isset($_SESSION['user_role']) && $_SESSION['verification_status'] == "Verified") {
     header('location: ../index.php');
 } else if (!isset($_SESSION['user_role'])) {
-    header('location: ./user/login.php');
+    header('location: ./login.php');
 }
 
 require_once("./classes/account.class.php");
