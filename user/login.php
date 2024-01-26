@@ -43,9 +43,9 @@ $title = "Login | Crimson Avenue";
 require_once('../includes/head.php');
 ?>
 
-<body>
-    <main class="row m-0 vh-100 bg-tertiary d-flex align-items-center justify-content-center">
-        <div class="col-10 custom-size px-3 py-3 px-md-5 bg-light shadow-lg rounded d-flex flex-column justify-content-center align-items-center">
+<body class="bg-tertiary">
+    <main class="row m-0 vh-100 d-flex align-items-center justify-content-center">
+        <div class="col-10 custom-size my-5 px-3 py-3 px-md-5 bg-light shadow-lg rounded d-flex flex-column justify-content-center align-items-center">
             <img src="../images/main/ca-icon-noword.png" alt="" class=" img-thumbnail border border-0 bg-light mb-4">
             <form action="" method="post" class="row d-flex">
                 <div class="mb-2 col-12">
