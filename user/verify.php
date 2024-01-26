@@ -51,7 +51,7 @@ $title = "Verify | Crimson Avenue";
 require_once('../includes/head.php');
 ?>
 
-<body class="bg-tertiary">
+<body class="bg-tertiary" onload="startCountdown()">
     <div class="row position-absolute start-0 top-0 w-100 m-0 p-2">
         <div class="col-8 p-0">
             <a class="navbar-brand h-1 fs-3 fw-bolder me-auto d-flex align-items-center text-white" href="../index.php">
@@ -135,7 +135,7 @@ require_once('../includes/head.php');
                     ?>
                     <p class="fs-7 text-dark m-0">
                         Didn't received verification code?
-                        <input type="submit" class="text-primary text-decoration-none fw-semibold border-0 bg-white" id="input_resend" name="resend" onclick="" value="Resend Code">
+                        <input type="submit" class="text-primary text-decoration-none fw-semibold border-0 bg-white" id="input_resend" onclick="startCountdown()" name="resend" value="Resend Code">
                     </p>
                 </div>
             </form>

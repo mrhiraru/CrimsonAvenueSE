@@ -26,3 +26,4 @@ document
   .forEach(function (radio) {
     radio.addEventListener("click", affiliation_effect);
   });
+
