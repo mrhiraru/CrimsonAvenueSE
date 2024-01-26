@@ -102,7 +102,7 @@ require_once('../includes/head.php');
     <?php
     }
     ?>
-    <main class="row m-0 vh-100 d-flex align-items-center justify-content-center">
+    <main class="row m-0 min-vh-100 d-flex align-items-center justify-content-center">
         <div class="col-10 custom-size my-5 px-3 py-3 px-md-5 bg-white shadow-lg rounded d-flex flex-column justify-content-center align-items-center">
             <img src="../images/main/ca-icon-noword.png" alt="" class=" img-thumbnail border border-0 bg-white mb-4">
             <form action="" method="post" class="row d-flex p-2 p-md-0">
