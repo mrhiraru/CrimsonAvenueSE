@@ -18,13 +18,13 @@ if (isset($_POST['signup'])) {
     } else {
         $account->affiliation = '';
     }
-    $account->firstname = htmlentities($_POST['first-name']);
+    $account->firstname = ucfirst(strtolower(htmlentities($_POST['first-name'])));
     if (isset($_POST['middle-name'])) {
-        $account->middlename = htmlentities($_POST['middle-name']);
+        $account->middlename = ucfirst(strtolower(htmlentities($_POST['middle-name'])));
     } else {
         $account->middlename = '';
     }
-    $account->lastname = htmlentities($_POST['last-name']);
+    $account->lastname = ucfirst(strtolower(htmlentities($_POST['last-name'])));
     if (isset($_POST['gender'])) {
         $account->gender = htmlentities($_POST['gender']);
     } else {
