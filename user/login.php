@@ -18,7 +18,7 @@ if (isset($_POST['login'])) {
         $_SESSION['account_id'] = $account->account_id;
         $_SESSION['verification_status'] = $account->verification_status;
         $_SESSION['email'] = $account->email;
-        $_SESSION['name'] = ucwords($account->firstname . ' ' . $account->middlename[0] . '. ' . $account->lastname);
+        $_SESSION['name'] = ucwords($account->firstname . ' ' . $account->lastname);
         if ($_SESSION['user_role'] == 2) {
             header('location: ../index.php');
         } else if ($_SESSION['user_role'] == 1) {
