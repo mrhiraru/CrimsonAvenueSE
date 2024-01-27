@@ -34,8 +34,9 @@
     color: var(--dark) !important;
 }
 
-.active, .nav-link:hover {
+.active, .nav-link:hover, .dropdown-item:hover, .dropdown-item:active, .dropdown-item.active {
     color: var(--primary) !important;
+    background-color: none !important;
 }
 
 /* border color */

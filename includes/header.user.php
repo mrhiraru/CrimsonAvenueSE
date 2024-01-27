@@ -11,20 +11,20 @@
                 <a href="../cart.php" class="mx-3 text-light"><i class="fa-solid fa-cart-shopping"></i></a>
 
                 <div class="dropdown d-none d-lg-block">
-                    <button class="mx-3 text-light dropdown-toggle border-0 bg-tertiary" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="mx-3 text-light dropdown-toggle border-0 bg-tertiary d-flex align-items-center justify-content-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-user"></i>
-                        <!-- <img src="../images/main/profilepic.png" alt="" width="40" height="40" class="d-inline-block rounded-5"> -->
+                        <!-- <img src="../images/main/profilepic.png" alt="" width="38" height="38" class="d-inline rounded-5 border border-white border-2"> -->
                     </button>
 
-                    <ul class="dropdown-menu dropdown-menu-end me-2">
-                        <li><a class="dropdown-item" href="#"><?= $_SESSION['name'] ?></a></li>
+                    <ul class="dropdown-menu dropdown-menu-end me-2 mt-2">
+                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 <?= $user_profile ?> " href="#"><?= $_SESSION['name'] ?></a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Login</a></li>
-                        <li><a class="dropdown-item" href="#">Signup</a></li>
-                        <li><a class="dropdown-item" href="#">Admin Panel</a></li>
-                        <li><a class="dropdown-item" href="#">Moderator Panel</a></li>
+                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 <?= $index_page ?>" href="#">Login</a></li>
+                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="#">Signup</a></li>
+                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="#">Admin Panel</a></li>
+                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="#">Moderator Panel</a></li>
                     </ul>
                 </div>
                 <button class="navbar-toggler mx-3 p-0 fs-3 text-light border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-expanded="false" aria-label="Toggle navigation">
