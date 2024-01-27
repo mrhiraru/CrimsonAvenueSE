@@ -73,12 +73,21 @@ if (isset($_POST['signup'])) {
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "Signup | Crimson Avenue";
+$title = "Admin Signup | Crimson Avenue";
 require_once('../includes/head.php');
 ?>
 
 <body class="bg-tertiary" onload="affiliation_effect()">
     <main class="row m-0 min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="row position-absolute start-0 top-0 w-100 m-0 p-2">
+            <div class="col-8 p-0">
+                <a class="navbar-brand h-1 fs-3 fw-bolder me-auto d-flex align-items-center text-white" href="../index.php">
+                    <img src="../images/main/ca-nospace.png" alt="" width="40" height="40" class="d-inline-block me-2">
+                    <span class="d-lg-inline d-md-inline d-none">Crimson Avenue </span>
+                </a>
+            </div>
+        </div>
+        <div class="col-12 m-0 mb-5"></div>
         <div class="col-10 custom-size my-5 px-3 py-3 px-md-5 bg-light shadow-lg rounded d-flex flex-column justify-content-center align-items-center">
             <img src="../images/main/ca-icon-noword.png" alt="" class=" img-thumbnail border border-0 bg-light mb-4">
             <?php
@@ -129,6 +138,10 @@ require_once('../includes/head.php');
                     } else if ((isset($_POST['affiliation']) && $_POST['affiliation'] == 'Student') && !validate_wmsu_email($_POST['email'], $_POST['affiliation'])) {
                     ?>
                         <p class="fs-7 text-primary m-0 ps-2">Student must use wmsu email.</p>
+                    <?php
+                    } else if ((isset($_POST['affiliation']) && $_POST['affiliation'] == 'Faculty') && !validate_wmsu_email($_POST['email'], $_POST['affiliation'])) {
+                    ?>
+                        <p class="fs-7 text-primary m-0 ps-2">Faculty must use wmsu email.</p>
                     <?php
                     }
                     ?>
