@@ -25,12 +25,13 @@ class Account
         $this->db = new Database();
     }
 
-    function sign_in_account(){
+    function sign_in_account()
+    {
         $sql = "SELECT * FROM account WHERE email = :email LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':email', $this->email);
 
-        if ($query->execute()){
+        if ($query->execute()) {
             $accountData = $query->fetch(PDO::FETCH_ASSOC);
 
             if ($accountData && password_verify($this->password, $accountData['password'])) {
@@ -72,26 +73,41 @@ class Account
         }
     }
 
-    function verify(){
+    function verify()
+    {
         $sql = "UPDATE account SET verification_status = :verification_status WHERE account_id = :account_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':verification_status', $this->verification_status);
         $query->bindParam(':account_id', $this->account_id);
 
-        if($query->execute()){
+        if ($query->execute()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    function is_email_exist(){
+    function is_email_exist()
+    {
         $sql = "SELECT * FROM account WHERE email = :email;";
-        $query=$this->db->connect()->prepare($sql);
+        $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':email', $this->email);
-        if($query->execute()){
-            if($query->rowCount()>0){
+        if ($query->execute()) {
+            if ($query->rowCount() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function check_for_admin($user_role)
+    {
+        $sql = "SELECT * FROM account WHERE user_role = :user_role;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':user_role', $user_role);
+        if ($query->execute()) {
+            if ($query->rowCount() > 0) {
                 return true;
             }
         }

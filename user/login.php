@@ -22,9 +22,9 @@ if (isset($_POST['login'])) {
         if ($_SESSION['user_role'] == 2) {
             header('location: ../index.php');
         } else if ($_SESSION['user_role'] == 1) {
-            // header to moderator index
-        } else if ($_SESSIOn['user_role'] == 0) {
-            // header to admin index
+            header('location: ../index.php');
+        } else if ($_SESSION['user_role'] == 0) {
+            header('location: ../index.php');
         }
     } else {
         $error = 'Login failed: Invalid email or password.';

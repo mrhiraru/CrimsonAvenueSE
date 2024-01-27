@@ -1,15 +1,17 @@
 <?php
 session_start();
 
-if (isset($_SESSION['user_role'])) {
-    header('location: ../index.php');
-}
-
 require_once("../classes/account.class.php");
 require_once("../tools/functions.php");
 
+$account = new Account();
+
+if (isset($_SESSION['user_role']) || $account->check_for_admin(0)) {
+    header('location: ../index.php');
+}
+
 if (isset($_POST['signup'])) {
-    $account = new Account();
+
 
     $account->email = htmlentities($_POST['email']);
     $account->password = htmlentities($_POST['password']);
@@ -30,13 +32,10 @@ if (isset($_POST['signup'])) {
     } else {
         $account->gender = '';
     }
-    if ($account->affiliation == 'Non-student') {
-        $account->college = 'No College';
-        $account->department = 'No Department';
-    } else {
-        $account->college = htmlentities($_POST['college']);
-        $account->department = htmlentities($_POST['department']);
-    }
+
+    $account->college = htmlentities($_POST['college']);
+    $account->department = htmlentities($_POST['department']);
+
     $account->contact = htmlentities($_POST['contact']);
     $account->user_role = 0; // user_role (0 = admin, 1 = mod, 2 = user)
 
@@ -99,7 +98,7 @@ require_once('../includes/head.php');
                             <div class="modal-body">
                                 <div class="row d-flex">
                                     <div class="col-12 text-center">
-                                        <a href="./login.php" class="text-decoration-none text-dark">
+                                        <a href="../user/login.php" class="text-decoration-none text-dark">
                                             <p class="m-0">Account is successfully created!</br><span class="text-primary fw-bold">Login to verify your account</span>.</p>
                                         </a>
                                     </div>
@@ -186,14 +185,6 @@ require_once('../includes/head.php');
                                                                                                                                                     } ?>>
                         <label class="form-check-label" for="faculty">
                             Faculty
-                        </label>
-                    </div>
-                    <div class="m-0 p-0 col-auto">
-                        <input class="form-check-input" type="radio" name="affiliation" id="non-student" onclick="affiliation_effect()" value="Non-student" <?php if (isset($_POST['affiliation']) && $_POST['affiliation'] == 'Non-student') {
-                                                                                                                                                                echo 'checked';
-                                                                                                                                                            } ?>>
-                        <label class="form-check-label" for="non-student">
-                            Non-student
                         </label>
                     </div>
                     <?php
@@ -335,7 +326,6 @@ require_once('../includes/head.php');
                     <input type="submit" class="btn btn-primary w-100 fw-semibold" name="signup" value="Sign up">
                 </div>
             </form>
-            <p class="fs-7 text-dark m-0">Already have an account? <a href="./login.php" class="text-primary text-decoration-none fw-semibold">Login Here</a>.</p>
         </div>
     </main>
     <?php
