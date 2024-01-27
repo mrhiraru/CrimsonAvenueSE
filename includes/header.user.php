@@ -17,14 +17,33 @@
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end me-2 mt-2">
-                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 <?= $user_profile ?> " href="#"><?= $_SESSION['name'] ?></a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 <?= $index_page ?>" href="#">Login</a></li>
-                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="#">Signup</a></li>
-                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="#">Admin Panel</a></li>
-                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="#">Moderator Panel</a></li>
+                        <?php
+                        if (isset($_SESSION['name'])) {
+                        ?>
+                            <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 <?= $user_profile ?> " href="#"><?= $_SESSION['name'] ?></a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <?php
+                            if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 0) {
+                            ?>
+                                <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="#">Admin Panel</a></li>
+                            <?php
+                            } else if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1) {
+                            ?>
+                                <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="#">Moderator Panel</a></li>
+                            <?php
+                            }
+                            ?>
+                            <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../logout.php">Log Out</a></li>
+                        <?php
+                        } else {
+                        ?>
+                            <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../user/login.php">Login</a></li>
+                            <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../user/signup.php">Signup</a></li>
+                        <?php
+                        }
+                        ?>
                     </ul>
                 </div>
                 <button class="navbar-toggler mx-3 p-0 fs-3 text-light border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,30 +60,42 @@
                         <ul class="navbar-nav m-auto mb-2 mb-lg-0 p-0 w-100 d-flex justify-content-evenly">
                             <!-- user link start -->
                             <hr class="d-md-block d-lg-none text-primary opacity-100 m-0">
-                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $index_page ?>" href="../"><?= $_SESSION['name'] ?></a>
-                            </li>
-                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $product_page ?>" href="../">Other Link</a>
-                            </li>
-                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $store_page ?>" href="../">Other Link</a>
-                            </li>
-                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $message_page ?>" href="../">Other Link</a>
-                            </li>
-                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../user/login.php">Login</a>
-                            </li>
-                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../user/signup.php">Sign up</a>
-                            </li>
-                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../admin/">Admin Panel</a>
-                            </li>
-                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../moderator/">Moderator Panel</a>
-                            </li>
+                            <?php
+                            if (isset($_SESSION['name'])) {
+                            ?>
+                                <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                    <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $index_page ?>" href="../"><?= $_SESSION['name'] ?></a>
+                                </li>
+                                <?php
+                                if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 0) {
+                                ?>
+                                    <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                        <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../admin/">Admin Panel</a>
+                                    </li>
+                                <?php
+                                } else if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1) {
+                                ?>
+                                    <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                        <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../moderator/">Moderator Panel</a>
+                                    </li>
+                                <?php
+                                }
+                                ?>
+                                <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                    <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../logout.php">Log Out</a>
+                                </li>
+                            <?php
+                            } else {
+                            ?>
+                                <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                    <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../user/login.php">Login</a>
+                                </li>
+                                <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                    <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../user/signup.php">Sign up</a>
+                                </li>
+                            <?php
+                            }
+                            ?>
                             <hr class="d-md-block d-lg-none text-primary opacity-100 m-0">
                             <!-- user link end -->
                             <li class="nav-item text-lg-center text-start">
