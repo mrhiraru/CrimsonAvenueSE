@@ -6,7 +6,7 @@ if (isset($_SESSION['user_role'])) {
 }
 
 require_once("./classes/account.class.php");
-require_once("./tools/functions.php");
+require_once("../tools/functions.php");
 
 if (isset($_POST['signup'])) {
     $account = new Account();
