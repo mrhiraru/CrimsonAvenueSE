@@ -5,7 +5,7 @@ if (isset($_SESSION['user_role'])) {
     header('location: ../index.php');
 }
 
-require_once("./classes/account.class.php");
+require_once("../classes/account.class.php");
 require_once("../tools/functions.php");
 
 if (isset($_POST['login'])) {
