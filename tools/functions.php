@@ -32,7 +32,7 @@ function validate_email($email)
 function validate_wmsu_email($email, $affiliation)
 {
     // Check if the affiliation is 'Student'
-    if ($affiliation == 'Student') {
+    if ($affiliation == 'Student' || $affiliation == 'Faculty') {
         // Validate the email format
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $pattern = '/@wmsu\.edu\.ph$/i';
@@ -47,7 +47,7 @@ function validate_wmsu_email($email, $affiliation)
             return false; // Invalid email format
         }
     } else {
-        // For 'Non-student' and 'Faculty', no need to check the pattern, return true
+        // For 'Non-student', no need to check the pattern, return true
         return true;
     }
 }

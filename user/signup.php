@@ -130,7 +130,12 @@ require_once('../includes/head.php');
                     ?>
                         <p class="fs-7 text-primary m-0 ps-2">Student must use wmsu email.</p>
                     <?php
+                    } else if ((isset($_POST['affiliation']) && $_POST['affiliation'] == 'Faculty') && !validate_wmsu_email($_POST['email'], $_POST['affiliation'])) {
+                    ?>
+                        <p class="fs-7 text-primary m-0 ps-2">Faculty must use wmsu email.</p>
+                    <?php
                     }
+                    ?>
                     ?>
 
                 </div>
