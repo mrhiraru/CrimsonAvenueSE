@@ -90,6 +90,15 @@ body {
     background-color: whitesmoke;
 }
 
+/* header.user css */
+.header-top {
+    height: 50px !important ;
+}
+
+.header-bottom {
+    height: 30px !important;
+}
+
 /* user module css */
 
 .custom-size {

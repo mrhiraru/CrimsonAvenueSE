@@ -9,7 +9,24 @@
                 <button class="btn mx-3 p-0 fs-4 text-light border-0" type="button" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
                 <a href="../notification.php" class="mx-3 text-light"><i class="fa-solid fa-bell"></i></a>
                 <a href="../cart.php" class="mx-3 text-light"><i class="fa-solid fa-cart-shopping"></i></a>
-                <a href="../user/index.php" class="mx-3 text-light"><i class="fa-solid fa-user"></i></a>
+
+                <div class="dropdown d-none d-lg-block">
+                    <button class="mx-3 text-light dropdown-toggle border-0 bg-tertiary" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user"></i>
+                        <!-- <img src="../images/main/profilepic.png" alt="" width="40" height="40" class="d-inline-block me-2"> -->
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end me-2">
+                        <li><a class="dropdown-item" href="#"><?= $_SESSION['name'] ?></a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Login</a></li>
+                        <li><a class="dropdown-item" href="#">Signup</a></li>
+                        <li><a class="dropdown-item" href="#">Admin Panel</a></li>
+                        <li><a class="dropdown-item" href="#">Moderator Panel</a></li>
+                    </ul>
+                </div>
                 <button class="navbar-toggler mx-3 p-0 fs-3 text-light border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa-solid fa-bars"></i>
                 </button>
@@ -22,6 +39,34 @@
                     </div>
                     <div class="offcanvas-body p-0 bg-white ">
                         <ul class="navbar-nav m-auto mb-2 mb-lg-0 p-0 w-100 d-flex justify-content-evenly">
+                            <!-- user link start -->
+                            <hr class="d-md-block d-lg-none text-primary opacity-100 m-0">
+                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $index_page ?>" href="../"><?= $_SESSION['name'] ?></a>
+                            </li>
+                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $product_page ?>" href="../">Other Link</a>
+                            </li>
+                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $store_page ?>" href="../">Other Link</a>
+                            </li>
+                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $message_page ?>" href="../">Other Link</a>
+                            </li>
+                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../user/login.php">Login</a>
+                            </li>
+                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../user/signup.php">Sign up</a>
+                            </li>
+                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../admin/">Admin Panel</a>
+                            </li>
+                            <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../moderator/">Moderator Panel</a>
+                            </li>
+                            <hr class="d-md-block d-lg-none text-primary opacity-100 m-0">
+                            <!-- user link end -->
                             <li class="nav-item text-lg-center text-start">
                                 <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $index_page ?>" href="../">Home</a>
                             </li>
@@ -33,18 +78,6 @@
                             </li>
                             <li class="nav-item text-lg-center text-start">
                                 <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $message_page ?>" href="../message-inbox.php">Messages</a>
-                            </li>
-                            <li class="nav-item text-lg-center text-start">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../admin/">Admin Panel</a>
-                            </li>
-                            <li class="nav-item text-lg-center text-start">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../moderator/">Moderator Panel</a>
-                            </li>
-                            <li class="nav-item text-lg-center text-start">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../user/login.php">Login</a>
-                            </li>
-                            <li class="nav-item text-lg-center text-start">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../user/signup.php">Sign up</a>
                             </li>
                         </ul>
                     </div>
