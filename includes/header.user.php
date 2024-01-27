@@ -13,7 +13,7 @@
                 <div class="dropdown d-none d-lg-block">
                     <button class="mx-3 text-light dropdown-toggle border-0 bg-tertiary" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-user"></i>
-                        <!-- <img src="../images/main/profilepic.png" alt="" width="40" height="40" class="d-inline-block me-2"> -->
+                        <!-- <img src="../images/main/profilepic.png" alt="" width="40" height="40" class="d-inline-block rounded-5"> -->
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end me-2">
