@@ -13,14 +13,12 @@
                     <button class="mx-3 text-light dropdown-toggle border-0 bg-tertiary d-flex align-items-center justify-content-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="../images/main/profilepic.png" alt="" width="38" height="38" class="d-inline rounded-5 border border-light border-2 me-2">
 
-                        <div class="row m-0 p-0">
-                            <div class="col-12 m-0 p-0">
-                                <a class="dropdown-item text-light fs-6 fw-bold p-0 m-0" href="#"><?= $_SESSION['name'] ?></a>
+                        <div class="row d-flex flex-column m-0 pe-1 h-auto">
+                            <div class="col-auto m-0 p-0 h-auto">
+                                <a class="text-light fs-6 fw-bold p-0 m-0 text-decoration-none" href="#"><?= $_SESSION['name'] ?> </a>
                             </div>
-                            <div class="col-12 m-0 p-0">
-                                <p class="text-light fs-8 fw-bold p-0 m-0">
-                                    Administrator
-                                </p>
+                            <div class="col-auto m-0 p-0 h-auto">
+                                <p class="text-light fs-7 fw-bold p-0 m-0">Administrator</p>
                             </div>
                         </div>
                     </button>
