@@ -75,6 +75,7 @@
     font-size: .70rem;
 }
 
+
 /* buttons */
 
 .btn-primary {
@@ -112,6 +113,9 @@ body {
 
 /* header.admin css  */
 
+.w-custom {
+    height: max-content;
+}
 
 /* user module css */
 
