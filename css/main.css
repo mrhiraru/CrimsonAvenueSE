@@ -85,6 +85,12 @@
     height: 38px;
 }
 
+/* borders  */
+
+.border-light {
+    border-color: var(--light);
+}
+
 /* html tags */
 
 body {
