@@ -12,19 +12,19 @@
                 <div class="dropdown">
                     <button class="mx-3 text-light dropdown-toggle border-0 bg-tertiary d-flex align-items-center justify-content-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="../images/main/profilepic.png" alt="" width="38" height="38" class="d-inline rounded-5 border border-light border-2 me-2">
-                        <div class="m-0 lh-1 ">
+                        <div class="m-0 lh-sm ">
                             <div class="align-bottom">
                                 <p class="text-light fs-6 fw-bold p-0 m-0" href="#"><?= $_SESSION['name'] ?> </p>
                             </div>
-                            <hr class="m-0 p-0 opacity-100 text-light">
+                            <hr class="m-0 p-0 opacity-100 border-2">
                             <div class="align-top">
-                                <p class="text-light fs-7 fw-bold p-0 m-0">Administrator</p>
+                                <p class="text-light fs-8 fw-bold p-0 m-0" style="font-size: .75rem;">Administrator</p>
                             </div>
                         </div>
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end me-2 mt-2">
-                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../index.php">Exit Admin Panel</a></li>
+                        <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../index.php">Exit Admin</a></li>
                         <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../logout.php">Log Out</a></li>
                     </ul>
                 </div>
