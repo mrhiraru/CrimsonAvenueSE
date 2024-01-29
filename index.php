@@ -30,14 +30,14 @@ require_once('./includes/head.php');
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
                 <div class="carousel-inner rounded">
-                    <div class="carousel-item active" data-bs-interval="5000">
-                        <img src="./images/main/ye-background.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-item carousel-custom active" data-bs-interval="5000">
+                        <img src="./images/main/ye-background.jpg" class="d-block img-custom" alt="...">
                     </div>
-                    <div class="carousel-item" data-bs-interval="5000">
-                        <img src="./images/main/ye-background.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-item carousel-custom" data-bs-interval="5000">
+                        <img src="./images/main/ye-background.jpg" class="d-block img-custom" alt="...">
                     </div>
-                    <div class="carousel-item" data-bs-interval="5000">
-                        <img src="./images/main/ye-background.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-item carousel-custom" data-bs-interval="5000">
+                        <img src="./images/main/Screenshot 2024-01-29 225224.png" class="d-block img-custom" alt="...">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">

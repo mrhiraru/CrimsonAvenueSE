@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 
@@ -23,13 +23,75 @@ require_once('../includes/head.php');
                 <?php
                 require_once('../includes/sidepanel.admin.php')
                 ?>
-                <main class="col-md-9 pt-3 ms-sm-auto col-lg-10 px-md-4">
+                <main class="col-md-9 pt-4 ms-sm-auto col-lg-10 px-md-4">
                     <div class="row">
                         <div class="col-12">
-                            <div class="container-fluid mb-3 p-3 bg-white shadow rounded">
-                                <div class="row h-auto mb-4 d-flex justify-content-center">
-                                    <h2 class="h2 text-primary fw-bold">Settings</h2>
-                                    <hr class="text-secondary">
+                            <div class="container-fluid mb-3 p-0 bg-white shadow rounded">
+                                <div class="row h-auto m-0 mb-4 d-flex justify-content-center">
+                                    <h2 class="h2 mb-3 mt-3 ms-3 lh-1 text-primary fw-bold">Settings</h2>
+                                    <!-- accordian settings -->
+                                    <div class="accordion accordion-flush p-0 border-0" id="accordionExample">
+                                        <div class="accordion-item border-0">
+                                            <h2 class="accordion-header" id="headingOne">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                    <p class="m-0 p-0 text-dark fw-semibold">Semester & School Year</p>
+                                                </button>
+                                            </h2>
+                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                <hr class="m-0 text-dark opacity-25 ">
+                                                <div class="accordion-body">
+                                                    <form method="post" action="" class="col-12">
+                                                        <div class="row">
+                                                            <div class="mb-2 col-4">
+                                                                <label for="sem" class="form-label">Semester:</label>
+                                                                <input type="text" class="form-control" id="sem" name="sem" required>
+                                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                                            </div>
+                                                            <div class="mb-2 col-4">
+                                                                <label for="sdate" class="form-label">Start Date:</label>
+                                                                <input type="datetime-local" class="form-control" id="sdate" name="sdate" required>
+                                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                                            </div>
+                                                            <div class="mb-2 col-4">
+                                                                <label for="edate" class="form-label">End Date:</label>
+                                                                <input type="datetime-local" class="form-control" id="edate" name="edate" required>
+                                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                                            </div>
+                                                            <div class="mt-2 col-12 text-end">
+                                                                <!-- change back to submit  -->
+                                                                <input type="submit" class="btn btn-primary " value="Save">
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <hr class="m-0 text-dark opacity-25 ">
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item border-0 rounded-0">
+                                            <h2 class="accordion-header" id="headingTwo">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                <p class="m-0 p-0 text-dark fw-semibold">College</p>
+                                                </button>
+                                            </h2>
+                                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item border-0 rounded-0">
+                                            <h2 class="accordion-header" id="headingThree">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                    Accordion Item #3
+                                                </button>
+                                            </h2>
+                                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!-- Start content -->
                                     <div class="col-12" id="semester">
                                         <hr class="text-secondary d-none">
@@ -202,85 +264,6 @@ require_once('../includes/head.php');
             </div>
         </div>
     </main>
-    <!-- Sem Created Modal -->
-    <div class=" modal fade" id="addsSemModal" tabindex="-1" aria-labelledby="addsSemModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <form method="post" action="" class="row d-flex">
-                        <div class=" col-12 text-center">
-                            <button type="button" class="btn border-0 " data-bs-dismiss="modal" aria-label="Close"><span class="text-primary fw-semibold ">Semester and School Year is successfully added!</span><br>Click to Continue</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Sem Created Modal -->
-    <!-- College Created Modal -->
-    <div class=" modal fade" id="addsColModal" tabindex="-1" aria-labelledby="addsColModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <form method="post" action="" class="row d-flex">
-                        <div class=" col-12 text-center">
-                            <button type="button" class="btn border-0 " data-bs-dismiss="modal" aria-label="Close"><span class="text-primary fw-semibold ">College is successfully added!</span><br>Click to Continue</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- College Created Modal -->
-    <!-- Department Created Modal -->
-    <div class=" modal fade" id="addsDeptModal" tabindex="-1" aria-labelledby="addsDeptModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <form method="post" action="" class="row d-flex">
-                        <div class=" col-12 text-center">
-                            <button type="button" class="btn border-0 " data-bs-dismiss="modal" aria-label="Close"><span class="text-primary fw-semibold ">Department is successfully added!</span><br>Click to Continue</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Department Created Modal -->
-    <!-- Category Created Modal -->
-    <div class=" modal fade" id="addsCatModal" tabindex="-1" aria-labelledby="addsCatModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <form method="post" action="" class="row d-flex">
-                        <div class=" col-12 text-center">
-                            <button type="button" class="btn border-0 " data-bs-dismiss="modal" aria-label="Close"><span class="text-primary fw-semibold ">Category is successfully added!</span><br>Click to Continue</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Category Created Modal -->
-    <!-- Transfer Created Modal -->
-    <div class=" modal fade" id="transferModal" tabindex="-1" aria-labelledby="transferModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <form method="post" action="" class="row d-flex">
-                        <div class=" col-12 text-center">
-                        <h6 class="h6 text-primary fw-semibold">Are you sure you want to transfer administrator privileges to <span class="text-secondary">[Name of New Admin]</span>?</h6>
-                        </div>
-                        <div class=" col-12 text-center">
-                            <button type="button" class="btn btn-success brand-bg-color" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                            <button type="submit" class="btn btn-danger brand-bg-color" name="transfer">Confirm</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Transfer Created Modal -->
     <?php
     require_once('../includes/js.php');
     ?>
