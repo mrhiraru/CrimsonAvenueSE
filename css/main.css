@@ -181,11 +181,12 @@ body {
     transition: .3s ease;
 }
 
-/* accordion css */
+/* list group item css */
 
-.accordion-button:not(.collapsed) {
-    background-color: transparent !important;
-    box-shadow: none !important;
+.list-group-item.active {
+    background-color: white !important;
+    border-bottom: solid 1px var(--primary) !important;
+    border-top: solid 1px var(--primary) !important;
 }
 
 /* user module css */

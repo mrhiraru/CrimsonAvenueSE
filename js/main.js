@@ -3,6 +3,16 @@ function validateinput(input) {
   input.value = input.value.replace(/[^0-9]/g, "");
 }
 
+function validateinputsem(input) {
+  // Remove any non-digit characters
+  input.value = input.value.replace(/[^1-3]/g, "");
+
+  // Ensure only one digit is allowed
+  if (input.value.length > 1) {
+    input.value = input.value.slice(0, 1);
+  }
+}
+
 // show college and department fields
 function affiliation_effect() {
   var affiliation = document.querySelector(
@@ -26,4 +36,3 @@ document
   .forEach(function (radio) {
     radio.addEventListener("click", affiliation_effect);
   });
-
