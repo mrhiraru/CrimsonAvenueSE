@@ -7,7 +7,9 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../index.php');
 }
 
-if 
+if (isset($_POST['save-sem'])){
+    
+}
 
 ?>
 
@@ -67,7 +69,7 @@ require_once('../includes/head.php');
                                                             </div>
                                                             <div class="mt-2 col-md-12 col-lg-3 text-end">
                                                                 <br class="d-none d-lg-block ">
-                                                                <input type="submit" class="btn btn-primary " value="Save">
+                                                                <input type="submit" class="btn btn-primary" name="save-sem" value="Save">
                                                             </div>
                                                         </div>
                                                     </form>
