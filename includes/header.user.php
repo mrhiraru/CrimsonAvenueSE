@@ -27,7 +27,7 @@
                             <?php
                             if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 0) {
                             ?>
-                                <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="#">Admin Panel</a></li>
+                                <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../admin/index.php">Admin Panel</a></li>
                             <?php
                             } else if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1) {
                             ?>
