@@ -81,3 +81,14 @@ function generate_code()
     $code = random_int(100000, 999999);
     return $code;
 }
+
+function check_date($sdate, $edate) {
+    $start = htmlentities($sdate);
+    $end = htmlentities($edate);
+
+    if ($start < $end) {
+        return true;
+    } else {
+        return false;
+    }
+}
