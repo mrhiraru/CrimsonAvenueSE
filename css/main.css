@@ -5,7 +5,8 @@
     --light: #EDF2F4;
     --dark: #2B2D42;
 
-    --primary-hover: #a7182a;;
+    --primary-hover: #a7182a;
+    --whitesmoke-hover:  rgb(197, 197, 197);
 }
 
 * {
@@ -25,6 +26,10 @@ input:focus, input:active, select:focus, select:active, button:focus, button:act
 
 .text-primary {
     color: var(--primary) !important;
+}
+
+.text-primary-hover {
+    color: var(--primary-hover) !important;
 }
 
 .text-secondary {
@@ -114,14 +119,15 @@ input:focus, input:active, select:focus, select:active, button:focus, button:act
 }
 
 .btn-cancel {
-    background-color: transparent;
-    border: var(--dark) 1px solid;
+    background-color: whitesmoke;
+    border: var(--primary-hover) 1px solid;
     height: 38px;
 }
 
 .btn-cancel:hover {
-    background-color: var(--light);
-    border: var(--dark) 1px solid;
+    background-color:  white;
+    color: var(--primary) !important;
+    border: var(--primary) 1px solid;
     height: 38px;
 }
 

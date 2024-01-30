@@ -157,7 +157,7 @@ require_once('../includes/head.php');
                                             </h2>
                                             <div id="collapseTwo" class="accordion-collapse collapse <?php if (isset($_POST['cancel-col']) || isset($_POST['save-col']) || isset($_GET['college-id'])) {
                                                                                                             echo 'show';
-                                                                                                        } ?>" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                                                                        } ?> bg-smoke" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                                 <hr class="m-0 text-dark opacity-25 ">
                                                 <div class="accordion-body m-0">
                                                     <form method="post" action="" class="col-12">
@@ -178,7 +178,7 @@ require_once('../includes/head.php');
                                                                 <?php
                                                                 if (isset($_GET['college-id']) && $_GET['college-id'] != 0) {
                                                                 ?>
-                                                                    <input type="submit" class="btn btn-cancel btn-settings-size" name="cancel-col" value="Cancel">
+                                                                    <input type="submit" class="btn btn-cancel btn-settings-size text-primary-hover" name="cancel-col" value="Cancel">
                                                                     <input type="submit" class="btn btn-primary btn-settings-size" name="save-col" value="Save">
                                                                 <?php
                                                                 } else {
