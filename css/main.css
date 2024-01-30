@@ -16,7 +16,7 @@
     font-size: 1em;
 }
 
-*:focus, *:active {
+input:focus, input:active, select:focus, select:active, button:focus, button:active {
     outline: none !important;
     box-shadow: none !important;
 }
@@ -181,8 +181,6 @@ body {
     background-color: transparent !important;
     box-shadow: none !important;
 }
-
-
 
 /* user module css */
 

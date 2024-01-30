@@ -1,6 +1,13 @@
 <?php
 session_start();
 
+if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
+    header('location: ./user/verify.php');
+} else if (isset($_SESSION['user_role']) && $_SESSION['user_role'] != 0) {
+    header('location: ../index.php');
+}
+
+if 
 
 ?>
 
@@ -29,7 +36,7 @@ require_once('../includes/head.php');
                             <div class="container-fluid mb-3 p-0 bg-white shadow rounded">
                                 <div class="row h-auto m-0 mb-4 d-flex justify-content-center">
                                     <h2 class="h2 mb-3 mt-3 ms-3 lh-1 text-primary fw-bold">Settings</h2>
-                                    <hr class="m-0 text-primary opacity-25 ">
+                                    <hr class="m-0 text-primary opacity-25">
                                     <!-- accordian settings -->
                                     <div class="accordion accordion-flush p-0 mb-3" id="accordionExample">
                                         <div class="accordion-item border-0">
