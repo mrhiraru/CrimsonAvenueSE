@@ -28,11 +28,24 @@ function affiliation_effect() {
     college_div.style.setProperty("display", "none", "important");
     department_div.style.setProperty("display", "none", "important");
   }
-}
-
+} 
 // Attach the function to the click event of the affiliation radio buttons
 document
   .querySelectorAll('input[name="affiliation"]')
   .forEach(function (radio) {
     radio.addEventListener("click", affiliation_effect);
   });
+
+
+
+// settings.college js
+
+document.getElementById('college-edit').onclick = function() {
+  var college_item = document.getElementById('college-item');
+  var college_save = document.getElementById('college-save');
+  var college_edit = document.getElementById('college-edit');
+
+  college_item.disabled = false;
+  college_save.style.setProperty('display', 'block', 'important');
+  college_edit.style.setProperty('display', 'none', 'important');
+}

@@ -181,6 +181,12 @@ body {
     transition: .3s ease;
 }
 
+/* input css */
+
+.form-control:disabled {
+    background-color: transparent !important;
+}
+
 /* list group item css */
 
 .list-group-item.active {

@@ -61,12 +61,31 @@ require_once('../includes/head.php');
                                                 }
                                                 ?>
                                             </div>
-                                            <div class="mt-2 col-md-4 text-end">
+                                            <div class="mt-2 col-md-4 text-end text-md-start ">
                                                 <br class="d-none d-md-block ">
                                                 <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
                                             </div>
                                         </div>
                                     </form>
+                                    <form method="post" action="" class="col-12 my-3">
+                                        <div class="row">
+                                            <div class="mb-2 col-md-8">
+                                                <input type="text" class="form-control" id="college-item" name="college-item" disabled value="dqweqweqw">
+                                                <?php
+                                                if (isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
+                                                ?>
+                                                    <p class="fs-7 text-primary m-0 ps-2">College name is required.</p>
+                                                <?php
+                                                }
+                                                ?>
+                                            </div>
+                                            <div class="col-md-4 text-end text-md-start">
+                                                <input type="submit" class="btn btn-primary btn-settings-size d-none" id="college-save" name="save" value="Save">
+                                                <button type="button" class="btn btn-primary btn-settings-size" id="college-edit">Edit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
 
                                 </div>
                             </div>
