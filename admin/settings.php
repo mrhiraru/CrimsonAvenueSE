@@ -64,130 +64,16 @@ require_once('../includes/head.php');
                             <div class="container-fluid mb-3 p-0 bg-white shadow rounded">
                                 <div class="row h-auto m-0 mb-4 d-flex justify-content-center">
                                     <h2 class="h2 mb-3 mt-3 ms-3 lh-1 text-primary fw-bold">Settings</h2>
-                                    <hr class="m-0 text-primary opacity-25">
+                                    <hr class="m-0 text-primary opacity-50">
                                     <!-- new design  -->
                                     <div class="list-group list-group-flush p-0">
                                         <a href="./settings.semester.php" class="list-group-item list-group-item-action text-dark fw-semibold">School Year and Semester</a>
                                         <a href="./settings.college.php" class="list-group-item list-group-item-action text-dark fw-semibold ">Colleges</a>
                                         <a href="./settings.department.php" class="list-group-item list-group-item-action text-dark fw-semibold ">Departments</a>
-                                        <a href="#" class="list-group-item list-group-item-action text-dark fw-semibold ">Moderators</a>
-                                        <a href="#" class="list-group-item list-group-item-action text-dark fw-semibold ">Transfer Administrator Privilege</a>
+                                        <a href="./settings.moderator.php" class="list-group-item list-group-item-action text-dark fw-semibold ">Moderators</a>
+                                        <a href="./settings.transfer.php" class="list-group-item list-group-item-action text-dark fw-semibold ">Transfer Administrator Privilege</a>
                                     </div>
-
-                                    <!-- accordian settings -->
-                                    <div class="accordion accordion-flush p-0 mb-3" id="accordionExample">
-                                        <div class="accordion-item border-0">
-                                            <h2 class="accordion-header" id="headingOne">
-
-                                                <div class="accordion-item border-0 rounded-0">
-                                                    <h2 class="accordion-header" id="headingFive">
-                                                        <button class="accordion-button <?php if (!isset($_GET['moderator-id'])) {
-                                                                                            echo 'collapsed';
-                                                                                        } ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="<?php if (!isset($_GET['moderator-id'])) {
-                                                                                                                                                                                    echo 'false';
-                                                                                                                                                                                } else {
-                                                                                                                                                                                    echo 'true';
-                                                                                                                                                                                } ?>" aria-controls="collapseFive">
-                                                            <p class="m-0 p-0 text-dark fw-semibold">Assign Moderator</p>
-                                                        </button>
-                                                    </h2>
-                                                    <div id="collapseFive" class="accordion-collapse collapse <?php if (isset($_GET['moderator-id'])) {
-                                                                                                                    echo 'show';
-                                                                                                                } ?>" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
-                                                        <hr class="m-0 text-dark opacity-25 ">
-                                                        <div class="accordion-body m-0">
-                                                            <form method="post" action="" class="col-12">
-                                                                <div class="row">
-                                                                    <div class="mb-2 col-md-6 col-lg-4"><label for="select-college" class="form-label">Select College:</label>
-                                                                        <select name="select-college" id="select-college" class="form-select">
-                                                                            <option value=""></option>
-                                                                            <option value="College of Agriculture">College of Agriculture</option>\
-                                                                        </select>
-                                                                        <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                                    </div>
-                                                                    <div class="mb-2 col-md-6 col-lg-4"><label for="select-mod" class="form-label">Select Moderator:</label>
-                                                                        <select name="select-mod" id="select-mod" class="form-select">
-                                                                            <option value=""></option>
-                                                                            <option value="Moderator value">Name of the moderator</option>\
-                                                                        </select>
-                                                                        <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                                    </div>
-                                                                    <div class="mb-4 mt-2 col-lg-4 text-end">
-                                                                        <br class="d-none d-lg-block ">
-                                                                        <?php
-                                                                        if (isset($_GET['moderator-id']) && $_GET['moderator-id'] != 0) {
-                                                                        ?>
-                                                                            <a href="?moderator-id=0" class="btn btn-cancel btn-settings-size">Cancel</a>
-                                                                            <input type="submit" class="btn btn-primary btn-settings-size" name="save" value="Save">
-                                                                        <?php
-                                                                        } else {
-                                                                        ?>
-                                                                            <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
-                                                                        <?php
-                                                                        }
-                                                                        ?>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-                                                                <div class="col">
-                                                                    <div class="card p-2">
-                                                                        <div class="card-body row m-0 py-1 px-2">
-                                                                            <div class="col-12 p-0 fw-semibold text-nowrap overflow-hidden ">
-                                                                                Moderator ASAKLHSAHSAHLHASLHALKSa
-                                                                            </div>
-                                                                            <div class="col-12 p-0 d-flex flex-row justify-content-end">
-                                                                                <a href="?moderator-id=1" class="text-dark text-decoration-none pe-3">Edit</a>
-                                                                                <form action="" method="post">
-                                                                                    <input type="submit" class="text-primary border-0 bg-white" value="Delete">
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <hr class="m-0 text-dark opacity-25 ">
-                                                    </div>
-                                                </div>
-                                                <div class="accordion-item border-0 rounded-0">
-                                                    <h2 class="accordion-header" id="headingFour">
-                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                                            <p class="m-0 p-0 text-dark fw-semibold">Transfer Administrator Privilege</p>
-                                                        </button>
-                                                    </h2>
-                                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                                        <hr class="m-0 text-dark opacity-25 ">
-                                                        <div class="accordion-body m-0">
-                                                            <form method="post" action="" class="col-12">
-                                                                <div class="row">
-                                                                    <div class="mb-2 col-md-6 col-lg-4">
-                                                                        <label for="newadmin" class="form-label">New Administrator:</label>
-                                                                        <input type="text" class="form-control" id="newadmin" name="newadmin" list="usernames" required>
-                                                                        <datalist id="usernames">
-                                                                            <option value="Franklin Oliveros">
-                                                                            <option value="Hilal Abdulajid">
-                                                                            <option value="Wilfred Borjal">
-                                                                        </datalist>
-                                                                        <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                                    </div>
-                                                                    <div class="mb-2 col-md-6 col-lg-4">
-                                                                        <label for="password" class="form-label">Enter your Password:</label>
-                                                                        <input type="text" class="form-control" id="password" name="password" required>
-                                                                        <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                                    </div>
-                                                                    <div class="mb-4 mt-2 col-lg-4 text-end">
-                                                                        <br class="d-none d-lg-block ">
-                                                                        <input type="submit" class="btn btn-primary " value="Save">
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                        <hr class="m-0 text-dark opacity-25 ">
-                                                    </div>
-                                                </div>
-                                        </div>
-                                    </div>
+                                    <hr class="m-0 text-primary opacity-50 mb-3">
                                 </div>
                             </div>
                         </div>

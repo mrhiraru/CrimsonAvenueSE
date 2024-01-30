@@ -8,7 +8,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/college.class.php');
+require_once('../classes/department.class.php');
 
 if (isset($_POST['add'])) {
     $department = new Department();
@@ -41,14 +41,13 @@ require_once('../includes/head.php');
                         <div class="col-12">
                             <div class="container-fluid mb-3 p-0 bg-white shadow rounded">
                                 <div class="row h-auto m-0 mb-4 d-flex justify-content-center">
-                                    <h2 class="h2 mb-3 mt-3 ms-3 lh-1 text-primary fw-bold">Settings</h2>
-                                    <hr class="m-0 text-primary opacity-25">
-                                    <!-- new design  -->
-                                    <div class="list-group list-group-flush p-0 mb-2">
-                                        <a href="./settings.colleges.php" class="list-group-item list-group-item-action text-dark fw-semibold active disabled ">
-                                            Departments
+                                    <hr class="m-0 text-primary opacity-50 mt-3">
+                                    <div class="list-group list-group-flush p-0 col-12">
+                                        <a href="./settings.php" class="list-group-item list-group-item-action text-dark fw-semibold">
+                                            <i class="fa-solid fa-arrow-left"></i> Back
                                         </a>
                                     </div>
+                                    <hr class="m-0 text-primary opacity-50">
                                     <form method="post" action="" class="col-12 my-3">
                                         <div class="row">
                                             <div class="mb-2 col-md-6 col-lg-4">

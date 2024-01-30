@@ -8,10 +8,8 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/college.class.php');
 
 if (isset($_POST['add'])) {
-    $college = new College();
 }
 
 
@@ -50,20 +48,24 @@ require_once('../includes/head.php');
                                     <hr class="m-0 text-primary opacity-50">
                                     <form method="post" action="" class="col-12 my-3">
                                         <div class="row">
-                                            <div class="mb-2 col-md-8">
-                                                <label for="col-name" class="form-label">College Name:</label>
-                                                <input type="text" class="form-control" id="col-name" name="col-name">
-                                                <?php
-                                                if (isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
-                                                ?>
-                                                    <p class="fs-7 text-primary m-0 ps-2">College name is required.</p>
-                                                <?php
-                                                }
-                                                ?>
+                                            <div class="mb-2 col-md-6 col-lg-4">
+                                                <label for="newadmin" class="form-label">New Administrator:</label>
+                                                <input type="text" class="form-control" id="newadmin" name="newadmin" list="usernames" required>
+                                                <datalist id="usernames">
+                                                    <option value="Franklin Oliveros">
+                                                    <option value="Hilal Abdulajid">
+                                                    <option value="Wilfred Borjal">
+                                                </datalist>
+                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
                                             </div>
-                                            <div class="mt-2 col-md-4 text-end">
-                                                <br class="d-none d-md-block ">
-                                                <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
+                                            <div class="mb-2 col-md-6 col-lg-4">
+                                                <label for="password" class="form-label">Enter your Password:</label>
+                                                <input type="text" class="form-control" id="password" name="password" required>
+                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                            </div>
+                                            <div class="mt-2 col-lg-4 text-end">
+                                                <br class="d-none d-lg-block ">
+                                                <input type="submit" class="btn btn-primary btn-settings-size" value="Save">
                                             </div>
                                         </div>
                                     </form>

@@ -60,14 +60,13 @@ require_once('../includes/head.php');
                         <div class="col-12">
                             <div class="container-fluid mb-3 p-0 bg-white shadow rounded">
                                 <div class="row h-auto m-0 mb-4 d-flex justify-content-center">
-                                    <h2 class="h2 mb-3 mt-3 ms-3 lh-1 text-primary fw-bold">Settings</h2>
-                                    <hr class="m-0 text-primary opacity-25">
-                                    <!-- new design  -->
-                                    <div class="list-group list-group-flush p-0">
-                                        <a href="./settings.semester.php" class="list-group-item list-group-item-action text-dark fw-semibold active disabled ">
-                                            School Year and Semester
+                                    <hr class="m-0 text-primary opacity-50 mt-3">
+                                    <div class="list-group list-group-flush p-0 col-12">
+                                        <a href="./settings.php" class="list-group-item list-group-item-action text-dark fw-semibold">
+                                            <i class="fa-solid fa-arrow-left"></i> Back
                                         </a>
                                     </div>
+                                    <hr class="m-0 text-primary opacity-50">
                                     <form method="post" action="" class="col-12 my-3">
                                         <div class="row">
                                             <div class="mb-2 col-md-6">
@@ -107,8 +106,8 @@ require_once('../includes/head.php');
                                             <div class="mb-2 col-md-6">
                                                 <label for="sem" class="form-label">Semester:</label>
                                                 <input type="number" min="1" max="3" pattern="[1-3]" class="form-control" id="sem" name="sem" oninput="validateinputsem(this)" value="<?php if (isset($_POST['sem'])) {
-                                                                                                                                                            echo $_POST['sem'];
-                                                                                                                                                        } ?>" required>
+                                                                                                                                                                                            echo $_POST['sem'];
+                                                                                                                                                                                        } ?>" required>
                                                 <?php
                                                 if (isset($_POST['sem']) && !validate_field($_POST['sem'])) {
                                                 ?>
@@ -118,7 +117,7 @@ require_once('../includes/head.php');
                                                 ?>
                                             </div>
                                             <div class="mt-2 col-md-6 text-end">
-                                                <br class="d-none d-lg-block ">
+                                                <br class="d-none d-md-block ">
                                                 <input type="submit" class="btn btn-primary btn-settings-size" name="save" value="Save">
                                             </div>
                                         </div>
