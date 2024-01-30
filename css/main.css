@@ -93,13 +93,13 @@
 
 .btn-primary {
     background-color: var(--primary);
-    border: var(--primary);
+    border: var(--primary) 1px solid;
     height: 38px;
 }
 
 .btn-primary:hover {
     background-color: var(--tertiary);
-    border: var(--primary-hover);
+    border: var(--primary-hover) 1px solid;
     height: 38px;
 }
 
@@ -111,6 +111,22 @@
 .btn-white:hover {
     background-color: whitesmoke !important;
     box-shadow: 0px 0px 10px whitesmoke !important;
+}
+
+.btn-cancel {
+    background-color: transparent;
+    border: var(--dark) 1px solid;
+    height: 38px;
+}
+
+.btn-cancel:hover {
+    background-color: var(--light);
+    border: var(--dark) 1px solid;
+    height: 38px;
+}
+
+.btn-settings-size {
+    width: 70px;
 }
 
 /* borders  */
@@ -152,6 +168,13 @@ body {
     height: 550px;
 }
 
+/* card css */
+
+.card:hover {
+    box-shadow: 0px 2px 5px var(--secondary);
+    transition: .3s ease;
+}
+
 /* accordion css */
 
 .accordion-button:not(.collapsed) {
@@ -168,6 +191,9 @@ body {
     min-width: 300px !important;
     min-height: 300px !important;
 }
+
+/* settings css */
+
 
 @media (max-width: 992px){
     .img-custom {

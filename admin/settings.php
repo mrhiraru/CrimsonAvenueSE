@@ -29,36 +29,37 @@ require_once('../includes/head.php');
                             <div class="container-fluid mb-3 p-0 bg-white shadow rounded">
                                 <div class="row h-auto m-0 mb-4 d-flex justify-content-center">
                                     <h2 class="h2 mb-3 mt-3 ms-3 lh-1 text-primary fw-bold">Settings</h2>
+                                    <hr class="m-0 text-primary opacity-25 ">
                                     <!-- accordian settings -->
-                                    <div class="accordion accordion-flush p-0 border-0" id="accordionExample">
+                                    <div class="accordion accordion-flush p-0 mb-3" id="accordionExample">
                                         <div class="accordion-item border-0">
                                             <h2 class="accordion-header" id="headingOne">
-                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                                     <p class="m-0 p-0 text-dark fw-semibold">Semester & School Year</p>
                                                 </button>
                                             </h2>
-                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                                 <hr class="m-0 text-dark opacity-25 ">
-                                                <div class="accordion-body">
+                                                <div class="accordion-body m-0">
                                                     <form method="post" action="" class="col-12">
                                                         <div class="row">
-                                                            <div class="mb-2 col-4">
+                                                            <div class="mb-2 col-md-4 col-lg-3">
                                                                 <label for="sem" class="form-label">Semester:</label>
                                                                 <input type="text" class="form-control" id="sem" name="sem" required>
                                                                 <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
                                                             </div>
-                                                            <div class="mb-2 col-4">
+                                                            <div class="mb-2 col-md-4 col-lg-3">
                                                                 <label for="sdate" class="form-label">Start Date:</label>
                                                                 <input type="datetime-local" class="form-control" id="sdate" name="sdate" required>
                                                                 <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
                                                             </div>
-                                                            <div class="mb-2 col-4">
+                                                            <div class="mb-2 col-md-4 col-lg-3">
                                                                 <label for="edate" class="form-label">End Date:</label>
                                                                 <input type="datetime-local" class="form-control" id="edate" name="edate" required>
                                                                 <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
                                                             </div>
-                                                            <div class="mt-2 col-12 text-end">
-                                                                <!-- change back to submit  -->
+                                                            <div class="mt-2 col-md-12 col-lg-3 text-end">
+                                                                <br class="d-none d-lg-block ">
                                                                 <input type="submit" class="btn btn-primary " value="Save">
                                                             </div>
                                                         </div>
@@ -69,193 +70,243 @@ require_once('../includes/head.php');
                                         </div>
                                         <div class="accordion-item border-0 rounded-0">
                                             <h2 class="accordion-header" id="headingTwo">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                <p class="m-0 p-0 text-dark fw-semibold">College</p>
+                                                <button class="accordion-button <?php if (!isset($_GET['college-id'])) {
+                                                                                    echo 'collapsed';
+                                                                                } ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="<?php if (!isset($_GET['college-id'])) {
+                                                                                                                                                                                echo 'false';
+                                                                                                                                                                            } else {
+                                                                                                                                                                                echo 'true';
+                                                                                                                                                                            } ?>" aria-controls="collapseTwo">
+                                                    <p class="m-0 p-0 text-dark fw-semibold">College</p>
                                                 </button>
                                             </h2>
-                                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                            <div id="collapseTwo" class="accordion-collapse collapse <?php if (isset($_GET['college-id'])) {
+                                                                                                            echo 'show';
+                                                                                                        } ?>" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                <hr class="m-0 text-dark opacity-25 ">
+                                                <div class="accordion-body m-0">
+                                                    <form method="post" action="" class="col-12">
+                                                        <div class="row">
+                                                            <div class="mb-2 col-lg-6">
+                                                                <label for="col-name" class="form-label">College Name:</label>
+                                                                <input type="text" class="form-control" id="col-name" name="col-name" required>
+                                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                                            </div>
+                                                            <div class="mb-4 mt-2 col-lg-6 text-end">
+                                                                <br class="d-none d-lg-block ">
+                                                                <?php
+                                                                if (isset($_GET['college-id']) && $_GET['college-id'] != 0) {
+                                                                ?>
+                                                                    <a href="?college-id=0" class="btn btn-cancel btn-settings-size">Cancel</a>
+                                                                    <input type="submit" class="btn btn-primary btn-settings-size" name="save" value="Save">
+                                                                <?php
+                                                                } else {
+                                                                ?>
+                                                                    <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                                                        <div class="col">
+                                                            <div class="card p-2">
+                                                                <div class="card-body row m-0 py-1 px-2">
+                                                                    <div class="col-12 p-0 fw-semibold text-nowrap overflow-hidden ">
+                                                                        College of Ewan ashdahsdkhaskhdkjahsdkjahsdjaskdhaks
+                                                                    </div>
+                                                                    <div class="col-12 p-0 d-flex flex-row justify-content-end">
+                                                                        <a href="?college-id=1" class="text-dark text-decoration-none pe-3">Edit</a>
+                                                                        <form action="" method="post">
+                                                                            <input type="submit" class="text-primary border-0 bg-white" value="Delete">
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <hr class="m-0 text-dark opacity-25 ">
                                             </div>
                                         </div>
                                         <div class="accordion-item border-0 rounded-0">
                                             <h2 class="accordion-header" id="headingThree">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                    Accordion Item #3
+                                                <button class="accordion-button <?php if (!isset($_GET['department-id'])) {
+                                                                                    echo 'collapsed';
+                                                                                } ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="<?php if (!isset($_GET['department-id'])) {
+                                                                                                                                                                                    echo 'false';
+                                                                                                                                                                                } else {
+                                                                                                                                                                                    echo 'true';
+                                                                                                                                                                                } ?>" aria-controls="collapseThree">
+                                                    <p class="m-0 p-0 text-dark fw-semibold">Department</p>
                                                 </button>
                                             </h2>
-                                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                            <div id="collapseThree" class="accordion-collapse collapse <?php if (isset($_GET['department-id'])) {
+                                                                                                            echo 'show';
+                                                                                                        } ?>" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                                <hr class="m-0 text-dark opacity-25 ">
+                                                <div class="accordion-body m-0">
+                                                    <form method="post" action="" class="col-12">
+                                                        <div class="row">
+                                                            <div class="mb-2 col-md-6 col-lg-4">
+                                                                <label for="col-name" class="form-label">Department Name:</label>
+                                                                <input type="text" class="form-control" id="col-name" name="col-name" required>
+                                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                                            </div>
+                                                            <div class="mb-2 col-md-6 col-lg-4"><label for="select-college" class="form-label">Select College:</label>
+                                                                <select name="select-college" id="select-college" class="form-select">
+                                                                    <option value=""></option>
+                                                                    <option value="College of Agriculture">College of Agriculture</option>\
+                                                                </select>
+                                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                                            </div>
+                                                            <div class="mb-4 mt-2 col-lg-4 text-end">
+                                                                <br class="d-none d-lg-block ">
+                                                                <?php
+                                                                if (isset($_GET['department-id']) && $_GET['department-id'] != 0) {
+                                                                ?>
+                                                                    <a href="?department-id=0" class="btn btn-cancel btn-settings-size">Cancel</a>
+                                                                    <input type="submit" class="btn btn-primary btn-settings-size" name="save" value="Save">
+                                                                <?php
+                                                                } else {
+                                                                ?>
+                                                                    <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                                                        <div class="col">
+                                                            <div class="card p-2">
+                                                                <div class="card-body row m-0 py-1 px-2">
+                                                                    <div class="col-12 p-0 fw-semibold text-nowrap overflow-hidden ">
+                                                                        Department of ewan tanga
+                                                                    </div>
+                                                                    <div class="col-12 p-0 d-flex flex-row justify-content-end">
+                                                                        <a href="?department-id=1" class="text-dark text-decoration-none pe-3">Edit</a>
+                                                                        <form action="" method="post">
+                                                                            <input type="submit" class="text-primary border-0 bg-white" value="Delete">
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr class="m-0 text-dark opacity-25 ">
+                                            </div>
+                                            <div class="accordion-item border-0 rounded-0">
+                                                <h2 class="accordion-header" id="headingFive">
+                                                    <button class="accordion-button <?php if (!isset($_GET['moderator-id'])) {
+                                                                                        echo 'collapsed';
+                                                                                    } ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="<?php if (!isset($_GET['moderator-id'])) {
+                                                                                                                                                                                    echo 'false';
+                                                                                                                                                                                } else {
+                                                                                                                                                                                    echo 'true';
+                                                                                                                                                                                } ?>" aria-controls="collapseFive">
+                                                        <p class="m-0 p-0 text-dark fw-semibold">Assign Moderator</p>
+                                                    </button>
+                                                </h2>
+                                                <div id="collapseFive" class="accordion-collapse collapse <?php if (isset($_GET['moderator-id'])) {
+                                                                                                                echo 'show';
+                                                                                                            } ?>" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                                                    <hr class="m-0 text-dark opacity-25 ">
+                                                    <div class="accordion-body m-0">
+                                                        <form method="post" action="" class="col-12">
+                                                            <div class="row">
+                                                                <div class="mb-2 col-md-6 col-lg-4"><label for="select-college" class="form-label">Select College:</label>
+                                                                    <select name="select-college" id="select-college" class="form-select">
+                                                                        <option value=""></option>
+                                                                        <option value="College of Agriculture">College of Agriculture</option>\
+                                                                    </select>
+                                                                    <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                                                </div>
+                                                                <div class="mb-2 col-md-6 col-lg-4"><label for="select-mod" class="form-label">Select Moderator:</label>
+                                                                    <select name="select-mod" id="select-mod" class="form-select">
+                                                                        <option value=""></option>
+                                                                        <option value="Moderator value">Name of the moderator</option>\
+                                                                    </select>
+                                                                    <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                                                </div>
+                                                                <div class="mb-4 mt-2 col-lg-4 text-end">
+                                                                    <br class="d-none d-lg-block ">
+                                                                    <?php
+                                                                    if (isset($_GET['moderator-id']) && $_GET['moderator-id'] != 0) {
+                                                                    ?>
+                                                                        <a href="?moderator-id=0" class="btn btn-cancel btn-settings-size">Cancel</a>
+                                                                        <input type="submit" class="btn btn-primary btn-settings-size" name="save" value="Save">
+                                                                    <?php
+                                                                    } else {
+                                                                    ?>
+                                                                        <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
+                                                                    <?php
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                                                            <div class="col">
+                                                                <div class="card p-2">
+                                                                    <div class="card-body row m-0 py-1 px-2">
+                                                                        <div class="col-12 p-0 fw-semibold text-nowrap overflow-hidden ">
+                                                                            Moderator ASAKLHSAHSAHLHASLHALKSa
+                                                                        </div>
+                                                                        <div class="col-12 p-0 d-flex flex-row justify-content-end">
+                                                                            <a href="?moderator-id=1" class="text-dark text-decoration-none pe-3">Edit</a>
+                                                                            <form action="" method="post">
+                                                                                <input type="submit" class="text-primary border-0 bg-white" value="Delete">
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="m-0 text-dark opacity-25 ">
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item border-0 rounded-0">
+                                                <h2 class="accordion-header" id="headingFour">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                        <p class="m-0 p-0 text-dark fw-semibold">Transfer Administrator Privilege</p>
+                                                    </button>
+                                                </h2>
+                                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                                    <hr class="m-0 text-dark opacity-25 ">
+                                                    <div class="accordion-body m-0">
+                                                        <form method="post" action="" class="col-12">
+                                                            <div class="row">
+                                                                <div class="mb-2 col-md-6 col-lg-4">
+                                                                    <label for="newadmin" class="form-label">New Administrator:</label>
+                                                                    <input type="text" class="form-control" id="newadmin" name="newadmin" list="usernames" required>
+                                                                    <datalist id="usernames">
+                                                                        <option value="Franklin Oliveros">
+                                                                        <option value="Hilal Abdulajid">
+                                                                        <option value="Wilfred Borjal">
+                                                                    </datalist>
+                                                                    <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                                                </div>
+                                                                <div class="mb-2 col-md-6 col-lg-4">
+                                                                    <label for="password" class="form-label">Enter your Password:</label>
+                                                                    <input type="text" class="form-control" id="password" name="password" required>
+                                                                    <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                                                </div>
+                                                                <div class="mb-4 mt-2 col-lg-4 text-end">
+                                                                    <br class="d-none d-lg-block ">
+                                                                    <input type="submit" class="btn btn-primary " value="Save">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <hr class="m-0 text-dark opacity-25 ">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Start content -->
-                                    <div class="col-12" id="semester">
-                                        <hr class="text-secondary d-none">
-                                        <h2 class="h4 text-primary fw-semibold">Semester & School Year</h2>
-                                        <form method="post" action="" class="col-12 col-lg-6">
-                                            <div class="row">
-                                                <div class="mb-2 col-12">
-                                                    <label for="sem" class="form-label">Semester:</label>
-                                                    <input type="text" class="form-control" id="sem" name="sem" required>
-                                                    <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                </div>
-                                                <div class="mb-2 col-12 col-lg-6">
-                                                    <label for="sdate" class="form-label">Start Date:</label>
-                                                    <input type="datetime-local" class="form-control" id="sdate" name="sdate" required>
-                                                    <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                </div>
-
-                                                <div class="mb-2 col-12 col-lg-6">
-                                                    <label for="edate" class="form-label">End Date:</label>
-                                                    <input type="datetime-local" class="form-control" id="edate" name="edate" required>
-                                                    <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                </div>
-                                                <div class="mt-2 col-12 text-end  text-lg-start">
-                                                    <!-- change back to submit  -->
-                                                    <button type="button" class="btn btn-success brand-bg-color" id="createNewStoreButton" data-bs-toggle="modal" data-bs-target="#addsSemModal">Save</button>
-                                                    <a href="./set-semester.php" class="text-decoration-none text-white btn btn-primary border-0 flex-grow-1 flex-sm-grow-0 ms-2">
-                                                        View
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!-- end content -->
-                                    <!-- Start content -->
-                                    <div class="col-12" id="college">
-                                        <hr class="text-secondary">
-                                        <h2 class="h4 text-primary fw-semibold">College</h2>
-                                        <form method="post" action="" class="col-12 col-lg-6">
-                                            <div class="row">
-                                                <div class="mb-2 col-12">
-                                                    <label for="col-name" class="form-label">College Name:</label>
-                                                    <input type="text" class="form-control" id="col-name" name="col-name" required>
-                                                    <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                </div>
-                                                <div class="mb-2 col-12"><label for="select-moderator" class="form-label">Moderator:</label>
-                                                    <select name="select-moderator" id="select-moderator" class="form-select">
-                                                        <option value=""></option>
-                                                        <option value="">Mark Flores</option>
-                                                        <option value="">Rubert V. Dela Cruz</option>
-                                                    </select>
-                                                    <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                </div>
-                                                <div class="mt-2 col-12 text-end  text-lg-start">
-                                                    <!-- change back to submit  -->
-                                                    <button type="button" class="btn btn-success brand-bg-color" id="createNewStoreButton" data-bs-toggle="modal" data-bs-target="#addsColModal">Save</button>
-                                                    <a href="./set-college.php" class="text-decoration-none text-white btn btn-primary border-0 flex-grow-1 flex-sm-grow-0 ms-2">
-                                                        View
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!-- end content -->
-                                    <!-- Start content -->
-                                    <div class="col-12" id="department">
-                                        <hr class="text-secondary">
-                                        <h2 class="h4 text-primary fw-semibold">Department</h2>
-                                        <div class="col-12">
-
-                                            <form method="post" action="" class="col-12 col-lg-6">
-                                                <div class="row">
-                                                    <div class="mb-2 col-12">
-                                                        <label for="col-name" class="form-label">Department Name:</label>
-                                                        <input type="text" class="form-control" id="col-name" name="col-name" required>
-                                                        <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                    </div>
-                                                    <div class="mb-2 col-12"><label for="select-college" class="form-label">Select College:</label>
-                                                        <select name="select-college" id="select-college" class="form-select">
-                                                            <option value=""></option>
-                                                            <option value="College of Agriculture">College of Agriculture</option>
-                                                            <option value="College of Architecture">College of Architecture</option>
-                                                            <option value="College of Asian and Islamic Studies">College of Asian and Islamic Studies</option>
-                                                            <option value="College of Computing Studies">College of Computing Studies</option>
-                                                            <option value="College of Criminal Justice Education">College of Criminal Justice Education</option>
-                                                            <option value="College of Engineering">College of Engineering</option>
-                                                            <option value="College of Forestry and Environmental Studies">College of Forestry and Environmental Studies</option>
-                                                            <option value="College of Home Economics">College of Home Economics</option>
-                                                            <option value="College of Law">College of Law</option>
-                                                            <option value="College of Liberal Arts">College of Liberal Arts</option>
-                                                            <option value="College of Nursing">College of Nursing</option>
-                                                            <option value="College of Public Administration and Development Justice">College of Public Administration and Development Justice</option>
-                                                            <option value="College of Sport Science and Physical Education">College of Sport Science and Physical Education</option>
-                                                            <option value="College of Science and Mathematics">College of Science and Mathematics</option>
-                                                            <option value="College of Social Work and Community Development">College of Social Work and Community Development</option>
-                                                            <option value="College of Teacher Education">College of Teacher Education</option>
-                                                        </select>
-                                                        <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                    </div>
-                                                    <div class="mt-2 col-12 text-end  text-lg-start">
-                                                        <!-- change back to submit  -->
-                                                        <button type="button" class="btn btn-success brand-bg-color" id="createNewStoreButton" data-bs-toggle="modal" data-bs-target="#addsDeptModal">Save</button>
-                                                        <a href="./set-department.php" class="text-decoration-none text-white btn btn-primary border-0 flex-grow-1 flex-sm-grow-0 ms-2">
-                                                            View
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                    <!-- end content -->
-                                    <!-- Start content -->
-                                    <div class="col-12" id="category">
-                                        <hr class="text-secondary">
-                                        <h2 class="h4 text-primary fw-semibold">Product Category</h2>
-                                        <div class="col-12">
-                                            <form method="post" action="" class="col-12 col-lg-6">
-                                                <div class="row">
-                                                    <div class="mb-2 col-12">
-                                                        <label for="cat-name" class="form-label">Category Name:</label>
-                                                        <input type="text" class="form-control" id="cat-name" name="cat-name" required>
-                                                        <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                    </div>
-                                                    <div class="mt-2 col-12 text-end text-lg-start">
-                                                        <!-- change back to submit  -->
-                                                        <button type="button" class="btn btn-success brand-bg-color" id="createNewStoreButton" data-bs-toggle="modal" data-bs-target="#addsCatModal">Save</button>
-                                                        <a href="./set-category.php" class="text-decoration-none text-white btn btn-primary border-0 flex-grow-1 flex-sm-grow-0 ms-2">
-                                                            View
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <!-- end content -->
-                                    <!-- Start content -->
-                                    <div class="col-12" id="privilege">
-                                        <hr class="text-secondary">
-                                        <h2 class="h4 text-primary fw-semibold">Transfer Administrator Privilege</h2>
-                                        <form method="post" action="" class="col-12 col-lg-6">
-                                            <div class="row">
-                                                <div class="mb-2 col-12">
-                                                    <label for="newadmin" class="form-label">New Administrator:</label>
-                                                    <input type="text" class="form-control" id="newadmin" name="newadmin" list="usernames" required>
-                                                    <datalist id="usernames">
-                                                        <option value="Franklin Oliveros">
-                                                        <option value="Hilal Abdulajid">
-                                                        <option value="Wilfred Borjal">
-                                                    </datalist>
-                                                    <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                </div>
-                                                <div class="mb-2 col-12">
-                                                    <label for="password" class="form-label">Enter your Password:</label>
-                                                    <input type="text" class="form-control" id="password" name="password" required>
-                                                    <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                                </div>
-                                                <div class="mt-2 col-12 text-end  text-lg-start">
-                                                    <!-- change back to submit  -->
-                                                    <button type="button" class="btn btn-success brand-bg-color" id="createNewStoreButton" data-bs-toggle="modal" data-bs-target="#transferModal">Transfer</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!-- end content -->
                                 </div>
                             </div>
                         </div>
