@@ -1,7 +1,7 @@
 <?php
 require_once("../classes/database.php");
 
-class Account
+class Semester
 {
     public $semester_id;
     public $semester_number;
