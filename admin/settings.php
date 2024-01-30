@@ -36,6 +36,7 @@ if (isset($_POST['save-sem'])) {
     }
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -144,9 +145,9 @@ require_once('../includes/head.php');
                                         </div>
                                         <div class="accordion-item border-0 rounded-0">
                                             <h2 class="accordion-header" id="headingTwo">
-                                                <button class="accordion-button <?php if (!isset($_GET['college-id'])) {
+                                                <button class="accordion-button <?php if (!isset($_POST['cancel-col']) || !isset($_POST['save-col']) || !isset($_GET['college-id'])) {
                                                                                     echo 'collapsed';
-                                                                                } ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="<?php if (!isset($_GET['college-id'])) {
+                                                                                } ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="<?php if (!isset($_POST['cancel-col']) || !isset($_POST['save-col']) || !isset($_GET['college-id'])) {
                                                                                                                                                                                 echo 'false';
                                                                                                                                                                             } else {
                                                                                                                                                                                 echo 'true';
@@ -154,7 +155,7 @@ require_once('../includes/head.php');
                                                     <p class="m-0 p-0 text-dark fw-semibold">College</p>
                                                 </button>
                                             </h2>
-                                            <div id="collapseTwo" class="accordion-collapse collapse <?php if (isset($_GET['college-id'])) {
+                                            <div id="collapseTwo" class="accordion-collapse collapse <?php if (isset($_POST['cancel-col']) || isset($_POST['save-col']) || isset($_GET['college-id'])) {
                                                                                                             echo 'show';
                                                                                                         } ?>" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                                 <hr class="m-0 text-dark opacity-25 ">
@@ -163,20 +164,26 @@ require_once('../includes/head.php');
                                                         <div class="row">
                                                             <div class="mb-2 col-lg-6">
                                                                 <label for="col-name" class="form-label">College Name:</label>
-                                                                <input type="text" class="form-control" id="col-name" name="col-name" required>
-                                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                                                <input type="text" class="form-control" id="col-name" name="col-name">
+                                                                <?php
+                                                                if (isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
+                                                                ?>
+                                                                    <p class="fs-7 text-primary m-0 ps-2">College name is required.</p>
+                                                                <?php
+                                                                }
+                                                                ?>
                                                             </div>
                                                             <div class="mb-4 mt-2 col-lg-6 text-end">
                                                                 <br class="d-none d-lg-block ">
                                                                 <?php
                                                                 if (isset($_GET['college-id']) && $_GET['college-id'] != 0) {
                                                                 ?>
-                                                                    <a href="?college-id=0" class="btn btn-cancel btn-settings-size">Cancel</a>
-                                                                    <input type="submit" class="btn btn-primary btn-settings-size" name="save" value="Save">
+                                                                    <input type="submit" class="btn btn-cancel btn-settings-size" name="cancel-col" value="Cancel">
+                                                                    <input type="submit" class="btn btn-primary btn-settings-size" name="save-col" value="Save">
                                                                 <?php
                                                                 } else {
                                                                 ?>
-                                                                    <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
+                                                                    <input type="submit" class="btn btn-primary btn-settings-size" name="add-col" value="Add">
                                                                 <?php
                                                                 }
                                                                 ?>
