@@ -38,8 +38,8 @@ require_once('../includes/head.php');
                 require_once('../includes/sidepanel.admin.php')
                 ?>
                 <main class="col-md-9 col-lg-10 p-4">
-                    <div class="row m-0 p-0">
-                        <div class="container-fluid bg-white shadow rounded m-0 p-3">
+                    <div class="row m-0 p-0 h-100">
+                        <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
                             <div class="row h-auto d-flex justify-content-center m-0 p-0">
                                 <form method="post" action="" class="col-12">
                                     <div class="row">
