@@ -103,8 +103,22 @@ input:focus, input:active, select:focus, select:active, button:focus, button:act
 }
 
 .btn-primary:hover {
-    background-color: var(--tertiary);
+    background-color: var(--primary-hover);
     border: var(--primary-hover) 1px solid;
+    height: 38px;
+}
+
+.btn-primary-opposite {
+    background-color: var(--white) !important;
+    border: var(--primary) 1px solid !important;  
+    color: var(--primary);
+    height: 38px;
+}
+
+.btn-primary-opposite:hover {
+    background-color: var(--whitesmoke-hover) !important;
+    border: var(--primary-hover) 1px solid !important;
+    color: var(--primary-hover);
     height: 38px;
 }
 

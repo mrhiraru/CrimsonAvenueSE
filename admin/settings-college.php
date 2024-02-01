@@ -123,8 +123,10 @@ require_once('../includes/head.php');
                                                 <td class="text-center"><?= $item['no_store'] ?></td>
                                                 <td class="text-center text-nowrap">
                                                     <div class="m-0 p-0">
-                                                        <button type="button" data-id="<?= $item['college_id'] ?>" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit">Edit</button>
-                                                        <input type="button" class="btn btn-cancel btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
+                                                        <form action="./settings-college.php?id=<?= $item['college_id'] ?>" method="post">
+                                                            <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="edit" value="Edit"></input>
+                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
+                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>
