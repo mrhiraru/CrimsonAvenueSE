@@ -187,13 +187,19 @@ body {
     background-color: transparent !important;
 }
 
-/* list group item css */
 
-.list-group-item.active {
-    background-color: white !important;
-    border-bottom: solid 1px var(--primary) !important;
-    border-top: solid 1px var(--primary) !important;
+/* accordion css */
+
+.accordion-button:not(.collpased) {
+    background-color: transparent !important;
+    box-shadow: none !important;
 }
+
+.accordion-body {
+    border-top: 1px solid var(--secondary) !important;
+    border-bottom: 1px solid var(--secondary) !important;
+}
+
 
 /* user module css */
 

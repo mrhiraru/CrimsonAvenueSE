@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../vendor/fontawesome-free-6.4.2-web/css/brands.min.css">
     <link rel="stylesheet" href="../vendor/fontawesome-free-6.4.2-web/css/solid.min.css">
     <link rel="stylesheet" href="../vendor/fontawesome-free-6.4.2-web/css/regular.min.css">
+    <!-- datatables -->
+    <link rel="stylesheet" href="../vendor/datatables/datatables.min.css">
     <!-- css -->
     <link rel="stylesheet" href="../css/main.css">
     <!-- apexchart -->
