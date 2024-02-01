@@ -104,10 +104,16 @@ require_once('../includes/head.php');
                                             ?>
                                         </div>
                                         <?php
-                                        if (isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
+                                        if (isset($_POST['add']) && isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
                                         ?>
                                             <div class="mb-2 col-auto mb-2 p-0">
                                                 <p class="fs-7 text-primary mb-2 ps-2">College name is required.</p>
+                                            </div>
+                                        <?php
+                                        } else if (isset($_POST['save']) && isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! name is required.</p>
                                             </div>
                                         <?php
                                         }
@@ -229,9 +235,9 @@ require_once('../includes/head.php');
                                 $record = $college->fetch($_GET['id']);
                                 ?>
                                 <p class="m-0 text-dark">Are you sure you want to delete <span class="text-primary fw-bold"><?= $record['college_name'] ?></span>?</p>
-                                <form action="./settings-college.php?id=<?= $item['college_id'] ?>" method="post">
-                                    <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="cancel" value="Cancel"></input>
-                                    <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
+                                <form action="./settings-college.php?id=<?= $item['college_id'] ?>" method="post" class="mt-3">
+                                    <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 me-3 rounded border-0 fw-semibold" id="college-edit" name="cancel" value="Cancel"></input>
+                                    <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 ms-3 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
                                 </form>
                             </div>
                         </div>
