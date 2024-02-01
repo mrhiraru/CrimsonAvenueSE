@@ -5,6 +5,7 @@ class College
 {
     public $college_id;
     public $college_name;
+    public $is_deleted;
 
     protected $db;
 
@@ -42,5 +43,40 @@ class College
         }
     }
 
+    function fetch($college_id)
+    {
+        $sql = "SELECT * FROM college WHERE college_id = :college_id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_id', $college_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
 
+    function show()
+    {
+        $sql = "SELECT * FROM college WHERE is_deleted != 1 ORDER BY college_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function delete()
+    {
+        $sql = "UPDATE college SET is_deleted=:is_deleted WHERE college_id = :college_id;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':is_deleted', $this->is_deleted);
+        $query->bindParam(':college_id', $this->college_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

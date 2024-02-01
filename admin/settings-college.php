@@ -10,8 +10,9 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 require_once('../tools/functions.php');
 require_once('../classes/college.class.php');
 
+$college = new College();
 if (isset($_POST['add'])) {
-    $college = new College();
+
 
     $college->college_name = htmlentities($_POST['col-name']);
 
@@ -22,6 +23,34 @@ if (isset($_POST['add'])) {
             echo 'An error occured while adding in the database.';
         }
     } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['save'])) {
+
+    $college->college_name = htmlentities($_POST['col-name']);
+    $college->college_id = $_GET['id'];
+
+    if (validate_field($college->college_name)) {
+        if ($college->edit()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['cancel'])) {
+
+    header('location: ./settings-college.php');
+} else if (isset($_POST['delete'])) {
+
+    $college->college_id = $_GET['id'];
+    $college->is_deleted = 1;
+
+    if ($college->delete()) {
+        $success = 'success';
+    } else {
+        echo 'An error occured while adding in the database.';
         $success = 'failed';
     }
 }
@@ -35,7 +64,7 @@ if (isset($_POST['add'])) {
 // Change title for each page.
 $title = "Settings | Crimson Avenue";
 $settings_page = "active";
-$college = "active";
+$college_page = "active";
 require_once('../includes/head.php');
 ?>
 
@@ -56,8 +85,23 @@ require_once('../includes/head.php');
                                 <form method="post" action="" class="col-12 col-lg-4">
                                     <div class="row">
                                         <div class="input-group mb-2 p-0 col-12">
-                                            <input type="text" class="form-control" id="col-name" name="col-name" placeholder="College Name">
-                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon1" name="add" value="Add">
+                                            <?php
+                                            if (isset($_POST['edit'])) {
+                                                $record = $college->fetch($_GET['id']);
+                                            ?>
+                                                <input type="text" class="form-control" id="col-name" name="col-name" placeholder="College Name" value="<?= $record['college_name'] ?>">
+                                                <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel" value="Cancel">
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save" value="Save">
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <input type="text" class="form-control" id="col-name" name="col-name" placeholder="College Name" value="<?php if (isset($_POST['col-name'])) {
+                                                                                                                                                            echo $_POST['col-name'];
+                                                                                                                                                        } ?>">
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon1" name="add" value="Add">
+                                            <?php
+                                            }
+                                            ?>
                                         </div>
                                         <?php
                                         if (isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
@@ -88,50 +132,24 @@ require_once('../includes/head.php');
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $semArray = array(
-                                            array(
-                                                'college_id' => 1,
-                                                'name' => 'Computing Studies',
-                                                'no_dept' => '2',
-                                                'no_store' => '4',
-                                            ), array(
-                                                'college_id' => 2,
-                                                'name' => 'Nursing',
-                                                'no_dept' => '0',
-                                                'no_store' => '4',
-                                            ), array(
-                                                'college_id' => 3,
-                                                'name' => 'Engineering',
-                                                'no_dept' => '6',
-                                                'no_store' => '8',
-                                            ), array(
-                                                'college_id' => 4,
-                                                'name' => 'Architecture',
-                                                'no_dept' => '0',
-                                                'no_store' => '3',
-                                            ),
-                                        );
-                                        ?>
-                                        <?php
-                                        $counter = 1;
-                                        foreach ($semArray as $item) {
+                                        $collegeArray = $college->show();
+                                        foreach ($collegeArray as $item) {
                                         ?>
                                             <tr class="align-middle">
-                                                <td><?= $counter ?></td>
-                                                <td> <?= $item['name'] ?> </td>
-                                                <td class="text-center"><?= $item['no_dept'] ?></td>
-                                                <td class="text-center"><?= $item['no_store'] ?></td>
+                                                <td><?= $item['college_id'] ?></td>
+                                                <td> <?= $item['college_name'] ?> </td>
+                                                <td class="text-center"><?= 0 ?></td>
+                                                <td class="text-center"><?= 0 ?></td>
                                                 <td class="text-center text-nowrap">
                                                     <div class="m-0 p-0">
                                                         <form action="./settings-college.php?id=<?= $item['college_id'] ?>" method="post">
                                                             <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="edit" value="Edit"></input>
-                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
+                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Delete"></input>
                                                         </form>
                                                     </div>
                                                 </td>
                                             </tr>
                                         <?php
-                                            $counter++;
                                         }
                                         ?>
                                     </tbody>
@@ -143,7 +161,7 @@ require_once('../includes/head.php');
             </div>
         </div>
     </main>
-    <!-- semester modal  -->
+    <!-- modals  -->
     <?php
     if (isset($_POST['add']) && $success == 'success') {
     ?>
@@ -153,9 +171,68 @@ require_once('../includes/head.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a href="./settings.php" class="text-decoration-none text-dark">
+                                <button type="button" class="btn text-decoration-none text-dark border-0 bg-white w-100 h-100 p-0" data-bs-dismiss="modal">
                                     <p class="m-0">College has been successfully added! <span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['save']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./settings-college.php" class="text-decoration-none text-dark">
+                                    <p class="m-0">College updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['delete']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./settings-college.php" class="text-decoration-none text-dark">
+                                    <p class="m-0 text-dark">College has been deleted! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['warning']) && isset($_GET['id'])) {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <?php
+                                $record = $college->fetch($_GET['id']);
+                                ?>
+                                <p class="m-0 text-dark">Are you sure you want to delete <span class="text-primary fw-bold"><?= $record['college_name'] ?></span>?</p>
+                                <form action="./settings-college.php?id=<?= $item['college_id'] ?>" method="post">
+                                    <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="cancel" value="Cancel"></input>
+                                    <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
+                                </form>
                             </div>
                         </div>
                     </div>
