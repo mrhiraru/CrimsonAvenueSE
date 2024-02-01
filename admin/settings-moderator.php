@@ -8,32 +8,8 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/semester.class.php');
-require_once('../classes/college.class.php');
-require_once('../classes/department.class.php');
 
-
-if (isset($_POST['save-sem'])) {
-    $semester = new Semester();
-
-    $semester->semester_number = htmlentities($_POST['sem']);
-    $semester->start_date = htmlentities($_POST['sdate']);
-    $semester->end_date = htmlentities($_POST['edate']);
-
-    if (
-        validate_field($semester->semester_number) &&
-        validate_field($semester->start_date) &&
-        validate_field($semester->end_date) &&
-        check_date($semester->start_date, $semester->end_date)
-    ) {
-        if ($semester->add()) {
-            $success = 'success';
-        } else {
-            echo 'An error occured while adding in the database.';
-        }
-    } else {
-        $success = 'failed';
-    }
+if (isset($_POST['add'])) {
 }
 
 
@@ -63,17 +39,29 @@ require_once('../includes/head.php');
                         <div class="col-12">
                             <div class="container-fluid mb-3 p-0 bg-white shadow rounded">
                                 <div class="row h-auto m-0 mb-4 d-flex justify-content-center">
-                                    <h2 class="h2 mb-3 mt-3 ms-3 lh-1 text-primary fw-bold">Settings</h2>
-                                    <hr class="m-0 text-primary opacity-50">
-                                    <!-- new design  -->
-                                    <div class="list-group list-group-flush p-0">
-                                        <a href="./settings.semester.php" class="list-group-item list-group-item-action text-dark fw-semibold">School Year and Semester</a>
-                                        <a href="./settings.college.php" class="list-group-item list-group-item-action text-dark fw-semibold ">Colleges</a>
-                                        <a href="./settings.department.php" class="list-group-item list-group-item-action text-dark fw-semibold ">Departments</a>
-                                        <a href="./settings.moderator.php" class="list-group-item list-group-item-action text-dark fw-semibold ">Moderators</a>
-                                        <a href="./settings.transfer.php" class="list-group-item list-group-item-action text-dark fw-semibold ">Transfer Administrator Privilege</a>
-                                    </div>
-                                    <hr class="m-0 text-primary opacity-50 mb-3">
+                                    <form method="post" action="" class="col-12 my-3">
+                                        <div class="row">
+                                            <div class="mb-2 col-md-6 col-lg-4"><label for="select-college" class="form-label">Select College:</label>
+                                                <select name="select-college" id="select-college" class="form-select">
+                                                    <option value=""></option>
+                                                    <option value="College of Agriculture">College of Agriculture</option>\
+                                                </select>
+                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                            </div>
+                                            <div class="mb-2 col-md-6 col-lg-4"><label for="select-mod" class="form-label">Select Moderator:</label>
+                                                <select name="select-mod" id="select-mod" class="form-select">
+                                                    <option value=""></option>
+                                                    <option value="Moderator value">Name of the moderator</option>\
+                                                </select>
+                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                            </div>
+                                            <div class="mt-2 col-lg-4 text-end">
+                                                <br class="d-none d-lg-block ">
+                                                <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
+                                            </div>
+                                        </div>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>

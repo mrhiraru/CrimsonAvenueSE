@@ -8,8 +8,10 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
+require_once('../classes/department.class.php');
 
 if (isset($_POST['add'])) {
+    $department = new Department();
 }
 
 
@@ -39,15 +41,13 @@ require_once('../includes/head.php');
                         <div class="col-12">
                             <div class="container-fluid mb-3 p-0 bg-white shadow rounded">
                                 <div class="row h-auto m-0 mb-4 d-flex justify-content-center">
-                                    <hr class="m-0 text-primary opacity-50 mt-3">
-                                    <div class="list-group list-group-flush p-0 col-12">
-                                        <a href="./settings.php" class="list-group-item list-group-item-action text-dark fw-semibold">
-                                            <i class="fa-solid fa-arrow-left"></i> Back
-                                        </a>
-                                    </div>
-                                    <hr class="m-0 text-primary opacity-50">
                                     <form method="post" action="" class="col-12 my-3">
                                         <div class="row">
+                                            <div class="mb-2 col-md-6 col-lg-4">
+                                                <label for="col-name" class="form-label">Department Name:</label>
+                                                <input type="text" class="form-control" id="col-name" name="col-name" required>
+                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                            </div>
                                             <div class="mb-2 col-md-6 col-lg-4"><label for="select-college" class="form-label">Select College:</label>
                                                 <select name="select-college" id="select-college" class="form-select">
                                                     <option value=""></option>
@@ -55,14 +55,7 @@ require_once('../includes/head.php');
                                                 </select>
                                                 <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
                                             </div>
-                                            <div class="mb-2 col-md-6 col-lg-4"><label for="select-mod" class="form-label">Select Moderator:</label>
-                                                <select name="select-mod" id="select-mod" class="form-select">
-                                                    <option value=""></option>
-                                                    <option value="Moderator value">Name of the moderator</option>\
-                                                </select>
-                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                            </div>
-                                            <div class="mt-2 col-lg-4 text-end">
+                                            <div class="mt-2 col-md-12 col-lg-4 text-end">
                                                 <br class="d-none d-lg-block ">
                                                 <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
                                             </div>

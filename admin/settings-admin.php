@@ -39,13 +39,6 @@ require_once('../includes/head.php');
                         <div class="col-12">
                             <div class="container-fluid mb-3 p-0 bg-white shadow rounded">
                                 <div class="row h-auto m-0 mb-4 d-flex justify-content-center">
-                                    <hr class="m-0 text-primary opacity-50 mt-3">
-                                    <div class="list-group list-group-flush p-0 col-12">
-                                        <a href="./settings.php" class="list-group-item list-group-item-action text-dark fw-semibold">
-                                            <i class="fa-solid fa-arrow-left"></i> Back
-                                        </a>
-                                    </div>
-                                    <hr class="m-0 text-primary opacity-50">
                                     <form method="post" action="" class="col-12 my-3">
                                         <div class="row">
                                             <div class="mb-2 col-md-6 col-lg-4">

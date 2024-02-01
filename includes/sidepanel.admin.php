@@ -1,48 +1,251 @@
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-white shadow collapse">
     <div class="position-sticky pt-3 vh-100">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
-                    <i class="fa-solid fa-chart-line"></i>
-                    Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
-                    <i class="fa-solid fa-boxes-stacked"></i>
-                    Products
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
-                    <i class="fa-solid fa-store"></i>
-                    Stores
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-secondary fw-semibold <?= $users_page ?>" href="../admin/user.php">
-                    <i class="fa-solid fa-address-book"></i>
-                    Users
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-secondary fw-semibold <?= $messages_page ?>" href="../admin/message-inbox.php">
-                    <i class="fa-solid fa-envelope"></i>
-                    Messages
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-secondary fw-semibold <?= $reports_page ?>" href="../admin/report.php">
-                    <i class="fa-solid fa-scroll"></i>
-                    Reports
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-secondary fw-semibold <?= $settings_page ?>" href="../admin/settings.php">
-                    <i class="fa-solid fa-gear"></i>
-                    Settings
-                </a>
-            </li>
-        </ul>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item border-0">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button px-2 pt-2 pb-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $index_page ?>" aria-current="page">
+                            <i class="fa-solid fa-chart-line"></i>
+                            Dashboard
+                        </p>
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body px-0 pt-1 py-2">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
+                                    <i class="fa-solid fa-boxes-stacked"></i>
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
+                                    <i class="fa-solid fa-store"></i>
+                                    Stores
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item border-0">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button px-2 pt-2 pb-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $index_page ?>" aria-current="page">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                            Products
+                        </p>
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body px-0 pt-1 py-2">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
+                                    <i class="fa-solid fa-boxes-stacked"></i>
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
+                                    <i class="fa-solid fa-store"></i>
+                                    Stores
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item border-0">
+                <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button  px-2 pt-2 pb-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $stores_page ?>" href="../admin/store.php">
+                            <i class="fa-solid fa-store"></i>
+                            Stores
+                        </p>
+                    </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body px-0 pt-1 py-2">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
+                                    <i class="fa-solid fa-boxes-stacked"></i>
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
+                                    <i class="fa-solid fa-store"></i>
+                                    Stores
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item border-0">
+                <h2 class="accordion-header" id="flush-headingFour">
+                    <button class="accordion-button  px-2 pt-2 pb-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $users_page ?>" href="../admin/user.php">
+                            <i class="fa-solid fa-address-book"></i>
+                            Users
+                        </p>
+                    </button>
+                </h2>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body px-0 pt-1 py-2">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
+                                    <i class="fa-solid fa-boxes-stacked"></i>
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
+                                    <i class="fa-solid fa-store"></i>
+                                    Stores
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item border-0">
+                <h2 class="accordion-header" id="flush-headingFive">
+                    <button class="accordion-button  px-2 pt-2 pb-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $messages_page ?>" href="../admin/message-inbox.php">
+                            <i class="fa-solid fa-envelope"></i>
+                            Messages
+                        </p>
+                    </button>
+                </h2>
+                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body px-0 pt-1 py-2">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
+                                    <i class="fa-solid fa-boxes-stacked"></i>
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
+                                    <i class="fa-solid fa-store"></i>
+                                    Stores
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item border-0">
+                <h2 class="accordion-header" id="flush-headingSix">
+                    <button class="accordion-button  px-2 pt-2 pb-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $reports_page ?>" href="../admin/report.php">
+                            <i class="fa-solid fa-scroll"></i>
+                            Reports
+                        </p>
+                    </button>
+                </h2>
+                <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body px-0 pt-1 py-2">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
+                                    <i class="fa-solid fa-boxes-stacked"></i>
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
+                                    <i class="fa-solid fa-store"></i>
+                                    Stores
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item border-0">
+                <h2 class="accordion-header" id="flush-headingSeven">
+                    <button class="accordion-button  px-2 pt-2 pb-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $settings_page ?>" href="../admin/settings.php">
+                            <i class="fa-solid fa-gear"></i>
+                            Settings
+                        </p>
+                    </button>
+                </h2>
+                <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body px-0 pt-1 py-2">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $semester ?>" aria-current="page" href="../admin/settings-semester.php">
+                                    School Year & Semester
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $college ?>" href="../admin/settings-college.php">
+                                    Colleges
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $department ?>" href="../admin/settings-department.php">
+                                    Departments
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $moderator ?>" href="../admin/settings-moderator.php">
+                                    Moderators
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $admin ?>" href="../admin/settings-admin.php">
+                                    Admin Control
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>
