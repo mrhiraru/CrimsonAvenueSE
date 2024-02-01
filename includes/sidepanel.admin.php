@@ -1,5 +1,5 @@
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-white shadow collapse">
-    <div class="position-sticky pt-3 vh-100">
+    <div class="position-sticky pt-3 min-vh-100">
         <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item border-0">
                 <h2 class="accordion-header" id="flush-headingOne">
