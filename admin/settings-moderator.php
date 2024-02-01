@@ -35,35 +35,32 @@ require_once('../includes/head.php');
                 <?php
                 require_once('../includes/sidepanel.admin.php')
                 ?>
-                <main class="col-md-9 pt-4 ms-sm-auto col-lg-10 px-md-4">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="container-fluid mb-3 p-0 bg-white shadow rounded">
-                                <div class="row h-auto m-0 mb-4 d-flex justify-content-center">
-                                    <form method="post" action="" class="col-12 my-3">
-                                        <div class="row">
-                                            <div class="mb-2 col-md-6 col-lg-4"><label for="select-college" class="form-label">Select College:</label>
-                                                <select name="select-college" id="select-college" class="form-select">
-                                                    <option value=""></option>
-                                                    <option value="College of Agriculture">College of Agriculture</option>\
-                                                </select>
-                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                            </div>
-                                            <div class="mb-2 col-md-6 col-lg-4"><label for="select-mod" class="form-label">Select Moderator:</label>
-                                                <select name="select-mod" id="select-mod" class="form-select">
-                                                    <option value=""></option>
-                                                    <option value="Moderator value">Name of the moderator</option>\
-                                                </select>
-                                                <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                            </div>
-                                            <div class="mt-2 col-lg-4 text-end">
-                                                <br class="d-none d-lg-block ">
-                                                <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
-                                            </div>
+                <main class="col-md-9 col-lg-10 p-4">
+                    <div class="row m-0 p-0">
+                        <div class="container-fluid bg-white shadow rounded m-0 p-3">
+                            <div class="row h-auto d-flex justify-content-center m-0 p-0">
+                                <form method="post" action="" class="col-12">
+                                    <div class="row">
+                                        <div class="mb-2 col-md-6 col-lg-4"><label for="select-college" class="form-label">Select College:</label>
+                                            <select name="select-college" id="select-college" class="form-select">
+                                                <option value=""></option>
+                                                <option value="College of Agriculture">College of Agriculture</option>\
+                                            </select>
+                                            <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
                                         </div>
-                                    </form>
-
-                                </div>
+                                        <div class="mb-2 col-md-6 col-lg-4"><label for="select-mod" class="form-label">Select Moderator:</label>
+                                            <select name="select-mod" id="select-mod" class="form-select">
+                                                <option value=""></option>
+                                                <option value="Moderator value">Name of the moderator</option>\
+                                            </select>
+                                            <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                        </div>
+                                        <div class="mt-2 col-lg-4 text-end">
+                                            <br class="d-none d-lg-block ">
+                                            <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -37,51 +37,29 @@ require_once('../includes/head.php');
                 <?php
                 require_once('../includes/sidepanel.admin.php')
                 ?>
-                <main class="col-md-9 pt-4 ms-sm-auto col-lg-10 px-md-4">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="container-fluid mb-3 p-0 bg-white shadow rounded">
-                                <div class="row h-auto m-0 mb-4 d-flex justify-content-center">
-                                    <form method="post" action="" class="col-12 my-3">
-                                        <div class="row">
-                                            <div class="mb-2 col-md-8">
-                                                <label for="col-name" class="form-label">College Name:</label>
-                                                <input type="text" class="form-control" id="col-name" name="col-name">
-                                                <?php
-                                                if (isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
-                                                ?>
-                                                    <p class="fs-7 text-primary m-0 ps-2">College name is required.</p>
-                                                <?php
-                                                }
-                                                ?>
-                                            </div>
-                                            <div class="mt-2 col-md-4 text-end text-md-start ">
-                                                <br class="d-none d-md-block ">
-                                                <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
-                                            </div>
+                <main class="col-md-9 col-lg-10 p-4">
+                    <div class="row m-0 p-0">
+                        <div class="container-fluid bg-white shadow rounded m-0 p-3">
+                            <div class="row h-auto d-flex justify-content-center m-0 p-0">
+                                <form method="post" action="" class="col-12">
+                                    <div class="row">
+                                        <div class="mb-2 col-md-8">
+                                            <label for="col-name" class="form-label">College Name:</label>
+                                            <input type="text" class="form-control" id="col-name" name="col-name">
+                                            <?php
+                                            if (isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">College name is required.</p>
+                                            <?php
+                                            }
+                                            ?>
                                         </div>
-                                    </form>
-                                    <form method="post" action="" class="col-12 my-3">
-                                        <div class="row">
-                                            <div class="mb-2 col-md-8">
-                                                <input type="text" class="form-control" id="college-item" name="college-item" disabled value="dqweqweqw">
-                                                <?php
-                                                if (isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
-                                                ?>
-                                                    <p class="fs-7 text-primary m-0 ps-2">College name is required.</p>
-                                                <?php
-                                                }
-                                                ?>
-                                            </div>
-                                            <div class="col-md-4 text-end text-md-start">
-                                                <input type="submit" class="btn btn-primary btn-settings-size d-none" id="college-save" name="save" value="Save">
-                                                <button type="button" class="btn btn-primary btn-settings-size" id="college-edit">Edit</button>
-                                            </div>
+                                        <div class="mt-2 col-md-4 text-end text-md-start ">
+                                            <br class="d-none d-md-block ">
+                                            <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
                                         </div>
-                                    </form>
-
-
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
