@@ -63,15 +63,15 @@ require_once('../includes/head.php');
                                         if (isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
                                         ?>
                                             <div class="mb-2 col-auto">
-                                                <p class="fs-7 text-primary mb-2 p-0 ps-2">College name is required.</p>
+                                                <p class="fs-7 text-primary mb-2 ps-2">College name is required.</p>
                                             </div>
                                         <?php
                                         }
                                         ?>
                                     </div>
                                 </form>
-                                <div class="search-keyword col-12 col-lg-4">
-                                    <div class="input-group mb-2">
+                                <div class="search-keyword col-12 col-lg-4 mb-2 p-0">
+                                    <div class="input-group">
                                         <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
                                         <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1">Search</span>
                                     </div>
