@@ -207,14 +207,14 @@
             </div>
             <div class="accordion-item border-0">
                 <h2 class="accordion-header" id="flush-headingSeven">
-                    <button class="accordion-button  px-2 pt-2 pb-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
+                    <button class="accordion-button  px-2 pt-2 pb-3 <?php if(!isset($settings_page)) { echo 'collapsed'; }  ?>" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="<?php if(isset($settings_page)) { echo 'true'; } else { echo 'false'; } ?>" aria-controls="flush-collapseSeven">
                         <p class="nav-link text-secondary fw-semibold m-0 <?= $settings_page ?>" href="../admin/settings.php">
                             <i class="fa-solid fa-gear"></i>
                             Settings
                         </p>
                     </button>
                 </h2>
-                <div id="flush-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseSeven" class="accordion-collapse collapse <?php if(isset($settings_page)) { echo 'show'; } ?>" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">

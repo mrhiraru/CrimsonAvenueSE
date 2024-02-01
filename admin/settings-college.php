@@ -23,6 +23,7 @@ if (isset($_POST['add'])) {
 // Change title for each page.
 $title = "Settings | Crimson Avenue";
 $settings_page = "active";
+$college = "active";
 require_once('../includes/head.php');
 ?>
 
