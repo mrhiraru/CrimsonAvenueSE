@@ -124,14 +124,14 @@ input:focus, input:active, select:focus, select:active, button:focus, button:act
 
 .btn-cancel {
     background-color: whitesmoke;
-    border: var(--primary-hover) 1px solid;
+    border: var(--dark) 1px solid !important;
     height: 38px;
 }
 
 .btn-cancel:hover {
-    background-color:  white;
-    color: var(--primary) !important;
-    border: var(--primary) 1px solid;
+    background-color: var(--whitesmoke-hover);
+    color: var(--dark) !important;
+    border: var(--dark) 1px solid !important;
     height: 38px;
 }
 
@@ -148,6 +148,30 @@ input:focus, input:active, select:focus, select:active, button:focus, button:act
 .border-primary {
     border: var(--primary) 1px solid !important;
     
+}
+
+/* pagination css  */
+
+.page-link {
+    color: var(--primary);
+}
+
+.paginate_button.page-item.active a {
+    background-color: var(--primary);
+    border: 1px var(--primary) solid;
+    box-shadow: none;
+}
+
+.paginate_button.page-item a:hover {
+    background-color: var(--primary-hover);
+    border: 1px var(--primary-hover) solid;
+    color: white;
+    font-weight: bold;
+    box-shadow: none;
+}
+
+.paginate_button.page-item.previous.disabled a, .paginate_button.page-item.next.disabled a {
+    background-color: white;
 }
 
 /* html tags */

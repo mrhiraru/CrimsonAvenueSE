@@ -62,7 +62,7 @@ require_once('../includes/head.php');
                                         <?php
                                         if (isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
                                         ?>
-                                            <div class="mb-2 col-auto">
+                                            <div class="mb-2 col-auto mb-2 p-0">
                                                 <p class="fs-7 text-primary mb-2 ps-2">College name is required.</p>
                                             </div>
                                         <?php
@@ -82,7 +82,7 @@ require_once('../includes/head.php');
                                             <th scope="col"></th>
                                             <th scope="col">College Name</th>
                                             <th scope="col" class="text-center">No of Department</th>
-                                            <th scope="col" class="text-center">No of Stores</th>
+                                            <th scope="col" class="text-center">No of Store</th>
                                             <th scope="col" class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -117,37 +117,16 @@ require_once('../includes/head.php');
                                         foreach ($semArray as $item) {
                                         ?>
                                             <tr class="align-middle">
-                                                <form action="" method="post">
-                                                    <td><?= $counter ?></td>
-                                                    <td>
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <input type="text" class="form-control border-0 rounded-0" id="college-item<?= $item['college_id'] ?>" name="college-item" value="<?= $item['name'] ?>" disabled>
-                                                            </div>
-                                                            <?php
-                                                            if (isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
-                                                            ?>
-                                                                <div class="mb-2 col-auto">
-                                                                    <p class="fs-7 text-primary m-0 ps-2">College name is required.</p>
-                                                                </div>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-center"><?= $item['no_dept'] ?></td>
-                                                    <td class="text-center"><?= $item['no_store'] ?></td>
-                                                    <td class="text-center text-nowrap">
-                                                        <div class="m-0 p-0" id="main-buttons<?= $item['college_id'] ?>">
-                                                            <button type="button" data-id="<?= $item['college_id'] ?>" class="btn btn-success btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit<?= $item['college_id'] ?>">Edit</button>
-                                                            <input type="button" class="btn btn-danger btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
-                                                        </div>
-                                                        <div class="m-0 p-0 d-none" id="edit-buttons<?= $item['college_id'] ?>">
-                                                            <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="save" value="Save"></input>
-                                                            <button type="button" data-id="<?= $item['college_id'] ?>" class="btn btn-secondary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-cancel<?= $item['college_id'] ?>">Cancel</button>
-                                                        </div>
-                                                    </td>
-                                                </form>
+                                                <td><?= $counter ?></td>
+                                                <td> <?= $item['name'] ?> </td>
+                                                <td class="text-center"><?= $item['no_dept'] ?></td>
+                                                <td class="text-center"><?= $item['no_store'] ?></td>
+                                                <td class="text-center text-nowrap">
+                                                    <div class="m-0 p-0">
+                                                        <button type="button" data-id="<?= $item['college_id'] ?>" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit">Edit</button>
+                                                        <input type="button" class="btn btn-cancel btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         <?php
                                             $counter++;
