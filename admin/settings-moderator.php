@@ -8,7 +8,10 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
+require_once('../classes/moderator.class.php');
+require_once('../classes/college.class.php');
 
+$moderator = new Moderator();
 if (isset($_POST['add'])) {
 }
 
@@ -38,29 +41,66 @@ require_once('../includes/head.php');
                 <main class="col-md-9 col-lg-10 p-4">
                     <div class="row m-0 p-0 h-100">
                         <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
-                            <div class="row h-auto d-flex justify-content-center m-0 p-0">
-                                <form method="post" action="" class="col-12">
+                            <div class="row h-auto d-flex justify-content-between m-0 p-0">
+                                <form method="post" action="" class="col-12 col-lg-7">
                                     <div class="row">
-                                        <div class="mb-2 col-md-6 col-lg-4"><label for="select-college" class="form-label">Select College:</label>
-                                            <select name="select-college" id="select-college" class="form-select">
-                                                <option value=""></option>
-                                                <option value="College of Agriculture">College of Agriculture</option>\
-                                            </select>
-                                            <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                        </div>
-                                        <div class="mb-2 col-md-6 col-lg-4"><label for="select-mod" class="form-label">Select Moderator:</label>
-                                            <select name="select-mod" id="select-mod" class="form-select">
-                                                <option value=""></option>
-                                                <option value="Moderator value">Name of the moderator</option>\
-                                            </select>
-                                            <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                        </div>
-                                        <div class="mt-2 col-lg-4 text-end">
-                                            <br class="d-none d-lg-block ">
-                                            <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
+                                        <div class="input-group mb-2 p-0 col-12">
+                                            <?php
+                                            if (isset($_POST['edit']) || isset($_POST['save'])) {
+                                            ?>
+                                                <select id="acc-id" name="acc-id" class="form-select">
+                                                    <option value="">Select Moderator</option>
+                                                    <?php
+                                                    $moderatorArray = $moderator->show_mod();
+                                                    foreach ($moderatorArray as $item) { ?>
+                                                        <option value="<?= $item['account_id'] ?>"><?= $item['firstname'] . ' ' . $item['lastname'] ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <select id="col-id" name="col-id" class="form-select">
+                                                    <option value="">Select College</option>
+                                                </select>
+                                                <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel" value="Cancel">
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save" value="Save">
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <select id="acc-id" name="acc-id" class="form-select">
+                                                    <option value="">Select Moderator</option>
+                                                    <?php
+                                                    $moderatorArray = $moderator->show_mod();
+                                                    foreach ($moderatorArray as $item) { ?>
+                                                        <option value="<?= $item['account_id'] ?>"><?php if(isset($item['middlename'])) { echo $item['firstname'].' '.$item['middlename'].' '.$item['lastname']; } else { echo $item['firstname'].' '.$item['lastname']; } ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <select id="col-id" name="col-id" class="form-select">
+                                                    <option value="">Select College</option>
+                                                    <?php 
+                                                    $college = new College();
+                                                    $collegeArray = $college->show();
+                                                    foreach($collegeArray as $item) {
+                                                        ?>
+                                                            <option value="<?= $item['college_id'] ?>"><?= $item['college_name'] ?></option>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="add" value="Assign">
+                                            <?php
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                 </form>
+                                <div class="search-keyword col-12 col-lg-4 mb-2 p-0">
+                                    <div class="input-group">
+                                        <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
+                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1">Search</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -68,28 +108,7 @@ require_once('../includes/head.php');
             </div>
         </div>
     </main>
-    <!-- semester modal  -->
-    <?php
-    if (isset($_POST['save-sem']) && $success == 'success') {
-    ?>
-        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="row d-flex">
-                            <div class="col-12 text-center">
-                                <a href="./settings.php" class="text-decoration-none text-dark">
-                                    <p class="m-0">Semester has been successfully set up! <span class="text-primary fw-bold">Click to Continue</span>.</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php
-    }
-    ?>
+
     <?php
     require_once('../includes/js.php');
     ?>

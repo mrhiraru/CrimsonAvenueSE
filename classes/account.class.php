@@ -113,4 +113,15 @@ class Account
         }
         return false;
     }
+
+    function show()
+    {
+        $sql = "SELECT * FROM account WHERE is_deleted != 1 ORDER BY account_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }
