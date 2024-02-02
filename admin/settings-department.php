@@ -175,7 +175,7 @@ require_once('../includes/head.php');
                                         <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1">Search</span>
                                     </div>
                                 </div>
-                                <table id="colleges" class="table table-lg mt-1">
+                                <table id="departments" class="table table-lg mt-1">
                                     <thead>
                                         <tr class="align-middle">
                                             <th scope="col"></th>
@@ -225,7 +225,7 @@ require_once('../includes/head.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a  href="./settings-department.php" class="text-decoration-none text-dark">
+                                <a href="./settings-department.php" class="text-decoration-none text-dark">
                                     <p class="m-0">Department added succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
@@ -299,6 +299,7 @@ require_once('../includes/head.php');
     <?php
     require_once('../includes/js.php');
     ?>
+    <script src="../js/departments.datatable.js"></script>
     <script>
         var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
         myModal.show()

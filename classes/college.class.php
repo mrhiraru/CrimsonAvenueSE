@@ -56,6 +56,7 @@ class College
 
     function show()
     {
+        // Note: Update query to count stores per college!
         $sql = "SELECT c.*, COUNT(d.college_id) as dept_count FROM college c LEFT JOIN department d ON c.college_id = d.college_id AND d.is_deleted != 1 WHERE c.is_deleted != 1 GROUP BY c.college_id ORDER BY c.college_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
