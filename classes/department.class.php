@@ -45,5 +45,14 @@ class Department
         }
     }
 
-
+    function show()
+    {
+        $sql = "SELECT d.*, c.college_name FROM department d JOIN college c ON d.college_id = c.college_id WHERE d.is_deleted != 1 ORDER BY d.department_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }

@@ -9,9 +9,25 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/department.class.php');
+require_once('../classes/college.class.php');
 
+
+
+$department = new Department();
 if (isset($_POST['add'])) {
-    $department = new Department();
+
+    $department->college_id = htmlentities($_POST['col-id']);
+    $department->department_name = htmlentities($_POST['dept-name']);
+
+    if (validate_field($department->college_id) && validate_field($department->department_name)) {
+        if ($department->add()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
 }
 
 
@@ -40,27 +56,105 @@ require_once('../includes/head.php');
                 <main class="col-md-9 col-lg-10 p-4">
                     <div class="row m-0 p-0 h-100">
                         <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
-                            <div class="row h-auto d-flex justify-content-center m-0 p-0">
-                                <form method="post" action="" class="col-12">
+                            <div class="row h-auto d-flex justify-content-between m-0 p-0">
+                                <form method="post" action="" class="col-12 col-lg-7">
                                     <div class="row">
-                                        <div class="mb-2 col-md-6 col-lg-4">
-                                            <label for="col-name" class="form-label">Department Name:</label>
-                                            <input type="text" class="form-control" id="col-name" name="col-name" required>
-                                            <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
+                                        <div class="input-group mb-2 p-0 col-12">
+                                            <?php
+                                            if (isset($_POST['edit'])) {
+                                                $record = $college->fetch($_GET['id']);
+                                            ?>
+                                                <select id="col-id" name="col-id" class="form-select">
+                                                    <option value="">Select College</option>
+                                                    <?php
+                                                    $college = new College();
+                                                    $collegeArray = $college->show();
+                                                    foreach ($collegeArray as $item) { ?>
+                                                        <option value="<?= $item['college_id'] ?>"><?= $item['college_name'] ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <input type="text" class="form-control" id="dept-name" name="dept-name" placeholder="Department Name">
+                                                <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel" value="Cancel">
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save" value="Save">
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <select name="col-id" id="col-id" class="form-select">
+                                                    <option value="">Select College</option>
+                                                    <?php
+                                                    $college = new College();
+                                                    $collegeArray = $college->show();
+                                                    foreach ($collegeArray as $item) { ?>
+                                                        <option value="<?= $item['college_id'] ?>"><?= $item['college_name'] ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <input type="text" class="form-control" id="dept-name" name="dept-name" placeholder="Department Name">
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="add" value="Add">
+                                            <?php
+                                            }
+                                            ?>
                                         </div>
-                                        <div class="mb-2 col-md-6 col-lg-4"><label for="select-college" class="form-label">Select College:</label>
-                                            <select name="select-college" id="select-college" class="form-select">
-                                                <option value=""></option>
-                                                <option value="College of Agriculture">College of Agriculture</option>\
-                                            </select>
-                                            <p id="store-name-error" class="modal-error text-danger my-1 d-none">Your custom error message here</p>
-                                        </div>
-                                        <div class="mt-2 col-md-12 col-lg-4 text-end">
-                                            <br class="d-none d-lg-block ">
-                                            <input type="submit" class="btn btn-primary btn-settings-size" name="add" value="Add">
-                                        </div>
+                                        <?php
+                                        if (isset($_POST['add']) && isset($_POST['dept-name']) && !validate_field($_POST['dept-name'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Department name is required.</p>
+                                            </div>
+                                        <?php
+                                        } else if (isset($_POST['save']) && isset($_POST['dept-name']) && !validate_field($_POST['dept-name'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! name is required.</p>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                 </form>
+                                <div class="search-keyword col-12 col-lg-4 mb-2 p-0">
+                                    <div class="input-group">
+                                        <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
+                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1">Search</span>
+                                    </div>
+                                </div>
+                                <table id="colleges" class="table table-lg mt-1">
+                                    <thead>
+                                        <tr class="align-middle">
+                                            <th scope="col"></th>
+                                            <th scope="col">Department Name</th>
+                                            <th scope="col">College Name</th>
+                                            <th scope="col" class="text-center"> N/A </th>
+                                            <th scope="col" class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $deptartmentArray = $department->show();
+                                        foreach ($departmentArray as $item) {
+                                        ?>
+                                            <tr class="align-middle">
+                                                <td><?= $item['department_id'] ?></td>
+                                                <td> <?= $item['department_name'] ?> </td>
+                                                <td> <?= $item['college_name'] ?></td>
+                                                <td class="text-center"><?= "N/A" ?></td>
+                                                <td class="text-center text-nowrap">
+                                                    <div class="m-0 p-0">
+                                                        <form action="./settings-college.php?id=<?= $item['college_id'] ?>" method="post">
+                                                            <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="edit" value="Edit"></input>
+                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Delete"></input>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
