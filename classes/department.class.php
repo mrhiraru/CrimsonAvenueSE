@@ -34,9 +34,9 @@ class Department
         $sql = "UPDATE department SET college_id=:college_id, department_name=:department_name WHERE department_id = :department_id;";
 
         $query = $this->db->connect()->prepare($sql);
-        $query->bindParam(':college_id', $this->college_id);
         $query->bindParam(':department_name', $this->department_name);
-        $query->bindParam(':department_id', $this->college_id);
+        $query->bindParam(':department_id', $this->department_id);
+        $query->bindParam(':college_id', $this->college_id);
 
         if ($query->execute()) {
             return true;

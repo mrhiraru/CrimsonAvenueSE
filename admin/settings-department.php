@@ -29,11 +29,12 @@ if (isset($_POST['add'])) {
         $success = 'failed';
     }
 } else if (isset($_POST['save'])) {
-    $department->department_name = htmlentities($_POST['col-name']);
+    $department->department_name = htmlentities($_POST['dept-name']);
     $department->department_id = $_GET['id'];
+    $department->college_id = htmlentities($_POST['col-id']);
 
     if (validate_field($department->department_name)) {
-        if ($college->edit()) {
+        if ($department->edit()) {
             $success = 'success';
         } else {
             echo 'An error occured while adding in the database.';
@@ -41,6 +42,9 @@ if (isset($_POST['add'])) {
     } else {
         $success = 'failed';
     }
+} else if (isset($_POST['cancel'])) {
+
+    header('location: ./settings-department.php');
 }
 
 
@@ -74,23 +78,27 @@ require_once('../includes/head.php');
                                     <div class="row">
                                         <div class="input-group mb-2 p-0 col-12">
                                             <?php
-                                            if (isset($_POST['edit'])) {
+                                            if (isset($_POST['edit']) || isset($_POST['save'])) {
                                                 $record = $department->fetch($_GET['id']);
                                             ?>
-                                                <select id="col-id" name="col-id" class="form-select" disabled>
+                                                <select id="col-id" name="col-id" class="form-select">
                                                     <option value="">Select College</option>
                                                     <?php
                                                     $college = new College();
                                                     $collegeArray = $college->show();
                                                     foreach ($collegeArray as $item) { ?>
-                                                        <option value="<?= $item['college_id'] ?>" <?php if (isset($item['college_id']) && $item['college_id'] == $record['college_id']) {
+                                                        <option value="<?= $item['college_id'] ?>" <?php if ((isset($item['college_id']) && $item['college_id'] == $record['college_id']) || (isset($_POST['col-id']) && $_POST['col-id'] == $record['college_id'])) {
                                                                                                         echo 'selected';
                                                                                                     } ?>><?= $item['college_name'] ?></option>
                                                     <?php
                                                     }
                                                     ?>
                                                 </select>
-                                                <input type="text" class="form-control" id="dept-name" name="dept-name" placeholder="Department Name" value="<?= $record['department_name'] ?>">
+                                                <input type="text" class="form-control" id="dept-name" name="dept-name" placeholder="Department Name" value="<?php if (isset($_POST['dept-name'])) {
+                                                                                                                                                                    echo $_POST['dept-name'];
+                                                                                                                                                                } else {
+                                                                                                                                                                    echo $record['department_name'];
+                                                                                                                                                                } ?>">
                                                 <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel" value="Cancel">
                                                 <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save" value="Save">
                                             <?php
@@ -142,7 +150,7 @@ require_once('../includes/head.php');
                                             } else if (isset($_POST['save']) && isset($_POST['dept-name']) && !validate_field($_POST['dept-name'])) {
                                             ?>
                                                 <div class="mb-2 col-auto mb-2 p-0">
-                                                    <p class="fs-7 text-primary mb-2 ps-2">Update failed! name is required.</p>
+                                                    <p class="fs-7 text-primary mb-2 ps-2">Update failed! department name is required.</p>
                                                 </div>
                                         <?php
                                             }
