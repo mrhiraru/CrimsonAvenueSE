@@ -86,10 +86,14 @@ require_once('../includes/head.php');
                                     <div class="row">
                                         <div class="input-group mb-2 p-0 col-12">
                                             <?php
-                                            if (isset($_POST['edit'])) {
+                                            if (isset($_POST['edit']) || isset($_POST['save'])) {
                                                 $record = $college->fetch($_GET['id']);
                                             ?>
-                                                <input type="text" class="form-control" id="col-name" name="col-name" placeholder="College Name" value="<?= $record['college_name'] ?>">
+                                                <input type="text" class="form-control" id="col-name" name="col-name" placeholder="College Name" value="<?php if (isset($_POST['col-name'])) {
+                                                                                                                                                                    echo $_POST['col-name'];
+                                                                                                                                                                } else {
+                                                                                                                                                                    echo $record['college_name'];
+                                                                                                                                                                } ?>">
                                                 <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel" value="Cancel">
                                                 <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save" value="Save">
                                             <?php
@@ -113,7 +117,7 @@ require_once('../includes/head.php');
                                         } else if (isset($_POST['save']) && isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
                                         ?>
                                             <div class="mb-2 col-auto mb-2 p-0">
-                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! name is required.</p>
+                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! College name is required.</p>
                                             </div>
                                         <?php
                                         }
@@ -144,7 +148,7 @@ require_once('../includes/head.php');
                                             <tr class="align-middle">
                                                 <td><?= $item['college_id'] ?></td>
                                                 <td> <?= $item['college_name'] ?> </td>
-                                                <td class="text-center"><?= 0 ?></td>
+                                                <td class="text-center"><?= $item['dept_count'] ?></td>
                                                 <td class="text-center"><?= 0 ?></td>
                                                 <td class="text-center text-nowrap">
                                                     <div class="m-0 p-0">
@@ -177,9 +181,9 @@ require_once('../includes/head.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <button type="button" class="btn text-decoration-none text-dark border-0 bg-white w-100 h-100 p-0" data-bs-dismiss="modal">
-                                    <p class="m-0">College has been successfully added! <span class="text-primary fw-bold">Click to Continue</span>.</p>
-                                </button>
+                                <a href="./settings-college.php" class="text-decoration-none text-dark">
+                                    <p class="m-0">College added succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
                             </div>
                         </div>
                     </div>

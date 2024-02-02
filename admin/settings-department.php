@@ -45,6 +45,17 @@ if (isset($_POST['add'])) {
 } else if (isset($_POST['cancel'])) {
 
     header('location: ./settings-department.php');
+} else if (isset($_POST['delete'])) {
+
+    $department->department_id = $_GET['id'];
+    $department->is_deleted = 1;
+
+    if ($department->delete()) {
+        $success = 'success';
+    } else {
+        echo 'An error occured while adding in the database.';
+        $success = 'failed';
+    }
 }
 
 
@@ -150,7 +161,7 @@ require_once('../includes/head.php');
                                             } else if (isset($_POST['save']) && isset($_POST['dept-name']) && !validate_field($_POST['dept-name'])) {
                                             ?>
                                                 <div class="mb-2 col-auto mb-2 p-0">
-                                                    <p class="fs-7 text-primary mb-2 ps-2">Update failed! department name is required.</p>
+                                                    <p class="fs-7 text-primary mb-2 ps-2">Update failed! Department name is required.</p>
                                                 </div>
                                         <?php
                                             }
@@ -203,9 +214,10 @@ require_once('../includes/head.php');
             </div>
         </div>
     </main>
-    <!-- semester modal  -->
+
+    <!-- modals  -->
     <?php
-    if (isset($_POST['save-sem']) && $success == 'success') {
+    if (isset($_POST['add']) && $success == 'success') {
     ?>
         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -213,9 +225,68 @@ require_once('../includes/head.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a href="./settings.php" class="text-decoration-none text-dark">
-                                    <p class="m-0">Semester has been successfully set up! <span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                <a  href="./settings-department.php" class="text-decoration-none text-dark">
+                                    <p class="m-0">Department added succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['save']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./settings-department.php" class="text-decoration-none text-dark">
+                                    <p class="m-0">Department updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['delete']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./settings-department.php" class="text-decoration-none text-dark">
+                                    <p class="m-0 text-dark">Department has been deleted! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['warning']) && isset($_GET['id'])) {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <?php
+                                $record = $department->fetch($_GET['id']);
+                                ?>
+                                <p class="m-0 text-dark">Are you sure you want to delete <span class="text-primary fw-bold"><?= $record['department_name'] ?></span>?</p>
+                                <form action="./settings-department.php?id=<?= $record['department_id'] ?>" method="post" class="mt-3">
+                                    <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 me-3 rounded border-0 fw-semibold" id="college-edit" name="cancel" value="Cancel"></input>
+                                    <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 ms-3 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ class Department
     public $department_id;
     public $college_id;
     public $department_name;
+    public $is_deleted;
 
     protected $db;
 
@@ -65,5 +66,20 @@ class Department
             $data = $query->fetch();
         }
         return $data;
+    }
+
+    function delete()
+    {
+        $sql = "UPDATE department SET is_deleted=:is_deleted WHERE department_id = :department_id;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':is_deleted', $this->is_deleted);
+        $query->bindParam(':department_id', $this->department_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
