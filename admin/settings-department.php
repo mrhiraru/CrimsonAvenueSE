@@ -118,26 +118,34 @@ require_once('../includes/head.php');
                                             ?>
                                         </div>
                                         <?php
-                                        if (isset($_POST['add']) && isset($_POST['col-id']) && !validate_field($_POST['col-id'])) {
+                                        if (isset($_POST['add']) && isset($_POST['col-id']) && isset($_POST['dept-name']) && !validate_field($_POST['col-id']) && !validate_field($_POST['dept-name'])) {
                                         ?>
                                             <div class="mb-2 col-auto mb-2 p-0">
-                                                <p class="fs-7 text-primary mb-2 ps-2">No college selected.</p>
+                                                <p class="fs-7 text-primary mb-2 ps-2">Please select a college and enter the department name.</p>
                                             </div>
-                                        <?php
-                                        }
+                                            <?php
+                                        } else {
+                                            if (isset($_POST['add']) && isset($_POST['col-id']) && !validate_field($_POST['col-id'])) {
+                                            ?>
+                                                <div class="mb-2 col-auto mb-2 p-0">
+                                                    <p class="fs-7 text-primary mb-2 ps-2">No college selected.</p>
+                                                </div>
+                                            <?php
+                                            }
 
-                                        if (isset($_POST['add']) && isset($_POST['dept-name']) && !validate_field($_POST['dept-name'])) {
-                                        ?>
-                                            <div class="mb-2 col-auto mb-2 p-0">
-                                                <p class="fs-7 text-primary mb-2 ps-2">Department name is required.</p>
-                                            </div>
+                                            if (isset($_POST['add']) && isset($_POST['dept-name']) && !validate_field($_POST['dept-name'])) {
+                                            ?>
+                                                <div class="mb-2 col-auto mb-2 p-0">
+                                                    <p class="fs-7 text-primary mb-2 ps-2">Department name is required.</p>
+                                                </div>
+                                            <?php
+                                            } else if (isset($_POST['save']) && isset($_POST['dept-name']) && !validate_field($_POST['dept-name'])) {
+                                            ?>
+                                                <div class="mb-2 col-auto mb-2 p-0">
+                                                    <p class="fs-7 text-primary mb-2 ps-2">Update failed! name is required.</p>
+                                                </div>
                                         <?php
-                                        } else if (isset($_POST['save']) && isset($_POST['dept-name']) && !validate_field($_POST['dept-name'])) {
-                                        ?>
-                                            <div class="mb-2 col-auto mb-2 p-0">
-                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! name is required.</p>
-                                            </div>
-                                        <?php
+                                            }
                                         }
                                         ?>
                                     </div>
@@ -154,7 +162,6 @@ require_once('../includes/head.php');
                                             <th scope="col"></th>
                                             <th scope="col">Department Name</th>
                                             <th scope="col">College Name</th>
-                                            <th scope="col" class="text-center"> N/A </th>
                                             <th scope="col" class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -167,7 +174,6 @@ require_once('../includes/head.php');
                                                 <td><?= $item['department_id'] ?></td>
                                                 <td> <?= $item['department_name'] ?> </td>
                                                 <td> <?= $item['college_name'] ?></td>
-                                                <td class="text-center"><?= "N/A" ?></td>
                                                 <td class="text-center text-nowrap">
                                                     <div class="m-0 p-0">
                                                         <form action="./settings-department.php?id=<?= $item['department_id'] ?>" method="post">
