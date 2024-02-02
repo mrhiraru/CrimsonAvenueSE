@@ -127,7 +127,7 @@ require_once('../includes/head.php');
                                 <div class="search-keyword col-12 col-lg-4 mb-2 p-0">
                                     <div class="input-group">
                                         <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
-                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1">Search</span>
+                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
                                     </div>
                                 </div>
                                 <table id="colleges" class="table table-lg mt-1">

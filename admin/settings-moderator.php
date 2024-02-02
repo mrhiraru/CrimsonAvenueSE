@@ -13,7 +13,37 @@ require_once('../classes/college.class.php');
 
 $moderator = new Moderator();
 if (isset($_POST['add'])) {
-}
+
+    $moderator->account_id = htmlentities($_POST['acc-id']);
+    $moderator->college_id = htmlentities($_POST['col-id']);
+
+    if (validate_field($moderator->account_id) && validate_field($moderator->college_id)) {
+        if ($moderator->add()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['save'])) {
+    $moderator->account_id = htmlentities($_POST['acc-id']);
+    $moderator->college_id = htmlentities($_POST['col-id']);
+    $moderator->moderator_id = $_GET['id'];
+
+    if (validate_field($moderator->account_id) && validate_field($moderator->college_id)) {
+        if ($moderator->edit()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['cancel'])) {
+
+    header('location: ./settings-moderator.php');
+} else if (isset($_POST['delete']))
 
 
 ?>
@@ -47,19 +77,27 @@ require_once('../includes/head.php');
                                         <div class="input-group mb-2 p-0 col-12">
                                             <?php
                                             if (isset($_POST['edit']) || isset($_POST['save'])) {
+                                                $record = $moderator->fetch($_GET['id']);
                                             ?>
                                                 <select id="acc-id" name="acc-id" class="form-select">
-                                                    <option value="">Select Moderator</option>
-                                                    <?php
-                                                    $moderatorArray = $moderator->show_mod();
-                                                    foreach ($moderatorArray as $item) { ?>
-                                                        <option value="<?= $item['account_id'] ?>"><?= $item['firstname'] . ' ' . $item['lastname'] ?></option>
-                                                    <?php
-                                                    }
-                                                    ?>
+                                                    <option value="<?= $record['account_id'] ?>" selected><?php if (isset($record['middlename'])) {
+                                                                                                                echo ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname']));
+                                                                                                            } else {
+                                                                                                                echo ucwords(strtolower($record['firstname'] . ' ' . $record['lastname']));
+                                                                                                            } ?></option>
                                                 </select>
                                                 <select id="col-id" name="col-id" class="form-select">
                                                     <option value="">Select College</option>
+                                                    <?php
+                                                    $college = new College();
+                                                    $collegeArray = $college->show();
+                                                    foreach ($collegeArray as $item) { ?>
+                                                        <option value="<?= $item['college_id'] ?>" <?php if ((isset($_POST['col-id']) && $_POST['col-id'] == $item['college_id']) || (isset($_POST['edit']) && $record['college_id'] == $item['college_id'])) {
+                                                                                                        echo 'selected';
+                                                                                                    } ?>><?= $item['college_name'] ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
                                                 </select>
                                                 <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel" value="Cancel">
                                                 <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save" value="Save">
@@ -69,22 +107,26 @@ require_once('../includes/head.php');
                                                 <select id="acc-id" name="acc-id" class="form-select">
                                                     <option value="">Select Moderator</option>
                                                     <?php
-                                                    $moderatorArray = $moderator->show_mod();
+                                                    $moderatorArray = $moderator->show_unassigned();
                                                     foreach ($moderatorArray as $item) { ?>
-                                                        <option value="<?= $item['account_id'] ?>"><?php if(isset($item['middlename'])) { echo $item['firstname'].' '.$item['middlename'].' '.$item['lastname']; } else { echo $item['firstname'].' '.$item['lastname']; } ?></option>
+                                                        <option value="<?= $item['account_id'] ?>"><?php if (isset($item['middlename'])) {
+                                                                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
+                                                                                                    } else {
+                                                                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
+                                                                                                    } ?></option>
                                                     <?php
                                                     }
                                                     ?>
                                                 </select>
                                                 <select id="col-id" name="col-id" class="form-select">
                                                     <option value="">Select College</option>
-                                                    <?php 
+                                                    <?php
                                                     $college = new College();
                                                     $collegeArray = $college->show();
-                                                    foreach($collegeArray as $item) {
-                                                        ?>
-                                                            <option value="<?= $item['college_id'] ?>"><?= $item['college_name'] ?></option>
-                                                        <?php
+                                                    foreach ($collegeArray as $item) {
+                                                    ?>
+                                                        <option value="<?= $item['college_id'] ?>"><?= $item['college_name'] ?></option>
+                                                    <?php
                                                     }
                                                     ?>
                                                 </select>
@@ -98,9 +140,46 @@ require_once('../includes/head.php');
                                 <div class="search-keyword col-12 col-lg-4 mb-2 p-0">
                                     <div class="input-group">
                                         <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
-                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1">Search</span>
+                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
                                     </div>
                                 </div>
+                                <table id="moderators" class="table table-lg mt-1">
+                                    <thead>
+                                        <tr class="align-middle">
+                                            <th scope="col"></th>
+                                            <th scope="col">Moderator Name</th>
+                                            <th scope="col">College Assigned</th>
+                                            <th scope="col" class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $moderatorArray = $moderator->show_assigned();
+                                        foreach ($moderatorArray as $item) {
+                                        ?>
+                                            <tr class="align-middle">
+                                                <td> <?= $item['moderator_id'] ?> </td>
+                                                <td><?php if (isset($item['middlename'])) {
+                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
+                                                    } else {
+                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
+                                                    } ?></td>
+
+                                                <td> <?= $item['college_name'] ?></td>
+                                                <td class="text-center text-nowrap">
+                                                    <div class="m-0 p-0">
+                                                        <form action="./settings-moderator.php?id=<?= $item['moderator_id'] ?>" method="post">
+                                                            <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="edit" value="Edit"></input>
+                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Remove"></input>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

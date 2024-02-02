@@ -33,7 +33,7 @@ if (isset($_POST['add'])) {
     $department->department_id = $_GET['id'];
     $department->college_id = htmlentities($_POST['col-id']);
 
-    if (validate_field($department->department_name)) {
+    if (validate_field($department->department_name) && validate_field($department->college_id)) {
         if ($department->edit()) {
             $success = 'success';
         } else {
@@ -98,7 +98,7 @@ require_once('../includes/head.php');
                                                     $college = new College();
                                                     $collegeArray = $college->show();
                                                     foreach ($collegeArray as $item) { ?>
-                                                        <option value="<?= $item['college_id'] ?>" <?php if ((isset($item['college_id']) && $item['college_id'] == $record['college_id']) || (isset($_POST['col-id']) && $_POST['col-id'] == $record['college_id'])) {
+                                                        <option value="<?= $item['college_id'] ?>" <?php if ((isset($_POST['col-id']) && $_POST['col-id'] == $item['college_id']) || (isset($_POST['edit']) && $record['college_id'] == $item['college_id'])) {
                                                                                                         echo 'selected';
                                                                                                     } ?>><?= $item['college_name'] ?></option>
                                                     <?php
@@ -163,6 +163,12 @@ require_once('../includes/head.php');
                                                 <div class="mb-2 col-auto mb-2 p-0">
                                                     <p class="fs-7 text-primary mb-2 ps-2">Update failed! Department name is required.</p>
                                                 </div>
+                                            <?php
+                                            } else if (isset($_POST['save']) && isset($_POST['col-id']) && !validate_field($_POST['col-id'])) {
+                                            ?>
+                                                <div class="mb-2 col-auto mb-2 p-0">
+                                                    <p class="fs-7 text-primary mb-2 ps-2">Update failed! No college selected.</p>
+                                                </div>
                                         <?php
                                             }
                                         }
@@ -172,7 +178,7 @@ require_once('../includes/head.php');
                                 <div class="search-keyword col-12 col-lg-4 mb-2 p-0">
                                     <div class="input-group">
                                         <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
-                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1">Search</span>
+                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
                                     </div>
                                 </div>
                                 <table id="departments" class="table table-lg mt-1">
