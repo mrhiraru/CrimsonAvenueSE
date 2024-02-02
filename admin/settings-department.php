@@ -28,6 +28,19 @@ if (isset($_POST['add'])) {
     } else {
         $success = 'failed';
     }
+} else if (isset($_POST['save'])) {
+    $department->department_name = htmlentities($_POST['col-name']);
+    $department->department_id = $_GET['id'];
+
+    if (validate_field($department->department_name)) {
+        if ($college->edit()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
 }
 
 
@@ -62,20 +75,22 @@ require_once('../includes/head.php');
                                         <div class="input-group mb-2 p-0 col-12">
                                             <?php
                                             if (isset($_POST['edit'])) {
-                                                $record = $college->fetch($_GET['id']);
+                                                $record = $department->fetch($_GET['id']);
                                             ?>
-                                                <select id="col-id" name="col-id" class="form-select">
+                                                <select id="col-id" name="col-id" class="form-select" disabled>
                                                     <option value="">Select College</option>
                                                     <?php
                                                     $college = new College();
                                                     $collegeArray = $college->show();
                                                     foreach ($collegeArray as $item) { ?>
-                                                        <option value="<?= $item['college_id'] ?>"><?= $item['college_name'] ?></option>
+                                                        <option value="<?= $item['college_id'] ?>" <?php if (isset($item['college_id']) && $item['college_id'] == $record['college_id']) {
+                                                                                                        echo 'selected';
+                                                                                                    } ?>><?= $item['college_name'] ?></option>
                                                     <?php
                                                     }
                                                     ?>
                                                 </select>
-                                                <input type="text" class="form-control" id="dept-name" name="dept-name" placeholder="Department Name">
+                                                <input type="text" class="form-control" id="dept-name" name="dept-name" placeholder="Department Name" value="<?= $record['department_name'] ?>">
                                                 <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel" value="Cancel">
                                                 <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save" value="Save">
                                             <?php
@@ -87,18 +102,30 @@ require_once('../includes/head.php');
                                                     $college = new College();
                                                     $collegeArray = $college->show();
                                                     foreach ($collegeArray as $item) { ?>
-                                                        <option value="<?= $item['college_id'] ?>"><?= $item['college_name'] ?></option>
+                                                        <option value="<?= $item['college_id'] ?>" <?php if (isset($_POST['col-id']) && $_POST['col-id'] == $item['college_id']) {
+                                                                                                        echo 'selected';
+                                                                                                    } ?>><?= $item['college_name'] ?></option>
                                                     <?php
                                                     }
                                                     ?>
                                                 </select>
-                                                <input type="text" class="form-control" id="dept-name" name="dept-name" placeholder="Department Name">
+                                                <input type="text" class="form-control" id="dept-name" name="dept-name" placeholder="Department Name" value="<?php if (isset($_POST['dept-name'])) {
+                                                                                                                                                                    echo $_POST['dept-name'];
+                                                                                                                                                                } ?>">
                                                 <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="add" value="Add">
                                             <?php
                                             }
                                             ?>
                                         </div>
                                         <?php
+                                        if (isset($_POST['add']) && isset($_POST['col-id']) && !validate_field($_POST['col-id'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">No college selected.</p>
+                                            </div>
+                                        <?php
+                                        }
+
                                         if (isset($_POST['add']) && isset($_POST['dept-name']) && !validate_field($_POST['dept-name'])) {
                                         ?>
                                             <div class="mb-2 col-auto mb-2 p-0">
@@ -133,7 +160,7 @@ require_once('../includes/head.php');
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $deptartmentArray = $department->show();
+                                        $departmentArray = $department->show();
                                         foreach ($departmentArray as $item) {
                                         ?>
                                             <tr class="align-middle">
@@ -143,7 +170,7 @@ require_once('../includes/head.php');
                                                 <td class="text-center"><?= "N/A" ?></td>
                                                 <td class="text-center text-nowrap">
                                                     <div class="m-0 p-0">
-                                                        <form action="./settings-college.php?id=<?= $item['college_id'] ?>" method="post">
+                                                        <form action="./settings-department.php?id=<?= $item['department_id'] ?>" method="post">
                                                             <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="edit" value="Edit"></input>
                                                             <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Delete"></input>
                                                         </form>

@@ -47,11 +47,22 @@ class Department
 
     function show()
     {
-        $sql = "SELECT d.*, c.college_name FROM department d JOIN college c ON d.college_id = c.college_id WHERE d.is_deleted != 1 ORDER BY d.department_id ASC;";
+        $sql = "SELECT d.*, c.college_name FROM department d JOIN college c ON d.college_id = c.college_id WHERE d.is_deleted != 1 AND c.is_deleted != 1 ORDER BY d.department_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {
             $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function fetch($department_id)
+    {
+        $sql = "SELECT d.*, c.college_name FROM department d JOIN college c ON d.college_id = c.college_id WHERE department_id = :department_id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':department_id', $department_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
         }
         return $data;
     }
