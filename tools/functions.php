@@ -29,6 +29,21 @@ function validate_email($email)
     }
 }
 
+function validate_affiliation($affiliation, $college, $department)
+{
+    if (isset($affiliation) && $affiliation == 'Non-student') {
+        return true;
+    } else if (isset($affiliation) && $affiliation != 'Non-student') {
+        if (validate_field($college) && validate_field($department)) {
+            return true;
+        } else if (validate_field($college) && $college->count_department($college) == 0) {
+            return true;
+        }
+    } else {
+        return false;
+    }
+}
+
 function validate_wmsu_email($email, $affiliation)
 {
     // Check if the affiliation is 'Student'
@@ -82,7 +97,8 @@ function generate_code()
     return $code;
 }
 
-function check_date($sdate, $edate) {
+function check_date($sdate, $edate)
+{
     $start = htmlentities($sdate);
     $end = htmlentities($edate);
 

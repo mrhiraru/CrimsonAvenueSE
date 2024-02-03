@@ -49,6 +49,7 @@ if (!isset($_SESSION['code'])) {
 // Change title for each page.
 $title = "Verify | Crimson Avenue";
 require_once('../includes/head.php');
+include_once('../includes/preloader.php');
 ?>
 
 <body class="bg-tertiary">

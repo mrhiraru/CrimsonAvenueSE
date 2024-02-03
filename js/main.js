@@ -1,3 +1,12 @@
+// preloader js
+const loader_container = document.querySelector('.loader-container');
+window.addEventListener('load', () => {
+    loader_container.classList.add('fade-out-animation');
+    setTimeout(() => {
+        loader_container.style.display = 'none';
+    }, 5000);
+});
+
 // contact number validate input
 function validateinput(input) {
   input.value = input.value.replace(/[^0-9]/g, "");

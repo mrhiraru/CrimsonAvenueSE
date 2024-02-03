@@ -15,6 +15,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 $title = "Home | Crimson Avenue";
 $index_page = "active";
 require_once('./includes/head.php');
+include_once('./includes/preloader.php');
 ?>
 
 <body>

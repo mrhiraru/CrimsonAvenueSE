@@ -80,4 +80,15 @@ class College
             return false;
         }
     }
+
+    function count_department($college_id) {
+        $sql = "SELECT c.* COUNT(d.college_id) as dept_count FROM college c LEFT JOIN department d ON c.college_id = d.college_id AND d.is_deleted != 1 WHERE c.college_id = :college_id AND c.is_deleted != 1";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_id', $college_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
 }

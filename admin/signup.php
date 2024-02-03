@@ -33,8 +33,8 @@ if (isset($_POST['signup'])) {
         $account->gender = '';
     }
 
-    $account->college = htmlentities($_POST['college']);
-    $account->department = htmlentities($_POST['department']);
+    $account->college_id = htmlentities($_POST['college']);
+    $account->department_id = htmlentities($_POST['department']);
 
     $account->contact = htmlentities($_POST['contact']);
     $account->user_role = 0; // user_role (0 = admin, 1 = mod, 2 = user)
@@ -47,8 +47,8 @@ if (isset($_POST['signup'])) {
         // validate_field($account->middlename) &&
         validate_field($account->lastname) &&
         validate_field($account->gender) &&
-        validate_field($account->college) &&
-        validate_field($account->department) &&
+        validate_field($account->college_id) &&
+        validate_field($account->department_id) &&
         validate_field($account->contact) &&
         validate_password($account->password) &&
         validate_cpw($account->password, $_POST['confirm-password']) &&
@@ -74,6 +74,7 @@ if (isset($_POST['signup'])) {
 // Change title for each page.
 $title = "Admin Signup | Crimson Avenue";
 require_once('../includes/head.php');
+include_once('../includes/preloader.php');
 ?>
 
 <body class="bg-tertiary" onload="affiliation_effect()">

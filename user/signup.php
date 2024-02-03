@@ -5,6 +5,7 @@ if (isset($_SESSION['user_role'])) {
     header('location: ../index.php');
 }
 
+require_once("../classes/college.class.php");
 require_once("../classes/account.class.php");
 require_once("../tools/functions.php");
 
@@ -30,13 +31,19 @@ if (isset($_POST['signup'])) {
     } else {
         $account->gender = '';
     }
+
+    $college = new College();
     if ($account->affiliation == 'Non-student') {
-        $account->college = 'No College';
-        $account->department = 'No Department';
+        $account->college_id = null;
+        $account->department_id = null;
+    }  else if ($account->affiliation != 'Non-student' && $college->count_department($account->college_id) == 0) {
+        $account->college_id = htmlentities($_POST['college']);;
+        $account->department_id = null;
     } else {
-        $account->college = htmlentities($_POST['college']);
-        $account->department = htmlentities($_POST['department']);
+        $account->college_id = htmlentities($_POST['college']);
+        $account->department_id = htmlentities($_POST['department']);
     }
+    
     $account->contact = htmlentities($_POST['contact']);
     $account->user_role = 2; // user_role (0 = admin, 1 = mod, 2 = user)
 
@@ -48,8 +55,7 @@ if (isset($_POST['signup'])) {
         // validate_field($account->middlename) &&
         validate_field($account->lastname) &&
         validate_field($account->gender) &&
-        validate_field($account->college) &&
-        validate_field($account->department) &&
+        validate_affiliation($account->affiliation, $account->college_id, $account->department_id) &&
         validate_field($account->contact) &&
         validate_password($account->password) &&
         validate_cpw($account->password, $_POST['confirm-password']) &&
@@ -75,6 +81,7 @@ if (isset($_POST['signup'])) {
 // Change title for each page.
 $title = "Signup | Crimson Avenue";
 require_once('../includes/head.php');
+include_once('../includes/preloader.php');
 ?>
 
 <body class="bg-tertiary" onload="affiliation_effect()">

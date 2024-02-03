@@ -41,6 +41,7 @@ if (isset($_POST['login'])) {
 // Change title for each page.
 $title = "Login | Crimson Avenue";
 require_once('../includes/head.php');
+include_once('../includes/preloader.php');
 ?>
 
 <body class="bg-tertiary">

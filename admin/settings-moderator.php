@@ -56,6 +56,7 @@ $title = "Settings | Crimson Avenue";
 $settings_page = "active";
 $moderator_page = "active";
 require_once('../includes/head.php');
+include_once('../includes/preloader.php');
 ?>
 
 <body>

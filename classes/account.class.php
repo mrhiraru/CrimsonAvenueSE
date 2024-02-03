@@ -11,8 +11,8 @@ class Account
     public $middlename;
     public $lastname;
     public $gender;
-    public $college;
-    public $department;
+    public $college_id;
+    public $department_id;
     public $contact;
 
     public $user_role;
@@ -50,7 +50,7 @@ class Account
 
     function add()
     {
-        $sql = "INSERT INTO account (email, password, affiliation, firstname, middlename, lastname, gender, college, department, contact, user_role) VALUES (:email, :password, :affiliation, :firstname, :middlename, :lastname, :gender, :college, :department, :contact, :user_role)";
+        $sql = "INSERT INTO account (email, password, affiliation, firstname, middlename, lastname, gender, college_id, department_id, contact, user_role) VALUES (:email, :password, :affiliation, :firstname, :middlename, :lastname, :gender, :college_id, :department_id, :contact, :user_role)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':email', $this->email);
@@ -61,8 +61,8 @@ class Account
         $query->bindParam('middlename', $this->middlename);
         $query->bindParam('lastname', $this->lastname);
         $query->bindParam('gender', $this->gender);
-        $query->bindParam('college', $this->college);
-        $query->bindParam('department', $this->department);
+        $query->bindParam('college_id', $this->college_id);
+        $query->bindParam('department_id', $this->department_id);
         $query->bindParam('contact', $this->contact);
         $query->bindParam('user_role', $this->user_role);
 
