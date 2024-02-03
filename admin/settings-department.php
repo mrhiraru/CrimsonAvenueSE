@@ -142,6 +142,12 @@ require_once('../includes/head.php');
                                             <div class="mb-2 col-auto mb-2 p-0">
                                                 <p class="fs-7 text-primary mb-2 ps-2">Please select a college and enter the department name.</p>
                                             </div>
+                                        <?php
+                                        } else if (isset($_POST['save']) && isset($_POST['col-id']) && isset($_POST['dept-name']) && !validate_field($_POST['col-id']) && !validate_field($_POST['dept-name'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Update Failed! Please select a college and enter the department name.</p>
+                                            </div>
                                             <?php
                                         } else {
                                             if (isset($_POST['add']) && isset($_POST['col-id']) && !validate_field($_POST['col-id'])) {
