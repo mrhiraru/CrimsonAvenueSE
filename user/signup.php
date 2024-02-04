@@ -356,7 +356,7 @@ require_once('../includes/head.php');
 
         function show_department(str) {
             if (str == "") {
-                document.getElementById("department").innerHTML = '<option value="">Select Department</option>';
+                document.getElementById("department").innerHTML = '<option value="">Select Department (College Required)</option>';
                 return;
             } else {
                 var xmlhttp = new XMLHttpRequest();

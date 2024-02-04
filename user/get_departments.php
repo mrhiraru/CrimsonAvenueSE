@@ -25,7 +25,7 @@ if (count($departmentArray) != 0) {
     <?php
     } else {
     ?>
-        <option value="">Select Department</option>
+        <option value="">Select Department (College Required)</option>
 <?php
     }
 }
