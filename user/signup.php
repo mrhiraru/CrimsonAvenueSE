@@ -36,14 +36,11 @@ if (isset($_POST['signup'])) {
     if ($account->affiliation == 'Non-student') {
         $account->college_id = null;
         $account->department_id = null;
-    }  else if ($account->affiliation != 'Non-student' && $college->count_department($account->college_id) == 0) {
-        $account->college_id = htmlentities($_POST['college']);;
-        $account->department_id = null;
     } else {
         $account->college_id = htmlentities($_POST['college']);
         $account->department_id = htmlentities($_POST['department']);
     }
-    
+
     $account->contact = htmlentities($_POST['contact']);
     $account->user_role = 2; // user_role (0 = admin, 1 = mod, 2 = user)
 
@@ -55,7 +52,8 @@ if (isset($_POST['signup'])) {
         // validate_field($account->middlename) &&
         validate_field($account->lastname) &&
         validate_field($account->gender) &&
-        validate_affiliation($account->affiliation, $account->college_id, $account->department_id) &&
+        validate_field($account->college_id) &&
+        validate_field($account->department_id) &&
         validate_field($account->contact) &&
         validate_password($account->password) &&
         validate_cpw($account->password, $_POST['confirm-password']) &&
@@ -81,7 +79,6 @@ if (isset($_POST['signup'])) {
 // Change title for each page.
 $title = "Signup | Crimson Avenue";
 require_once('../includes/head.php');
-include_once('../includes/preloader.php');
 ?>
 
 <body class="bg-tertiary" onload="affiliation_effect()">
@@ -90,7 +87,7 @@ include_once('../includes/preloader.php');
             <div class="col-8 p-0">
                 <a class="navbar-brand h-1 fs-3 fw-bolder me-auto d-flex align-items-center text-white" href="../index.php">
                     <img src="../images/main/ca-nospace.png" alt="" width="40" height="40" class="d-inline-block me-2">
-                    <span class="d-lg-inline d-md-inline d-none">Crimson Avenue </span>
+                    <span class="d-lg-inline d-md-inline d-none">Crimson Avenue</span>
                 </a>
             </div>
         </div>
@@ -281,11 +278,18 @@ include_once('../includes/preloader.php');
                     ?>
                 </div>
                 <div class="mb-2 p-0 col-12 d-none" id="college_div">
-                    <select name="college" id="college" class="form-select">
+                    <select name="college" id="college" class="form-select" onchange="show_department(this.value)">
                         <option value="">Select College</option>
-                        <option value="Computing Studies" <?php if (isset($_POST['college']) && $_POST['college'] == 'Computing Studies') {
-                                                                echo 'selected';
-                                                            } ?>>Computing Studies</option>
+                        <?php
+                        $college = new College();
+                        $collegeArray = $college->show();
+                        foreach ($collegeArray as $item) { ?>
+                            <option value="<?= $item['college_id'] ?>" <?php if ((isset($_POST['college']) && $_POST['college'] == $item['college_id'])) {
+                                                                            echo 'selected';
+                                                                        } ?>><?= $item['college_name'] ?></option>
+                        <?php
+                        }
+                        ?>
                     </select>
                     <?php
                     if (isset($_POST['college']) && !validate_field($_POST['college'])) {
@@ -296,17 +300,15 @@ include_once('../includes/preloader.php');
                     ?>
                 </div>
                 <div class="mb-2 p-0 col-12 d-none" id="department_div">
+                    <?php
+                    ?>
                     <select name="department" id="department" class="form-select">
-                        <option value="">Select Department</option>
-                        <option value="Computer Science" <?php if (isset($_POST['department']) && $_POST['department'] == 'Computer Science') {
-                                                                echo 'selected';
-                                                            } ?>>Computer Science</option>
-                        <option value="Information Technology" <?php if (isset($_POST['department']) && $_POST['department'] == 'Information Technology') {
-                                                                    echo 'selected';
-                                                                } ?>>Information Technology</option>
+                        <?php
+                        require_once("../user/get_departments.php");
+                        ?>
                     </select>
                     <?php
-                    if (isset($_POST['department']) && !validate_field($_POST['department'])) {
+                    if (isset($_POST['department']) && !validate_field($_POST['department']) && $college->count_department($_POST['college'] != 0)) {
                     ?>
                         <p class="fs-7 text-primary m-0 ps-2">No department selected.</p>
                     <?php
@@ -348,9 +350,25 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/js.php');
     ?>
-    <script>
+    <script type="text/javascript">
         var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
-        myModal.show()
+        myModal.show();
+
+        function show_department(str) {
+            if (str == "") {
+                document.getElementById("department").innerHTML = '<option value="">Select Department</option>';
+                return;
+            } else {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("department").innerHTML = this.responseText;
+                    }
+                };
+                xmlhttp.open("GET", "get_departments.php?id=" + str, true);
+                xmlhttp.send();
+            }
+        }
     </script>
 
 </body>

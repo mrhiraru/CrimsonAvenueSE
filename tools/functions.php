@@ -29,14 +29,15 @@ function validate_email($email)
     }
 }
 
-function validate_affiliation($affiliation, $college, $department)
+function validate_affiliation($affiliation, $col, $dep)
 {
+    $college = new College();
     if (isset($affiliation) && $affiliation == 'Non-student') {
         return true;
     } else if (isset($affiliation) && $affiliation != 'Non-student') {
-        if (validate_field($college) && validate_field($department)) {
+        if (validate_field($col) && validate_field($dep)) {
             return true;
-        } else if (validate_field($college) && $college->count_department($college) == 0) {
+        } else if (validate_field($col) && $college->count_department($col) == 0) {
             return true;
         }
     } else {
