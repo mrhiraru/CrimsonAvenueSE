@@ -79,6 +79,7 @@ if (isset($_POST['signup'])) {
 // Change title for each page.
 $title = "Signup | Crimson Avenue";
 require_once('../includes/head.php');
+include_once('../includes/preloader.php');
 ?>
 
 <body class="bg-tertiary" onload="affiliation_effect()">
