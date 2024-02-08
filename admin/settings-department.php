@@ -199,11 +199,12 @@ include_once('../includes/preloader.php');
                                     </thead>
                                     <tbody>
                                         <?php
+                                        $counter = 1;
                                         $departmentArray = $department->show();
                                         foreach ($departmentArray as $item) {
                                         ?>
                                             <tr class="align-middle">
-                                                <td><?= $item['department_id'] ?></td>
+                                                <td> <?= $counter ?> </td>
                                                 <td> <?= $item['department_name'] ?> </td>
                                                 <td> <?= $item['college_name'] ?></td>
                                                 <td class="text-center text-nowrap">
@@ -216,6 +217,7 @@ include_once('../includes/preloader.php');
                                                 </td>
                                             </tr>
                                         <?php
+                                            $counter++;
                                         }
                                         ?>
                                     </tbody>

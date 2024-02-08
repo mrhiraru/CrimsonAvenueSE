@@ -143,11 +143,12 @@ include_once('../includes/preloader.php');
                                     </thead>
                                     <tbody>
                                         <?php
+                                        $counter = 1;
                                         $collegeArray = $college->show();
                                         foreach ($collegeArray as $item) {
                                         ?>
                                             <tr class="align-middle">
-                                                <td><?= $item['college_id'] ?></td>
+                                                <td><?= $counter ?></td>
                                                 <td> <?= $item['college_name'] ?> </td>
                                                 <td class="text-center"><?= $item['dept_count'] ?></td>
                                                 <td class="text-center"><?= 0 ?></td>
@@ -161,6 +162,7 @@ include_once('../includes/preloader.php');
                                                 </td>
                                             </tr>
                                         <?php
+                                            $counter++;
                                         }
                                         ?>
                                     </tbody>

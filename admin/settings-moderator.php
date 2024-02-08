@@ -164,11 +164,12 @@ include_once('../includes/preloader.php');
                                     </thead>
                                     <tbody>
                                         <?php
+                                        $counter = 1;
                                         $moderatorArray = $moderator->show_assigned();
                                         foreach ($moderatorArray as $item) {
                                         ?>
                                             <tr class="align-middle">
-                                                <td> <?= $item['moderator_id'] ?> </td>
+                                                <td> <?= $counter ?> </td>
                                                 <td><?php if (isset($item['middlename'])) {
                                                         echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
                                                     } else {
@@ -186,6 +187,7 @@ include_once('../includes/preloader.php');
                                                 </td>
                                             </tr>
                                         <?php
+                                            $counter++;
                                         }
                                         ?>
                                     </tbody>

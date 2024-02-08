@@ -71,7 +71,7 @@ class Moderator
 
     function show_unassigned()
     {
-        $sql = "SELECT * FROM account WHERE is_deleted != 1 AND user_role = 1 AND NOT EXISTS (SELECT 1 FROM moderator WHERE moderator.account_id = account.account_id AND moderator.is_deleted != 1) ORDER BY account_id ASC;";
+        $sql = "SELECT * FROM account a WHERE is_deleted != 1 AND user_role = 1 AND NOT EXISTS (SELECT 1 FROM moderator m WHERE m.account_id = a.account_id AND m.is_deleted != 1) ORDER BY account_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {
