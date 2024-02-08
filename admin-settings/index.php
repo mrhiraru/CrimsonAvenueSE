@@ -63,20 +63,20 @@ include_once('../includes/preloader.php');
                             <div class="row h-auto d-flex justify-content-start m-0 p-0">
                                 <form method="post" action="" class="col-12 col-lg-7">
                                     <div class="row">
-                                        <div class="input-group mb-2 p-0 col-12">
-                                            <span class="input-group-text" id="basic-addon1">Start</span>
+                                        <div class="input-group mb-2 p-0 col-12 col-lg-6">
+                                            <span class="input-group-text" id="basic-addon1">Start Date:</span>
                                             <input type="date" class="form-control" id="sdate" name="sdate" placeholder="YYYY-MM-DD" value="<?php if (isset($_POST['sdate'])) {
                                                                                                                                                 echo $_POST['sdate'];
                                                                                                                                             } ?>" required>
 
-
-                                            <span class="input-group-text" id="basic-addon1">End</span>
+                                        </div>
+                                        <div class="input-group mb-2 p-0 col-12 col-lg-6">
+                                            <span class="input-group-text" id="basic-addon1">End Date:</span>
                                             <input type="date" class="form-control" id="edate" name="edate" placeholder="End Date" value="<?php if (isset($_POST['edate'])) {
                                                                                                                                                 echo $_POST['edate'];
                                                                                                                                             } ?>" required>
-
                                         </div>
-                                        <div class="input-group mb-2 p-0 col-12">
+                                        <div class="input-group mb-2 p-0 col-12 col-lg-6">
                                             <input type="number" min="1" max="3" pattern="[1-3]" class="form-control" id="sem" name="sem" placeholder="Semester" oninput="validateinputsem(this)" value="<?php if (isset($_POST['sem'])) {
                                                                                                                                                                                                                 echo $_POST['sem'];
                                                                                                                                                                                                             } ?>" required>
@@ -101,7 +101,7 @@ include_once('../includes/preloader.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a href="./settings.php" class="text-decoration-none text-dark">
+                                <a href="./index.php" class="text-decoration-none text-dark">
                                     <p class="m-0">Semester has been successfully set up! <span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>

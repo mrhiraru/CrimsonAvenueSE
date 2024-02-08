@@ -184,7 +184,7 @@ include_once('../includes/preloader.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a href="./settings-college.php" class="text-decoration-none text-dark">
+                                <a href="./college.php" class="text-decoration-none text-dark">
                                     <p class="m-0">College added succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
@@ -202,7 +202,7 @@ include_once('../includes/preloader.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a href="./settings-college.php" class="text-decoration-none text-dark">
+                                <a href="./college.php" class="text-decoration-none text-dark">
                                     <p class="m-0">College updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
@@ -220,7 +220,7 @@ include_once('../includes/preloader.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a href="./settings-college.php" class="text-decoration-none text-dark">
+                                <a href="./college.php" class="text-decoration-none text-dark">
                                     <p class="m-0 text-dark">College has been deleted! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
@@ -242,7 +242,7 @@ include_once('../includes/preloader.php');
                                 $record = $college->fetch($_GET['id']);
                                 ?>
                                 <p class="m-0 text-dark">Are you sure you want to delete <span class="text-primary fw-bold"><?= $record['college_name'] ?></span>?</p>
-                                <form action="./settings-college.php?id=<?= $record['college_id'] ?>" method="post" class="mt-3">
+                                <form action="./college.php?id=<?= $record['college_id'] ?>" method="post" class="mt-3">
                                     <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 me-3 rounded border-0 fw-semibold" id="college-edit" name="cancel" value="Cancel"></input>
                                     <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 ms-3 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
                                 </form>
