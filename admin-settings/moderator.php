@@ -218,7 +218,6 @@ include_once('../includes/preloader.php');
                                                     } else {
                                                         echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
                                                     } ?></td>
-
                                                 <td> <?= $item['college_name'] ?></td>
                                                 <td class="text-center text-nowrap">
                                                     <div class="m-0 p-0">

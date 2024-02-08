@@ -72,27 +72,6 @@ include_once('../includes/preloader.php');
     </main>
     <!-- semester modal  -->
     <?php
-    if (isset($_POST['save-sem']) && $success == 'success') {
-    ?>
-        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="row d-flex">
-                            <div class="col-12 text-center">
-                                <a href="./settings.php" class="text-decoration-none text-dark">
-                                    <p class="m-0">Semester has been successfully set up! <span class="text-primary fw-bold">Click to Continue</span>.</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php
-    }
-    ?>
-    <?php
     require_once('../includes/js.php');
     ?>
     <script>

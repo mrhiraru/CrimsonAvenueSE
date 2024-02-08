@@ -105,32 +105,24 @@
             </div>
             <div class="accordion-item border-0">
                 <h2 class="accordion-header" id="flush-headingFour">
-                    <button class="accordion-button  px-2 pt-2 pb-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                        <p class="nav-link text-secondary fw-semibold m-0 <?= $users_page ?>" href="../admin/user.php">
+                    <button class="accordion-button  px-2 pt-2 pb-3 <?php if(!isset($users_page)) { echo 'collapsed'; }  ?>" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="<?php if(isset($users_page)) { echo 'true'; } else { echo 'false'; } ?>" aria-controls="flush-collapseFour">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $users_page ?>">
                             <i class="fa-solid fa-address-book"></i>
                             Users
                         </p>
                     </button>
                 </h2>
-                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseFour" class="accordion-collapse collapse <?php if(isset($users_page)) { echo 'show'; } ?>" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
-                                    <i class="fa-solid fa-chart-line"></i>
-                                    Dashboard
+                                <a class="nav-link text-secondary fw-semibold <?= $user_page ?>" aria-current="page" href="../admin-users/index.php">
+                                    Users List
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
-                                    <i class="fa-solid fa-boxes-stacked"></i>
-                                    Products
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
-                                    <i class="fa-solid fa-store"></i>
-                                    Stores
+                                <a class="nav-link text-secondary fw-semibold <?= $add_page ?>" href="../admin/product.php">
+                                    Create Account
                                 </a>
                             </li>
                         </ul>
@@ -208,7 +200,7 @@
             <div class="accordion-item border-0">
                 <h2 class="accordion-header" id="flush-headingSeven">
                     <button class="accordion-button  px-2 pt-2 pb-3 <?php if(!isset($settings_page)) { echo 'collapsed'; }  ?>" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="<?php if(isset($settings_page)) { echo 'true'; } else { echo 'false'; } ?>" aria-controls="flush-collapseSeven">
-                        <p class="nav-link text-secondary fw-semibold m-0 <?= $settings_page ?>" href="../admin/settings.php">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $settings_page ?>">
                             <i class="fa-solid fa-gear"></i>
                             Settings
                         </p>

@@ -14,6 +14,8 @@ class Account
     public $college_id;
     public $department_id;
     public $contact;
+    public $profile_image;
+    public $restriction_status;
 
     public $user_role;
     public $verification_status;
