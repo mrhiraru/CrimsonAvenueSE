@@ -78,7 +78,7 @@ include_once('../includes/preloader.php');
                                                                         } else if ($item['user_role'] == 2) {
                                                                             echo 'User';
                                                                         } ?></td>
-                                                <td class="text-center"><?= 'No Data Restriction' ?></td>
+                                                <td class="text-center"><?= $item['restriction_status'] ?></td>
                                                 <td class="text-center text-nowrap">
                                                     <div class="m-0 p-0">
                                                         <a href="./user-view.php" type="button" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold text-decoration-none">View</a>

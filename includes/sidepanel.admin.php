@@ -121,7 +121,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $add_page ?>" href="../admin/product.php">
+                                <a class="nav-link text-secondary fw-semibold <?= $create_page ?>" href="../admin-users/create.php">
                                     Create Account
                                 </a>
                             </li>
