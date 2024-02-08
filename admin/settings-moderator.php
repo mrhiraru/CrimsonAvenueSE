@@ -145,6 +145,49 @@ include_once('../includes/preloader.php');
                                             }
                                             ?>
                                         </div>
+                                        <?php
+                                        if (isset($_POST['add']) && isset($_POST['acc-id']) && isset($_POST['col-id']) && !validate_field($_POST['acc-id']) && !validate_field($_POST['col-id'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Please select moderator and college.</p>
+                                            </div>
+                                        <?php
+                                        } else if (isset($_POST['save']) && isset($_POST['acc-id']) && isset($_POST['col-id']) && !validate_field($_POST['acc-id']) && !validate_field($_POST['col-id'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Update Failed! Please select moderator and college.</p>
+                                            </div>
+                                            <?php
+                                        } else {
+                                            if (isset($_POST['add']) && isset($_POST['acc-id']) && !validate_field($_POST['acc-id'])) {
+                                            ?>
+                                                <div class="mb-2 col-auto mb-2 p-0">
+                                                    <p class="fs-7 text-primary mb-2 ps-2">No moderator selected.</p>
+                                                </div>
+                                            <?php
+                                            }
+
+                                            if (isset($_POST['add']) && isset($_POST['col-id']) && !validate_field($_POST['col-id'])) {
+                                            ?>
+                                                <div class="mb-2 col-auto mb-2 p-0">
+                                                    <p class="fs-7 text-primary mb-2 ps-2">No college selected.</p>
+                                                </div>
+                                            <?php
+                                            } else if (isset($_POST['save']) && isset($_POST['acc-id']) && !validate_field($_POST['acc-id'])) {
+                                            ?>
+                                                <div class="mb-2 col-auto mb-2 p-0">
+                                                    <p class="fs-7 text-primary mb-2 ps-2">Update failed! No moderator selected.</p>
+                                                </div>
+                                            <?php
+                                            } else if (isset($_POST['save']) && isset($_POST['col-id']) && !validate_field($_POST['col-id'])) {
+                                            ?>
+                                                <div class="mb-2 col-auto mb-2 p-0">
+                                                    <p class="fs-7 text-primary mb-2 ps-2">Update failed! No college selected.</p>
+                                                </div>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
                                     </div>
                                 </form>
                                 <div class="search-keyword col-12 col-lg-4 mb-2 p-0">

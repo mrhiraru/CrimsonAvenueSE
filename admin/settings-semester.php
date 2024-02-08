@@ -60,58 +60,26 @@ include_once('../includes/preloader.php');
                 <main class="col-md-9 col-lg-10 p-4">
                     <div class="row m-0 p-0 h-100">
                         <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
-                            <div class="row h-auto d-flex justify-content-center m-0 p-0">
-                                <form method="post" action="" class="col-12">
+                            <div class="row h-auto d-flex justify-content-start m-0 p-0">
+                                <form method="post" action="" class="col-12 col-lg-7">
                                     <div class="row">
-                                        <div class="mb-2 col-md-6">
-                                            <label for="sdate" class="form-label">Start Date:</label>
-                                            <input type="datetime-local" class="form-control" id="sdate" name="sdate" value="<?php if (isset($_POST['sdate'])) {
-                                                                                                                                    echo $_POST['sdate'];
-                                                                                                                                } ?>" required>
-                                            <?php
-                                            if (isset($_POST['sdate']) && !validate_field($_POST['sdate'])) {
-                                            ?>
-                                                <p class="fs-7 text-primary m-0 ps-2">Start date is required.</p>
-                                            <?php
-                                            } else if (isset($_POST['sdate']) && !check_date($_POST['sdate'], $_POST['edate'])) {
-                                            ?>
-                                                <p class="fs-7 text-primary m-0 ps-2">Start date can't be later than the end date.</p>
-                                            <?php
-                                            }
-                                            ?>
+                                        <div class="input-group mb-2 p-0 col-12">
+                                            <span class="input-group-text" id="basic-addon1">Start</span>
+                                            <input type="date" class="form-control" id="sdate" name="sdate" placeholder="YYYY-MM-DD" value="<?php if (isset($_POST['sdate'])) {
+                                                                                                                                                echo $_POST['sdate'];
+                                                                                                                                            } ?>" required>
+
+
+                                            <span class="input-group-text" id="basic-addon1">End</span>
+                                            <input type="date" class="form-control" id="edate" name="edate" placeholder="End Date" value="<?php if (isset($_POST['edate'])) {
+                                                                                                                                                echo $_POST['edate'];
+                                                                                                                                            } ?>" required>
+
                                         </div>
-                                        <div class="mb-2 col-md-6">
-                                            <label for="edate" class="form-label">End Date:</label>
-                                            <input type="datetime-local" class="form-control" id="edate" name="edate" value="<?php if (isset($_POST['edate'])) {
-                                                                                                                                    echo $_POST['edate'];
-                                                                                                                                } ?>" required>
-                                            <?php
-                                            if (isset($_POST['edate']) && !validate_field($_POST['edate'])) {
-                                            ?>
-                                                <p class="fs-7 text-primary m-0 ps-2">End date is required.</p>
-                                            <?php
-                                            } else if (isset($_POST['edate']) && !check_date($_POST['sdate'], $_POST['edate'])) {
-                                            ?>
-                                                <p class="fs-7 text-primary m-0 ps-2">End date can't be earlier than the start date.</p>
-                                            <?php
-                                            }
-                                            ?>
-                                        </div>
-                                        <div class="mb-2 col-md-6">
-                                            <label for="sem" class="form-label">Semester:</label>
-                                            <input type="number" min="1" max="3" pattern="[1-3]" class="form-control" id="sem" name="sem" oninput="validateinputsem(this)" value="<?php if (isset($_POST['sem'])) {
-                                                                                                                                                                                        echo $_POST['sem'];
-                                                                                                                                                                                    } ?>" required>
-                                            <?php
-                                            if (isset($_POST['sem']) && !validate_field($_POST['sem'])) {
-                                            ?>
-                                                <p class="fs-7 text-primary m-0 ps-2">Semester is required.</p>
-                                            <?php
-                                            }
-                                            ?>
-                                        </div>
-                                        <div class="mt-2 col-md-6 text-end">
-                                            <br class="d-none d-md-block ">
+                                        <div class="input-group mb-2 p-0 col-12">
+                                            <input type="number" min="1" max="3" pattern="[1-3]" class="form-control" id="sem" name="sem" placeholder="Semester" oninput="validateinputsem(this)" value="<?php if (isset($_POST['sem'])) {
+                                                                                                                                                                                                                echo $_POST['sem'];
+                                                                                                                                                                                                            } ?>" required>
                                             <input type="submit" class="btn btn-primary btn-settings-size" name="save" value="Save">
                                         </div>
                                     </div>
