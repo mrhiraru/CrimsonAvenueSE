@@ -12,6 +12,6 @@
     </div>
 </div>
 
-<div id="timer" class="position-fixed end-0 bottom-0 m-2 text-end fs-8">
-    
+<div id="timer" class="position-fixed end-0 bottom-0 m-2 text-center fs-8 z-3" style="cursor: default; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;">
+
 </div>
