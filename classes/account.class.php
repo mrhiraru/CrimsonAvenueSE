@@ -50,7 +50,7 @@ class Account
 
     function add()
     {
-        $sql = "INSERT INTO account (email, password, affiliation, firstname, middlename, lastname, gender, college_id, department_id, contact, user_role) VALUES (:email, :password, :affiliation, :firstname, :middlename, :lastname, :gender, :college_id, :department_id, :contact, :user_role)";
+        $sql = "INSERT INTO account (email, password, affiliation, firstname, middlename, lastname, gender, college_id, contact, user_role) VALUES (:email, :password, :affiliation, :firstname, :middlename, :lastname, :gender, :college_id, :contact, :user_role)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':email', $this->email);
@@ -62,7 +62,29 @@ class Account
         $query->bindParam('lastname', $this->lastname);
         $query->bindParam('gender', $this->gender);
         $query->bindParam('college_id', $this->college_id);
-        $query->bindParam('department_id', $this->department_id);
+        $query->bindParam('contact', $this->contact);
+        $query->bindParam('user_role', $this->user_role);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function add_admin()
+    {
+        $sql = "INSERT INTO account (email, password, affiliation, firstname, middlename, lastname, gender, contact, user_role) VALUES (:email, :password, :affiliation, :firstname, :middlename, :lastname, :gender, :contact, :user_role)";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':email', $this->email);
+        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+        $query->bindParam(':password', $hashedPassword);
+        $query->bindParam('affiliation', $this->affiliation);
+        $query->bindParam('firstname', $this->firstname);
+        $query->bindParam('middlename', $this->middlename);
+        $query->bindParam('lastname', $this->lastname);
+        $query->bindParam('gender', $this->gender);
         $query->bindParam('contact', $this->contact);
         $query->bindParam('user_role', $this->user_role);
 

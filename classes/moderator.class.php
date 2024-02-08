@@ -49,7 +49,7 @@ class Moderator
 
     function fetch($moderator_id)
     {
-        $sql = "SELECT m.*, a.firstname, a.middlename, a.lastname, c.college_name FROM moderator m JOIN college c ON m.college_id = c.college_id JOIN account a ON m.account_id = a.account_id WHERE moderator_id = :moderator_id;";
+        $sql = "SELECT m.*, a.firstname, a.middlename, a.lastname, c.college_name FROM moderator m JOIN college c ON m.college_id = c.college_id JOIN account a ON m.account_id = a.account_id WHERE moderator_id = :moderator_id; LIMIT 1";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':moderator_id', $moderator_id);
         if ($query->execute()) {
@@ -71,7 +71,7 @@ class Moderator
 
     function show_unassigned()
     {
-        $sql = "SELECT * FROM account WHERE is_deleted != 1 AND user_role = 1 AND NOT EXISTS ( SELECT 1 FROM moderator WHERE moderator.account_id = account.account_id ) ORDER BY account_id ASC;";
+        $sql = "SELECT * FROM account WHERE is_deleted != 1 AND user_role = 1 AND NOT EXISTS (SELECT 1 FROM moderator WHERE moderator.account_id = account.account_id AND moderator.is_deleted != 1) ORDER BY account_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {
@@ -80,10 +80,14 @@ class Moderator
         return $data;
     }
 
-    function delete($moderator_id){
-        $sql = "DELETE FROM moderator WHERE moderator_id = :moderator_id ;";
+    function delete()
+    {
+        $sql = "UPDATE moderator SET is_deleted = :is_deleted WHERE moderator_id = :moderator_id;";
+
         $query = $this->db->connect()->prepare($sql);
-        $query->bindParam(':moderator_id', $moderator_id);
+        $query->bindParam(':is_deleted', $this->is_deleted);
+        $query->bindParam(':moderator_id', $this->moderator_id);
+
         if ($query->execute()) {
             return true;
         } else {

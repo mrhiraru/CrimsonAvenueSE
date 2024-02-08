@@ -43,9 +43,18 @@ if (isset($_POST['add'])) {
 } else if (isset($_POST['cancel'])) {
 
     header('location: ./settings-moderator.php');
-} else if (isset($_POST['delete']))
+} else if (isset($_POST['delete'])) {
 
+    $moderator->moderator_id = $_GET['id'];
+    $moderator->is_deleted = 1;
 
+    if ($moderator->delete()) {
+        $success = 'success';
+    } else {
+        echo 'An error occured while adding in the database.';
+        $success = 'failed';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -188,10 +197,91 @@ include_once('../includes/preloader.php');
             </div>
         </div>
     </main>
-
+    <!-- modals -->
+    <?php
+    if (isset($_POST['add']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./settings-moderator.php" class="text-decoration-none text-dark">
+                                    <p class="m-0">Moderator assigned succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['save']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./settings-moderator.php" class="text-decoration-none text-dark">
+                                    <p class="m-0">Moderator updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['delete']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./settings-moderator.php" class="text-decoration-none text-dark">
+                                    <p class="m-0 text-dark">Moderator has been unassigned! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['warning']) && isset($_GET['id'])) {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <?php
+                                $record = $moderator->fetch($_GET['id']);
+                                ?>
+                                <p class="m-0 text-dark">Are you sure you want to remove <span class="text-primary fw-bold"><?= ucwords(strtolower($record['firstname'] . ' ' . $record['lastname'])) ?></span> as moderator of <span class="text-primary fw-bold"><?= ucwords(strtolower($record['college_name'])) ?></span>?</p>
+                                <form action="./settings-moderator.php?id=<?= $record['moderator_id'] ?>" method="post" class="mt-3">
+                                    <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 me-3 rounded border-0 fw-semibold" id="college-edit" name="cancel" value="Cancel"></input>
+                                    <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 ms-3 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
     <?php
     require_once('../includes/js.php');
     ?>
+    <script src="../js/moderators.datatable.js"></script>
     <script>
         var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
         myModal.show()

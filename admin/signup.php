@@ -33,9 +33,6 @@ if (isset($_POST['signup'])) {
         $account->gender = '';
     }
 
-    $account->college_id = htmlentities($_POST['college']);
-    $account->department_id = htmlentities($_POST['department']);
-
     $account->contact = htmlentities($_POST['contact']);
     $account->user_role = 0; // user_role (0 = admin, 1 = mod, 2 = user)
 
@@ -47,8 +44,6 @@ if (isset($_POST['signup'])) {
         // validate_field($account->middlename) &&
         validate_field($account->lastname) &&
         validate_field($account->gender) &&
-        validate_field($account->college_id) &&
-        validate_field($account->department_id) &&
         validate_field($account->contact) &&
         validate_password($account->password) &&
         validate_cpw($account->password, $_POST['confirm-password']) &&
@@ -56,7 +51,7 @@ if (isset($_POST['signup'])) {
         validate_wmsu_email($account->email, $account->affiliation) &&
         isset($_POST['terms'])
     ) {
-        if ($account->add()) {
+        if ($account->add_admin()) {
             $success = 'success';
         } else {
             echo 'An error occured while adding in the database.';
@@ -77,7 +72,7 @@ require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>
 
-<body class="bg-tertiary" onload="affiliation_effect()">
+<body class="bg-tertiary">
     <main class="row m-0 min-vh-100 d-flex align-items-center justify-content-center">
         <div class="row position-absolute start-0 top-0 w-100 m-0 p-2">
             <div class="col-8 p-0">
@@ -173,9 +168,9 @@ include_once('../includes/preloader.php');
                 </div>
                 <div class="form-group m-0 mb-2 p-0 row col-12 d-flex justify-content-evenly">
                     <div class="m-0 p-0 col-auto">
-                        <input class="form-check-input" type="radio" name="affiliation" id="student" onclick="affiliation_effect()" value="Student" <?php if (isset($_POST['affiliation']) && $_POST['affiliation'] == 'Student') {
-                                                                                                                                                        echo 'checked';
-                                                                                                                                                    } ?>>
+                        <input class="form-check-input" type="radio" name="affiliation" id="student" value="Student" <?php if (isset($_POST['affiliation']) && $_POST['affiliation'] == 'Student') {
+                                                                                                                            echo 'checked';
+                                                                                                                        } ?>>
                         <label class="form-check-label" for="student">
                             Student
                         </label>
@@ -261,39 +256,6 @@ include_once('../includes/preloader.php');
                     if ((!isset($_POST['gender']) && isset($_POST['signup'])) || (isset($_POST['gender']) && !validate_field($_POST['gender']))) {
                     ?>
                         <p class="fs-7 text-primary m-0 ps-2 col-12">No gender selected.</p>
-                    <?php
-                    }
-                    ?>
-                </div>
-                <div class="mb-2 p-0 col-12 d-none" id="college_div">
-                    <select name="college" id="college" class="form-select">
-                        <option value="">Select College</option>
-                        <option value="Computing Studies" <?php if (isset($_POST['college']) && $_POST['college'] == 'Computing Studies') {
-                                                                echo 'selected';
-                                                            } ?>>Computing Studies</option>
-                    </select>
-                    <?php
-                    if (isset($_POST['college']) && !validate_field($_POST['college'])) {
-                    ?>
-                        <p class="fs-7 text-primary m-0 ps-2">No college selected.</p>
-                    <?php
-                    }
-                    ?>
-                </div>
-                <div class="mb-2 p-0 col-12 d-none" id="department_div">
-                    <select name="department" id="department" class="form-select">
-                        <option value="">Select Department</option>
-                        <option value="Computer Science" <?php if (isset($_POST['department']) && $_POST['department'] == 'Computer Science') {
-                                                                echo 'selected';
-                                                            } ?>>Computer Science</option>
-                        <option value="Information Technology" <?php if (isset($_POST['department']) && $_POST['department'] == 'Information Technology') {
-                                                                    echo 'selected';
-                                                                } ?>>Information Technology</option>
-                    </select>
-                    <?php
-                    if (isset($_POST['department']) && !validate_field($_POST['department'])) {
-                    ?>
-                        <p class="fs-7 text-primary m-0 ps-2">No department selected.</p>
                     <?php
                     }
                     ?>

@@ -91,10 +91,10 @@ include_once('../includes/preloader.php');
                                                 $record = $college->fetch($_GET['id']);
                                             ?>
                                                 <input type="text" class="form-control" id="col-name" name="col-name" placeholder="College Name" value="<?php if (isset($_POST['col-name'])) {
-                                                                                                                                                                    echo $_POST['col-name'];
-                                                                                                                                                                } else {
-                                                                                                                                                                    echo $record['college_name'];
-                                                                                                                                                                } ?>">
+                                                                                                                                                            echo $_POST['col-name'];
+                                                                                                                                                        } else {
+                                                                                                                                                            echo $record['college_name'];
+                                                                                                                                                        } ?>">
                                                 <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel" value="Cancel">
                                                 <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save" value="Save">
                                             <?php
@@ -240,7 +240,7 @@ include_once('../includes/preloader.php');
                                 $record = $college->fetch($_GET['id']);
                                 ?>
                                 <p class="m-0 text-dark">Are you sure you want to delete <span class="text-primary fw-bold"><?= $record['college_name'] ?></span>?</p>
-                                <form action="./settings-college.php?id=<?= $item['college_id'] ?>" method="post" class="mt-3">
+                                <form action="./settings-college.php?id=<?= $record['college_id'] ?>" method="post" class="mt-3">
                                     <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 me-3 rounded border-0 fw-semibold" id="college-edit" name="cancel" value="Cancel"></input>
                                     <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 ms-3 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
                                 </form>

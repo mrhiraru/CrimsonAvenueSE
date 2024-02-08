@@ -35,10 +35,8 @@ if (isset($_POST['signup'])) {
     $college = new College();
     if ($account->affiliation == 'Non-student') {
         $account->college_id = null;
-        $account->department_id = null;
     } else {
         $account->college_id = htmlentities($_POST['college']);
-        $account->department_id = htmlentities($_POST['department']);
     }
 
     $account->contact = htmlentities($_POST['contact']);
@@ -52,8 +50,7 @@ if (isset($_POST['signup'])) {
         // validate_field($account->middlename) &&
         validate_field($account->lastname) &&
         validate_field($account->gender) &&
-        validate_field($account->college_id) &&
-        validate_field($account->department_id) &&
+        validate_affiliation($account->affiliation, $account->college_id) &&
         validate_field($account->contact) &&
         validate_password($account->password) &&
         validate_cpw($account->password, $_POST['confirm-password']) &&
@@ -296,22 +293,6 @@ include_once('../includes/preloader.php');
                     if (isset($_POST['college']) && !validate_field($_POST['college'])) {
                     ?>
                         <p class="fs-7 text-primary m-0 ps-2">No college selected.</p>
-                    <?php
-                    }
-                    ?>
-                </div>
-                <div class="mb-2 p-0 col-12 d-none" id="department_div">
-                    <?php
-                    ?>
-                    <select name="department" id="department" class="form-select">
-                        <?php
-                        require_once("../user/get_departments.php");
-                        ?>
-                    </select>
-                    <?php
-                    if (isset($_POST['department']) && !validate_field($_POST['department']) && $college->count_department($_POST['college'] != 0)) {
-                    ?>
-                        <p class="fs-7 text-primary m-0 ps-2">No department selected.</p>
                     <?php
                     }
                     ?>

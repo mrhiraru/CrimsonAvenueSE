@@ -28,14 +28,11 @@ function affiliation_effect() {
     'input[name="affiliation"]:checked'
   ).value;
   var college_div = document.getElementById("college_div");
-  var department_div = document.getElementById("department_div");
 
   if (affiliation === "Student" || affiliation === "Faculty") {
     college_div.style.setProperty("display", "block", "important");
-    department_div.style.setProperty("display", "block", "important");
   } else {
     college_div.style.setProperty("display", "none", "important");
-    department_div.style.setProperty("display", "none", "important");
   }
 }
 // Attach the function to the click event of the affiliation radio buttons
