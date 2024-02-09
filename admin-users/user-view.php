@@ -34,8 +34,11 @@ include_once('../includes/preloader.php');
                 <main class="col-md-9 col-lg-10 p-4 row m-0">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3">
                         <div class="row h-auto d-flex justify-content-between m-0 p-0">
-                            <div class="col-12 col-lg-auto">
-                                <img src="" alt="">
+                            <div class="col-12 col-lg-auto p-0 d-flex justify-content-center p-3">
+                                <img src="../images/main/no-profile.jpg" alt="" class="profile-responsive border border-black">
+                            </div>
+                            <div class="col-12 col-lg-auto p-0 d-flex justify-content-center p-3 ps-0 flex-fill">
+                                
                             </div>
                         </div>
                     </div>

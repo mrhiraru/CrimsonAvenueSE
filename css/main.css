@@ -285,6 +285,12 @@ body {
 
 /* settings css */
 
+/* user css */
+.profile-responsive {
+    width: 200px;
+    height: 200px;
+}
+
 
 @media (max-width: 992px){
     .img-custom {
