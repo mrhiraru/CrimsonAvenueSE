@@ -33,65 +33,63 @@ include_once('../includes/preloader.php');
                 <?php
                 require_once('../includes/sidepanel.admin.php')
                 ?>
-                <main class="col-md-9 col-lg-10 p-4">
-                    <div class="row m-0 p-0 h-100">
-                        <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
-                            <div class="row h-auto d-flex justify-content-center m-0 p-0">
-                                <div class="search-keyword col-12 col-lg-4 mb-2 ms-auto p-0">
-                                    <div class="input-group">
-                                        <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
-                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
-                                    </div>
+                <main class="col-md-9 col-lg-10 p-4 row m-0">
+                    <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
+                        <div class="row h-auto d-flex justify-content-center m-0 p-0">
+                            <div class="search-keyword col-12 col-lg-4 mb-2 ms-auto p-0">
+                                <div class="input-group">
+                                    <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
+                                    <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
                                 </div>
-                                <table id="users" class="table table-lg mt-1">
-                                    <thead>
-                                        <tr class="align-middle">
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
-                                            <th scope="col" class="text-center">Name</th>
-                                            <th scope="col" class="text-center">Affiliation</th>
-                                            <th scope="col" class="text-center">Role</th>
-                                            <th scope="col" class="text-center">Status</th>
-                                            <th scope="col" class="text-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $counter = 1;
-                                        $user = new Account();
-                                        $userArray = $user->show();
-                                        foreach ($userArray as $item) {
-                                        ?>
-                                            <tr class="align-middle">
-                                                <td><?= $counter ?></td>
-                                                <td> <?= 'No Data Image' ?> </td>
-                                                <td class="text-center"><?php if (isset($item['middlename'])) {
-                                                                            echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
-                                                                        } else {
-                                                                            echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
-                                                                        } ?></td>
-                                                <td class="text-center"><?= $item['affiliation'] ?></td>
-                                                <td class="text-center"><?php if ($item['user_role'] == 0) {
-                                                                            echo 'Admin';
-                                                                        } else if ($item['user_role'] == 1) {
-                                                                            echo 'Moderator';
-                                                                        } else if ($item['user_role'] == 2) {
-                                                                            echo 'User';
-                                                                        } ?></td>
-                                                <td class="text-center"><?= $item['restriction_status'] ?></td>
-                                                <td class="text-center text-nowrap">
-                                                    <div class="m-0 p-0">
-                                                        <a href="./user-view.php" type="button" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold text-decoration-none">View</a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php
-                                            $counter++;
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
                             </div>
+                            <table id="users" class="table table-lg mt-1">
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col" class="text-center">Name</th>
+                                        <th scope="col" class="text-center">Affiliation</th>
+                                        <th scope="col" class="text-center">Role</th>
+                                        <th scope="col" class="text-center">Status</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $counter = 1;
+                                    $user = new Account();
+                                    $userArray = $user->show();
+                                    foreach ($userArray as $item) {
+                                    ?>
+                                        <tr class="align-middle">
+                                            <td><?= $counter ?></td>
+                                            <td> <?= 'No Data Image' ?> </td>
+                                            <td class="text-center"><?php if (isset($item['middlename'])) {
+                                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
+                                                                    } else {
+                                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
+                                                                    } ?></td>
+                                            <td class="text-center"><?= $item['affiliation'] ?></td>
+                                            <td class="text-center"><?php if ($item['user_role'] == 0) {
+                                                                        echo 'Admin';
+                                                                    } else if ($item['user_role'] == 1) {
+                                                                        echo 'Moderator';
+                                                                    } else if ($item['user_role'] == 2) {
+                                                                        echo 'User';
+                                                                    } ?></td>
+                                            <td class="text-center"><?= $item['restriction_status'] ?></td>
+                                            <td class="text-center text-nowrap">
+                                                <div class="m-0 p-0">
+                                                    <a href="./user-view.php?id=<?= $item['account_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        $counter++;
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </main>
