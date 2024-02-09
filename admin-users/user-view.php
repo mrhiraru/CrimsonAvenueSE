@@ -31,14 +31,14 @@ include_once('../includes/preloader.php');
                 <?php
                 require_once('../includes/sidepanel.admin.php')
                 ?>
-                <main class="col-md-9 col-lg-10 p-4 row m-0">
+                <main class="col-md-9 col-lg-10 p-4 row m-0 h-100">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3">
-                        <div class="row h-auto d-flex justify-content-between m-0 p-0">
-                            <div class="col-12 col-lg-auto p-0 d-flex justify-content-center p-3">
-                                <img src="../images/main/no-profile.jpg" alt="" class="profile-responsive border border-black">
+                        <div class="row d-flex justify-content-between m-0 p-0">
+                            <div class="col-12 col-lg-auto p-3 d-flex justify-content-center">
+                                <img src="../images/main/no-profile.jpg" alt="" class="profile-responsive border border-secondary">
                             </div>
-                            <div class="col-12 col-lg-auto p-0 d-flex justify-content-center p-3 ps-0 flex-fill">
-                                
+                            <div class="col-12 col-lg-auto m-0 p-3 ps-lg-0 d-flex justify-content-start align-items-start  flex-fill row">
+
                             </div>
                         </div>
                     </div>
