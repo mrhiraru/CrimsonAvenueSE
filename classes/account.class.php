@@ -16,7 +16,7 @@ class Account
     public $contact;
     public $profile_image;
     public $restriction_status;
-
+    public $address;
     public $user_role;
     public $verification_status;
 
@@ -145,6 +145,16 @@ class Account
         $data = null;
         if ($query->execute()) {
             $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function fetch($account_id){
+        $sql = "SELECT a.*, c.college_name, d.department_name FROM account a LEFT JOIN college c ON a.college_id = c.college_id LEFT JOIN department d ON a.department_id = d.department_id WHERE account_id = :account_id LIMIT 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
         }
         return $data;
     }

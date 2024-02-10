@@ -49,7 +49,7 @@ class Moderator
 
     function fetch($moderator_id)
     {
-        $sql = "SELECT m.*, a.firstname, a.middlename, a.lastname, c.college_name FROM moderator m JOIN college c ON m.college_id = c.college_id JOIN account a ON m.account_id = a.account_id WHERE moderator_id = :moderator_id; LIMIT 1";
+        $sql = "SELECT m.*, a.firstname, a.middlename, a.lastname, c.college_name FROM moderator m JOIN college c ON m.college_id = c.college_id JOIN account a ON m.account_id = a.account_id WHERE moderator_id = :moderator_id LIMIT 1";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':moderator_id', $moderator_id);
         if ($query->execute()) {

@@ -6,7 +6,7 @@ require_once("../tools/functions.php");
 
 $account = new Account();
 
-if (isset($_SESSION['user_role']) || $account->check_for_admin(0)) {
+if (!isset($_SESSION['user_role']) || $account->check_for_admin(0)) {
     header('location: ../index.php');
 }
 
