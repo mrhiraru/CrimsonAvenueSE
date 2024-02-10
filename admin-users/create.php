@@ -94,7 +94,10 @@ include_once('../includes/preloader.php');
                 ?>
                 <main class="col-md-9 col-lg-10 p-4 row m-0">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
-                        <div class="row h-auto d-flex justify-content-center m-0 pt-2">
+                        <div class="row h-auto d-flex justify-content-center m-0">
+                            <p class="m-0 mb-3 p-0 text-center fs-3 fw-semibold text-primary">
+                                Create Account
+                            </p>
                             <form action="" method="post" class="row d-flex p-2 p-md-0 m-0 col-lg-5">
                                 <div class="mb-3 p-0 col-12">
                                     <input type="email" name="email" placeholder="Email" class="form-control" value="<?php if (isset($_POST['email'])) {
@@ -317,8 +320,8 @@ include_once('../includes/preloader.php');
                                     }
                                     ?>
                                 </div>
-                                <div class="mb-2 p-0 col-12">
-                                    <input type="submit" class="btn btn-primary w-100 fw-semibold" name="signup" value="Create Account">
+                                <div class="mb-3 p-0 col-12">
+                                    <input type="submit" class="btn btn-primary w-100 fw-semibold" name="signup" value="Save">
                                 </div>
                             </form>
                         </div>
