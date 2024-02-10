@@ -75,7 +75,7 @@ include_once('../includes/preloader.php');
                                                                     } ?></td>
                                             <td class="text-center"><?= $item['affiliation'] ?></td>
                                             <td class="text-center"><?php if ($item['user_role'] == 0) {
-                                                                        echo 'Admin';
+                                                                        echo 'Administrator';
                                                                     } else if ($item['user_role'] == 1) {
                                                                         echo 'Moderator';
                                                                     } else if ($item['user_role'] == 2) {
