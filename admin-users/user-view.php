@@ -37,15 +37,20 @@ include_once('../includes/preloader.php');
                 ?>
                 <main class="col-md-9 col-lg-10 p-4 row m-0 h-100">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3">
+                        <?php
+                        $record = $account->fetch($_GET['id']);
+                        ?>
                         <div class="row d-flex justify-content-between m-0 p-0">
                             <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column justify-content-center align-items-center">
-                                <img src="../images/main/no-profile.jpg" alt="" class="profile-responsive border border-secondary-subtle rounded-2">
+                                <img src="<?php if (isset($record['profile_image'])) {
+                                                echo "../images/data/" . $record['profile_image'];
+                                            } else {
+                                                echo "../images/main/no-profile.jpg";
+                                            } ?>" alt="" class="profile-size border border-secondary-subtle rounded-2">
                             </div>
                             <div class="col-auto d-none d-lg-block p-0 m-0 border-start"></div>
                             <div class="col-12 col-lg-auto m-0 p-3 d-flex justify-content-start align-items-start flex-fill row">
-                                <?php
-                                $record = $account->fetch($_GET['id']);
-                                ?>
+
                                 <table class="table table-sm border-top m-0">
                                     <tr>
                                         <td class=" pe-3 text-secondary d-none d-md-block">Name</td>
@@ -67,16 +72,12 @@ include_once('../includes/preloader.php');
                                         <td class=" pe-3 text-secondary d-none d-md-block">College</td>
                                         <td class="fw-semibold text-dark ps-3"><?php if (isset($record['college_name'])) {
                                                                                     echo $record['college_name'];
-                                                                                } else {
-                                                                                    echo "No College";
                                                                                 } ?></td>
                                     </tr>
                                     <tr>
                                         <td class=" pe-3 text-secondary d-none d-md-block">Department</td>
                                         <td class="fw-semibold text-dark ps-3"><?php if (isset($record['department_name'])) {
                                                                                     echo $record['department_name'];
-                                                                                } else {
-                                                                                    echo "No Department";
                                                                                 }   ?></td>
                                     </tr>
                                     <tr>
@@ -90,9 +91,7 @@ include_once('../includes/preloader.php');
                                     <tr>
                                         <td class=" pe-3 text-secondary d-none d-md-block">Address</td>
                                         <td class="fw-semibold text-dark ps-3"><?php if (isset($record['address'])) {
-                                                                                    echo $record['department_name'];
-                                                                                } else {
-                                                                                    echo "No Address";
+                                                                                    echo $record['address'];
                                                                                 } ?> </td>
                                     </tr>
                                     <tr>
@@ -110,7 +109,7 @@ include_once('../includes/preloader.php');
                                     <tr>
                                         <td class=" pe-3 text-secondary d-none d-md-block">Restriction</td>
                                         <td class="fw-semibold text-dark ps-3">
-                                        <?= $record['restriction_status'] ?> <button class="text-primary float-end border-0 bg-white fw-semibold" data-bs-toggle="modal" data-bs-target="#restrictionModal">Change</button>
+                                            <?= $record['restriction_status'] ?> <button class="text-primary float-end border-0 bg-white fw-semibold" data-bs-toggle="modal" data-bs-target="#restrictionModal">Change</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -131,7 +130,7 @@ include_once('../includes/preloader.php');
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <form action="./user-view.php?id=getid" method="post" class="col-12 m-0" name="useRole" id="useRole">
+                            <form action="./user-view.php?id=<?= $record['account_id'] ?>" method="post" class="col-12 m-0" name="useRole" id="useRole">
                                 <div class="form-group m-0 p-0 d-flex row justify-content-evenly">
                                     <div class="col-auto m-0 p-0">
                                         <input class="form-check-input" type="radio" name="user_role" id="user" value="2" onchange="autoSubmitRole()">
@@ -163,7 +162,7 @@ include_once('../includes/preloader.php');
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <form action="./user-view.php?id=getid" method="post" class="col-12 m-0" name="accRestriction" id="accRestriction">
+                            <form action="./user-view.php?id<?= $record['account_id'] ?>" method="post" class="col-12 m-0" name="accRestriction" id="accRestriction">
                                 <div class="form-group m-0 p-0 row d-flex justify-content-evenly">
                                     <div class="col-auto m-0 p-0">
                                         <input class="form-check-input" type="radio" name="restriction" id="unrestricted" value="2" onchange="autoSubmitRestriction()">

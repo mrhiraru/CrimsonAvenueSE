@@ -63,7 +63,11 @@ include_once('../includes/preloader.php');
                                     ?>
                                         <tr class="align-middle">
                                             <td><?= $counter ?></td>
-                                            <td> <?= 'No Data Image' ?> </td>
+                                            <td> <img src="<?php if (isset($record['profile_image'])) {
+                                                                echo "../images/data/" . $record['profile_image'];
+                                                            } else {
+                                                                echo "../images/main/no-profile.jpg";
+                                                            } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"> </td>
                                             <td class="text-center"><?php if (isset($item['middlename'])) {
                                                                         echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
                                                                     } else {

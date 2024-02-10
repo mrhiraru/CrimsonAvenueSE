@@ -285,10 +285,15 @@ body {
 
 /* settings css */
 
-/* user css */
-.profile-responsive {
+/* admin-user css */
+.profile-size {
     width: 200px;
     height: 200px;
+}
+
+.profile-list-size {
+    width: 50px;
+    height: 50px;
 }
 
 
