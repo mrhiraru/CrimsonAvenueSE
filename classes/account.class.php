@@ -158,4 +158,34 @@ class Account
         }
         return $data;
     }
+
+    function update_role()
+    {
+        $sql = "UPDATE account SET user_role = :user_role WHERE account_id = :account_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':user_role', $this->user_role);
+        $query->bindParam(':account_id', $this->account_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function update_restriction()
+    {
+        $sql = "UPDATE account SET restriction_status = :restriction_status WHERE account_id = :account_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':restriction_status', $this->restriction_status);
+        $query->bindParam(':account_id', $this->account_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

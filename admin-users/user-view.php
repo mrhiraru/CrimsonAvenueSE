@@ -15,7 +15,35 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./index.php');
 }
 
+if (isset($_POST['user_role'])) {
 
+    $account->user_role = htmlentities($_POST['user_role']);
+    $account->account_id = $_GET['id'];
+
+    if (validate_field($account->user_role)) {
+        if ($account->update_role()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['restriction'])) {
+
+    $account->restriction_status = htmlentities($_POST['restriction']);
+    $account->account_id = $_GET['id'];
+
+    if (validate_field($account->restriction_status)) {
+        if ($account->update_restriction()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +69,6 @@ include_once('../includes/preloader.php');
                 ?>
                 <main class="col-md-9 col-lg-10 p-4 row m-0 h-100">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3">
-
                         <div class="row d-flex justify-content-between m-0 p-0">
                             <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column justify-content-center align-items-center">
                                 <img src="<?php if (isset($record['profile_image'])) {
@@ -211,6 +238,43 @@ include_once('../includes/preloader.php');
         </div>
     </div>
     <?php
+    if (isset($_POST['user_role']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a class="text-decoration-none text-dark" href="./user-view.php?id=<?= $record['account_id'] ?>">
+                                    <p class="m-0">User role has been updated successfully!</br><span class="text-primary fw-bold">Click to continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['restriction']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a class="text-decoration-none text-dark" href="./user-view.php?id=<?= $record['account_id'] ?>">
+                                    <p class="m-0">Restriction has been updated successfully!</br><span class="text-primary fw-bold">Click to continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
     require_once('../includes/js.php');
     ?>
     <script>
@@ -223,6 +287,8 @@ include_once('../includes/preloader.php');
             var formObject = document.forms['accRestriction'];
             formObject.submit();
         }
+        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
+        myModal.show()
     </script>
 </body>
 
