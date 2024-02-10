@@ -71,32 +71,29 @@
             </div>
             <div class="accordion-item border-0">
                 <h2 class="accordion-header" id="flush-headingThree">
-                    <button class="accordion-button  px-2 pt-2 pb-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    <button class="accordion-button  px-2 pt-2 pb-3 <?php if(!isset($stores_page)) { echo 'collapsed'; }  ?>" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="<?php if(isset($stores_page)) { echo 'true'; } else { echo 'false'; } ?>" aria-controls="flush-collapseThree">
                         <p class="nav-link text-secondary fw-semibold m-0 <?= $stores_page ?>" href="../admin/store.php">
                             <i class="fa-solid fa-store"></i>
                             Stores
                         </p>
                     </button>
                 </h2>
-                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseThree" class="accordion-collapse collapse <?php if(isset($stores_page)) { echo 'show'; } ?>" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
-                                    <i class="fa-solid fa-chart-line"></i>
-                                    Dashboard
+                                <a class="nav-link text-secondary fw-semibold <?= $store_page ?>" aria-current="page" href="../admin-stores/index.php">
+                                    Store List
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
-                                    <i class="fa-solid fa-boxes-stacked"></i>
-                                    Products
+                                <a class="nav-link text-secondary fw-semibold <?= $registration_page ?>" href="../admin-stores/registration.php">
+                                    Registrations
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
-                                    <i class="fa-solid fa-store"></i>
-                                    Stores
+                                <a class="nav-link text-secondary fw-semibold <?= $createstore_page ?>" href="../admin-stores/create.php">
+                                    Create Store
                                 </a>
                             </li>
                         </ul>
@@ -117,7 +114,7 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link text-secondary fw-semibold <?= $user_page ?>" aria-current="page" href="../admin-users/index.php">
-                                    Users List
+                                    User List
                                 </a>
                             </li>
                             <li class="nav-item">

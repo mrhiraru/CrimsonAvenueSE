@@ -8,17 +8,16 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/account.class.php');
-
+require_once('../classes/account.class.php')
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "User List | Crimson Avenue";
-$users_page = "active";
-$user_page = "active";
+$title = "Store List | Crimson Avenue";
+$stores_page = "active";
+$store_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>
@@ -31,7 +30,7 @@ include_once('../includes/preloader.php');
         <div class="container-fluid">
             <div class="row">
                 <?php
-                require_once('../includes/sidepanel.admin.php')
+                require_once('../includes/sidepanel.admin.php');
                 ?>
                 <main class="col-md-9 col-lg-10 p-4 row m-0">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
@@ -100,15 +99,9 @@ include_once('../includes/preloader.php');
             </div>
         </div>
     </main>
-    <!-- semester modal  -->
     <?php
     require_once('../includes/js.php');
     ?>
-    <script src="../js/users.datatables.js"></script>
-    <script>
-        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
-        myModal.show()
-    </script>
 </body>
 
 </html>

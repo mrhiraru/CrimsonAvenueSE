@@ -75,7 +75,7 @@ if (isset($_POST['signup'])) {
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "Settings | Crimson Avenue";
+$title = "Create Account | Crimson Avenue";
 $users_page = "active";
 $create_page = "active";
 require_once('../includes/head.php');
