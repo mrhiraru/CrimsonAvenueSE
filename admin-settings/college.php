@@ -153,7 +153,7 @@ include_once('../includes/preloader.php');
                                             <td class="text-center"><?= 0 ?></td>
                                             <td class="text-center text-nowrap">
                                                 <div class="m-0 p-0">
-                                                    <form action="./settings-college.php?id=<?= $item['college_id'] ?>" method="post">
+                                                    <form action="./college.php?id=<?= $item['college_id'] ?>" method="post">
                                                         <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="edit" value="Edit"></input>
                                                         <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Delete"></input>
                                                     </form>
