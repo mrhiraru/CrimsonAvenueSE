@@ -8,7 +8,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/account.class.php')
+require_once('../classes/account.class.php');
 ?>
 
 <!DOCTYPE html>
@@ -41,14 +41,14 @@ include_once('../includes/preloader.php');
                                     <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
                                 </div>
                             </div>
-                            <table id="users" class="table table-lg mt-1">
+                            <table id="stores" class="table table-lg mt-1">
                                 <thead>
                                     <tr class="align-middle">
                                         <th scope="col"></th>
                                         <th scope="col"></th>
                                         <th scope="col" class="text-center">Name</th>
-                                        <th scope="col" class="text-center">Affiliation</th>
-                                        <th scope="col" class="text-center">Role</th>
+                                        <th scope="col" class="text-center">Owner</th>
+                                        <th scope="col" class="text-center">College</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>

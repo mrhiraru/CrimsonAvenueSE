@@ -313,7 +313,7 @@ include_once('../includes/preloader.php');
                                         </label>
                                     </div>
                                     <?php
-                                    if ((!isset($_POST['user_role']) && isset($_POST['signup'])) || (isset($_POST['user_role']) && !validate_field($_POST['affiliation']))) {
+                                    if ((isset($_POST['user_role']) && !validate_field($_POST['user_role']))) {
                                     ?>
                                         <p class="fs-7 text-primary m-0 ps-2 col-12">No user role selected.</p>
                                     <?php
