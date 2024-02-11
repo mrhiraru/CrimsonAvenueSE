@@ -102,7 +102,7 @@ include_once('../includes/preloader.php');
                                                                                                                                                             echo 'checked';
                                                                                                                                                         } ?>>
                                         <label class="form-check-label" for="moderator">
-                                            Unverified
+                                            Not Verified
                                         </label>
                                     </div>
                                     <?php
