@@ -22,6 +22,7 @@ if (isset($_POST['user_role'])) {
 
     if (validate_field($account->user_role)) {
         if ($account->update_role()) {
+
             $success = 'success';
         } else {
             echo 'An error occured while adding in the database.';

@@ -8,7 +8,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/account.class.php');
+require_once('../classes/store.class.php');
 ?>
 
 <!DOCTYPE html>
@@ -56,9 +56,9 @@ include_once('../includes/preloader.php');
                                 <tbody>
                                     <?php
                                     $counter = 1;
-                                    $user = new Account();
-                                    $userArray = $user->show();
-                                    foreach ($userArray as $item) {
+                                    $store = new Store();
+                                    $storeArray = $store->show();
+                                    foreach ($storeArray as $item) {
                                     ?>
                                         <tr class="align-middle">
                                             <td><?= $counter ?></td>
@@ -67,23 +67,17 @@ include_once('../includes/preloader.php');
                                                             } else {
                                                                 echo "../images/main/no-profile.jpg";
                                                             } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"> </td>
+                                            <td class="text-center"><?= $store_name ?></td>
                                             <td class="text-center"><?php if (isset($item['middlename'])) {
                                                                         echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
                                                                     } else {
                                                                         echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
                                                                     } ?></td>
-                                            <td class="text-center"><?= $item['affiliation'] ?></td>
-                                            <td class="text-center"><?php if ($item['user_role'] == 0) {
-                                                                        echo 'Administrator';
-                                                                    } else if ($item['user_role'] == 1) {
-                                                                        echo 'Moderator';
-                                                                    } else if ($item['user_role'] == 2) {
-                                                                        echo 'User';
-                                                                    } ?></td>
+                                            <td class="text-center"><?= $item['college_name'] ?></td>
                                             <td class="text-center"><?= $item['restriction_status'] ?></td>
                                             <td class="text-center text-nowrap">
                                                 <div class="m-0 p-0">
-                                                    <a href="./user-view.php?id=<?= $item['account_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
+                                                    <a href="./store-view.php?id=<?= $item['store_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
                                                 </div>
                                             </td>
                                         </tr>
