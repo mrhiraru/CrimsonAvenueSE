@@ -41,7 +41,7 @@ if (isset($_POST['add'])) {
     }
 } else if (isset($_POST['cancel'])) {
 
-    header('location: ./settings-college.php');
+    header('location: ./college.php');
 } else if (isset($_POST['delete'])) {
 
     $college->college_id = $_GET['id'];

@@ -42,7 +42,7 @@ if (isset($_POST['add'])) {
     }
 } else if (isset($_POST['cancel'])) {
 
-    header('location: ./settings-moderator.php');
+    header('location: ./moderator.php');
 } else if (isset($_POST['delete'])) {
 
     $moderator->moderator_id = $_GET['id'];
@@ -220,7 +220,7 @@ include_once('../includes/preloader.php');
                                                 <td> <?= $item['college_name'] ?></td>
                                                 <td class="text-center text-nowrap">
                                                     <div class="m-0 p-0">
-                                                        <form action="./settings-moderator.php?id=<?= $item['moderator_id'] ?>" method="post">
+                                                        <form action="./moderator.php?id=<?= $item['moderator_id'] ?>" method="post">
                                                             <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="edit" value="Edit"></input>
                                                             <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Remove"></input>
                                                         </form>
