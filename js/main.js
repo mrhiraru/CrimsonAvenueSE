@@ -41,11 +41,7 @@ document
   .forEach(function (radio) {
     radio.addEventListener("click", affiliation_effect);
   });
-
-window.onload = function () {
-  affiliation_effect();
-};
-
+  
 // // real time clock timer
 // function updateClock() {
 //   // Fetch the server time using AJAX

@@ -105,7 +105,7 @@ include_once('../includes/preloader.php');
                                 </div>
                                 <div class="mb-3 p-0 col-12">
                                     <!-- Upload image or pdf copy of your certificate to verify that you are a WMSU student. -->
-                                    <label for="" class="fs-8 text-dark lh-sm ms-2">Upload image or pdf copy of certificate to verify the owner as WMSU student.</label>
+                                    <label for="" class="fs-8 text-dark lh-sm ms-2">Upload image or pdf copy of certificate to verify the owner as WMSU student or faculty.</label>
                                     <input type="file" name="cetificate" placeholder="Certificate" class="form-control" value="<?php if (isset($_POST['cetificate'])) {
                                                                                                                                     echo $_POST['cetificate'];
                                                                                                                                 } ?>">
@@ -162,13 +162,13 @@ include_once('../includes/preloader.php');
         var select_account = document.querySelector('#account_id');
         dselect(select_account, {
             search: true,
-            maxHeight: '200px',
+            maxHeight: '100px',
         });
 
         var select_college = document.querySelector('#college_id');
         dselect(select_college, {
             search: true,
-            maxHeight: '200px',
+            maxHeight: '100px',
         });
     </script>
 </body>
