@@ -84,13 +84,13 @@ include_once('../includes/preloader.php');
                                         $account = new Account();
                                         $accountArray = $account->show();
                                         foreach ($accountArray as $item) { ?>
-                                            <option value="<?= $item['account_id'] ?>" <?php if ((isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id'])) {
+                                            <option value="<?= $item['account_id'] ?>" > <?php /* if ((isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id'])) {
                                                                                             echo 'selected';
                                                                                         } ?>><?php if (isset($item['middlename'])) {
                                                                                                     echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
                                                                                                 } else {
                                                                                                     echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
-                                                                                                } ?></option>
+                                                                                                } */  echo $item['email'] ?></option>
                                         <?php
                                         }
                                         ?>
@@ -105,8 +105,8 @@ include_once('../includes/preloader.php');
                                 </div>
                                 <div class="mb-3 p-0 col-12">
                                     <!-- Upload image or pdf copy of your certificate to verify that you are a WMSU student. -->
-                                    <label for="" class="fs-8 text-dark lh-sm ms-2">Upload image or pdf copy of certificate to verify the owner as WMSU student or faculty.</label>
-                                    <input type="file" name="cetificate" placeholder="Certificate" class="form-control" value="<?php if (isset($_POST['cetificate'])) {
+                                    <label for="certificate" class="fs-8 text-dark lh-sm ms-2">Upload image or pdf copy of certificate to verify the owner as WMSU student or faculty.</label>
+                                    <input type="file" id="certificate" name="cetificate" placeholder="Certificate" class="form-control" value="<?php if (isset($_POST['cetificate'])) {
                                                                                                                                     echo $_POST['cetificate'];
                                                                                                                                 } ?>">
                                     <?php
