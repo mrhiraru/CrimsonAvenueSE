@@ -260,7 +260,7 @@ include_once('../includes/preloader.php');
                                     ?>
                                 </div>
                                 <div class="mb-3 p-0 col-12 d-none" id="college_div">
-                                    <select name="college" id="college" class="form-select" onchange="show_department(this.value)">
+                                    <select name="college" id="college" class="form-select">
                                         <option value="">Select College</option>
                                         <?php
                                         $college = new College();
@@ -358,6 +358,12 @@ include_once('../includes/preloader.php');
     <script>
         var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
         myModal.show()
+
+        var select_college = document.querySelector('#college');
+        dselect(select_college, {
+            search: true,
+            maxHeight: '200px',
+        });
     </script>
 </body>
 

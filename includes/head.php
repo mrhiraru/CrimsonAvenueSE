@@ -17,6 +17,5 @@
     <!-- apexchart -->
     <link rel="stylesheet" href="../vendor/apexchart/dist/apexcharts.css">
 
-    <!-- cdn for timezone_transitions_get -->
-    <link rel="stylesheet" href="https://unpkg.com/@jarstone/dselect/dist/css/dselect.css">
+    <link rel="stylesheet" href="../vendor/dselect/css/dselect.css">
 </head>

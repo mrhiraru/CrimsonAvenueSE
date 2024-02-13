@@ -22,7 +22,7 @@ function validateinputsem(input) {
   }
 }
 
-// show college and department fields
+// show college fields
 function affiliation_effect() {
   var affiliation = document.querySelector(
     'input[name="affiliation"]:checked'

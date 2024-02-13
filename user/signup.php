@@ -276,7 +276,7 @@ include_once('../includes/preloader.php');
                     ?>
                 </div>
                 <div class="mb-2 p-0 col-12 d-none" id="college_div">
-                    <select name="college" id="college" class="form-select" onchange="show_department(this.value)">
+                    <select name="college" id="college" class="form-select">
                         <option value="">Select College</option>
                         <?php
                         $college = new College();
@@ -335,22 +335,6 @@ include_once('../includes/preloader.php');
     <script type="text/javascript">
         var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
         myModal.show();
-
-        function show_department(str) {
-            if (str == "") {
-                document.getElementById("department").innerHTML = '<option value="">Select Department (College Required)</option>';
-                return;
-            } else {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("department").innerHTML = this.responseText;
-                    }
-                };
-                xmlhttp.open("GET", "get_departments.php?id=" + str, true);
-                xmlhttp.send();
-            }
-        }
     </script>
 
 </body>

@@ -79,7 +79,7 @@ include_once('../includes/preloader.php');
                                 </div>
                                 <div class="mb-2 p-0 col-12">
                                     <select name="account_id" id="account_id" class="form-select" list="names">
-                                        <option value="">Select Owner</option>
+                                        <option value="">Select Owner's Email</option>
                                         <?php
                                         $account = new Account();
                                         $accountArray = $account->show();
@@ -94,11 +94,6 @@ include_once('../includes/preloader.php');
                                         <?php
                                         }
                                         ?>
-                                        <?php if (isset($item['middlename'])) {
-                                            echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
-                                        } else {
-                                            echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
-                                        } ?>
                                     </select>
                                     <?php
                                     if (isset($_POST['college']) && !validate_field($_POST['college'])) {
@@ -166,6 +161,12 @@ include_once('../includes/preloader.php');
     <script>
         var select_account = document.querySelector('#account_id');
         dselect(select_account, {
+            search: true,
+            maxHeight: '200px',
+        });
+
+        var select_college = document.querySelector('#college_id');
+        dselect(select_college, {
             search: true,
             maxHeight: '200px',
         });
