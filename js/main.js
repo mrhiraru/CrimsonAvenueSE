@@ -44,7 +44,6 @@ document
 
 window.onload = function () {
   affiliation_effect();
-  console.log("Div is fully loaded!");
 };
 
 // // real time clock timer
