@@ -13,6 +13,8 @@ class Store
     public $store_bio;
     public $business_time;
     public $certificate;
+    public $verification_status;
+    public $restriction_status;
     public $is_created;
     public $is_deleted;
 
@@ -25,9 +27,14 @@ class Store
 
     function add()
     {
-        $sql = "INSERT INTO store () VALUES ();";
+        $sql = "INSERT INTO store (store_name, college_id, account_id ,certificate, verification_status) VALUES (:store_name, :college_id, :account_id, :certificate, :verification_status);";
 
         $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_name', $this->store_name);
+        $query->bindParam(':college_id', $this->college_id);
+        $query->bindParam(':account_id', $this->account_id);
+        $query->bindParam(':certificate', $this->certificate);
+        $query->bindParam(':verification_status', $this->verification_status);
 
         if ($query->execute()) {
             return true;
