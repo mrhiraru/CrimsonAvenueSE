@@ -42,25 +42,30 @@ document
     radio.addEventListener("click", affiliation_effect);
   });
 
-// real time clock
-function updateClock() {
-  // Fetch the server time using AJAX
-  $.ajax({
-    url: "../includes/get_time.php", // Replace with the correct server-side script
-    type: "GET",
-    success: function (serverTime) {
-      // Update the clock element
-      document.getElementById("timer").innerText = serverTime;
-
-      // Set the function to be called again after 1 second
-      setTimeout(updateClock, 1000);
-    },
-    error: function (xhr, status, error) {
-      console.error("Error fetching server time:", error);
-    },
-  });
-}
-
 window.onload = function () {
-  updateClock();
+  affiliation_effect();
+  console.log("Div is fully loaded!");
 };
+
+// // real time clock timer
+// function updateClock() {
+//   // Fetch the server time using AJAX
+//   $.ajax({
+//     url: "../includes/get_time.php", // Replace with the correct server-side script
+//     type: "GET",
+//     success: function (serverTime) {
+//       // Update the clock element
+//       document.getElementById("timer").innerText = serverTime;
+
+//       // Set the function to be called again after 1 second
+//       setTimeout(updateClock, 1000);
+//     },
+//     error: function (xhr, status, error) {
+//       console.error("Error fetching server time:", error);
+//     },
+//   });
+// }
+
+// window.onload = function () {
+//   updateClock();
+// };

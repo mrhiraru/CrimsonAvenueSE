@@ -82,7 +82,7 @@ require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>
 
-<body>
+<body onload="affiliation_effect()">
     <?php
     require_once('../includes/header.admin.php');
     ?>
@@ -98,7 +98,7 @@ include_once('../includes/preloader.php');
                             <p class="m-0 mb-3 p-0 text-center fs-3 fw-semibold text-primary">
                                 Create Account
                             </p>
-                            <form action="" method="post" class="row d-flex p-2 p-md-0 m-0 col-lg-5">
+                            <form action="" method="post" class="row d-flex p-2 p-md-0 m-0 col-lg-5" >
                                 <div class="mb-3 p-0 col-12">
                                     <input type="email" name="email" placeholder="Email" class="form-control" value="<?php if (isset($_POST['email'])) {
                                                                                                                             echo $_POST['email'];
