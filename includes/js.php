@@ -3,3 +3,6 @@
 <script src="../vendor/apexchart/dist/apexcharts.min.js"></script>
 <script src="../vendor/datatables/datatables.min.js"></script>
 <script src="../js/main.js"></script>
+
+<!-- cdn for testing -->
+<script src="https://unpkg.com/@jarstone/dselect/dist/js/dselect.js"></script>

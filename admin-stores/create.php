@@ -8,8 +8,11 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/account.class.php');
 require_once('../classes/college.class.php');
+require_once('../classes/account.class.php');
+require_once('../classes/store.class.php');
+
+
 ?>
 
 <!DOCTYPE html>
@@ -52,19 +55,50 @@ include_once('../includes/preloader.php');
                                     }
                                     ?>
                                 </div>
-                                <div class="mb-3 p-0 col-12">
-                                    <select name="college" id="college" class="form-select">
+                                <div class="mb-2 p-0 col-12">
+                                    <select name="college_id" id="college_id" class="form-select">
                                         <option value="">Select College</option>
                                         <?php
                                         $college = new College();
                                         $collegeArray = $college->show();
                                         foreach ($collegeArray as $item) { ?>
-                                            <option value="<?= $item['college_id'] ?>" <?php if ((isset($_POST['college']) && $_POST['college'] == $item['college_id'])) {
+                                            <option value="<?= $item['college_id'] ?>" <?php if ((isset($_POST['college_id']) && $_POST['college_id'] == $item['college_id'])) {
                                                                                             echo 'selected';
                                                                                         } ?>><?= $item['college_name'] ?></option>
                                         <?php
                                         }
                                         ?>
+                                    </select>
+                                    <?php
+                                    if (isset($_POST['college_id']) && !validate_field($_POST['college_id'])) {
+                                    ?>
+                                        <p class="fs-7 text-primary m-0 ps-2">No college selected.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="mb-2 p-0 col-12">
+                                    <select name="account_id" id="account_id" class="form-select" list="names">
+                                        <option value="">Select Owner</option>
+                                        <?php
+                                        $account = new Account();
+                                        $accountArray = $account->show();
+                                        foreach ($accountArray as $item) { ?>
+                                            <option value="<?= $item['account_id'] ?>" <?php if ((isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id'])) {
+                                                                                            echo 'selected';
+                                                                                        } ?>><?php if (isset($item['middlename'])) {
+                                                                                                    echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
+                                                                                                } else {
+                                                                                                    echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
+                                                                                                } ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                        <?php if (isset($item['middlename'])) {
+                                            echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
+                                        } else {
+                                            echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
+                                        } ?>
                                     </select>
                                     <?php
                                     if (isset($_POST['college']) && !validate_field($_POST['college'])) {
@@ -75,6 +109,8 @@ include_once('../includes/preloader.php');
                                     ?>
                                 </div>
                                 <div class="mb-3 p-0 col-12">
+                                    <!-- Upload image or pdf copy of your certificate to verify that you are a WMSU student. -->
+                                    <label for="" class="fs-8 text-dark lh-sm ms-2">Upload image or pdf copy of certificate to verify the owner as WMSU student.</label>
                                     <input type="file" name="cetificate" placeholder="Certificate" class="form-control" value="<?php if (isset($_POST['cetificate'])) {
                                                                                                                                     echo $_POST['cetificate'];
                                                                                                                                 } ?>">
@@ -114,7 +150,7 @@ include_once('../includes/preloader.php');
                                     ?>
                                 </div>
                                 <div class="mb-3 p-0 col-12">
-                                    <input type="submit" class="btn btn-primary w-100 fw-semibold" name="signup" value="Save">
+                                    <input type="submit" class="btn btn-primary w-100 fw-semibold" name="create" value="Save">
                                 </div>
                             </form>
                         </div>
@@ -126,6 +162,14 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/js.php');
     ?>
+
+    <script>
+        var select_account = document.querySelector('#account_id');
+        dselect(select_account, {
+            search: true,
+            maxHeight: '200px',
+        });
+    </script>
 </body>
 
 </html>
