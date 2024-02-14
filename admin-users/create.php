@@ -98,7 +98,7 @@ include_once('../includes/preloader.php');
                             <p class="m-0 mb-3 p-0 text-center fs-3 fw-semibold text-primary">
                                 Create Account
                             </p>
-                            <form action="" method="post" class="row d-flex p-2 p-md-0 m-0 col-lg-5" >
+                            <form action="" method="post" class="row d-flex p-2 p-md-0 m-0 col-lg-5">
                                 <div class="mb-3 p-0 col-12">
                                     <input type="email" name="email" placeholder="Email" class="form-control" value="<?php if (isset($_POST['email'])) {
                                                                                                                             echo $_POST['email'];
@@ -341,7 +341,7 @@ include_once('../includes/preloader.php');
                         <div class="row d-flex">
                             <div class="col-12 text-center">
                                 <a href="./create.php" class="text-decoration-none text-dark">
-                                    <p class="m-0 text-primary fw-bold">Account is successfully created!</p>
+                                    <p class="m-0 text-dark">Account is successfully created! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
                         </div>

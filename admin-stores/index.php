@@ -49,7 +49,8 @@ include_once('../includes/preloader.php');
                                         <th scope="col" class="text-center">Name</th>
                                         <th scope="col" class="text-center">Owner</th>
                                         <th scope="col" class="text-center">College</th>
-                                        <th scope="col" class="text-center">Status</th>
+                                        <th scope="col" class="text-center">Verification</th>
+                                        <th scope="col" class="text-center">Restriction</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -67,13 +68,18 @@ include_once('../includes/preloader.php');
                                                             } else {
                                                                 echo "../images/main/no-profile.jpg";
                                                             } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"> </td>
-                                            <td class="text-center"><?= $store_name ?></td>
+                                            <td class="text-center"><?= $item['store_name'] ?></td>
                                             <td class="text-center"><?php if (isset($item['middlename'])) {
                                                                         echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
                                                                     } else {
                                                                         echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
                                                                     } ?></td>
-                                            <td class="text-center"><?= $item['college_name'] ?></td>
+                                            <td class="text-center"><?php if (!isset($item['college_name'])) {
+                                                                        echo 'Independent';
+                                                                    } else {
+                                                                        echo $item['college_name'];
+                                                                    } ?></td>
+                                            <td class="text-center"><?= $item['verification_status'] ?></td>
                                             <td class="text-center"><?= $item['restriction_status'] ?></td>
                                             <td class="text-center text-nowrap">
                                                 <div class="m-0 p-0">
@@ -96,6 +102,7 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/js.php');
     ?>
+    <script src="../js/stores.datatables.js"></script>
 </body>
 
 </html>
