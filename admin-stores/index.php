@@ -46,8 +46,8 @@ include_once('../includes/preloader.php');
                                     <tr class="align-middle">
                                         <th scope="col"></th>
                                         <th scope="col"></th>
-                                        <th scope="col" class="text-center">Name</th>
-                                        <th scope="col" class="text-center">Owner</th>
+                                        <th scope="col" class="text-center">Store Name</th>
+                                        <th scope="col" class="text-center">Administrator</th>
                                         <th scope="col" class="text-center">College</th>
                                         <th scope="col" class="text-center">Verification</th>
                                         <th scope="col" class="text-center">Restriction</th>

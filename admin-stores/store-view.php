@@ -91,7 +91,7 @@ include_once('../includes/preloader.php');
                                         <td class="fw-semibold text-dark ps-3"><?= $record['store_bio'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Owner</td>
+                                        <td class=" pe-3 text-secondary d-none d-md-block">Administrator</td>
                                         <td class="fw-semibold text-dark ps-3"><?php if (isset($record['middlename'])) {
                                                                                     echo ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname']));
                                                                                 } else {
