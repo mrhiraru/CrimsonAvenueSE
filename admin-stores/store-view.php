@@ -15,13 +15,13 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./index.php');
 }
 
-if (isset($_POST['user_role'])) {
+if (isset($_POST['verification_status'])) {
 
-    $store->verification_status = htmlentities($_POST['user_role']);
+    $store->verification_status = htmlentities($_POST['verification_status']);
     $store->store_id = $_GET['id'];
 
     if (validate_field($store->verification_status)) {
-        if ($store->add()) {
+        if ($store->update_verification()) {
 
             $success = 'success';
         } else {
@@ -33,7 +33,7 @@ if (isset($_POST['user_role'])) {
 } else if (isset($_POST['restriction'])) {
 
     $store->restriction_status = htmlentities($_POST['restriction']);
-    $store->store = $_GET['id'];
+    $store->store_id = $_GET['id'];
 
     if (validate_field($store->restriction_status)) {
         if ($store->update_restriction()) {
@@ -52,8 +52,8 @@ if (isset($_POST['user_role'])) {
 <?php
 // Change title for each page.
 $title = "User View | Crimson Avenue";
-$users_page = "active";
-$user_page = "active";
+$stores_page = "active";
+$store_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>
@@ -83,7 +83,15 @@ include_once('../includes/preloader.php');
 
                                 <table class="table table-sm border-top m-0">
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Name</td>
+                                        <td class=" pe-3 text-secondary d-none d-md-block">Store</td>
+                                        <td class="fw-semibold text-dark ps-3"><?= $record['store_name'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class=" pe-3 text-secondary d-none d-md-block">Bio</td>
+                                        <td class="fw-semibold text-dark ps-3"><?= $record['store_bio'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class=" pe-3 text-secondary d-none d-md-block">Owner</td>
                                         <td class="fw-semibold text-dark ps-3"><?php if (isset($record['middlename'])) {
                                                                                     echo ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname']));
                                                                                 } else {
@@ -91,63 +99,39 @@ include_once('../includes/preloader.php');
                                                                                 } ?></td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Gender</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['gender'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Affiliation</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['affiliation'] ?></td>
-                                    </tr>
-                                    <tr>
                                         <td class=" pe-3 text-secondary d-none d-md-block">College</td>
-                                        <td class="fw-semibold text-dark ps-3"><?php if (isset($record['college_name'])) {
-                                                                                    echo $record['college_name'];
+                                        <td class="fw-semibold text-dark ps-3"><?php if (!isset($record['college_name'])) {
+                                                                                    echo 'Independent (No College)';
                                                                                 } else {
-                                                                                    echo "No College";
+                                                                                    echo $record['college_name'];
                                                                                 } ?></td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Department</td>
-                                        <td class="fw-semibold text-dark ps-3"><?php if (isset($record['department_name'])) {
-                                                                                    echo $record['department_name'];
-                                                                                } else {
-                                                                                    echo "No Department";
-                                                                                }  ?></td>
-                                    </tr>
-                                    <tr>
                                         <td class=" pe-3 text-secondary d-none d-md-block">Email</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['email'] ?> <span class="text-primary fw-semibold float-end"><?= $record['verification_status'] ?></span></td>
+                                        <td class="fw-semibold text-dark ps-3"><?= $record['store_email'] ?></td>
                                     </tr>
                                     <tr>
                                         <td class=" pe-3 text-secondary d-none d-md-block">Contact</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['contact'] ?></td>
+                                        <td class="fw-semibold text-dark ps-3"><?= $record['store_contact'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Address</td>
-                                        <td class="fw-semibold text-dark ps-3"><?php if (isset($record['address'])) {
-                                                                                    echo $record['address'];
-                                                                                } else {
-                                                                                    echo "No Address";
-                                                                                } ?> </td>
+                                        <td class=" pe-3 text-secondary d-none d-md-block">Location</td>
+                                        <td class="fw-semibold text-dark ps-3"><?= $record['store_location'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">User Role</td>
+                                        <td class=" pe-3 text-secondary d-none d-md-block">Date Established</td>
+                                        <td class="fw-semibold text-dark ps-3"><?= date('F d Y', strtotime($record['is_created'])); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class=" pe-3 text-secondary d-none d-md-block">Verification</td>
                                         <td class="fw-semibold text-dark ps-3">
-                                            <?php if ($record['user_role'] == 0) {
-                                                echo "Administrator";
-                                            } else if ($record['user_role'] == 1) {
-                                                echo "Moderator";
-                                            } else if ($record['user_role'] == 2) {
-                                                echo "User";
-                                            }
-                                            if ($record['user_role'] != 0) { ?> <button class="text-primary float-end border-0 bg-white fw-semibold " data-bs-toggle="modal" data-bs-target="#userRoleModal">Change</button> <?php } ?>
+                                            <?= $record['verification_status'] ?><button class="text-primary float-end border-0 bg-white fw-semibold " data-bs-toggle="modal" data-bs-target="#userRoleModal">Change</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class=" pe-3 text-secondary d-none d-md-block">Restriction</td>
                                         <td class="fw-semibold text-dark ps-3">
-                                            <?php echo $record['restriction_status'];
-                                            if ($record['user_role'] != 0) { ?> <button class="text-primary float-end border-0 bg-white fw-semibold" data-bs-toggle="modal" data-bs-target="#restrictionModal">Change</button> <?php } ?>
+                                            <?= $record['restriction_status'] ?><button class="text-primary float-end border-0 bg-white fw-semibold" data-bs-toggle="modal" data-bs-target="#restrictionModal">Change</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -162,26 +146,26 @@ include_once('../includes/preloader.php');
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header py-2 px-3">
-                    <h1 class="modal-title fs-6 text-primary" id="exampleModalLabel">Update User Role</h1>
+                    <h1 class="modal-title fs-6 text-primary" id="exampleModalLabel">Update Verification Status</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <form action="./user-view.php?id=<?= $record['store_id'] ?>" method="post" class="col-12 m-0" name="verificationForm" id="verificationForm">
+                            <form action="./store-view.php?id=<?= $record['store_id'] ?>" method="post" class="col-12 m-0" name="verificationForm" id="verificationForm">
                                 <div class="form-group m-0 p-0 d-flex row justify-content-evenly">
                                     <div class="col-auto m-0 p-0">
-                                        <input class="form-check-input" type="radio" name="verification" id="verified" value="Verified" onchange="autoSubmitRole()" <?php if ($record['verification_status'] == 'Verified') {
-                                                                                                                                                            echo "checked";
-                                                                                                                                                        } ?>>
+                                        <input class="form-check-input" type="radio" name="verification_status" id="verified" value="Verified" onchange="autoSubmitRole()" <?php if ($record['verification_status'] == 'Verified') {
+                                                                                                                                                                        echo "checked";
+                                                                                                                                                                    } ?>>
                                         <label class="form-check-label" for="verified">
                                             Verified
                                         </label>
                                     </div>
                                     <div class="col-auto m-0 p-0">
-                                        <input class="form-check-input" type="radio" name="verification" id="notverified" value="Not Verified" onchange="autoSubmitRole()" <?php if ($record['verification_status'] == 'Not Verified') {
-                                                                                                                                                                echo "checked";
-                                                                                                                                                            } ?>>
+                                        <input class="form-check-input" type="radio" name="verification_status" id="notverified" value="Not Verified" onchange="autoSubmitRole()" <?php if ($record['verification_status'] == 'Not Verified') {
+                                                                                                                                                                                echo "checked";
+                                                                                                                                                                            } ?>>
                                         <label class="form-check-label" for="notverified">
                                             Not Verified
                                         </label>
@@ -204,7 +188,7 @@ include_once('../includes/preloader.php');
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <form action="./user-view.php?id=<?= $record['store_id'] ?>" method="post" class="col-12 m-0" name="accRestriction" id="accRestriction">
+                            <form action="./store-view.php?id=<?= $record['store_id'] ?>" method="post" class="col-12 m-0" name="accRestriction" id="accRestriction">
                                 <div class="form-group m-0 p-0 row d-flex justify-content-evenly">
                                     <div class="col-auto m-0 p-0">
                                         <input class="form-check-input" type="radio" name="restriction" id="unrestricted" value="Unrestricted" onchange="autoSubmitRestriction()" <?php if ($record['restriction_status'] == "Unrestricted") {
@@ -247,7 +231,7 @@ include_once('../includes/preloader.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a class="text-decoration-none text-dark" href="./user-view.php?id=<?= $record['store_id'] ?>">
+                                <a class="text-decoration-none text-dark" href="./store-view.php?id=<?= $record['store_id'] ?>">
                                     <p class="m-0">Verification status has been updated successfully!</br><span class="text-primary fw-bold">Click to continue</span>.</p>
                                 </a>
                             </div>
@@ -265,7 +249,7 @@ include_once('../includes/preloader.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a class="text-decoration-none text-dark" href="./user-view.php?id=<?= $record['store_id'] ?>">
+                                <a class="text-decoration-none text-dark" href="./store-view.php?id=<?= $record['store_id'] ?>">
                                     <p class="m-0">Restriction has been updated successfully!</br><span class="text-primary fw-bold">Click to continue</span>.</p>
                                 </a>
                             </div>

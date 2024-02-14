@@ -53,4 +53,46 @@ class Store
         }
         return $data;
     }
+
+    function fetch($store_id){
+        $sql = "SELECT s.*, c.college_name, a.firstname, a.middlename, a.lastname FROM store s LEFT JOIN college c ON s.college_id = c.college_id LEFT JOIN account a ON s.account_id = a.account_id WHERE store_id = :store_id LIMIT 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
+    function update_restriction()
+    {
+        $sql = "UPDATE store SET restriction_status = :restriction_status WHERE store_id = :store_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':restriction_status', $this->restriction_status);
+        $query->bindParam(':store_id', $this->store_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function update_verification()
+    {
+        $sql = "UPDATE store SET verification_status = :verification_status WHERE store_id = :store_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':verification_status', $this->verification_status);
+        $query->bindParam(':store_id', $this->store_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
+
+
