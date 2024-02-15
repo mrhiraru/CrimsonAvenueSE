@@ -18,7 +18,7 @@ require_once('./includes/head.php');
 include_once('./includes/preloader.php');
 ?>
 
-<body>
+<body class="min-vh-100">
     <?php
     require_once('./includes/header.user.php');
     ?>

@@ -52,16 +52,16 @@ require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>
 
-<body>
+<body class="min-vh-100">
     <?php
     require_once('../includes/header.user.php');
     ?>
-    <div class="container-fluid col-md-9 mt-4 mx-sm-auto">
+    <div class="container-fluid col-md-9 mt-4 mx-sm-auto d-flex justify-content-center align-items-center">
         <main>
             <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
-                <div class="row h-100 d-flex flex-column justify-content-center align-items-center m-0 p-0">
+                <div class="row d-flex flex-column justify-content-center align-items-center m-0 p-0">
                     <p class="m-0 mb-3 p-0 text-center fs-3 fw-semibold text-primary">
-                        Create Store
+                        Store Registration
                     </p>
                     <form action="" method="post" class="row d-flex p-2 p-md-0 m-0 col-lg-5">
                         <div class="mb-3 p-0 col-12">
@@ -171,7 +171,7 @@ include_once('../includes/preloader.php');
                             ?>
                         </div>
                         <div class="mb-3 p-0 col-12">
-                            <input type="submit" class="btn btn-primary w-100 fw-semibold" name="create" value="Save">
+                            <input type="submit" class="btn btn-primary w-100 fw-semibold" name="create" value="Register">
                         </div>
                     </form>
                 </div>
