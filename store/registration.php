@@ -12,18 +12,18 @@ require_once('../classes/college.class.php');
 require_once('../classes/account.class.php');
 require_once('../classes/store.class.php');
 
-if (isset($_POST['create'])) {
+if (isset($_POST['register'])) {
     $store = new Store();
 
     $store->store_name = htmlentities($_POST['store-name']);
-    $store->account_id = htmlentities($_POST['account_id']);
+    $store->account_id = $_SESSION['account_id'];
     if (!isset($_POST['college_id']) || $_POST['college_id'] == 'null') {
         $store->college_id = null;
     } else {
         $store->college_id = htmlentities($_POST['college_id']);
     }
     $store->certificate = htmlentities($_POST['certificate']);
-    $store->verification_status = htmlentities($_POST['verification_status']);
+    $store->verification_status = 'Not Verified';
 
     if (
         validate_field($store->store_name) &&
@@ -116,7 +116,7 @@ include_once('../includes/preloader.php');
                             ?>
                         </div>
                         <div class="mb-3 p-0 col-12">
-                            <input type="submit" class="btn btn-primary w-100 fw-semibold" name="create" value="Register">
+                            <input type="submit" class="btn btn-primary w-100 fw-semibold" name="register" value="Register">
                         </div>
                     </form>
                 </div>
@@ -127,8 +127,9 @@ include_once('../includes/preloader.php');
         </section>
         <!-- Extra Section Add more Section if needed ./. -->
     </div>
+    <!-- modals  -->
     <?php
-    if (isset($_POST['create']) && $success == 'success') {
+    if (isset($_POST['register']) && $success == 'success') {
     ?>
         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -136,7 +137,7 @@ include_once('../includes/preloader.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a href="./create.php" class="text-decoration-none text-dark">
+                                <a href="./registration.php" class="text-decoration-none text-dark">
                                     <p class="m-0 text-dark">Store is successfully created! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
@@ -147,18 +148,9 @@ include_once('../includes/preloader.php');
         </div>
     <?php
     }
-    ?>
-    <?php
     require_once('../includes/js.php');
     ?>
-
     <script>
-        var select_account = document.querySelector('#account_id');
-        dselect(select_account, {
-            search: true,
-            maxHeight: '100px',
-        });
-
         var select_college = document.querySelector('#college_id');
         dselect(select_college, {
             search: true,

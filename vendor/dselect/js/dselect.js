@@ -90,6 +90,7 @@ function dselectClear(button, classElement) {
   Array.from(target.options).forEach((option) => (option.selected = false));
   target.dispatchEvent(new Event("change"));
 }
+const defaultCreatable = false;
 function dselect(el, option = {}) {
   el.style.display = "none";
   const classElement = "dselect-wrapper";
@@ -100,7 +101,6 @@ function dselect(el, option = {}) {
   const classClearBtn = "dselect-clear";
   const classTogglerClearable = "dselect-clearable";
   const defaultSearch = false;
-  const defaultCreatable = false;
   const defaultClearable = false;
   const defaultMaxHeight = "360px";
   const defaultSize = "";
