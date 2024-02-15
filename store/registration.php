@@ -59,7 +59,7 @@ include_once('../includes/preloader.php');
     <div class="container-fluid col-md-9 mt-4 mx-sm-auto">
         <main>
             <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
-                <div class="row d-flex flex-column justify-content-center align-items-center m-0 p-0">
+                <div class="row d-flex flex-column justify-content-center align-items-center m-0 my-5 p-0">
                     <p class="m-0 mb-3 p-0 text-center fs-3 fw-semibold text-primary">
                         Store Registration
                     </p>
