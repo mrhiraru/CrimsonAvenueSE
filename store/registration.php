@@ -101,37 +101,9 @@ include_once('../includes/preloader.php');
                             }
                             ?>
                         </div>
-                        <div class="mb-2 p-0 col-12">
-                            <select name="account_id" id="account_id" class="form-select" list="names">
-                                <option value="">Select Owner (Email)</option>
-                                <?php
-                                $account = new Account();
-                                $accountArray = $account->show();
-                                foreach ($accountArray as $item) { ?>
-                                    <option value="<?= $item['account_id'] ?>" <?php if ((isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id'])) {
-                                                                                    echo 'selected';
-                                                                                } ?>> <?php /* if ((isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id'])) {
-                                                                                            echo 'selected';
-                                                                                        } ?>><?php if (isset($item['middlename'])) {
-                                                                                                    echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
-                                                                                                } else {
-                                                                                                    echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
-                                                                                                } */ echo $item['email'] ?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-                            <?php
-                            if (isset($_POST['account_id']) && !validate_field($_POST['account_id'])) {
-                            ?>
-                                <p class="fs-7 text-primary m-0 ps-2">No owner selected.</p>
-                            <?php
-                            }
-                            ?>
-                        </div>
                         <div class="mb-3 p-0 col-12">
                             <!-- Upload image or pdf copy of your certificate to verify that you are a WMSU student. -->
-                            <label for="certificate" class="fs-8 text-dark lh-sm ms-2">Upload image or pdf copy of certificate to verify the owner as WMSU student or faculty.</label>
+                            <label for="certificate" class="fs-8 text-dark lh-sm ms-2">Upload image or pdf copy of your certificate to verify that you're a WMSU student or faculty.</label>
                             <input type="file" id="certificate" name="certificate" placeholder="Certificate" class="form-control" value="<?php if (isset($_POST['cetificate'])) {
                                                                                                                                                 echo $_POST['cetificate'];
                                                                                                                                             } ?>">
@@ -139,33 +111,6 @@ include_once('../includes/preloader.php');
                             if (isset($_POST['certificate']) && !validate_field($_POST['certificate'])) {
                             ?>
                                 <p class="fs-7 text-primary m-0 ps-2">Certificate is required.</p>
-                            <?php
-                            }
-                            ?>
-                        </div>
-                        <div class="form-group m-0 mb-3 p-0 row col-12 d-flex justify-content-evenly">
-                            <div class="m-0 p-0 col-auto">
-                                <input class="form-check-input" type="radio" name="verification_status" id="verified" value="Verified" <?php if (isset($_POST['verification_status']) && $_POST['verification_status'] == "Verified") {
-                                                                                                                                            echo 'checked';
-                                                                                                                                        } else {
-                                                                                                                                            echo 'checked';
-                                                                                                                                        } ?>>
-                                <label class="form-check-label" for="verified">
-                                    Verified
-                                </label>
-                            </div>
-                            <div class="m-0 p-0 col-auto">
-                                <input class="form-check-input" type="radio" name="verification_status" id="not-verified" value="Not Verified" <?php if (isset($_POST['verification_status']) && $_POST['verification_status'] == "Not Verified") {
-                                                                                                                                                    echo 'checked';
-                                                                                                                                                } ?>>
-                                <label class="form-check-label" for="moderator">
-                                    Not Verified
-                                </label>
-                            </div>
-                            <?php
-                            if ((isset($_POST['verification_status'])  && !validate_field($_POST['verification_status']))) {
-                            ?>
-                                <p class="fs-7 text-primary m-0 ps-2 col-12">No registration status selected.</p>
                             <?php
                             }
                             ?>
