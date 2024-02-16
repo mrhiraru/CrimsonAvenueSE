@@ -50,9 +50,15 @@ include_once('../includes/preloader.php');
                     <div class="col-6 m-0 p-0">
                         <p class="m-0 p-0 fs-2 fw-bold text-primary lh-1">Stores</p>
                     </div>
-                    <div class="col-6 m-0 p-0 text-end">
-                        <a href="./registration.php" class="text-primary fw-semibold fs-6">Register Store</a>
-                    </div>
+                    <?php
+                    if (isset($_SESSION['affiliation']) && $_SESSION['affiliation'] != 'Non-student') {
+                    ?>
+                        <div class="col-6 m-0 p-0 text-end">
+                            <a href="./registration.php" class="text-primary fw-semibold fs-6">Register Store</a>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <hr>
                 <div class="row m-0 p-0 grid">
@@ -67,7 +73,12 @@ include_once('../includes/preloader.php');
                                         <img src="../images/main/no-profile.jpg" width="60" height="60" alt="" class="border border-secondary border-opacity-25 rounded ">
                                     </div>
                                     <div class="col-6 m-0 p-0 ps-3 flex-fill">
-                                        <p class="fs-5 text-nowrap fw-semibold text-dark m-0 p-0 lh-1  text-truncate"><?= ucwords(strtolower($item['store_name'])) ?></p>
+                                        <p class="fs-5 text-nowrap fw-semibold text-dark m-0 p-0 lh-sm  text-truncate"><?= ucwords(strtolower($item['store_name'])) ?></p>
+                                        <p class="fs-7 text-nowrap fw-semibold text-primary m-0 mt-1 p-0 lh-sm  text-truncate"><?php if (isset($item['middlename'])) {
+                                                                                                                            echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
+                                                                                                                        } else {
+                                                                                                                            echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
+                                                                                                                        } ?></p>
                                     </div>
                                 </div>
                                 <div class="row m-0 p-0 overflow-hidden">

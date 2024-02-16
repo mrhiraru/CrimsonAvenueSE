@@ -275,7 +275,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 1s ease;
+    transition: all .7s ease;
 }
 
 .fade-out-animation {
