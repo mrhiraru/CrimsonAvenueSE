@@ -45,22 +45,32 @@ include_once('../includes/preloader.php');
     <div class="container-fluid col-md-9 mt-4 mx-sm-auto">
         <main>
             <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
-                <div class="row m-0 p-0 row-cols-1 row-cols-md-2 row-cols-lg-3">
+                <div class="row m-0 p-0 row-cols-1 row-cols-lg-2">
                     <?php
                     $counter = 1;
                     foreach ($storeArray as $item) {
                     ?>
-                        <div class="col-auto p-1 border border-1 border-black ">
-                            qweqwe
+                        <div class="col-auto p-1 w-100">
+                            <a class="card row d-flex flex-column m-0 p-3 w-100 store-card bg-white rounded text-decoration-none overflow-hidden" href="./stores.php">
+                                <div class="col-12 col-md-auto m-0 p-0 store-img-cont d-flex justify-content-center align-items-center">
+                                    <img src="../images/main/no-profile.jpg" alt="" class="border border-black border-opacity-10 rounded store-img">
+                                </div>
+                                <div class="col-12 col-md-6 row m-0 p-0 ps-3 d-flex flex-fill">
+                                    <div class="col-12 p-0 w-auto ">
+                                        <p class="fs-4 text-nowrap fw-bold text-primary m-0 mb-2 text-truncate"><?= ucwords(strtolower($item['store_name'])) ?></p>
+                                    </div>
+                                    <div class="col-12 p-0 w-auto overflow-hidden ">
+                                        <p class="fs-6 text-dark lh-sm m-0 store-bio overflow-hidden "><?= ucfirst(strtolower($item['store_bio'])) ?></p>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     <?php
+                        $counter++;
                     }
                     ?>
                 </div>
-            </div>
-        </main>
-        <section>
-            <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] <= 1) ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $_GET['page'] - 1 ?>" aria-label="Previous">
@@ -70,7 +80,7 @@ include_once('../includes/preloader.php');
                     <?php
                     for ($i = 1; $i <= $pages; $i++) {
                     ?>
-                        <li class="page-item"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                        <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] == $i) ? 'active' : ''  ?>"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
                     <?php
                     }
                     ?>
@@ -81,7 +91,8 @@ include_once('../includes/preloader.php');
                     </li>
                 </ul>
             </nav>
-        </section>
+            </div>
+        </main>
         <!-- Extra Section Add more Section if needed ./. -->
     </div>
     <?php

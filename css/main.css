@@ -296,6 +296,24 @@ body {
     height: 50px;
 }
 
+/* store css */
+
+.store-card {
+    height: 200px;
+    min-width: 100%;
+}
+
+.store-img-cont {
+    height: calc(200px - 32px);
+}
+
+.store-img {
+    height: inherit;
+}
+
+.store-bio {
+    height: 110px;
+}
 
 @media (max-width: 992px){
     .img-custom {
@@ -306,6 +324,10 @@ body {
 @media (max-width: 768px){
     .img-custom {
         height: 300px;
+    }
+
+    .store-card {
+        height: 400px;
     }
 }
 
