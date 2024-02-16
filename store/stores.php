@@ -46,9 +46,14 @@ include_once('../includes/preloader.php');
     <div class="container-fluid col-md-9 mt-4 mx-sm-auto">
         <main>
             <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
-                <p class="m-0 p-0 fs-2 fw-bold text-primary">
-                    Stores
-                </p>
+                <div class="row m-0 p-0 d-flex align-items-center">
+                    <div class="col-6 m-0 p-0">
+                        <p class="m-0 p-0 fs-2 fw-bold text-primary lh-1">Stores</p>
+                    </div>
+                    <div class="col-6 m-0 p-0 text-end">
+                        <a href="./registration.php" class="text-primary fw-semibold fs-6">Register Store</a>
+                    </div>
+                </div>
                 <hr>
                 <div class="row m-0 p-0 grid">
                     <?php
@@ -62,7 +67,7 @@ include_once('../includes/preloader.php');
                                         <img src="../images/main/no-profile.jpg" width="60" height="60" alt="" class="border border-secondary border-opacity-25 rounded ">
                                     </div>
                                     <div class="col-6 m-0 p-0 ps-3 flex-fill">
-                                        <p class="fs-5 text-nowrap fw-semibold text-primary m-0 text-truncate"><?= ucwords(strtolower($item['store_name'])) ?></p>
+                                        <p class="fs-5 text-nowrap fw-semibold text-dark m-0 p-0 lh-1  text-truncate"><?= ucwords(strtolower($item['store_name'])) ?></p>
                                     </div>
                                 </div>
                                 <div class="row m-0 p-0 overflow-hidden">

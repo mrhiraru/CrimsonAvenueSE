@@ -303,7 +303,7 @@ body {
     width: 100%;
 }
 
-.active>.page-link, .page-link.active {
+.active>.page-link, .page-link.active, .page-link:hover  {
     z-index: 3;
     color: var(--light);
     background-color: var(--primary);
