@@ -45,21 +45,21 @@ include_once('../includes/preloader.php');
     <div class="container-fluid col-md-9 mt-4 mx-sm-auto">
         <main>
             <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
-                <div class="row m-0 p-0 row-cols-1 row-cols-lg-2">
+                <div class="row m-0 p-0 row-cols-1">
                     <?php
                     $counter = 1;
                     foreach ($storeArray as $item) {
                     ?>
                         <div class="col-auto p-1 w-100">
-                            <a class="card row d-flex flex-column m-0 p-3 w-100 store-card bg-white rounded text-decoration-none overflow-hidden" href="./stores.php">
-                                <div class="col-12 col-md-auto m-0 p-0 store-img-cont d-flex justify-content-center align-items-center">
+                            <a class="card row col-12 m-0 p-3 store-card bg-white rounded text-decoration-none overflow-hidden" href="./stores.php">
+                                <div class="col-12 col-md-auto m-0 p-0 store-img-cont d-flex justify-content-center align-items-center justify-content-lg-start">
                                     <img src="../images/main/no-profile.jpg" alt="" class="border border-black border-opacity-10 rounded store-img">
                                 </div>
-                                <div class="col-12 col-md-6 row m-0 p-0 ps-3 d-flex flex-fill">
-                                    <div class="col-12 p-0 w-auto ">
+                                <div class="col-12 col-md-6 m-0 p-0 ps-3">
+                                    <div class="col-12 p-0">
                                         <p class="fs-4 text-nowrap fw-bold text-primary m-0 mb-2 text-truncate"><?= ucwords(strtolower($item['store_name'])) ?></p>
                                     </div>
-                                    <div class="col-12 p-0 w-auto overflow-hidden ">
+                                    <div class="col-12 p-0 overflow-hidden ">
                                         <p class="fs-6 text-dark lh-sm m-0 store-bio overflow-hidden "><?= ucfirst(strtolower($item['store_bio'])) ?></p>
                                     </div>
                                 </div>
