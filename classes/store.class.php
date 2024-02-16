@@ -54,7 +54,8 @@ class Store
         return $data;
     }
 
-    function fetch($store_id){
+    function fetch($store_id)
+    {
         $sql = "SELECT s.*, c.college_name, a.firstname, a.middlename, a.lastname FROM store s LEFT JOIN college c ON s.college_id = c.college_id LEFT JOIN account a ON s.account_id = a.account_id WHERE store_id = :store_id LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':store_id', $store_id);
@@ -93,6 +94,26 @@ class Store
             return false;
         }
     }
+
+    function show_stores($start, $limit)
+    {
+        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s LEFT JOIN account a ON s.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.is_deleted != 1 AND s.verification_status = 'Verified' ORDER BY s.store_id ASC LIMIT $start, $limit";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function count_stores()
+    {
+        $sql = "SELECT count(store_id) AS store_id FROM store WHERE is_deleted != 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }
-
-

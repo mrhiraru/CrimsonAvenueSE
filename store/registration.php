@@ -2,9 +2,9 @@
 session_start();
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
-    header('location: ./user/verify.php');
-} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 0) {
-    header('location: ../index.php');
+    header('location: ../user/verify.php');
+} else if (!isset($_SESSION['user_role'])) {
+    header('location: ../user/login.php');
 }
 
 require_once('../tools/functions.php');
