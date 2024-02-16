@@ -5,6 +5,9 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../user/verify.php');
 } else if (!isset($_SESSION['user_role'])) {
     header('location: ../user/login.php');
+} else if (isset($_SESSION['affiliation']) && ($_SESSION['affiliation'] != 'Student' || $_SESSION['affiliation'] != 'Faculty')) {
+    $activate_modal = 1;
+    echo 'entered';
 }
 
 require_once('../tools/functions.php');
@@ -148,6 +151,27 @@ include_once('../includes/preloader.php');
         </div>
     <?php
     }
+    if (isset($activate_modal) &&  $activate_modal == 1) {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./stores.php" class="text-decoration-none text-dark">
+                                    <p class="m-0 text-dark">Non-student are not allowed to register store! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    var_dump($activate_modal);
+    var_dump($_SESSION['affiliation']);
     require_once('../includes/js.php');
     ?>
     <script>
@@ -159,6 +183,8 @@ include_once('../includes/preloader.php');
 
         var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
         myModal.show();
+
+        console.log('Success HERE')
     </script>
 </body>
 
