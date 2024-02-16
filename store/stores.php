@@ -8,6 +8,10 @@ require_once('../classes/store.class.php');
 
 $store = new Store();
 $limit = 10;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$start = ($page - 1) * $limit;
+$storeArray = $store->show_stores($start, $limit);
+
 $page_count = $store->count_stores();
 $pages = ceil($page_count[0]['store_id'] / $limit);
 
@@ -16,8 +20,8 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 } else if (!isset($_GET['page']) || $_GET['page'] < 1) {
     header('location: ./stores.php?page=1');
 } else if ($_GET['page'] > $pages) {
-    header('location: ./stores.php?page='.$pages);
-} 
+    header('location: ./stores.php?page=' . $pages);
+}
 
 
 
@@ -42,15 +46,16 @@ include_once('../includes/preloader.php');
         <main>
             <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
                 <div class="row m-0 p-0 row-cols-1 row-cols-md-2 row-cols-lg-3">
-                    <div class="col-auto p-1 border border-1 border-black ">
-                        qweqwe
-                    </div>
-                    <div class="col-auto p-1 border border-1 border-black ">
-                        qweqwe
-                    </div>
-                    <div class="col-auto p-1 border border-1 border-black ">
-                        qweqwe
-                    </div>
+                    <?php
+                    $counter = 1;
+                    foreach ($storeArray as $item) {
+                    ?>
+                        <div class="col-auto p-1 border border-1 border-black ">
+                            qweqwe
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </main>

@@ -97,8 +97,10 @@ class Store
 
     function show_stores($start, $limit)
     {
-        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s LEFT JOIN account a ON s.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.is_deleted != 1 AND s.verification_status = 'Verified' ORDER BY s.store_id ASC LIMIT $start, $limit";
+        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s LEFT JOIN account a ON s.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.is_deleted != 1 AND s.verification_status = 'Verified' ORDER BY s.store_id ASC LIMIT :start, :limit";
         $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':start', $start);
+        $query->bindParam(':limit', $limit);
         $data = null;
         if ($query->execute()) {
             $data = $query->fetchAll();
