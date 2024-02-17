@@ -8,7 +8,7 @@ session_start();
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "User Profile | Crimson Avenue";
+$title = "Profile | Crimson Avenue";
 $user_profile = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
