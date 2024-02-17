@@ -82,13 +82,10 @@ include_once('../includes/preloader.php');
                 </div>
             </div>
         </main>
-    </div>
-    </div>
-    </main>
-    <section>
-        <!-- Code Here Extra Section -->
-    </section>
-    <!-- Extra Section Add more Section if needed ./. -->
+        <section>
+            <!-- Code Here Extra Section -->
+        </section>
+        <!-- Extra Section Add more Section if needed ./. -->
     </div>
     <?php
     require_once('../includes/js.php');
