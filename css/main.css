@@ -243,8 +243,8 @@ body {
 }
 
 .accordion-body {
-    border-top: 1px solid var(--secondary) !important;
-    border-bottom: 1px solid var(--secondary) !important;
+    border-top: 1px solid rgba(141, 153, 174, 0.2) !important;
+    border-bottom: 1px solid rgba(141, 153, 174, 0.2) !important;
 }
 
 /* height css */
