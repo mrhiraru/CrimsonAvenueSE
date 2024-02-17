@@ -12,7 +12,9 @@ class Account
     public $lastname;
     public $gender;
     public $college_id;
+    public $college_name;
     public $department_id;
+    public $department_name;
     public $contact;
     public $profile_image;
     public $restriction_status;
@@ -29,7 +31,7 @@ class Account
 
     function sign_in_account()
     {
-        $sql = "SELECT * FROM account WHERE email = :email LIMIT 1;";
+        $sql = "SELECT a.*, c.college_name, d.department_name FROM account a LEFT JOIN college c ON a.college_id = c.college_id LEFT JOIN department d ON a.department_id = d.department_id WHERE email = :email LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':email', $this->email);
 
@@ -45,6 +47,12 @@ class Account
                 $this->email = $accountData['email'];
                 $this->affiliation = $accountData['affiliation'];
                 $this->verification_status = $accountData['verification_status'];
+                $this->gender = $accountData['gender'];
+                $this->contact = $accountData['contact'];
+                $this->address = $accountData['address'];
+                $this->college_name = $accountData['college_name'];
+                $this->department_name = $accountData['department_name'];
+
                 return true;
             }
         }

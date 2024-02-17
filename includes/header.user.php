@@ -20,7 +20,7 @@
                         <?php
                         if (isset($_SESSION['name'])) {
                         ?>
-                            <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 <?= $user_profile ?> " href="#"><?= $_SESSION['name'] ?></a></li>
+                            <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 <?= $user_profile ?> " href="../user/profile.php"><?= $_SESSION['name'] ?></a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -64,13 +64,13 @@
                             if (isset($_SESSION['name'])) {
                             ?>
                                 <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
-                                    <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $index_page ?>" href="../"><?= $_SESSION['name'] ?></a>
+                                    <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $user_profile ?>" href="../user/profile.php"><?= $_SESSION['name'] ?></a>
                                 </li>
                                 <?php
                                 if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 0) {
                                 ?>
                                     <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
-                                        <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../admin/">Admin Panel</a>
+                                        <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../admin/index.php">Admin Panel</a>
                                     </li>
                                 <?php
                                 } else if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1) {

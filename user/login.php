@@ -19,7 +19,11 @@ if (isset($_POST['login'])) {
         $_SESSION['verification_status'] = $account->verification_status;
         $_SESSION['email'] = $account->email;
         $_SESSION['affiliation'] = $account->affiliation;
-        $_SESSION['name'] = ucwords(strtolower($account->firstname . ' ' . $account->lastname));
+        if (isset($account->middlename)) {
+            $_SESSION['name'] = ucwords(strtolower($account->firstname. ' ' . $account->middlename . ' ' . $account->lastname));
+        } else {
+            $_SESSION['name'] = ucwords(strtolower($account->firstname . ' ' . $account->lastname));
+        }
         if ($_SESSION['user_role'] == 2) {
             header('location: ../index.php');
         } else if ($_SESSION['user_role'] == 1) {
@@ -27,6 +31,11 @@ if (isset($_POST['login'])) {
         } else if ($_SESSION['user_role'] == 0) {
             header('location: ../index.php');
         }
+        $_SESSION['contact'] = $account->contact;
+        $_SESSION['gender'] = $account->gender;
+        $_SESSION['address'] = $account->address;
+        $_SESSION['college_name'] = $account->college_name;
+        $_SESSION['department_name'] = $account->department_name;
     } else {
         $error = 'Login failed: Invalid email or password.';
     }
