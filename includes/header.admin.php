@@ -14,11 +14,15 @@
                         <img src="../images/main/profilepic.png" alt="" width="38" height="38" class="d-inline rounded-5 border border-light border-2 me-2">
                         <div class="m-0 lh-sm ">
                             <div class="align-bottom">
-                                <p class="text-light fs-7 fw-bold p-0 m-0" href="#"><?= $_SESSION['name'] ?> </p>
+                                <p class="text-light fs-7 fw-bold p-0 m-0"><?= $_SESSION['name'] ?> </p>
                             </div>
                             <hr class="m-0 p-0 opacity-100 border-2">
                             <div class="align-top">
-                                <p class="text-light fs-8 fw-bold p-0 m-0">Administrator</p>
+                                <p class="text-light fs-8 fw-bold p-0 m-0"><?php if ($_SESSION['user_role'] == 0) {
+                                                                                echo 'Administrator';
+                                                                            } else if ($_SESSION['user_role'] == 1) {
+                                                                                echo 'Moderator';
+                                                                            } ?></p>
                             </div>
                         </div>
                     </button>
