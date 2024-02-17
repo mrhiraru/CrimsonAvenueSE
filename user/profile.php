@@ -23,8 +23,8 @@ include_once('../includes/preloader.php');
             <div class="container-fluid bg-white shadow rounded m-0 p-3">
                 <div class="row d-flex justify-content-between m-0 p-0">
                     <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column justify-content-center align-items-center">
-                        <img src="<?php if (isset($record['profile_image'])) {
-                                        echo "../images/data/" . $record['profile_image'];
+                        <img src="<?php if (isset($_SESSION['profile_image'])) {
+                                        echo "../images/data/" . $_SESSION['profile_image'];
                                     } else {
                                         echo "../images/main/no-profile.jpg";
                                     } ?>" alt="" class="profile-size border border-secondary-subtle rounded-2">
