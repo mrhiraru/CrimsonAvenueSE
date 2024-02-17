@@ -35,7 +35,7 @@ include_once('../includes/preloader.php');
                         <table class="table table-sm border-top m-0">
                             <tr>
                                 <td class=" pe-3 text-secondary d-none d-md-block">Name</td>
-                                <td class="fw-semibold text-dark ps-3"><?= $_SESSION['name'] ?></td>
+                                <td class="fw-semibold text-dark ps-3"><?= $_SESSION['full_name'] ?></td>
                             </tr>
                             <tr>
                                 <td class=" pe-3 text-secondary d-none d-md-block">Gender</td>

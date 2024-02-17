@@ -20,10 +20,11 @@ if (isset($_POST['login'])) {
         $_SESSION['email'] = $account->email;
         $_SESSION['affiliation'] = $account->affiliation;
         if (isset($account->middlename)) {
-            $_SESSION['name'] = ucwords(strtolower($account->firstname. ' ' . $account->middlename . ' ' . $account->lastname));
+            $_SESSION['full_name'] = ucwords(strtolower($account->firstname. ' ' . $account->middlename . ' ' . $account->lastname));
         } else {
-            $_SESSION['name'] = ucwords(strtolower($account->firstname . ' ' . $account->lastname));
+            $_SESSION['full_name'] = ucwords(strtolower($account->firstname . ' ' . $account->lastname));
         }
+        $_SESSION['name'] = ucwords(strtolower($account->firstname . ' ' . $account->lastname));
         if ($_SESSION['user_role'] == 2) {
             header('location: ../index.php');
         } else if ($_SESSION['user_role'] == 1) {
