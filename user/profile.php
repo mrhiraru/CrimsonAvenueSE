@@ -106,7 +106,6 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/js.php');
     ?>
-    <script src="../js/mystores.datatables.js"></script>
 </body>
 
 </html>
