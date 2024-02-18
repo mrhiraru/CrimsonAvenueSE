@@ -82,8 +82,19 @@ class Store
 
     function show()
     {
-        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s LEFT JOIN store_staff ss ON s.store_id = ss.store_id LEFT JOIN account a ON ss.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.is_deleted != 1 ORDER BY s.store_id ASC;";
+        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND staff_role = 0 LEFT JOIN account a ON ss.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.is_deleted != 1 ORDER BY s.store_id ASC;";
         $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function show_mystores($account_id) {
+        $sql = "SELECT s.*, ss.staff_role FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND ss.is_deleted != 1 WHERE ss.account_id = :account_id AND s.is_deleted != 1 ORDER BY s.store_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id);
         $data = null;
         if ($query->execute()) {
             $data = $query->fetchAll();
@@ -93,7 +104,7 @@ class Store
 
     function fetch($store_id)
     {
-        $sql = "SELECT s.*, c.college_name, a.firstname, a.middlename, a.lastname FROM store s LEFT JOIN store_staff ss ON s.store_id = ss.store_id LEFT JOIN college c ON s.college_id = c.college_id LEFT JOIN account a ON ss.account_id = a.account_id WHERE ss.store_id = :store_id LIMIT 1;";
+        $sql = "SELECT s.*, c.college_name, a.firstname, a.middlename, a.lastname FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND staff_role = 0 LEFT JOIN college c ON s.college_id = c.college_id LEFT JOIN account a ON ss.account_id = a.account_id WHERE ss.store_id = :store_id LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':store_id', $store_id);
         if ($query->execute()) {
@@ -134,7 +145,7 @@ class Store
 
     function show_stores($start, $limit)
     {
-        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s LEFT JOIN store_staff ss ON s.store_id = ss.store_id LEFT JOIN account a ON ss.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.is_deleted != 1 ORDER BY s.store_id ASC LIMIT $start, $limit";
+        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND staff_role = 0 LEFT JOIN account a ON ss.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.is_deleted != 1 ORDER BY s.store_id ASC LIMIT $start, $limit";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {

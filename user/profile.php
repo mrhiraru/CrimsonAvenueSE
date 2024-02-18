@@ -108,21 +108,23 @@ include_once('../includes/preloader.php');
                             <?php
                             $counter = 1;
                             $store = new Store();
-                            $storeArray = $store->show();
+                            $storeArray = $store->show_mystores($_SESSION['account_id']);
                             foreach ($storeArray as $item) {
                             ?>
                                 <tr class="align-middle">
                                     <td><?= $counter ?></td>
-                                    <td> <img src="<?php if (isset($record['profile_image'])) {
-                                                        echo "../images/data/" . $record['profile_image'];
+                                    <td> <img src="<?php if (isset($item['profile_image'])) {
+                                                        echo "../images/data/" . $item['profile_image'];
                                                     } else {
                                                         echo "../images/main/no-profile.jpg";
                                                     } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"> </td>
                                     <td class="text-center"><?= $item['store_name'] ?></td>
-                                    <td class="text-center"><?php if (isset($item['middlename'])) {
-                                                                echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
-                                                            } else {
-                                                                echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
+                                    <td class="text-center"><?php if ($item['staff_role'] == 0) {
+                                                                echo 'Administrator';
+                                                            } else if ($item['staff_role'] == 1) {
+                                                                echo 'Moderator';
+                                                            } else if ($item['staff_role'] == 2) {
+                                                                echo 'Courier';
                                                             } ?></td>
                                     <td class="text-center text-nowrap">
                                         <div class="m-0 p-0">
