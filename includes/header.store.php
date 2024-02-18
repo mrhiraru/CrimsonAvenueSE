@@ -22,11 +22,12 @@
                                                                                 echo 'Administrator';
                                                                             } else if ($_SESSION['user_role'] == 1) {
                                                                                 echo 'Moderator';
+                                                                            } else if ($_SESSION['user_role'] == 2) {
+                                                                                echo 'Courier';
                                                                             } ?></p>
                             </div>
                         </div>
                     </button>
-
                     <ul class="dropdown-menu dropdown-menu-end me-2 mt-2">
                         <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../index.php">Exit Store</a></li>
                         <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../logout.php">Log Out</a></li>

@@ -88,7 +88,7 @@ include_once('../includes/preloader.php');
                 </div>
             </div>
         </main>
-        <section>
+        <section id="#MyStores">
             <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
                 <div class="row d-flex justify-content-between m-0 p-0">
                     <div class="col-12 m-0 p-0">
@@ -128,7 +128,7 @@ include_once('../includes/preloader.php');
                                                             } ?></td>
                                     <td class="text-center text-nowrap">
                                         <div class="m-0 p-0">
-                                            <a href="./store-view.php?id=<?= $item['store_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
+                                            <a href="../store/index.php?store_id=<?= $item['store_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
                                         </div>
                                     </td>
                                 </tr>

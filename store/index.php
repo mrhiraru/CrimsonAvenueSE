@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+require_once "../tools/functions.php";
+require_once "../classes/store.class.php";
+
+$store = new Store();
+
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
 } else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 0) {
@@ -14,7 +19,7 @@ require_once('../tools/functions.php');
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "Admin Dashboard | Crimson Avenue";
+$title = "Store Dashboard | Crimson Avenue";
 $store_page = "active";
 $dashboard_page = "active";
 require_once('../includes/head.php');
