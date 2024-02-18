@@ -17,6 +17,7 @@ class Store
     public $restriction_status;
     public $is_created;
     public $is_deleted;
+    public $staff_role;
 
     protected $db;
 
@@ -39,6 +40,42 @@ class Store
         if ($query->execute()) {
             return true;
         } else {
+            return false;
+        }
+    }
+
+    function test_add()
+    {
+        $connect = $this->db->connect();
+        $connect->beginTransaction();
+
+        $sql = "INSERT INTO store (store_name, college_id ,certificate, verification_status) VALUES (:store_name, :college_id, :certificate, :verification_status);";
+
+        $query = $connect->prepare($sql);
+        $query->bindParam(':store_name', $this->store_name);
+        $query->bindParam(':college_id', $this->college_id);
+        $query->bindParam(':certificate', $this->certificate);
+        $query->bindParam(':verification_status', $this->verification_status);
+
+        if ($query->execute()) {
+            $last_store_id = $connect->lastInsertId();
+
+            $sub_sql = "INSERT INTO store_staff (account_id, store_id, staff_role) VALUES (:account_id, :store_id, :staff_role);";
+
+            $sub_query = $connect->prepare($sub_sql);
+            $sub_query->bindParam(':account_id', $this->account_id);
+            $sub_query->bindParam(':store_id', $last_store_id);
+            $sub_query->bindParam(':staff_role', $this->staff_role);
+
+            if($sub_query->execute()) {
+                $connect->commit();
+                return true;
+            } else {
+                $connect->rollBack();
+                return false;
+            }
+        } else {
+            $connect->rollBack();
             return false;
         }
     }

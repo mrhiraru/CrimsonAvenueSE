@@ -2,6 +2,9 @@
 
 session_start();
 
+require_once "../tools/functions.php";
+require_once "../classes/store.class.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -18,10 +21,13 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/header.user.php');
     ?>
-    <div class="container-fluid col-md-9 mt-4 mx-sm-auto">
+    <div class="container-fluid col-md-9 my-4 mx-sm-auto">
         <main>
             <div class="container-fluid bg-white shadow rounded m-0 p-3">
                 <div class="row d-flex justify-content-between m-0 p-0">
+                    <div class="col-12 m-0 p-0">
+                        <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1">Profile</p>
+                    </div>
                     <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column justify-content-center align-items-center">
                         <img src="<?php if (isset($_SESSION['profile_image'])) {
                                         echo "../images/data/" . $_SESSION['profile_image'];
@@ -83,7 +89,55 @@ include_once('../includes/preloader.php');
             </div>
         </main>
         <section>
-            <!-- Code Here Extra Section -->
+            <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
+                <div class="row d-flex justify-content-between m-0 p-0">
+                    <div class="col-12 m-0 p-0">
+                        <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1">Stores</p>
+                    </div>
+                    <table id="stores" class="table table-lg mt-1">
+                        <thead>
+                            <tr class="align-middle">
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col" class="text-center">Store Name</th>
+                                <th scope="col" class="text-center">Role</th>
+                                <th scope="col" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $counter = 1;
+                            $store = new Store();
+                            $storeArray = $store->show();
+                            foreach ($storeArray as $item) {
+                            ?>
+                                <tr class="align-middle">
+                                    <td><?= $counter ?></td>
+                                    <td> <img src="<?php if (isset($record['profile_image'])) {
+                                                        echo "../images/data/" . $record['profile_image'];
+                                                    } else {
+                                                        echo "../images/main/no-profile.jpg";
+                                                    } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"> </td>
+                                    <td class="text-center"><?= $item['store_name'] ?></td>
+                                    <td class="text-center"><?php if (isset($item['middlename'])) {
+                                                                echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
+                                                            } else {
+                                                                echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
+                                                            } ?></td>
+                                    <td class="text-center text-nowrap">
+                                        <div class="m-0 p-0">
+                                            <a href="./store-view.php?id=<?= $item['store_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php
+                                $counter++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </section>
         <!-- Extra Section Add more Section if needed ./. -->
     </div>
@@ -91,4 +145,5 @@ include_once('../includes/preloader.php');
     require_once('../includes/js.php');
     ?>
 </body>
+
 </html>

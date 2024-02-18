@@ -17,6 +17,8 @@ if (isset($_POST['create'])) {
 
     $store->store_name = htmlentities($_POST['store-name']);
     $store->account_id = htmlentities($_POST['account_id']);
+    $store->staff_role = 0;
+
     if (!isset($_POST['college_id']) || $_POST['college_id'] == 'null') {
         $store->college_id = null;
     } else {
@@ -31,7 +33,7 @@ if (isset($_POST['create'])) {
         validate_field($store->certificate) &&
         validate_field($store->verification_status)
     ) {
-        if ($store->add()) {
+        if ($store->test_add()) {
             $success = 'success';
         } else {
             echo 'An error occured while adding in the database.';
