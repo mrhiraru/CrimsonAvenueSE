@@ -54,7 +54,7 @@ include_once('../includes/preloader.php');
                     if (isset($_SESSION['affiliation']) && $_SESSION['affiliation'] != 'Non-student') {
                     ?>
                         <div class="col-6 m-0 p-0 text-end">
-                            <a href="./registration.php" class="text-primary fw-semibold fs-6">Register Store</a>
+                            <a href="./my-stores.php" class="text-primary fw-semibold fs-6">My Stores</a>
                         </div>
                     <?php
                     }

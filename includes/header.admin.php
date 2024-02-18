@@ -11,7 +11,11 @@
                 </a>
                 <div class="dropdown">
                     <button class="mx-3 text-light dropdown-toggle border-0 bg-tertiary d-flex align-items-center justify-content-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="../images/main/profilepic.png" alt="" width="38" height="38" class="d-inline rounded-5 border border-light border-2 me-2">
+                        <img src="<?php if (isset($_SESSION['profile_image'])) {
+                                        echo "../images/data/" . $_SESSION['profile_image'];
+                                    } else {
+                                        echo "../images/main/no-profile.jpg";
+                                    } ?>" alt="" width="38" height="38" class="d-inline rounded-5 border border-light border-2 me-2">
                         <div class="m-0 lh-sm ">
                             <div class="align-bottom">
                                 <p class="text-light fs-7 fw-bold p-0 m-0"><?= $_SESSION['name'] ?> </p>

@@ -11,9 +11,12 @@
                 <a href="../cart.php" class="mx-3 text-light"><i class="fa-solid fa-cart-shopping"></i></a>
 
                 <div class="dropdown d-none d-lg-block">
-                    <button class="mx-3 text-light dropdown-toggle border-0 bg-tertiary d-flex align-items-center justify-content-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user"></i>
-                        <!-- <img src="../images/main/profilepic.png" alt="" width="38" height="38" class="d-inline rounded-5 border border-white border-2"> -->
+                    <button class="mx-3 text-light border-0 bg-tertiary d-flex align-items-center justify-content-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="<?php if (isset($_SESSION['profile_image'])) {
+                                        echo "../images/data/" . $_SESSION['profile_image'];
+                                    } else {
+                                        echo "../images/main/no-profile.jpg";
+                                    } ?>" alt="" width="38" height="38" class="d-inline rounded-5 border border-light border-2 me-2">
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end me-2 mt-2">
@@ -29,6 +32,13 @@
                             } else if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1) {
                             ?>
                                 <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="#">Moderator Panel</a></li>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if (isset($_SESSION['affiliation']) && $_SESSION['affiliation'] != 'Non-student') {
+                            ?>
+                                <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 <?= $my_stores ?>" href="../stores/my-stores.php">My Stores</a></li>
                             <?php
                             }
                             ?>
@@ -74,6 +84,15 @@
                                 ?>
                                     <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
                                         <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold" href="../moderator/">Moderator Panel</a>
+                                    </li>
+                                <?php
+                                }
+                                ?>
+                                <?php
+                                if (isset($_SESSION['affiliation']) && $_SESSION['affiliation'] != 'Non-student') {
+                                ?>
+                                    <li class="nav-item text-lg-center text-start d-md-block d-lg-none">
+                                        <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $my_stores ?>" href="../stores/my-stores.php">My Stores</a>
                                     </li>
                                 <?php
                                 }

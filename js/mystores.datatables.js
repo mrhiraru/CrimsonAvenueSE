@@ -3,7 +3,7 @@ $(document).ready(function () {
       dom: "Brtp",
       responsive: true,
       fixedHeader: true,
-      pageLength: 5,
+      pageLength: 10,
       buttons: [],
       columnDefs: [
         {
