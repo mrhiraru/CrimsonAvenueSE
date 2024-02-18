@@ -21,9 +21,6 @@
                         if (isset($_SESSION['name'])) {
                         ?>
                             <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 <?= $user_profile ?> " href="../user/profile.php"><?= $_SESSION['name'] ?></a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
                             <?php
                             if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 0) {
                             ?>
