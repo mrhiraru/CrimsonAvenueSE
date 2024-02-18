@@ -5,14 +5,15 @@ require_once "../tools/functions.php";
 require_once "../classes/store.class.php";
 
 $store = new Store();
+$record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
-} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 0) {
+} else if (!isset($_GET['store_id']) || !isset($record['store_id']) || $record['is_deleted'] == 1 || !isset($record['staff_role'])) {
     header('location: ../index.php');
 }
 
-require_once('../tools/functions.php');
+
 ?>
 
 <!DOCTYPE html>

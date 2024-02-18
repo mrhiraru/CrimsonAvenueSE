@@ -102,11 +102,12 @@ class Store
         return $data;
     }
 
-    function fetch_info($store_id)
+    function fetch_info($store_id, $account_id)
     {
-        $sql = "SELECT s.*, ss.* FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND ss.is_deleted != 1 ss.store_id = :store_id LIMIT 1;";
+        $sql = "SELECT s.*, ss.* FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND ss.is_deleted != 1 WHERE s.store_id = :store_id AND s.is_deleted != 1 AND ss.account_id = :account_id AND ss.is_deleted != 1 LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':store_id', $store_id);
+        $query->bindParam(':account_id', $account_id);
         if ($query->execute()) {
             $data = $query->fetch();
         }
