@@ -26,7 +26,7 @@ class Store
         $this->db = new Database();
     }
 
-    function add()
+    function old_add()
     {
         $sql = "INSERT INTO store (store_name, college_id, account_id ,certificate, verification_status) VALUES (:store_name, :college_id, :account_id, :certificate, :verification_status);";
 
@@ -44,7 +44,7 @@ class Store
         }
     }
 
-    function test_add()
+    function add()
     {
         $connect = $this->db->connect();
         $connect->beginTransaction();

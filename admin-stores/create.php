@@ -33,7 +33,7 @@ if (isset($_POST['create'])) {
         validate_field($store->certificate) &&
         validate_field($store->verification_status)
     ) {
-        if ($store->test_add()) {
+        if ($store->add()) {
             $success = 'success';
         } else {
             echo 'An error occured while adding in the database.';

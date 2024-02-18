@@ -19,6 +19,8 @@ if (isset($_POST['register'])) {
 
     $store->store_name = htmlentities($_POST['store-name']);
     $store->account_id = $_SESSION['account_id'];
+    $store->staff_role = 0;
+
     if (!isset($_POST['college_id']) || $_POST['college_id'] == 'null') {
         $store->college_id = null;
     } else {
