@@ -332,11 +332,6 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/js.php');
     ?>
-    <script type="text/javascript">
-        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
-        myModal.show();
-
-    </script>
 </body>
 
 </html>

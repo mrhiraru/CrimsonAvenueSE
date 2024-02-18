@@ -41,7 +41,15 @@ document
   .forEach(function (radio) {
     radio.addEventListener("click", affiliation_effect);
   });
-  
+
+// auto open modal
+
+var modalElement = document.getElementById("myModal");
+if (modalElement) {
+  var myModal = new bootstrap.Modal(modalElement, {});
+  myModal.show();
+}
+
 // // real time clock timer
 // function updateClock() {
 //   // Fetch the server time using AJAX

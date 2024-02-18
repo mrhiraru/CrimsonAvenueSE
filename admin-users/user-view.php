@@ -288,8 +288,6 @@ include_once('../includes/preloader.php');
             var formObject = document.forms['accRestriction'];
             formObject.submit();
         }
-        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
-        myModal.show()
     </script>
 </body>
 

@@ -257,10 +257,6 @@ include_once('../includes/preloader.php');
     require_once('../includes/js.php');
     ?>
     <script src="../js/colleges.datatable.js"></script>
-    <script>
-        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
-        myModal.show()
-    </script>
 </body>
 
 </html>

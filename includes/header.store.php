@@ -7,7 +7,7 @@
                 </button>
                 <a class="navbar-brand h-1 fs-3 fw-bolder ms-3 me-auto d-flex align-items-center text-light" href="../store/index.php">
                     <img src="../images/main/ca-nospace.png" alt="" width="40" height="40" class="d-inline-block me-2">
-                    <span class="d-lg-inline d-md-inline d-none">Crimson Avenue </span>
+                    <span class="d-lg-inline d-md-inline d-none">Store Panel</span>
                 </a>
                 <div class="dropdown">
                     <button class="mx-3 text-light dropdown-toggle border-0 bg-tertiary d-flex align-items-center justify-content-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">

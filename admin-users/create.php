@@ -361,9 +361,6 @@ include_once('../includes/preloader.php');
             search: true,
             maxHeight: '100px',
         });
-
-        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
-        myModal.show();
     </script>
 </body>
 

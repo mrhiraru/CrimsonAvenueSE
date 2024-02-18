@@ -105,10 +105,6 @@ include_once('../includes/preloader.php');
     require_once('../includes/js.php');
     ?>
     <script src="../js/users.datatables.js"></script>
-    <script>
-        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
-        myModal.show()
-    </script>
 </body>
 
 </html>
