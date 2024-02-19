@@ -139,7 +139,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="w-100 d-flex" role="search">
+                <form class="w-100 d-flex" role="search" action="../index.php">
                     <input class="form-control me-auto border border-primary" type="search" name="search" placeholder="Search" aria-label="Search">
                 </form>
             </div>
