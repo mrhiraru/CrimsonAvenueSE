@@ -7,7 +7,7 @@ $(document).ready(function () {
       buttons: [],
       columnDefs: [
         {
-          targets: [0, 1, 2, 3, 4] /* column index */,
+          targets: [0, 1, 2, 3, 4, 5] /* column index */,
           orderable: false /* true or false */,
         },
       ],
@@ -15,7 +15,7 @@ $(document).ready(function () {
     dataTable.buttons().container().appendTo($("#MyButtons"));
   
     var table = dataTable;
-    var filter = createFilter(table, [0, 1, 2, 3, 4]);
+    var filter = createFilter(table, [0, 1, 2, 3, 4, 5]);
   
     function createFilter(table, columns) {
       var input = $("input#keyword").on("keyup", function () {

@@ -312,7 +312,7 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/js.php');
     ?>
-    <script src="../js/departments.datatable.js"></script>
+    <script src="../js/departments.datatable.js"></script>  
 </body>
 
 </html>

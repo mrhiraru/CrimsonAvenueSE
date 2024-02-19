@@ -44,6 +44,7 @@ include_once('../includes/preloader.php');
                                 <th scope="col"></th>
                                 <th scope="col" class="text-center">Store Name</th>
                                 <th scope="col" class="text-center">Role</th>
+                                <th scope="col" class="text-center">Verification Status</th>
                                 <th scope="col" class="text-center"></th>
                             </tr>
                         </thead>
@@ -69,6 +70,7 @@ include_once('../includes/preloader.php');
                                                             } else if ($item['staff_role'] == 2) {
                                                                 echo 'Courier';
                                                             } ?></td>
+                                    <td class="text-center"><?= $item['verification_status'] ?></td>
                                     <td class="text-center text-nowrap">
                                         <div class="m-0 p-0">
                                             <a href="../store/index.php?store_id=<?= $item['store_id'] ?>" type="button" class="text-primary border-0 fw-semibold text-decoration-none">Store Panel</a>
