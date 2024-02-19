@@ -246,6 +246,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $category_page ?>" href="../admin-settings/category.php">
+                                    Categories
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-secondary fw-semibold <?= $admin_page ?>" href="../admin-settings/admin.php">
                                     Admin Control
                                 </a>
