@@ -57,7 +57,7 @@ class College
     function show()
     {
         // Note: Update query to count stores per college!
-        $sql = "SELECT c.*, COUNT(d.college_id) as dept_count FROM college c LEFT JOIN department d ON c.college_id = d.college_id AND d.is_deleted != 1 WHERE c.is_deleted != 1 GROUP BY c.college_id ORDER BY c.college_id ASC;";
+        $sql = "SELECT c.*, COALESCE(d.dept_count, 0) as dept_count, COALESCE(s.store_count, 0) as store_count FROM college c LEFT JOIN (SELECT college_id, COUNT(*) as dept_count FROM department WHERE is_deleted != 1 GROUP BY college_id) d ON c.college_id = d.college_id LEFT JOIN (SELECT college_id, COUNT(*) as store_count FROM store WHERE is_deleted != 1 GROUP BY college_id) s ON c.college_id = s.college_id WHERE c.is_deleted != 1 ORDER BY c.college_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {
@@ -81,7 +81,8 @@ class College
         }
     }
 
-    function count_department($college_id) {
+    function count_department($college_id)
+    {
         $sql = "SELECT c.*, COUNT(d.college_id) as dept_count FROM college c LEFT JOIN department d ON c.college_id = d.college_id AND d.is_deleted != 1 WHERE c.college_id = :college_id AND c.is_deleted != 1";
 
         $query = $this->db->connect()->prepare($sql);

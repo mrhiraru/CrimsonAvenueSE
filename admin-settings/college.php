@@ -150,7 +150,7 @@ include_once('../includes/preloader.php');
                                             <td><?= $counter ?></td>
                                             <td> <?= $item['college_name'] ?> </td>
                                             <td class="text-center"><?= $item['dept_count'] ?></td>
-                                            <td class="text-center"><?= 0 ?></td>
+                                            <td class="text-center"><?= $item['store_count'] ?></td>
                                             <td class="text-center text-nowrap">
                                                 <div class="m-0 p-0">
                                                     <form action="./college.php?id=<?= $item['college_id'] ?>" method="post">
