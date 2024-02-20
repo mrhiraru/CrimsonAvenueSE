@@ -4,6 +4,7 @@ session_start();
 require_once "../tools/functions.php";
 require_once "../classes/store.class.php";
 require_once "../classes/category.class.php";
+require_once "../classes/product.class.php";
 
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
@@ -14,6 +15,31 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../index.php');
 }
 
+if (isset($_POST['create'])) {
+    $product = new Product();
+
+    $product->product_name = htmlentities($_POST['product_name']);
+    $product->category_id = htmlentities($_POST['category_id']);
+    $product->exclusivity = htmlentities($_POST['exclusivity']);
+    $product->sale_status = htmlentities($_POST['sale_status']);
+    $product->store_id = $_GET['store_id'];
+
+    if (
+        validate_field($product->product_name) &&
+        validate_field($product->category_id) &&
+        validate_field($product->exclusivity) &&
+        validate_field($product->sale_status) &&
+        validate_field($product->store_id)
+    ) {
+        if ($product->add()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
 
 ?>
 
@@ -44,14 +70,14 @@ include_once('../includes/preloader.php');
                             <p class="m-0 mb-3 p-0 text-center fs-3 fw-semibold text-primary">
                                 Add New Product
                             </p>
-                            <form action="" method="post" class="row d-flex p-2 p-md-0 m-0 col-lg-5">
+                            <form action="./create.php?store_id=<?= $record['store_id'] ?>" method="post" class="row d-flex p-2 p-md-0 m-0 col-lg-5">
 
                                 <div class="mb-3 p-0 col-12">
                                     <input type="text" name="product_name" placeholder="Product Name" class="form-control" value="<?php if (isset($_POST['product_name'])) {
                                                                                                                                         echo $_POST['product_name'];
                                                                                                                                     } ?>">
                                     <?php
-                                    if (isset($_POST['product_name']) && validate_field($_POST['product_name'])) {
+                                    if (isset($_POST['product_name']) && !validate_field($_POST['product_name'])) {
                                     ?>
                                         <p class="fs-7 text-primary m-0 ps-2">Product name is required.</p>
                                     <?php
@@ -132,7 +158,7 @@ include_once('../includes/preloader.php');
                                     ?>
                                 </div>
                                 <div class="mb-3 p-0 col-12">
-                                    <input type="submit" class="btn btn-primary w-100 fw-semibold" name="signup" value="Save">
+                                    <input type="submit" class="btn btn-primary w-100 fw-semibold" name="create" value="Save">
                                 </div>
                             </form>
                         </div>
@@ -141,6 +167,27 @@ include_once('../includes/preloader.php');
             </div>
         </div>
     </main>
+    <?php
+    if (isset($_POST['create']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./create.php?store_id=<?= $record['store_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0 text-dark">Product is successfully added! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
     <?php
     require_once('../includes/js.php');
     ?>

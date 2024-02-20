@@ -26,7 +26,7 @@ class Product
         $connect = $this->db->connect();
         $connect->beginTransaction();
 
-        $sql = "INSERT INTO product (store_id, category_id, product_name, exclusivity, sale_status) VALUES (:store_id, :category_id, :product_name, :exclusivity, :sale_status,)";
+        $sql = "INSERT INTO product (store_id, category_id, product_name, exclusivity, sale_status) VALUES (:store_id, :category_id, :product_name, :exclusivity, :sale_status)";
 
         $query = $connect->prepare($sql);
         $query->bindParam(':store_id', $this->store_id);
@@ -42,13 +42,13 @@ class Product
 
             $sec_query = $connect->prepare($sec_sql);
             $sec_query->bindParam(':product_id', $last_product_id);
-            $sec_query->bindParam(':variation_name', 'Default');
+            $sec_query->bindValue(':variation_name', 'Default');
 
             $thi_sql = "INSERT INTO measurement (product_id, measurement_name) VALUES (:product_id, :measurement_name)";
 
             $thi_query = $connect->prepare($thi_sql);
             $thi_query->bindParam(':product_id', $last_product_id);
-            $thi_query->bindParam(':measurement_name', 'Default');
+            $thi_query->bindValue(':measurement_name', 'Default');
 
             if ($sec_query->execute() && $thi_query->execute()) {
                 $connect->commit();
