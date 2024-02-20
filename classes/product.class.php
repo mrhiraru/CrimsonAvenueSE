@@ -65,7 +65,7 @@ class Product
 
     function show($store_id)
     {
-        $sql = "SELECT p.*, c.category_name, COALESCE(v.variation_count, 0) AS variation_count, COALESCE(m.measurement_count, 0) AS measurement_count FROM product p INNER JOIN category c ON p.category_id = c.category_id LEFT JOIN (SELECT variation_id, COUNT(*) as variation_count FROM variation  WHERE is_deleted != 1 GROUP BY product_id) v ON p.product_id = v.product_id LEFT JOIN (SELECT measurement_id, COUNT(*) as measurement_count FROM measurement WHERE is_deleted != 1 GROUP BY product_id) m ON p.product_id = m.product_id WHERE p.store_id = :store_id AND p.is_deleted != 1 ORDER BY p.product_id ASC;";
+        $sql = "SELECT p.*, c.category_name FROM product p INNER JOIN category c ON p.category_id = c.category_id AND c.is_deleted != 1 WHERE p.store_id = :store_id AND p.is_deleted != 1 ORDER BY p.product_id ASC";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':store_id', $store_id);
 

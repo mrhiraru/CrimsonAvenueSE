@@ -47,7 +47,7 @@ include_once('../includes/preloader.php');
                                     <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
                                 </div>
                             </div>
-                            <table id="stores" class="table table-lg mt-1">
+                            <table id="products" class="table table-lg mt-1">
                                 <thead>
                                     <tr class="align-middle">
                                         <th scope="col"></th>
@@ -55,9 +55,7 @@ include_once('../includes/preloader.php');
                                         <th scope="col" class="text-center">Product Name</th>
                                         <th scope="col" class="text-center">Category</th>
                                         <th scope="col" class="text-center">Exclusivity</th>
-                                        <th scope="col" class="text-center">Variations</th>
-                                        <th scope="col" class="text-center">Sizes/Measurements</th>
-                                        <th scope="col" class="text-center">Sale Status</th>
+                                        <th scope="col" class="text-center">Availability</th>
                                         <th scope="col" class="text-center">Restriction Status</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
@@ -79,8 +77,6 @@ include_once('../includes/preloader.php');
                                             <td class="text-center"><?= $item['product_name'] ?></td>
                                             <td class="text-center"><?= $item['category_name'] ?></td>
                                             <td class="text-center"><?= $item['exclusivity'] ?></td>
-                                            <td class="text-center"><?= $item['variation_count'] ?></td>
-                                            <td class="text-center"><?= $item['measurement_count'] ?></td>
                                             <td class="text-center"><?= $item['sale_status'] ?></td>
                                             <td class="text-center"><?= $item['restriction_status'] ?></td>
                                             <td class="text-center text-nowrap">
@@ -104,6 +100,7 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/js.php');
     ?>
+    <script src="../js/store-products.datatable.js"></script>
 </body>
 
 </html>
