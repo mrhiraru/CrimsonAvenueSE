@@ -56,7 +56,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $add_page ?>" href="../store-product/create.php?store_id=<?= $record['store_id'] ?>">
+                                <a class="nav-link text-secondary fw-semibold <?= $addproduct_page ?>" href="../store-product/create.php?store_id=<?= $record['store_id'] ?>">
                                     Add Product
                                 </a>
                             </li>
