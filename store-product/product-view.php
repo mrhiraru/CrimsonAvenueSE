@@ -9,14 +9,15 @@ $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
 
 $product = new Product();
-
+$pro_record = $product->fetch_info($_GET['product_id'], $record['store_id']);
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
 } else if (!isset($_GET['store_id']) || !isset($record['store_id']) || $record['is_deleted'] == 1 || !isset($record['staff_role'])) {
     header('location: ../index.php');
+} else if (!isset($pro_record['store_id']) || !isset($_GET['product_id'])) {
+    header('location: ./index.php?store_id=' . $record['store_id']);
 }
-
 
 ?>
 
@@ -24,9 +25,9 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "Store Dashboard | Crimson Avenue";
-$store_page = "active";
-$dashboard_page = "active";
+$title = "Product View | Crimson Avenue";
+$product_page = "active";
+$products_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>

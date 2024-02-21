@@ -74,4 +74,16 @@ class Product
         }
         return $data;
     }
+
+    function fetch_info($product_id, $store_id)
+    {
+        $sql = "SELECT p.*, s.* FROM product p INNER JOIN store s ON p.store_id = s.store_id AND s.is_deleted != 1 WHERE p.product_id = :product_id AND p.is_deleted != 1 AND p.store_id = :store_id LIMIT 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+        $query->bindParam(':product_id', $product_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
 }

@@ -81,7 +81,7 @@ include_once('../includes/preloader.php');
                                             <td class="text-center"><?= $item['restriction_status'] ?></td>
                                             <td class="text-center text-nowrap">
                                                 <div class="m-0 p-0">
-                                                    <a href="./product-view.php?store_id=<?php echo $record['store_id'].'&?product_id='.$item['product_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
+                                                    <a href="./product-view.php?store_id=<?php echo $record['store_id'].'&product_id='.$item['product_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
                                                 </div>
                                             </td>
                                         </tr>
