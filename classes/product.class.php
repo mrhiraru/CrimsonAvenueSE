@@ -77,7 +77,7 @@ class Product
 
     function fetch_info($product_id, $store_id)
     {
-        $sql = "SELECT p.*, s.*, c.* FROM product p INNER JOIN store s ON p.store_id = s.store_id AND s.is_deleted != 1 INNER JOIN category c ON p.category_id = c.category_id AND c.is_deleted != 1 WHERE p.product_id = :product_id AND p.is_deleted != 1 AND p.store_id = :store_id LIMIT 1;";
+        $sql = "SELECT p.*, s.store_id, c.category_name, COALESCE(v.var_count, 0) AS var_count, COALESCE(m.mea_count, 0) AS mea_count FROM product p INNER JOIN store s ON p.store_id = s.store_id INNER JOIN category c ON p.category_id = c.category_id INNER JOIN (SELECT product_id, COUNT(*) AS var_count FROM variation WHERE is_deleted != 1 GROUP BY product_id) v ON p.product_id = v.product_id INNER JOIN (SELECT product_id, COUNT(*) AS mea_count FROM measurement WHERE is_deleted != 1 GROUP BY product_id) m ON p.product_id = m.product_id WHERE p.store_id = :store_id AND p.product_id = :product_id AND p.is_deleted != 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':store_id', $store_id);
         $query->bindParam(':product_id', $product_id);
@@ -85,11 +85,5 @@ class Product
             $data = $query->fetch();
         }
         return $data;
-    }
-
-    function count() {
-        $sql = "SELECT COALESCE(v.variation_id, 0) as var_count, COALESCE(m.measurement_id, 0) as measure_count, FROM product p INNER JOIN (SELECT variation_id, COUNT(*) FROM variation WHERE is_deleted != 1) v ON p.variation_id = v.variation_id INNER JOIN (SELECT measurement_id, COUNT(*) FROM measurement WHERE is_deleted != 1) m ";
-        $sql = "SELECT * FROM product, variation_table WHERE product.product_id = variation.variation_id";
-        
     }
 }
