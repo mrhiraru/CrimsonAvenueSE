@@ -30,11 +30,11 @@ include_once('../includes/preloader.php');
         <main>
             <div class="container-fluid bg-white shadow rounded m-0 p-3">
                 <div class="row d-flex justify-content-center m-0 p-0">
-                    <div class="col-12 m-0 p-0 px-2">
-                        <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1 btn-group">
+                    <div class="col-12 m-0 p-0 px-2 btn-group">
+                        <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1 flex-fill">
                             Profile
                         </p>
-                        <p type="button" class="m-0 p-0 text-secondary float-end border-0 bg-white fw-semibold fs-4 lh-1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <p type="button" class="m-0 p-0 text-secondary border-0 bg-white fw-semibold fs-4 lh-1" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-ellipsis"></i>
                         </p>
                         <ul class="dropdown-menu dropdown-menu-end">

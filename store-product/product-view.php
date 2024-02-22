@@ -44,13 +44,13 @@ include_once('../includes/preloader.php');
                 <main class="col-md-9 col-lg-10 p-4 row m-0 h-100">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3">
                         <div class="row d-flex justify-content-center m-0 p-0">
-                            <div class="col-12 m-0 p-0 px-2">
-                                <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1 btn-group">
+                            <div class="col-12 m-0 p-0 px-2 btn-group">
+                                <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1 flex-fill">
                                     Product Details
                                 </p>
-                                <p type="button" class="m-0 p-0 text-secondary float-end border-0 bg-white fw-semibold fs-4 lh-1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="m-0 p-0 text-secondary border-0 bg-white fw-semibold fs-4 lh-1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-ellipsis"></i>
-                                </p>
+                                </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Update Details</a></li>
                                     <li><a class="dropdown-item" href="#">Delete Product</a></li>
@@ -171,9 +171,28 @@ include_once('../includes/preloader.php');
                     <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
                         <div class="row d-flex justify-content-between m-0 p-0">
                             <div class="col-12 m-0 p-0 px-2 row">
-                                <div class="item">
-                                    
-                                </div>
+                                Images Here
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
+                        <div class="row d-flex justify-content-between m-0 p-0">
+                            <div class="col-12 m-0 p-0 px-2 row">
+                                Descriptions Here
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
+                        <div class="row d-flex justify-content-between m-0 p-0">
+                            <div class="col-12 m-0 p-0 px-2 row">
+                                Variations Here
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
+                        <div class="row d-flex justify-content-between m-0 p-0">
+                            <div class="col-12 m-0 p-0 px-2 row">
+                                Measurements Here
                             </div>
                         </div>
                     </div>
