@@ -25,7 +25,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "Product View | Crimson Avenue";
+$title = "Product Inventory | Crimson Avenue";
 $product_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
@@ -159,19 +159,12 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0 px-2">
                                 <ul class="nav justify-content-center">
                                     <li class="nav-item">
-                                        <a class="nav-link py-0 px-5 fw-bold text-decoration-underline active disabled" aria-current="page" href="">Configure</a>
+                                        <a class="nav-link py-0 px-5 fw-bold " aria-current="page" href="./product-view.php?store_id=<?= $pro_record['store_id'].'&product_id='.$pro_record['product_id'] ?>">Configure</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link py-0 px-5 fw-bold" href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Inventory</a>
+                                        <a class="nav-link py-0 px-5 fw-bold text-decoration-underline active disabled" href="#">Inventory</a>
                                     </li>
                                 </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
-                        <div class="row d-flex justify-content-between m-0 p-0">
-                            <div class="col-12 m-0 p-0 px-2">
-                                
                             </div>
                         </div>
                     </div>

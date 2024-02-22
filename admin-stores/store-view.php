@@ -69,68 +69,132 @@ include_once('../includes/preloader.php');
                 ?>
                 <main class="col-md-9 col-lg-10 p-4 row m-0 h-100">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3">
-                        <div class="row d-flex justify-content-between m-0 p-0">
-                            <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column justify-content-center align-items-center">
-                                <img src="<?php if (isset($record['profile_image'])) {
-                                                echo "../images/data/" . $record['profile_image'];
+                        <div class="row d-flex justify-content-center m-0 p-0">
+                            <div class="col-12 m-0 p-0 px-2">
+                                <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1 btn-group">
+                                    Store Details
+                                </p>
+                                <p type="button" class="m-0 p-0 text-secondary float-end border-0 bg-white fw-semibold fs-4 lh-1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </p>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <button class="dropdown-item border-0 bg-white" data-bs-toggle="modal" data-bs-target="#verificationModal">Update Verfication Status</button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item border-0 bg-white" data-bs-toggle="modal" data-bs-target="#restrictionModal">Update Restriction</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 m-0 p-0">
+                                <hr class="mb-0">
+                            </div>
+                            <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column align-items-center">
+                                <img src="<?php if (isset($pro_record['profile_image'])) {
+                                                echo "../images/data/" . $pro_record['profile_image'];
                                             } else {
                                                 echo "../images/main/no-profile.jpg";
                                             } ?>" alt="" class="profile-size border border-secondary-subtle rounded-2">
                             </div>
                             <div class="col-auto d-none d-lg-block p-0 m-0 border-start"></div>
-                            <div class="col-12 col-lg-auto m-0 p-3 d-flex justify-content-start align-items-start flex-fill row">
-
-                                <table class="table table-sm border-top m-0">
+                            <div class="col-12 col-lg-auto m-0 p-2 d-flex justify-content-start align-items-start flex-fill row">
+                                <table class="table-sm m-0">
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Store</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['store_name'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Bio</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['store_bio'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Administrator</td>
-                                        <td class="fw-semibold text-dark ps-3"><?php if (isset($record['middlename'])) {
-                                                                                    echo ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname']));
-                                                                                } else {
-                                                                                    echo ucwords(strtolower($record['firstname'] . ' ' . $record['lastname']));
-                                                                                } ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">College</td>
-                                        <td class="fw-semibold text-dark ps-3"><?php if (!isset($record['college_name'])) {
-                                                                                    echo 'Independent (No College)';
-                                                                                } else {
-                                                                                    echo $record['college_name'];
-                                                                                } ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Email</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['store_email'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Contact</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['store_contact'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Location</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['store_location'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Date Established</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= date('F d Y', strtotime($record['is_created'])); ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Verification</td>
-                                        <td class="fw-semibold text-dark ps-3">
-                                            <?= $record['verification_status'] ?><button class="text-primary float-end border-0 bg-white fw-semibold " data-bs-toggle="modal" data-bs-target="#userRoleModal">Change</button>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Store Name:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['store_name'] ?>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Restriction</td>
-                                        <td class="fw-semibold text-dark ps-3">
-                                            <?= $record['restriction_status'] ?><button class="text-primary float-end border-0 bg-white fw-semibold" data-bs-toggle="modal" data-bs-target="#restrictionModal">Change</button>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Bio:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['store_bio'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Administrator:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?php if (isset($record['middlename'])) {
+                                                echo ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname']));
+                                            } else {
+                                                echo ucwords(strtolower($record['firstname'] . ' ' . $record['lastname']));
+                                            } ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                College:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?php if (!isset($record['college_name'])) {
+                                                echo 'Independent (No College)';
+                                            } else {
+                                                echo $record['college_name'];
+                                            } ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Store Email:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['store_email'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Contact:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['store_contact'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="pe-3 text-secondary fw-normal">
+                                                Location:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['store_location'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Date Established:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= date('F d Y', strtotime($record['is_created'])) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Verification Status:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['verification_status'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Restrictions:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['restriction_status'] ?>
                                         </td>
                                     </tr>
                                 </table>
@@ -141,7 +205,7 @@ include_once('../includes/preloader.php');
             </div>
         </div>
     </main>
-    <div class="modal fade" id="userRoleModal" tabindex="-1" aria-labelledby="userRoleModalLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="false">
+    <div class="modal fade" id="verificationModal" tabindex="-1" aria-labelledby="verificationModalLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header py-2 px-3">
@@ -155,16 +219,16 @@ include_once('../includes/preloader.php');
                                 <div class="form-group m-0 p-0 d-flex row justify-content-evenly">
                                     <div class="col-auto m-0 p-0">
                                         <input class="form-check-input" type="radio" name="verification_status" id="verified" value="Verified" onchange="autoSubmitRole()" <?php if ($record['verification_status'] == 'Verified') {
-                                                                                                                                                                        echo "checked";
-                                                                                                                                                                    } ?>>
+                                                                                                                                                                                echo "checked";
+                                                                                                                                                                            } ?>>
                                         <label class="form-check-label" for="verified">
                                             Verified
                                         </label>
                                     </div>
                                     <div class="col-auto m-0 p-0">
                                         <input class="form-check-input" type="radio" name="verification_status" id="notverified" value="Not Verified" onchange="autoSubmitRole()" <?php if ($record['verification_status'] == 'Not Verified') {
-                                                                                                                                                                                echo "checked";
-                                                                                                                                                                            } ?>>
+                                                                                                                                                                                        echo "checked";
+                                                                                                                                                                                    } ?>>
                                         <label class="form-check-label" for="notverified">
                                             Not Verified
                                         </label>

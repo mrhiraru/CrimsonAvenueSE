@@ -29,11 +29,24 @@ include_once('../includes/preloader.php');
     <div class="container-fluid col-md-9 my-4 mx-sm-auto">
         <main>
             <div class="container-fluid bg-white shadow rounded m-0 p-3">
-                <div class="row d-flex justify-content-between m-0 p-0">
-                    <div class="col-12 m-0 p-0">
-                        <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1">Profile</p>
+                <div class="row d-flex justify-content-center m-0 p-0">
+                    <div class="col-12 m-0 p-0 px-2">
+                        <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1 btn-group">
+                            Profile
+                        </p>
+                        <p type="button" class="m-0 p-0 text-secondary float-end border-0 bg-white fw-semibold fs-4 lh-1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </p>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <button class="dropdown-item border-0 bg-white" data-bs-toggle="modal" data-bs-target="#userRoleModal">Settings</button>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column justify-content-center align-items-center">
+                    <div class="col-12 m-0 p-0">
+                        <hr class="mb-0">
+                    </div>
+                    <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column align-items-center">
                         <img src="<?php if (isset($_SESSION['profile_image'])) {
                                         echo "../images/data/" . $_SESSION['profile_image'];
                                     } else {
@@ -41,52 +54,107 @@ include_once('../includes/preloader.php');
                                     } ?>" alt="" class="profile-size border border-secondary-subtle rounded-2">
                     </div>
                     <div class="col-auto d-none d-lg-block p-0 m-0 border-start"></div>
-                    <div class="col-12 col-lg-auto m-0 p-3 d-flex justify-content-start align-items-start flex-fill row">
-
-                        <table class="table table-sm border-top m-0">
+                    <div class="col-12 col-lg-auto m-0 p-2 d-flex justify-content-start align-items-start flex-fill row">
+                        <table class="table-sm m-0">
                             <tr>
-                                <td class=" pe-3 text-secondary d-none d-md-block">Name</td>
-                                <td class="fw-semibold text-dark ps-3"><?= $_SESSION['full_name'] ?></td>
+                                <td class="fw-semibold text-dark">
+                                    <span class="text-secondary fw-normal">
+                                        Name:
+                                    </span>
+                                    <br class="d-block d-md-none">
+                                    <?= $_SESSION['full_name'] ?>
+                                </td>
                             </tr>
                             <tr>
-                                <td class=" pe-3 text-secondary d-none d-md-block">Gender</td>
-                                <td class="fw-semibold text-dark ps-3"><?= $_SESSION['gender'] ?></td>
+                                <td class="fw-semibold text-dark">
+                                    <span class="text-secondary fw-normal">
+                                        Gender:
+                                    </span>
+                                    <br class="d-block d-md-none">
+                                    <?= $_SESSION['gender'] ?>
+                                </td>
                             </tr>
                             <tr>
-                                <td class=" pe-3 text-secondary d-none d-md-block">Affiliation</td>
-                                <td class="fw-semibold text-dark ps-3"><?= $_SESSION['affiliation'] ?></td>
+                                <td class="fw-semibold text-dark">
+                                    <span class="text-secondary fw-normal">
+                                        Affiliation:
+                                    </span>
+                                    <br class="d-block d-md-none">
+                                    <?= $_SESSION['affiliation'] ?>
+                                </td>
                             </tr>
                             <tr>
-                                <td class=" pe-3 text-secondary d-none d-md-block">College</td>
-                                <td class="fw-semibold text-dark ps-3"><?php if (isset($_SESSION['college_name'])) {
-                                                                            echo $_SESSION['college_name'];
-                                                                        } else {
-                                                                            echo "No College";
-                                                                        } ?></td>
+                                <td class="fw-semibold text-dark">
+                                    <span class="text-secondary fw-normal">
+                                        College:
+                                    </span>
+                                    <br class="d-block d-md-none">
+                                    <?php if (!isset($_SESSION['college_name'])) {
+                                        echo 'No College';
+                                    } else {
+                                        echo $_SESSION['college_name'];
+                                    } ?>
+                                </td>
                             </tr>
                             <tr>
-                                <td class=" pe-3 text-secondary d-none d-md-block">Department</td>
-                                <td class="fw-semibold text-dark ps-3"><?php if (isset($_SESSION['department_name'])) {
-                                                                            echo $_SESSION['department_name'];
-                                                                        } else {
-                                                                            echo "No Department";
-                                                                        }  ?></td>
+                                <td class="fw-semibold text-dark">
+                                    <span class="text-secondary fw-normal">
+                                        Department:
+                                    </span>
+                                    <br class="d-block d-md-none">
+                                    <?php if (!isset($_SESSION['department_name'])) {
+                                        echo 'No Department';
+                                    } else {
+                                        echo $_SESSION['department_name'];
+                                    } ?>
+                                </td>
                             </tr>
                             <tr>
-                                <td class=" pe-3 text-secondary d-none d-md-block">Email</td>
-                                <td class="fw-semibold text-dark ps-3"><?= $_SESSION['email'] ?> <span class="text-primary fw-semibold float-end"><?= $_SESSION['verification_status'] ?></span></td>
+                                <td class="fw-semibold text-dark">
+                                    <span class="text-secondary fw-normal">
+                                        Email:
+                                    </span>
+                                    <br class="d-block d-md-none">
+                                    <?= $_SESSION['email'] ?> -
+                                    <span class="text-primary fw-semibold"><?= $_SESSION['verification_status'] ?>
+                                </td>
                             </tr>
                             <tr>
-                                <td class=" pe-3 text-secondary d-none d-md-block">Contact</td>
-                                <td class="fw-semibold text-dark ps-3"><?= $_SESSION['contact'] ?></td>
+                                <td class="fw-semibold text-dark">
+                                    <span class="text-secondary fw-normal">
+                                        Contact:
+                                    </span>
+                                    <br class="d-block d-md-none">
+                                    <?= $_SESSION['contact'] ?>
+                                </td>
                             </tr>
                             <tr>
-                                <td class=" pe-3 text-secondary d-none d-md-block">Address</td>
-                                <td class="fw-semibold text-dark ps-3"><?php if (isset($_SESSION['address'])) {
-                                                                            echo $_SESSION['address'];
-                                                                        } else {
-                                                                            echo "No Address";
-                                                                        } ?> </td>
+                                <td class="fw-semibold text-dark">
+                                    <span class="pe-3 text-secondary fw-normal">
+                                        Address:
+                                    </span>
+                                    <br class="d-block d-md-none">
+                                    <?php if (isset($_SESSION['address'])) {
+                                        echo $_SESSION['address'];
+                                    } else {
+                                        echo "No Address";
+                                    } ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold text-dark">
+                                    <span class="text-secondary fw-normal">
+                                        User Role:
+                                    </span>
+                                    <br class="d-block d-md-none">
+                                    <?php if ($_SESSION['user_role'] == 0) {
+                                        echo "Administrator";
+                                    } else if ($_SESSION['user_role'] == 1) {
+                                        echo "Moderator";
+                                    } else if ($_SESSION['user_role'] == 2) {
+                                        echo "User";
+                                    } ?>
+                                </td>
                             </tr>
                         </table>
                     </div>

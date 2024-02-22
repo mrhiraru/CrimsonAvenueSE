@@ -69,84 +69,147 @@ include_once('../includes/preloader.php');
                 ?>
                 <main class="col-md-9 col-lg-10 p-4 row m-0 h-100">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3">
-                        <div class="row d-flex justify-content-between m-0 p-0">
-                            <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column justify-content-center align-items-center">
-                                <img src="<?php if (isset($record['profile_image'])) {
-                                                echo "../images/data/" . $record['profile_image'];
+                        <div class="row d-flex justify-content-center m-0 p-0">
+                            <div class="col-12 m-0 p-0 px-2">
+                                <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1 btn-group">
+                                    User Details
+                                </p>
+                                <p type="button" class="m-0 p-0 text-secondary float-end border-0 bg-white fw-semibold fs-4 lh-1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </p>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <?php if ($record['user_role'] != 0) { ?> <button class="dropdown-item border-0 bg-white" data-bs-toggle="modal" data-bs-target="#userRoleModal">Update User Role</button> <?php } ?>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item border-0 bg-white" data-bs-toggle="modal" data-bs-target="#restrictionModal">Update Restriction</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 m-0 p-0">
+                                <hr class="mb-0">
+                            </div>
+                            <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column align-items-center">
+                                <img src="<?php if (isset($pro_record['profile_image'])) {
+                                                echo "../images/data/" . $pro_record['profile_image'];
                                             } else {
                                                 echo "../images/main/no-profile.jpg";
                                             } ?>" alt="" class="profile-size border border-secondary-subtle rounded-2">
                             </div>
                             <div class="col-auto d-none d-lg-block p-0 m-0 border-start"></div>
-                            <div class="col-12 col-lg-auto m-0 p-3 d-flex justify-content-start align-items-start flex-fill row">
-
-                                <table class="table table-sm border-top m-0">
+                            <div class="col-12 col-lg-auto m-0 p-2 d-flex justify-content-start align-items-start flex-fill row">
+                                <table class="table-sm m-0">
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Name</td>
-                                        <td class="fw-semibold text-dark ps-3"><?php if (isset($record['middlename'])) {
-                                                                                    echo ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname']));
-                                                                                } else {
-                                                                                    echo ucwords(strtolower($record['firstname'] . ' ' . $record['lastname']));
-                                                                                } ?></td>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Name:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?php if (isset($record['middlename'])) {
+                                                echo ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname']));
+                                            } else {
+                                                echo ucwords(strtolower($record['firstname'] . ' ' . $record['lastname']));
+                                            } ?>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Gender</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['gender'] ?></td>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Gender:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['gender'] ?>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Affiliation</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['affiliation'] ?></td>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Affiliation:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['affiliation'] ?>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">College</td>
-                                        <td class="fw-semibold text-dark ps-3"><?php if (isset($record['college_name'])) {
-                                                                                    echo $record['college_name'];
-                                                                                } else {
-                                                                                    echo "No College";
-                                                                                } ?></td>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                College:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?php if (!isset($record['college_name'])) {
+                                                echo 'No College';
+                                            } else {
+                                                echo $record['college_name'];
+                                            } ?>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Department</td>
-                                        <td class="fw-semibold text-dark ps-3"><?php if (isset($record['department_name'])) {
-                                                                                    echo $record['department_name'];
-                                                                                } else {
-                                                                                    echo "No Department";
-                                                                                }  ?></td>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Department:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?php if (!isset($record['department_name'])) {
+                                                echo 'No Department';
+                                            } else {
+                                                echo $record['department_name'];
+                                            } ?>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Email</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['email'] ?> <span class="text-primary fw-semibold float-end"><?= $record['verification_status'] ?></span></td>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Email:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['email'] ?> -
+                                            <span class="text-primary fw-semibold"><?= $record['verification_status'] ?>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Contact</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $record['contact'] ?></td>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Contact:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['contact'] ?>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Address</td>
-                                        <td class="fw-semibold text-dark ps-3"><?php if (isset($record['address'])) {
-                                                                                    echo $record['address'];
-                                                                                } else {
-                                                                                    echo "No Address";
-                                                                                } ?> </td>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="pe-3 text-secondary fw-normal">
+                                                Address:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?php if (isset($record['address'])) {
+                                                echo $record['address'];
+                                            } else {
+                                                echo "No Address";
+                                            } ?>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">User Role</td>
-                                        <td class="fw-semibold text-dark ps-3">
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                User Role:
+                                            </span>
+                                            <br class="d-block d-md-none">
                                             <?php if ($record['user_role'] == 0) {
                                                 echo "Administrator";
                                             } else if ($record['user_role'] == 1) {
                                                 echo "Moderator";
                                             } else if ($record['user_role'] == 2) {
                                                 echo "User";
-                                            }
-                                            if ($record['user_role'] != 0) { ?> <button class="text-primary float-end border-0 bg-white fw-semibold " data-bs-toggle="modal" data-bs-target="#userRoleModal">Change</button> <?php } ?>
+                                            } ?>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Restriction</td>
-                                        <td class="fw-semibold text-dark ps-3">
-                                            <?php echo $record['restriction_status'];
-                                            if ($record['user_role'] != 0) { ?> <button class="text-primary float-end border-0 bg-white fw-semibold" data-bs-toggle="modal" data-bs-target="#restrictionModal">Change</button> <?php } ?>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Restrictions:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['restriction_status'] ?>
                                         </td>
                                     </tr>
                                 </table>
