@@ -170,8 +170,10 @@ include_once('../includes/preloader.php');
                     </div>
                     <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
                         <div class="row d-flex justify-content-between m-0 p-0">
-                            <div class="col-12 m-0 p-0 px-2">
-                                
+                            <div class="col-12 m-0 p-0 px-2 row">
+                                <div class="item">
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
