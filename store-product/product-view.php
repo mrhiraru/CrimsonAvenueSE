@@ -27,7 +27,6 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 // Change title for each page.
 $title = "Product View | Crimson Avenue";
 $product_page = "active";
-$products_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>
@@ -57,45 +56,85 @@ include_once('../includes/preloader.php');
 
                                 <table class="table table-sm border-top m-0">
                                     <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Product Name</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $pro_record['product_name'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Category</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $pro_record['category_name'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Exclusivity</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $pro_record['exclusivity'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Variations</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $pro_record['var_count'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Sizes</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $pro_record['mea_count'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Limit Per Order</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $pro_record['order_quantity_limit'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Estimated Order Time</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $pro_record['estimated_order_time'] . ' Days' ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Date Added</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= date('F d Y', strtotime($pro_record['is_created'])); ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Sale Status</td>
-                                        <td class="fw-semibold text-dark ps-3"><?= $pro_record['sale_status'] ?><button class="text-primary float-end border-0 bg-white fw-semibold" data-bs-toggle="modal" data-bs-target="#saleStatusModal">Change</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td class=" pe-3 text-secondary d-none d-md-block">Restriction</td>
                                         <td class="fw-semibold text-dark ps-3">
-                                            <?= $record['restriction_status'] ?>
+                                            <span class="pe-3 text-secondary fw-normal">
+                                                Product Name:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $pro_record['product_name'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark ps-3">
+                                            <span class="pe-3 text-secondary fw-normal">
+                                                Category:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $pro_record['category_name'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark ps-3">
+                                            <span class="pe-3 text-secondary fw-normal">
+                                                Exclusivity:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $pro_record['exclusivity'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark ps-3">
+                                            <span class="pe-3 text-secondary fw-normal">
+                                                Variations:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $pro_record['var_count'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark ps-3">
+                                            <span class="pe-3 text-secondary fw-normal">
+                                                Sizes/Measurements:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $pro_record['mea_count'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark ps-3">
+                                            <span class="pe-3 text-secondary fw-normal">
+                                                Limit Per Order:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $pro_record['order_quantity_limit'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark ps-3">
+                                            <span class="pe-3 text-secondary fw-normal">
+                                                Estimated Order Time:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $pro_record['estimated_order_time'].' days' ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark ps-3">
+                                            <span class="pe-3 text-secondary fw-normal">
+                                                Date Added:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= date('F d Y', strtotime($pro_record['is_created'])) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark ps-3">
+                                            <span class="pe-3 text-secondary fw-normal">
+                                                Sale Status:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $pro_record['sale_status'] ?>
+                                            <button class="text-primary float-end border-0 bg-white fw-semibold" data-bs-toggle="modal" data-bs-target="#saleStatusModal">Change</button>
                                         </td>
                                     </tr>
                                 </table>

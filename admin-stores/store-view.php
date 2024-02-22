@@ -53,7 +53,6 @@ if (isset($_POST['verification_status'])) {
 // Change title for each page.
 $title = "User View | Crimson Avenue";
 $stores_page = "active";
-$store_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>

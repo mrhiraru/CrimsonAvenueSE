@@ -53,7 +53,6 @@ if (isset($_POST['user_role'])) {
 // Change title for each page.
 $title = "User View | Crimson Avenue";
 $users_page = "active";
-$user_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>
