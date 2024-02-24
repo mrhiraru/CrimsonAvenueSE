@@ -4,6 +4,7 @@ session_start();
 require_once "../tools/functions.php";
 require_once "../classes/store.class.php";
 require_once "../classes/product.class.php";
+require_once "../classes/description.class.php";
 
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
@@ -17,6 +18,52 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../index.php');
 } else if (!isset($pro_record['store_id'])) {
     header('location: ./index.php?store_id=' . $record['store_id']);
+}
+
+$description = new Description();
+if (isset($_POST['add_desc'])) {
+
+    $description->desc_label = htmlentities($_POST['label']);
+    $description->desc_value = htmlentities($_POST['value']);
+    $description->product_id = $pro_record['product_id'];
+
+    if (validate_field($description->desc_label) && validate_field($description->desc_value)) {
+        if ($description->add()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['save_desc'])) {
+    $description->desc_label = htmlentities($_POST['label']);
+    $description->desc_value = htmlentities($_POST['value']);
+    $description->desc_id = $_GET['desc_id'];
+
+    if (validate_field($description->desc_label) && validate_field($description->desc_value)) {
+        if ($description->edit()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['cancel_desc'])) {
+
+    header('location: ./product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id']);
+} else if (isset($_POST['delete'])) {
+
+    $department->department_id = $_GET['id'];
+    $department->is_deleted = 1;
+
+    if ($department->delete()) {
+        $success = 'success';
+    } else {
+        echo 'An error occured while adding in the database.';
+        $success = 'failed';
+    }
 }
 
 ?>
@@ -185,44 +232,80 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-3">
                             </div>
-                            <form method="post" action="" class="col-12 col-lg-4">
+                            <form method="post" action="#Descriptions" class="col-12 col-lg-6" id="Descriptions">
                                 <div class="row">
                                     <div class="input-group mb-2 p-0 col-12">
                                         <?php
-                                        if (isset($_POST['edit']) || isset($_POST['save'])) {
-                                            $record = $college->fetch($_GET['id']);
+                                        if (isset($_POST['edit_desc']) || isset($_POST['save_desc'])) {
+                                            $desc_record = $description->fetch($_GET['desc_id']);
                                         ?>
-                                            <input type="text" class="form-control" id="col-name" name="col-name" placeholder="College Name" value="<?php if (isset($_POST['col-name'])) {
-                                                                                                                                                        echo $_POST['col-name'];
-                                                                                                                                                    } else {
-                                                                                                                                                        echo $record['college_name'];
-                                                                                                                                                    } ?>">
-                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel" value="Cancel">
-                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save" value="Save">
+                                            <input type="text" class="form-control" id="label" name="label" placeholder="Label" value="<?php if (isset($_POST['label'])) {
+                                                                                                                                            echo $_POST['label'];
+                                                                                                                                        } else {
+                                                                                                                                            echo $desc_record['desc_label'];
+                                                                                                                                        } ?>">
+                                            <input type="text" class="form-control" id="value" name="value" placeholder="Value" value="<?php if (isset($_POST['value'])) {
+                                                                                                                                            echo $_POST['value'];
+                                                                                                                                        } else {
+                                                                                                                                            echo $desc_record['desc_value'];
+                                                                                                                                        } ?>">
+                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel_desc" value="Cancel">
+                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save_desc" value="Save">
                                         <?php
                                         } else {
                                         ?>
-                                            <input type="text" class="form-control" id="col-name" name="col-name" placeholder="College Name" value="<?php if (isset($_POST['col-name'])) {
-                                                                                                                                                        echo $_POST['col-name'];
-                                                                                                                                                    } ?>">
-                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon1" name="add" value="Add">
+                                            <input type="text" class="form-control" id="label" name="label" placeholder="Label" value="<?php if (isset($_POST['label'])) {
+                                                                                                                                            echo $_POST['label'];
+                                                                                                                                        } ?>">
+                                            <input type="text" class="form-control" id="value" name="value" placeholder="Value" value="<?php if (isset($_POST['value'])) {
+                                                                                                                                            echo $_POST['value'];
+                                                                                                                                        } ?>">
+                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon1" name="add_desc" value="Add">
                                         <?php
                                         }
                                         ?>
                                     </div>
                                     <?php
-                                    if (isset($_POST['add']) && isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
+                                    if (isset($_POST['add_desc']) && isset($_POST['label']) && isset($_POST['value']) && !validate_field($_POST['label']) && !validate_field($_POST['value'])) {
                                     ?>
                                         <div class="mb-2 col-auto mb-2 p-0">
-                                            <p class="fs-7 text-primary mb-2 ps-2">College name is required.</p>
+                                            <p class="fs-7 text-primary mb-2 ps-2">Description label and value is required.</p>
                                         </div>
                                     <?php
-                                    } else if (isset($_POST['save']) && isset($_POST['col-name']) && !validate_field($_POST['col-name'])) {
+                                    } else if (isset($_POST['save_desc']) && isset($_POST['label']) && isset($_POST['value']) && !validate_field($_POST['label']) && !validate_field($_POST['value'])) {
                                     ?>
                                         <div class="mb-2 col-auto mb-2 p-0">
-                                            <p class="fs-7 text-primary mb-2 ps-2">Update failed! College name is required.</p>
+                                            <p class="fs-7 text-primary mb-2 ps-2">Update Failed! Description label and value is required.</p>
                                         </div>
+                                        <?php
+                                    } else {
+                                        if (isset($_POST['add_desc']) && isset($_POST['label']) && !validate_field($_POST['label'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Description label is required.</p>
+                                            </div>
+                                        <?php
+                                        }
+
+                                        if (isset($_POST['add_desc']) && isset($_POST['value']) && !validate_field($_POST['value'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Description value is required.</p>
+                                            </div>
+                                        <?php
+                                        } else if (isset($_POST['save_desc']) && isset($_POST['value']) && !validate_field($_POST['value'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! Description value is required.</p>
+                                            </div>
+                                        <?php
+                                        } else if (isset($_POST['save_desc']) && isset($_POST['label']) && !validate_field($_POST['label'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! Description label is required.</p>
+                                            </div>
                                     <?php
+                                        }
                                     }
                                     ?>
                                 </div>
@@ -240,20 +323,18 @@ include_once('../includes/preloader.php');
                                     <tbody>
                                         <?php
                                         $counter = 1;
-                                        $product = new Product();
-                                        $productArray = $product->show($record['store_id']);
-                                        foreach ($productArray as $item) {
+                                        $descArray = $description->show($pro_record['product_id']);
+                                        foreach ($descArray as $item) {
                                         ?>
                                             <tr class="align-middle">
                                                 <td><?= $counter ?></td>
-                                                <td><?= $item['category_name'] ?></td>
-                                                <td><?= $item['exclusivity'] ?></td>
+                                                <td><?= $item['desc_label'] ?></td>
+                                                <td><?= $item['desc_value'] ?></td>
                                                 <td class="text-center text-nowrap">
                                                     <div class="m-0 p-0">
-                                                        <form action="<?php // edit action link 
-                                                                        ?>" method="post">
-                                                            <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="edit" value="Edit"></input>
-                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Delete"></input>
+                                                        <form action="./product-view.php<?php echo '?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&desc_id=' . $item['desc_id'] . '#Descriptions'; ?>" method="post">
+                                                            <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="edit_desc" value="Edit"></input>
+                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning_desc" value="Delete"></input>
                                                         </form>
                                                     </div>
                                                 </td>
@@ -286,6 +367,7 @@ include_once('../includes/preloader.php');
         </div>
     </main>
     <?php
+    include_once('./product.modals.php');
     require_once('../includes/js.php');
     ?>
 </body>
