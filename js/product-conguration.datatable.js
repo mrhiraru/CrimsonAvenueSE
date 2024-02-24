@@ -12,6 +12,20 @@ $(document).ready(function () {
         },
       ],
     });
+
+    dataTable = $("#variations").DataTable({
+        dom: "Brtp",
+        responsive: true,
+        fixedHeader: true,
+        pageLength: 5,
+        buttons: [],
+        columnDefs: [
+          {
+            targets: [0, 1, 2] /* column index */,
+            orderable: false /* true or false */,
+          },
+        ],
+      });
     // dataTable.buttons().container().appendTo($("#MyButtons"));
   
     // var table = dataTable;
