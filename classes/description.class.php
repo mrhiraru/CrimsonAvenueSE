@@ -72,7 +72,7 @@ class Description
 
     function delete()
     {
-        $sql = "DELETE product_desc WHERE desc_id = :desc_id;";
+        $sql = "DELETE FROM product_desc WHERE desc_id = :desc_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':desc_id', $this->desc_id);

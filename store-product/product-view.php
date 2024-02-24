@@ -20,51 +20,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./index.php?store_id=' . $record['store_id']);
 }
 
-$description = new Description();
-if (isset($_POST['add_desc'])) {
-
-    $description->desc_label = htmlentities($_POST['label']);
-    $description->desc_value = htmlentities($_POST['value']);
-    $description->product_id = $pro_record['product_id'];
-
-    if (validate_field($description->desc_label) && validate_field($description->desc_value)) {
-        if ($description->add()) {
-            $success = 'success';
-        } else {
-            echo 'An error occured while adding in the database.';
-        }
-    } else {
-        $success = 'failed';
-    }
-} else if (isset($_POST['save_desc'])) {
-    $description->desc_label = htmlentities($_POST['label']);
-    $description->desc_value = htmlentities($_POST['value']);
-    $description->desc_id = $_GET['desc_id'];
-
-    if (validate_field($description->desc_label) && validate_field($description->desc_value)) {
-        if ($description->edit()) {
-            $success = 'success';
-        } else {
-            echo 'An error occured while adding in the database.';
-        }
-    } else {
-        $success = 'failed';
-    }
-} else if (isset($_POST['cancel_desc'])) {
-
-    header('location: ./product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id']);
-} else if (isset($_POST['delete'])) {
-
-    $department->department_id = $_GET['id'];
-    $department->is_deleted = 1;
-
-    if ($department->delete()) {
-        $success = 'success';
-    } else {
-        echo 'An error occured while adding in the database.';
-        $success = 'failed';
-    }
-}
+include_once('./product.process.php');
 
 ?>
 
