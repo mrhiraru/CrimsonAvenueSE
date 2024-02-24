@@ -20,7 +20,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./index.php?store_id=' . $record['store_id']);
 }
 
-include_once('./product.process.php');
+include_once('./product.configuration-process.php');
 
 ?>
 
@@ -55,7 +55,7 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0 px-2">
                                 <ul class="nav justify-content-center">
                                     <li class="nav-item">
-                                        <a class="nav-link py-0 px-5 fw-bold text-decoration-underline active disabled" aria-current="page" href="">Configure</a>
+                                        <a class="nav-link py-0 px-5 fw-bold text-decoration-underline active disabled" aria-current="page" href="">Configuration</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link py-0 px-5 fw-bold" href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Inventory</a>
@@ -81,7 +81,7 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-3">
                             </div>
-                            <form method="post" action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&processing' . '#Descriptions' ?>" class="col-12 col-lg-6" id="Descriptions">
+                            <form method="post" action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&desc_id=auto_increment' . '#Descriptions' ?>" class="col-12 col-lg-6" id="Descriptions">
                                 <div class="row">
                                     <div class="input-group mb-2 p-0 col-12">
                                         <?php
@@ -160,7 +160,7 @@ include_once('../includes/preloader.php');
                                 </div>
                             </form>
                             <div class="col-12 m-0 p-0 px-2 row">
-                                <table id="products" class="table table-lg mt-1">
+                                <table id="descriptions" class="table table-lg mt-1">
                                     <thead>
                                         <tr class="align-middle">
                                             <th scope="col"></th>
@@ -216,7 +216,7 @@ include_once('../includes/preloader.php');
         </div>
     </main>
     <?php
-    include_once('./product.modals.php');
+    include_once('./product.configuration-modals.php');
     require_once('../includes/js.php');
     ?>
 </body>
