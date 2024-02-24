@@ -95,7 +95,7 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
         <tr>
             <td class="fw-semibold text-dark">
                 <span class="text-secondary fw-normal">
-                    Variations:
+                    Styles/Variations:
                 </span>
                 <br class="d-block d-md-none">
                 <?= $pro_record['var_count'] ?>
