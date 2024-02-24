@@ -25,11 +25,6 @@ include_once('./includes/preloader.php');
     <div class="container-fluid col-md-9 mt-4 mx-sm-auto">
         <main>
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
                 <div class="carousel-inner rounded">
                     <div class="carousel-item carousel-custom active" data-bs-interval="5000">
                         <img src="./images/main/ye-background.jpg" class="d-block img-custom" alt="...">
