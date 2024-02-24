@@ -82,7 +82,7 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-3">
                             </div>
-                            <form method="post" action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . (isset($_GET['desc_id']) ? '&desc_id=' . $_GET['desc_id'] : '&processing=true') . '#Descriptions' ?>" class="col-12 col-lg-6">
+                            <form method="post" action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . (isset($_GET['desc_id']) ? '&desc_id=' . $_GET['desc_id'] : '&id=auto') . '#Descriptions' ?>" class="col-12 col-lg-6">
                                 <div class="row">
                                     <div class="input-group mb-2 p-0 col-12">
                                         <?php
@@ -208,7 +208,7 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-3">
                             </div>
-                            <form method="post" action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . (isset($_GET['variation_id']) ? '&variation_id=' . $_GET['variation_id'] : '&processing=true') . '#Variations' ?>" class="col-12 col-lg-6">
+                            <form method="post" action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . (isset($_GET['variation_id']) ? '&variation_id=' . $_GET['variation_id'] : '&id=auto') . '#Variations' ?>" class="col-12 col-lg-6">
                                 <div class="row">
                                     <div class="input-group mb-2 p-0 col-12">
                                         <?php
