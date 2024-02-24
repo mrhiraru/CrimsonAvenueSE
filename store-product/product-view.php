@@ -16,7 +16,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./user/verify.php');
 } else if (!isset($record['store_id']) || $record['is_deleted'] == 1 || !isset($record['staff_role'])) {
     header('location: ../index.php');
-} else if (!isset($pro_record['product_id']) ) {
+} else if (!isset($pro_record['product_id'])) {
     header('location: ./index.php?store_id=' . $record['store_id']);
 }
 
@@ -81,7 +81,7 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-3">
                             </div>
-                            <form method="post" action="#Descriptions" class="col-12 col-lg-6" id="Descriptions">
+                            <form method="post" action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&processing' . '#Descriptions' ?>" class="col-12 col-lg-6" id="Descriptions">
                                 <div class="row">
                                     <div class="input-group mb-2 p-0 col-12">
                                         <?php
