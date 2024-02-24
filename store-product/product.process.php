@@ -1,4 +1,10 @@
 <?php
+if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
+    header('location: ./index.php?store_id=' . $record['store_id']);
+}
+?>
+
+<?php
 
 $description = new Description();
 if (isset($_POST['add_desc'])) {

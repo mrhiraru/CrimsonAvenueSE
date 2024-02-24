@@ -1,4 +1,10 @@
 <?php
+if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
+    header('location: ./index.php?store_id=' . $record['store_id']);
+}
+?>
+
+<?php
 if (isset($_POST['add_desc']) && $success == 'success') {
 ?>
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
