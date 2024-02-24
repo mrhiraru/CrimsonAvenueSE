@@ -46,7 +46,7 @@ class Variation
 
     function show($product_id)
     {
-        $sql = "SELECT * FROM variation WHERE product_id = :product_id ORDER BY variation_id ASC;";
+        $sql = "SELECT * FROM variation WHERE product_id = :product_id AND is_deleted != 1 ORDER BY variation_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_id', $product_id);
         $data = null;
@@ -58,7 +58,7 @@ class Variation
 
     function fetch($variation_id)
     {
-        $sql = "SELECT * FROM variation WHERE variation_id = :variation_id  LIMIT 1;";
+        $sql = "SELECT * FROM variation WHERE variation_id = :variation_id LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':variation_id', $variation_id);
         if ($query->execute()) {
@@ -69,7 +69,7 @@ class Variation
 
     function delete()
     {
-        $sql = "UPDATE variation SET is_deleted=:is_deleted WHERE desc_id = :desc_id;";
+        $sql = "UPDATE variation SET is_deleted=:is_deleted WHERE variation_id = :variation_id;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':is_deleted', $this->is_deleted);

@@ -51,3 +51,47 @@ if (isset($_POST['add_desc'])) {
         $success = 'failed';
     }
 }
+
+$variation = new Variation();
+if (isset($_POST['add_var'])) {
+
+    $variation->variation_name = htmlentities($_POST['variation_name']);
+    $variation->product_id = $pro_record['product_id'];
+
+    if (validate_field($variation->variation_name)) {
+        if ($variation->add()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['save_var'])) {
+    $variation->variation_name = htmlentities($_POST['variation_name']);
+    $variation->variation_id = $_GET['variation_id'];
+
+    if (validate_field($variation->variation_name)) {
+        if ($variation->edit()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['cancel_var'])) {
+
+    header('location: ./product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id']);
+} else if (isset($_POST['delete_var'])) {
+
+    $variation->variation_id = $_GET['variation_id'];
+    $variation->is_deleted = 1;
+
+    if ($variation->delete()) {
+        $success = 'success';
+    } else {
+        echo 'An error occured while adding in the database.';
+        $success = 'failed';
+    }
+}
