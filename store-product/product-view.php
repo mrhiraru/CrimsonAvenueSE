@@ -167,7 +167,7 @@ include_once('../includes/preloader.php');
                                             <th scope="col"></th>
                                             <th scope="col">Label</th>
                                             <th scope="col">Value</th>
-                                            <th scope="col" class="text-center">Action</th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -180,7 +180,7 @@ include_once('../includes/preloader.php');
                                                 <td><?= $counter ?></td>
                                                 <td><?= $item['desc_label'] ?></td>
                                                 <td><?= $item['desc_value'] ?></td>
-                                                <td class="text-center text-nowrap">
+                                                <td class="text-end text-nowrap">
                                                     <div class="m-0 p-0">
                                                         <form action="./product-view.php<?php echo '?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&desc_id=' . $item['desc_id'] . '#Descriptions'; ?>" method="post">
                                                             <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="edit_desc" value="Edit"></input>
@@ -256,7 +256,7 @@ include_once('../includes/preloader.php');
                                         <tr class="align-middle">
                                             <th scope="col"></th>
                                             <th scope="col">Variation Name</th>
-                                            <th scope="col" class="text-center">Action</th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -268,7 +268,7 @@ include_once('../includes/preloader.php');
                                             <tr class="align-middle">
                                                 <td><?= $counter ?></td>
                                                 <td><?= $item['variation_name'] ?></td>
-                                                <td class="text-center text-nowrap">
+                                                <td class="text-end text-nowrap">
                                                     <div class="m-0 p-0">
                                                         <form action="./product-view.php<?php echo '?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $item['variation_id'] . '#Variations'; ?>" method="post">
                                                             <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="edit_var" value="Edit"></input>
