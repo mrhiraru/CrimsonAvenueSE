@@ -42,6 +42,7 @@ if (isset($_POST['add_desc'])) {
 } else if (isset($_POST['delete_desc'])) {
 
     $description->desc_id = $_GET['desc_id'];
+    $description->is_deleted = 1;
 
     if ($description->delete()) {
         $success = 'success';
