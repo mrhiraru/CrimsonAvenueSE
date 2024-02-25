@@ -20,7 +20,7 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
     <hr class="mb-0">
 </div>
 <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column align-items-center">
-    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div id="carouselExampleCaptions" class="carousel slide product-carousel-width" data-bs-ride="carousel">
         <div class="carousel-inner rounded">
             <?php
             $activecounter = false;

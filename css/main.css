@@ -311,6 +311,12 @@ body {
 }
 
 
+/* product view css  */
+
+.product-carousel-width {
+    max-width: 200px !important;
+}
+
 @media (max-width: 992px){
     .img-custom {
         height: 420px;
