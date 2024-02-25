@@ -52,7 +52,7 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0 px-2">
                                 <ul class="nav justify-content-center">
                                     <li class="nav-item">
-                                        <a class="nav-link py-0 px-5 fw-bold " aria-current="page" href="./product-view.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Configuration</a>
+                                        <a class="nav-link py-0 px-5 fw-bold text-secondary" aria-current="page" href="./product-view.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Configuration</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link py-0 px-5 fw-bold text-decoration-underline active disabled" href="#">Inventory</a>

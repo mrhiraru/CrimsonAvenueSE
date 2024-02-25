@@ -60,7 +60,7 @@ include_once('../includes/preloader.php');
                                         <a class="nav-link py-0 px-5 fw-bold text-decoration-underline active disabled" aria-current="page" href="">Configuration</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link py-0 px-5 fw-bold" href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Inventory</a>
+                                        <a class="nav-link py-0 px-5 fw-bold text-secondary " href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Inventory</a>
                                     </li>
                                 </ul>
                             </div>
