@@ -70,7 +70,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                             $desc_record = $description->fetch($_GET['desc_id']);
                             ?>
                             <p class="m-0 text-dark">Are you sure you want to delete <span class="text-primary fw-bold"><?= $desc_record['desc_label'] ?></span>?</p>
-                            <form action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&desc_id=' . $item['desc_id'] . '#Descriptions' ?>" method="post" class="mt-3">
+                            <form action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&desc_id=' . $desc_record['desc_id'] . '#Descriptions' ?>" method="post" class="mt-3">
                                 <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 me-3 rounded border-0 fw-semibold" name="cancel_desc" value="Cancel"></input>
                                 <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 ms-3 rounded border-0 fw-semibold" name="delete_desc" value="Delete"></input>
                             </form>
@@ -147,7 +147,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                             $var_record = $variation->fetch($_GET['variation_id']);
                             ?>
                             <p class="m-0 text-dark">Are you sure you want to delete <span class="text-primary fw-bold"><?= $var_record['variation_name'] ?></span>?</p>
-                            <form action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $item['variation_id'] . '#Variations' ?>" method="post" class="mt-3">
+                            <form action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '#Variations' ?>" method="post" class="mt-3">
                                 <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 me-3 rounded border-0 fw-semibold" name="cancel_var" value="Cancel"></input>
                                 <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 ms-3 rounded border-0 fw-semibold" name="delete_var" value="Delete"></input>
                             </form>
@@ -224,7 +224,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                             $mea_record = $measurement->fetch($_GET['measurement_id']);
                             ?>
                             <p class="m-0 text-dark">Are you sure you want to delete <span class="text-primary fw-bold"><?= $mea_record['measurement_name'] ?></span>?</p>
-                            <form action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&measurement_id=' . $item['measurement_id'] . '#Measurements' ?>" method="post" class="mt-3">
+                            <form action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&measurement_id=' . $mea_record['measurement_id'] . '#Measurements' ?>" method="post" class="mt-3">
                                 <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 me-3 rounded border-0 fw-semibold" name="cancel_mea" value="Cancel"></input>
                                 <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 ms-3 rounded border-0 fw-semibold" name="delete_mea" value="Delete"></input>
                             </form>

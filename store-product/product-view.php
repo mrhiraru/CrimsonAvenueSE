@@ -376,7 +376,7 @@ include_once('../includes/preloader.php');
                                 </div>
                             </form>
                             <div class="col-12 m-0 p-0 px-2 row">
-                                <table id="measurement" class="table table-lg mt-1">
+                                <table id="measurements" class="table table-lg mt-1">
                                     <thead>
                                         <tr class="align-middle">
                                             <th scope="col"></th>
