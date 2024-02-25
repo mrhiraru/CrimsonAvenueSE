@@ -2,9 +2,6 @@
 if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
     header('location: ./index.php?store_id=' . $record['store_id']);
 }
-?>
-
-<?php
 
 $description = new Description();
 if (isset($_POST['add_desc'])) {
@@ -99,8 +96,8 @@ if (isset($_POST['add_var'])) {
 $measurement = new Measurement();
 if (isset($_POST['add_mea'])) {
 
-    $measurement->measurement_name = htmlentities($_POST['label']);
-    $measurement->value_unit = htmlentities($_POST['value']);
+    $measurement->measurement_name = htmlentities($_POST['measurement_name']);
+    $measurement->value_unit = htmlentities($_POST['value_unit']);
     $measurement->product_id = $pro_record['product_id'];
 
     if (validate_field($measurement->measurement_name) && validate_field($measurement->value_unit)) {
@@ -113,8 +110,8 @@ if (isset($_POST['add_mea'])) {
         $success = 'failed';
     }
 } else if (isset($_POST['save_mea'])) {
-    $measurement->measurement_name = htmlentities($_POST['label']);
-    $measurement->value_unit = htmlentities($_POST['value']);
+    $measurement->measurement_name = htmlentities($_POST['measurement_name']);
+    $measurement->value_unit = htmlentities($_POST['value_unit']);
     $measurement->measurement_id = $_GET['measurement_id'];
 
     if (validate_field($measurement->measurement_name) && validate_field($measurement->value_unit)) {

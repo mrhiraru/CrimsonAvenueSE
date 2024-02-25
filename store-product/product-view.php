@@ -397,7 +397,7 @@ include_once('../includes/preloader.php');
                                                 <td><?= $item['value_unit'] ?></td>
                                                 <td class="text-end text-nowrap">
                                                     <div class="m-0 p-0">
-                                                        <form action="./product-view.php<?php echo '?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&measreument_id=' . $item['measurement_id'] . '#Measurements'; ?>" method="post">
+                                                        <form action="./product-view.php<?php echo '?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&measurement_id=' . $item['measurement_id'] . '#Measurements'; ?>" method="post">
                                                             <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="edit_mea" value="Edit"></input>
                                                             <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning_mea" value="Delete"></input>
                                                         </form>

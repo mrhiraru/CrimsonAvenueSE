@@ -34,7 +34,7 @@ class Measurement
 
     function edit()
     {
-        $sql = "UPDATE measurement SET measurement_name=:measurement_name, value_unit=:value_unit measurement_id = :measurement_id;";
+        $sql = "UPDATE measurement SET measurement_name=:measurement_name, value_unit=:value_unit WHERE measurement_id = :measurement_id;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':measurement_id', $this->measurement_id);

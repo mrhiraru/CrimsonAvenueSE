@@ -2,9 +2,8 @@
 if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
     header('location: ./index.php?store_id=' . $record['store_id']);
 }
-?>
 
-<?php
+
 if (isset($_POST['add_desc']) && $success == 'success') {
 ?>
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -224,7 +223,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                             <?php
                             $mea_record = $measurement->fetch($_GET['measurement_id']);
                             ?>
-                            <p class="m-0 text-dark">Are you sure you want to delete <span class="text-primary fw-bold"><?= $var_record['measurement_name'] ?></span>?</p>
+                            <p class="m-0 text-dark">Are you sure you want to delete <span class="text-primary fw-bold"><?= $mea_record['measurement_name'] ?></span>?</p>
                             <form action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&measurement_id=' . $item['measurement_id'] . '#Measurements' ?>" method="post" class="mt-3">
                                 <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 me-3 rounded border-0 fw-semibold" name="cancel_mea" value="Cancel"></input>
                                 <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 ms-3 rounded border-0 fw-semibold" name="delete_mea" value="Delete"></input>
