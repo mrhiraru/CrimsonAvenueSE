@@ -6,6 +6,7 @@ require_once "../classes/store.class.php";
 require_once "../classes/product.class.php";
 require_once "../classes/description.class.php";
 require_once "../classes/variation.class.php";
+require_once "../classes/measurement.class.php";
 
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
@@ -286,10 +287,129 @@ include_once('../includes/preloader.php');
                             </div>
                         </div>
                     </div>
-                    <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
+                    <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3" id="Measurements">
                         <div class="row d-flex justify-content-between m-0 p-0">
+                            <div class="col-12 m-0 p-0 px-2">
+                                <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1 flex-fill">
+                                    Measurements
+                                </p>
+                            </div>
+                            <div class="col-12 m-0 p-0">
+                                <hr class="mb-3">
+                            </div>
+                            <form method="post" action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . (isset($_GET['measurement_id']) ? '&measurement_id=' . $_GET['measurement_id'] : '&id=auto') . '#Measurements' ?>" class="col-12 col-lg-6">
+                                <div class="row">
+                                    <div class="input-group mb-2 p-0 col-12">
+                                        <?php
+                                        if (isset($_POST['edit_mea']) || isset($_POST['save_mea'])) {
+                                            $mea_record = $measurement->fetch($_GET['measurement_id']);
+                                        ?>
+                                            <input type="text" class="form-control" id="measurement_name" name="measurement_name" placeholder="Name (e.g. Small)" value="<?php if (isset($_POST['measurement_name'])) {
+                                                                                                                                                                                echo $_POST['measurement_name'];
+                                                                                                                                                                            } else {
+                                                                                                                                                                                echo $mea_record['measurement_name'];
+                                                                                                                                                                            } ?>">
+                                            <input type="text" class="form-control" id="value_unit" name="value_unit" placeholder="Value (e.g. 104x73 cm)" value="<?php if (isset($_POST['value_unit'])) {
+                                                                                                                                                                        echo $_POST['value_unit'];
+                                                                                                                                                                    } else {
+                                                                                                                                                                        echo $mea_record['value_unit'];
+                                                                                                                                                                    } ?>">
+                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel_mea" value="Cancel">
+                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save_mea" value="Save">
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <input type="text" class="form-control" id="measurement_name" name="measurement_name" placeholder="Measurement Name" value="<?php if (isset($_POST['measurement_name'])) {
+                                                                                                                                                                            echo $_POST['measurement_name'];
+                                                                                                                                                                        } ?>">
+                                            <input type="text" class="form-control" id="value_unit" name="value_unit" placeholder="Value" value="<?php if (isset($_POST['value_unit'])) {
+                                                                                                                                                        echo $_POST['value_unit'];
+                                                                                                                                                    } ?>">
+                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon1" name="add_mea" value="Add">
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <?php
+                                    if (isset($_POST['add_mea']) && isset($_POST['measurement_name']) && isset($_POST['value_unit']) && !validate_field($_POST['measurement_name']) && !validate_field($_POST['value_unit'])) {
+                                    ?>
+                                        <div class="mb-2 col-auto mb-2 p-0">
+                                            <p class="fs-7 text-primary mb-2 ps-2">Measurement name and value is required.</p>
+                                        </div>
+                                    <?php
+                                    } else if (isset($_POST['save_mea']) && isset($_POST['measurement_name']) && isset($_POST['value_unit']) && !validate_field($_POST['measurement_name']) && !validate_field($_POST['value_unit'])) {
+                                    ?>
+                                        <div class="mb-2 col-auto mb-2 p-0">
+                                            <p class="fs-7 text-primary mb-2 ps-2">Update Failed! Measurement name and value is required.</p>
+                                        </div>
+                                        <?php
+                                    } else {
+                                        if (isset($_POST['add_mea']) && isset($_POST['measurement_name']) && !validate_field($_POST['measurement_name'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Measurement name is required.</p>
+                                            </div>
+                                        <?php
+                                        }
+
+                                        if (isset($_POST['add_mea']) && isset($_POST['value_unit']) && !validate_field($_POST['value_unit'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Measurement value is required.</p>
+                                            </div>
+                                        <?php
+                                        } else if (isset($_POST['save_mea']) && isset($_POST['value_unit']) && !validate_field($_POST['value_unit'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! Measurement value is required.</p>
+                                            </div>
+                                        <?php
+                                        } else if (isset($_POST['save_mea']) && isset($_POST['measurement_name']) && !validate_field($_POST['measurement_name'])) {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! Measurement name is required.</p>
+                                            </div>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                            </form>
                             <div class="col-12 m-0 p-0 px-2 row">
-                                Measurements Here
+                                <table id="measurement" class="table table-lg mt-1">
+                                    <thead>
+                                        <tr class="align-middle">
+                                            <th scope="col"></th>
+                                            <th scope="col">Measurement Name</th>
+                                            <th scope="col">Value</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $counter = 1;
+                                        $meaArray = $measurement->show($pro_record['product_id']);
+                                        foreach ($meaArray as $item) {
+                                        ?>
+                                            <tr class="align-middle">
+                                                <td><?= $counter ?></td>
+                                                <td><?= $item['measurement_name'] ?></td>
+                                                <td><?= $item['value_unit'] ?></td>
+                                                <td class="text-end text-nowrap">
+                                                    <div class="m-0 p-0">
+                                                        <form action="./product-view.php<?php echo '?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&measreument_id=' . $item['measurement_id'] . '#Measurements'; ?>" method="post">
+                                                            <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="edit_mea" value="Edit"></input>
+                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning_mea" value="Delete"></input>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                            $counter++;
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

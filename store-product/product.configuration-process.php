@@ -95,3 +95,49 @@ if (isset($_POST['add_var'])) {
         $success = 'failed';
     }
 }
+
+$measurement = new Measurement();
+if (isset($_POST['add_mea'])) {
+
+    $measurement->measurement_name = htmlentities($_POST['label']);
+    $measurement->value_unit = htmlentities($_POST['value']);
+    $measurement->product_id = $pro_record['product_id'];
+
+    if (validate_field($measurement->measurement_name) && validate_field($measurement->value_unit)) {
+        if ($measurement->add()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['save_mea'])) {
+    $measurement->measurement_name = htmlentities($_POST['label']);
+    $measurement->value_unit = htmlentities($_POST['value']);
+    $measurement->measurement_id = $_GET['measurement_id'];
+
+    if (validate_field($measurement->measurement_name) && validate_field($measurement->value_unit)) {
+        if ($measurement->edit()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['cancel_mea'])) {
+
+    header('location: ./product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id']);
+} else if (isset($_POST['delete_mea'])) {
+
+    $measurement->measurement_id = $_GET['measurement_id'];
+    $measurement->is_deleted = 1;
+
+    if ($measurement->delete()) {
+        $success = 'success';
+    } else {
+        echo 'An error occured while adding in the database.';
+        $success = 'failed';
+    }
+}
