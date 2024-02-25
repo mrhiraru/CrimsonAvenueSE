@@ -138,3 +138,66 @@ if (isset($_POST['add_mea'])) {
         $success = 'failed';
     }
 }
+
+
+$image = new Image();
+if (isset($_POST['add_img'])) {
+
+    $uploaddir = '../images/data/';
+    $uploadname = $_FILES[htmlentities('image_file')]['name'];
+    $uploadext = explode('.', $uploadname);
+    $uploadnewext = strtolower(end($uploadext));
+    $allowed = array('jpg', 'jpeg', 'png');
+
+    if (in_array($uploadnewext, $allowed)) {
+
+        $uploadenewname = uniqid('', true) . "." . $uploadnewext;
+        $uploadfile = $uploaddir . $uploadenewname;
+
+        if (move_uploaded_file($_FILES[htmlentities('image_file')]['tmp_name'], $uploadfile)) {
+            $image->image_file = $uploadenewname;
+            $image->product_id = $pro_record['product_id'];
+
+            if (validate_field($image->image_file)) {
+                if ($image->add()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'file-failed';
+    }
+} else if (isset($_POST['save_img'])) {
+    $image->image_file = htmlentities($_POST['image']);
+    $image->image_id = $_GET['image_id'];
+
+    if (validate_field($image->image_file)) {
+        if ($image->edit()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['cancel_img'])) {
+
+    header('location: ./product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id']);
+} else if (isset($_POST['delete_img'])) {
+
+    $image->image_id = $_GET['image_id'];
+    $image->is_deleted = 1;
+
+    if ($image->delete()) {
+        $success = 'success';
+    } else {
+        echo 'An error occured while adding in the database.';
+        $success = 'failed';
+    }
+}

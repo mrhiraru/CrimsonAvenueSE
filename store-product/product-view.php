@@ -7,6 +7,7 @@ require_once "../classes/product.class.php";
 require_once "../classes/description.class.php";
 require_once "../classes/variation.class.php";
 require_once "../classes/measurement.class.php";
+require_once "../classes/image.class.php";
 
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
@@ -66,10 +67,77 @@ include_once('../includes/preloader.php');
                             </div>
                         </div>
                     </div>
-                    <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
+                    <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3" id="Images">
                         <div class="row d-flex justify-content-between m-0 p-0">
+                            <div class="col-12 m-0 p-0 px-2">
+                                <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1 flex-fill">
+                                    Images
+                                </p>
+                            </div>
+                            <div class="col-12 m-0 p-0">
+                                <hr class="mb-3">
+                            </div>
+                            <form method="post" action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . (isset($_GET['image_id']) ? '&image=' . $_GET['image_id'] : '&id=auto') . '#Images' ?>" enctype="multipart/form-data" class="col-12 col-lg-8">
+                                <div class="row">
+                                    <div class="input-group mb-2 p-0 col-12">
+                                        <input type="file" class="form-control" id="image_file" name="image_file" accept=".jpg, .jpeg, .png">
+                                        <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon1" name="add_img" value="Add">
+                                    </div>
+                                    <?php
+                                    if (isset($_POST['add_img']) && isset($success) && $success == 'failed') {
+                                    ?>
+                                        <div class="mb-2 col-auto mb-2 p-0">
+                                            <p class="fs-7 text-primary mb-2 ps-2">Image file is required.</p>
+                                        </div>
+                                    <?php
+                                    } else if (isset($_POST['add_img']) && isset($success) && $success == 'file-failed') {
+                                    ?>
+                                        <div class="mb-2 col-auto mb-2 p-0">
+                                            <p class="fs-7 text-primary mb-2 ps-2">File type is not allowed.</p>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </form>
                             <div class="col-12 m-0 p-0 px-2 row">
-                                Images Here
+                                <table id="variations" class="table table-lg mt-1">
+                                    <thead>
+                                        <tr class="align-middle">
+                                            <th scope="col"></th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">File Name</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $counter = 1;
+                                        $imgArray = $image->show($pro_record['product_id']);
+                                        foreach ($imgArray as $item) {
+                                        ?>
+                                            <tr class="align-middle">
+                                                <td><?= $counter ?></td>
+                                                <td><img src="<?php if (isset($item['image_file'])) {
+                                                                    echo "../images/data/" . $item['image_file'];
+                                                                } else {
+                                                                    echo "../images/main/no-profile.jpg";
+                                                                } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"></td>
+                                                <td><?= $item['image_file'] ?></td>
+                                                <td class="text-end text-nowrap">
+                                                    <div class="m-0 p-0">
+                                                        <form action="./product-view.php<?php echo '?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&image_id=' . $item['image_id'] . '#Images'; ?>" method="post">
+                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning_var" value="Delete"></input>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                            $counter++;
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
