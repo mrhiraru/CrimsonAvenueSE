@@ -20,11 +20,34 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
     <hr class="mb-0">
 </div>
 <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column align-items-center">
-    <img src="<?php if (isset($pro_record['profile_image'])) {
-                    echo "../images/data/" . $pro_record['profile_image'];
-                } else {
-                    echo "../images/main/no-profile.jpg";
-                } ?>" alt="" class="profile-size border border-secondary-subtle rounded-2">
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner rounded">
+            <?php
+            $activecounter = false;
+            $imagesArray = $image->show($pro_record['product_id']);
+            foreach ($imagesArray as $img) {
+            ?>
+                <div class="carousel-item carousel-custom <?= ($activecounter == false) ? 'active' : '' ?> " data-bs-interval="5000">
+                    <img src="<?php if (isset($img['image_file'])) {
+                                    echo "../images/data/" . $img['image_file'];
+                                } else {
+                                    echo "../images/main/no-profile.jpg";
+                                } ?>" alt="" class="profile-size border border-secondary-subtle rounded-2">
+                </div>
+            <?php
+                $activecounter = true;
+            }
+            ?>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 </div>
 <div class="col-auto d-none d-lg-block p-0 m-0 border-start"></div>
 <div class="col-12 col-lg-auto m-0 p-2 d-flex justify-content-start align-items-start flex-fill row">

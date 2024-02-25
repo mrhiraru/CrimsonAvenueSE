@@ -101,7 +101,7 @@ include_once('../includes/preloader.php');
                                 </div>
                             </form>
                             <div class="col-12 m-0 p-0 px-2 row">
-                                <table id="variations" class="table table-lg mt-1">
+                                <table id="images" class="table table-lg mt-1">
                                     <thead>
                                         <tr class="align-middle">
                                             <th scope="col"></th>
@@ -127,7 +127,7 @@ include_once('../includes/preloader.php');
                                                 <td class="text-end text-nowrap">
                                                     <div class="m-0 p-0">
                                                         <form action="./product-view.php<?php echo '?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&image_id=' . $item['image_id'] . '#Images'; ?>" method="post">
-                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning_var" value="Delete"></input>
+                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning_img" value="Delete"></input>
                                                         </form>
                                                     </div>
                                                 </td>

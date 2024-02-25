@@ -29,21 +29,6 @@ class Image
         }
     }
 
-    function edit()
-    {
-        $sql = "UPDATE product_images SET image_file=:image_file WHERE image_id = :image_id;";
-
-        $query = $this->db->connect()->prepare($sql);
-        $query->bindParam(':image_id', $this->image_id);
-        $query->bindParam(':image_file', $this->image_file);
-
-        if ($query->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     function show($product_id)
     {
         $sql = "SELECT * FROM product_images WHERE product_id = :product_id AND is_deleted != 1 ORDER BY image_id ASC;";

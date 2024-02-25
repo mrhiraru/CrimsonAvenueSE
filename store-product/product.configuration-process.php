@@ -173,19 +173,6 @@ if (isset($_POST['add_img'])) {
     } else {
         $success = 'file-failed';
     }
-} else if (isset($_POST['save_img'])) {
-    $image->image_file = htmlentities($_POST['image']);
-    $image->image_id = $_GET['image_id'];
-
-    if (validate_field($image->image_file)) {
-        if ($image->edit()) {
-            $success = 'success';
-        } else {
-            echo 'An error occured while adding in the database.';
-        }
-    } else {
-        $success = 'failed';
-    }
 } else if (isset($_POST['cancel_img'])) {
 
     header('location: ./product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id']);
