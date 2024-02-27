@@ -25,17 +25,25 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
             <?php
             $activecounter = false;
             $imagesArray = $image->show($pro_record['product_id']);
-            foreach ($imagesArray as $img) {
+            if (empty($imagesArray)) {
             ?>
-                <div class="carousel-item carousel-custom <?= ($activecounter == false) ? 'active' : '' ?> " data-bs-interval="5000">
-                    <img src="<?php if (isset($img['image_file'])) {
-                                    echo "../images/data/" . $img['image_file'];
-                                } else {
-                                    echo "../images/main/no-profile.jpg";
-                                } ?>" alt="" class="profile-size border border-secondary-subtle rounded-2">
+                <div class="carousel-item carousel-custom active" data-bs-interval="5000">
+                    <img src="../images/main/no-profile.jpg" alt="" class="profile-size border border-secondary-subtle rounded-2">
                 </div>
+                <?php
+            } else {
+                foreach ($imagesArray as $img) {
+                ?>
+                    <div class="carousel-item carousel-custom <?= ($activecounter == false) ? 'active' : '' ?> " data-bs-interval="5000">
+                        <img src="<?php if (isset($img['image_file'])) {
+                                        echo "../images/data/" . $img['image_file'];
+                                    } else {
+                                        echo "../images/main/no-profile.jpg";
+                                    } ?>" alt="" class="profile-size border border-secondary-subtle rounded-2">
+                    </div>
             <?php
-                $activecounter = true;
+                    $activecounter = true;
+                }
             }
             ?>
         </div>

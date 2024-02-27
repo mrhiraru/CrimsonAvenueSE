@@ -69,8 +69,8 @@ include_once('../includes/preloader.php');
                                     ?>
                                         <tr class="align-middle">
                                             <td><?= $counter ?></td>
-                                            <td> <img src="<?php if (isset($item['profile_image'])) {
-                                                                echo "../images/data/" . $item['profile_image'];
+                                            <td> <img src="<?php if (isset($item['image_file'])) {
+                                                                echo "../images/data/" . $item['image_file'];
                                                             } else {
                                                                 echo "../images/main/no-profile.jpg";
                                                             } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"> </td>
