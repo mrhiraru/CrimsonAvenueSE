@@ -4,12 +4,15 @@ session_start();
 require_once "../tools/functions.php";
 require_once "../classes/store.class.php";
 require_once "../classes/product.class.php";
+require_once "../classes/image.class.php";
 
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
 
 $product = new Product();
 $pro_record = $product->fetch_info($_GET['product_id'], $record['store_id']);
+
+$image = new Image();
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
@@ -44,7 +47,7 @@ include_once('../includes/preloader.php');
                 <main class="col-md-9 col-lg-10 p-4 row m-0 h-100">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3">
                         <div class="row d-flex justify-content-center m-0 p-0">
-                            <?php include_once('./product.details.php') ?>
+                            <?php include_once('./product.details.php'); ?>
                         </div>
                     </div>
                     <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">

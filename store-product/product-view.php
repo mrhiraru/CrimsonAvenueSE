@@ -50,7 +50,7 @@ include_once('../includes/preloader.php');
                 <main class="col-md-9 col-lg-10 p-4 row m-0 h-100">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3">
                         <div class="row d-flex justify-content-center m-0 p-0">
-                            <?php include_once('./product.details.php') ?>
+                            <?php include_once('./product.details.php'); ?>
                         </div>
                     </div>
                     <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
@@ -94,6 +94,12 @@ include_once('../includes/preloader.php');
                                     ?>
                                         <div class="mb-2 col-auto mb-2 p-0">
                                             <p class="fs-7 text-primary mb-2 ps-2">File type is not allowed.</p>
+                                        </div>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <div class="mb-2 col-auto mb-2 p-0">
+                                            <p class="fs-7 text-dark mb-2 ps-2">Note: The first image uploaded will serve as the thumbnail for this product.</p>
                                         </div>
                                     <?php
                                     }
