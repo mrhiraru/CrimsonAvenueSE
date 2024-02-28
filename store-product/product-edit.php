@@ -73,11 +73,12 @@ include_once('../includes/preloader.php');
                     <div class="container-fluid bg-white shadow rounded m-0 p-3">
                         <div class="row d-flex justify-content-center m-0 p-0">
                             <p class="m-0 mb-3 p-0 text-center fs-3 fw-semibold text-primary">
-                                Edit Product
+                                Edit Product Details
                             </p>
                             <form action="<?= './product-edit.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" method="post" class="row d-flex p-2 p-md-0 m-0 col-lg-5">
 
-                                <div class="mb-3 p-0 col-12">
+                                <div class="mb-2 p-0 col-12">
+                                    <label for="product_name" class="text-secondary m-0 p-0">Product Name:</label>
                                     <input type="text" name="product_name" placeholder="Product Name" class="form-control" value="<?php if (isset($_POST['product_name'])) {
                                                                                                                                         echo $_POST['product_name'];
                                                                                                                                     } else {
@@ -91,7 +92,8 @@ include_once('../includes/preloader.php');
                                     }
                                     ?>
                                 </div>
-                                <div class="mb-3 p-0 col-12">
+                                <div class="mb-2 p-0 col-12">
+                                    <label for="category_id" class="text-secondary m-0 p-0">Category:</label>
                                     <select name="category_id" id="category_id" class="form-select">
                                         <option value="">Select Category</option>
                                         <?php
@@ -117,7 +119,8 @@ include_once('../includes/preloader.php');
                                     }
                                     ?>
                                 </div>
-                                <div class="mb-3 p-0 col-12">
+                                <div class="mb-2 p-0 col-12">
+                                    <label for="exclusivity" class="text-secondary m-0 p-0">Exclusivity:</label>
                                     <select name="exclusivity" id="exclusivity" class="form-select">
                                         <option value="">Select Exclusivity</option>
                                         <option value="All Users" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "All Users")) {
@@ -149,7 +152,7 @@ include_once('../includes/preloader.php');
                                     }
                                     ?>
                                 </div>
-                                <div class="form-group m-0 mb-3 p-0 row col-12 d-flex justify-content-evenly">
+                                <div class="form-group m-0 mb-2 p-0 row col-12 d-flex justify-content-evenly">
                                     <div class="m-0 p-0 col-auto">
                                         <input class="form-check-input" type="radio" name="sale_status" id="pre-order" value="Pre-order" <?php if (isset($_POST['sale_status']) && $_POST['sale_status'] == 'Pre-order') {
                                                                                                                                                 echo 'checked';
@@ -178,7 +181,8 @@ include_once('../includes/preloader.php');
                                     }
                                     ?>
                                 </div>
-                                <div class="mb-3 p-0 col-12">
+                                <div class="mb-2 p-0 col-12">
+                                    <label for="order_quantity_limit" class="text-secondary m-0 p-0">Limit Per Order:</label>
                                     <input type="number" name="order_quantity_limit" placeholder="Limit Per Order" oninput="validateinput(this)" class="form-control" value="<?php if (isset($_POST['order_quantity_limit'])) {
                                                                                                                                                                                     echo $_POST['order_quantity_limit'];
                                                                                                                                                                                 } else {
@@ -186,6 +190,7 @@ include_once('../includes/preloader.php');
                                                                                                                                                                                 } ?>">
                                 </div>
                                 <div class="mb-3 p-0 col-12">
+                                    <label for="estimated_order_time" class="text-secondary m-0 p-0">Estimated Order Time (Days):</label>
                                     <input type="number" name="estimated_order_time" placeholder="Estimated Order Time (Days)" oninput="validateinput(this)" class="form-control" value="<?php if (isset($_POST['estimated_order_time'])) {
                                                                                                                                                                                                 echo $_POST['estimated_order_time'];
                                                                                                                                                                                             } else {

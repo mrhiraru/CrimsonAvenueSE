@@ -64,9 +64,9 @@ include_once('../includes/preloader.php');
                 <?php
                 require_once('../includes/sidepanel.store.php');
                 ?>
-                <main class="col-md-9 col-lg-10 p-4 row m-0">
-                    <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
-                        <div class="row h-100 d-flex flex-column justify-content-center align-items-center m-0 p-0">
+                <main class="col-md-9 col-lg-10 p-4 row m-0 h-100">
+                    <div class="container-fluid bg-white shadow rounded m-0 p-3">
+                        <div class="row d-flex justify-content-center m-0 p-0">
                             <p class="m-0 mb-3 p-0 text-center fs-3 fw-semibold text-primary">
                                 Add New Product
                             </p>
