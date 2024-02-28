@@ -24,6 +24,29 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./index.php?store_id=' . $record['store_id']);
 }
 
+if (isset($_POST['edit'])) {
+    $product->product_name = htmlentities($_POST['product_name']);
+    $product->category_id = htmlentities($_POST['category_id']);
+    $product->sale_status = htmlentities($_POST['sale_status']);
+    $product->order_quantity_limit = htmlentities($_POST['order_quantity_limit']);
+    $product->estimated_order_time = htmlentities($_POST['estimated_order_time']);
+    $product->exclusivity = htmlentities($_POST['exclusivity']);
+    $product->product_id = $pro_record['product_id'];
+
+    if (validate_field($product->product_name &&
+        $product->category_id &&
+        $product->sale_status &&
+        $product->exclusivity)) {
+        if ($product->edit()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -156,16 +179,53 @@ include_once('../includes/preloader.php');
                                     ?>
                                 </div>
                                 <div class="mb-3 p-0 col-12">
-                                    <input type="submit" class="btn btn-primary w-100 fw-semibold" name="create" value="Save">
+                                    <input type="number" name="order_quantity_limit" placeholder="Limit Per Order" oninput="validateinput(this)" class="form-control" value="<?php if (isset($_POST['order_quantity_limit'])) {
+                                                                                                                                                                                    echo $_POST['order_quantity_limit'];
+                                                                                                                                                                                } else {
+                                                                                                                                                                                    echo $pro_record['order_quantity_limit'];
+                                                                                                                                                                                } ?>">
+                                </div>
+                                <div class="mb-3 p-0 col-12">
+                                    <input type="number" name="estimated_order_time" placeholder="Estimated Order Time (Days)" oninput="validateinput(this)" class="form-control" value="<?php if (isset($_POST['estimated_order_time'])) {
+                                                                                                                                                                                                echo $_POST['estimated_order_time'];
+                                                                                                                                                                                            } else {
+                                                                                                                                                                                                echo $pro_record['estimated_order_time'];
+                                                                                                                                                                                            } ?>">
+                                </div>
+                                <div class="mb-3 p-0 col-6 pe-1">
+                                    <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="btn btn-secondary w-100 fw-semibold">Cancel</a>
+                                </div>
+                                <div class="mb-3 p-0 col-6 ps-1">
+                                    <input type="submit" class="btn btn-primary w-100 fw-semibold" name="edit" value="Save">
                                 </div>
                             </form>
                         </div>
                     </div>
+                </main>
             </div>
+        </div>
     </main>
-    </div>
-    </div>
-    </main>
+    <?php
+    if (isset($_POST['edit']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Product updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
     <?php
     require_once('../includes/js.php');
     ?>

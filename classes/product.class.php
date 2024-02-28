@@ -63,6 +63,26 @@ class Product
         }
     }
 
+    function edit()
+    {
+        $sql = "UPDATE product SET product_name=:product_name, category_id=:category_id, exclusivity=:exclusivity, sale_status=:sale_status, estimated_order_time=:estimated_order_time, order_quantity_limit=:order_quantity_limit WHERE product_id = :product_id;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':product_name', $this->product_name);
+        $query->bindParam(':category_id', $this->category_id);
+        $query->bindParam(':exclusivity', $this->exclusivity);
+        $query->bindParam(':sale_status', $this->sale_status);
+        $query->bindParam(':estimated_order_time', $this->estimated_order_time);
+        $query->bindParam(':order_quantity_limit', $this->order_quantity_limit);
+        $query->bindParam(':product_id', $this->product_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function show($store_id)
     {
         $sql = "SELECT p.*, c.category_name, i.image_file FROM product p INNER JOIN category c ON p.category_id = c.category_id AND c.is_deleted != 1 LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id  WHERE p.store_id = :store_id AND p.is_deleted != 1 ORDER BY p.product_id ASC";

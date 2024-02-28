@@ -98,11 +98,11 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
         </tr>
         <tr>
             <td class="fw-semibold text-dark">
-                <span class="pe-3 text-secondary fw-normal">
+                <span class="text-secondary fw-normal">
                     Estimated Order Time:
                 </span>
                 <br class="d-block d-md-none">
-                <?= $pro_record['estimated_order_time'] ?>
+                <?= $pro_record['estimated_order_time']." Days" ?>
             </td>
         </tr>
         <tr>
