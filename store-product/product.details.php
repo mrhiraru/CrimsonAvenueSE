@@ -12,7 +12,7 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
         <i class="fa-solid fa-ellipsis"></i>
     </button>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Update Details</a></li>
+        <li><a class="dropdown-item" href="<?= './product-edit.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Update Details</a></li>
         <li><a class="dropdown-item" href="#">Delete Product</a></li>
     </ul>
 </div>

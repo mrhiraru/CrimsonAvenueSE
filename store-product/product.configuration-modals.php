@@ -12,7 +12,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '#Descriptions' ?>" class="text-decoration-none text-dark">
+                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
                                 <p class="m-0">Description added succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                             </a>
                         </div>
@@ -30,7 +30,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '#Descriptions' ?>" class="text-decoration-none text-dark">
+                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
                                 <p class="m-0">Description updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                             </a>
                         </div>
@@ -48,7 +48,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '#Descriptions' ?>" class="text-decoration-none text-dark">
+                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
                                 <p class="m-0 text-dark">Description has been deleted! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                             </a>
                         </div>
@@ -89,7 +89,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '#Variations' ?>" class="text-decoration-none text-dark">
+                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id']?>" class="text-decoration-none text-dark">
                                 <p class="m-0">Variation added succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                             </a>
                         </div>
@@ -107,7 +107,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '#Variations' ?>" class="text-decoration-none text-dark">
+                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
                                 <p class="m-0">Variation updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                             </a>
                         </div>
@@ -125,7 +125,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '#Variations' ?>" class="text-decoration-none text-dark">
+                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id']?>" class="text-decoration-none text-dark">
                                 <p class="m-0 text-dark">Variations has been deleted! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                             </a>
                         </div>
@@ -166,7 +166,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '#Measurements' ?>" class="text-decoration-none text-dark">
+                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
                                 <p class="m-0">Measurement added succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                             </a>
                         </div>
@@ -184,7 +184,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '#Measurements' ?>" class="text-decoration-none text-dark">
+                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
                                 <p class="m-0">Measurement updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                             </a>
                         </div>
@@ -202,7 +202,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '#Measurement' ?>" class="text-decoration-none text-dark">
+                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
                                 <p class="m-0 text-dark">Measurement has been deleted! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                             </a>
                         </div>
@@ -243,7 +243,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '#Images' ?>" class="text-decoration-none text-dark">
+                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
                                 <p class="m-0">Image added succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                             </a>
                         </div>
@@ -284,7 +284,7 @@ if (isset($_POST['add_desc']) && $success == 'success') {
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '#Images' ?>" class="text-decoration-none text-dark">
+                            <a href="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
                                 <p class="m-0 text-dark">Image has been deleted! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                             </a>
                         </div>
