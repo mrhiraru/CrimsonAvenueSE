@@ -88,7 +88,7 @@ include_once('../includes/preloader.php');
                                 $varArray = $variation->show($pro_record['product_id']);
                                 foreach ($varArray as $item) {
                                 ?>
-                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $item['variation_id'] . '&measurement_id=' . $_GET['measurement_id'] ?>" class="btn <?= ($item['variation_id'] == $_GET['variation_id']) ? 'btn-primary' : 'btn-secondary' ?> btn-secondary fw-semibold mx-2"><?= $item['variation_name'] ?></a>
+                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $item['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="btn <?= ($item['variation_id'] == $_GET['variation_id']) ? 'btn-primary' : 'btn-secondary' ?> btn-secondary fw-semibold mx-2"><?= $item['variation_name'] ?></a>
                                 <?php
                                 }
                                 ?>
@@ -99,7 +99,7 @@ include_once('../includes/preloader.php');
                                 $meaArray = $measurement->show($pro_record['product_id']);
                                 foreach ($meaArray as $item) {
                                 ?>
-                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $_GET['variation_id'] . '&measurement_id=' . $item['measurement_id'] ?>" class="btn <?= ($item['measurement_id'] == $_GET['measurement_id']) ? 'btn-primary' : 'btn-secondary' ?> fw-semibold mx-2"><?= $item['measurement_name'] ?></a>
+                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $item['measurement_id'] ?>" class="btn <?= ($item['measurement_id'] == $_GET['measurement_id']) ? 'btn-primary' : 'btn-secondary' ?> fw-semibold mx-2"><?= $item['measurement_name'] ?></a>
                                 <?php
                                 }
                                 ?>
@@ -107,7 +107,7 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-3">
                             </div>
-                            <form method="post" action="<?= './product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . (isset($_GET['variation_id']) ? '&variation_id=' . $_GET['variation_id'] : '') . '#Variations' ?>" class="col-12 col-lg-8">
+                            <form method="post" action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="col-12 col-lg-8">
                                 <div class="row">
                                     <div class="input-group mb-2 p-0 col-12">
                                         <?php
