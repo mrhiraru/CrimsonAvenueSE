@@ -112,7 +112,7 @@ include_once('../includes/preloader.php');
                                     <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3">
                                         <input type="number" name="stock_quantity" placeholder="Stock Quantity" class="form-control" value="<?php if (isset($_POST['stock_quantity'])) {
                                                                                                                                                 echo $_POST['stock_quantity'];
-                                                                                                                                            } ?>">
+                                                                                                                                            } // add else if for edit same for other fields ?>">
                                         <?php
                                         if (isset($_POST['stock_quantity']) && !validate_field($_POST['stock_quantity'])) {
                                         ?>
