@@ -67,6 +67,29 @@ class Variation
         return $data;
     }
 
+    function get_first($product_id)
+    {
+        $sql = "SELECT * FROM variation WHERE product_id = :product_id AND is_deleted != 1 LIMIT 1";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':product_id', $product_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
+    function fetch_info($variation_id, $product_id)
+    {
+        $sql = "SELECT * FROM variation WHERE variation_id = :variation_id AND product_id = :product_id AND is_deleted != 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':variation_id', $variation_id);
+        $query->bindParam(':product_id', $product_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
     function delete()
     {
         $sql = "UPDATE variation SET is_deleted=:is_deleted WHERE variation_id = :variation_id;";

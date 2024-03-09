@@ -71,6 +71,29 @@ class Measurement
         return $data;
     }
 
+    function get_first($product_id)
+    {
+        $sql = "SELECT * FROM measurement WHERE product_id = :product_id AND is_deleted != 1 LIMIT 1";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':product_id', $product_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
+    function fetch_info($measurement_id, $product_id)
+    {
+        $sql = "SELECT * FROM measurement WHERE measurement_id = :measurement_id AND product_id = :product_id AND is_deleted != 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':measurement_id', $measurement_id);
+        $query->bindParam(':product_id', $product_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
     function delete()
     {
         $sql = "UPDATE measurement SET is_deleted=:is_deleted WHERE measurement_id = :measurement_id;";

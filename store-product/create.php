@@ -176,7 +176,7 @@ include_once('../includes/preloader.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a href="./create.php?store_id=<?= $record['store_id'] ?>" class="text-decoration-none text-dark">
+                                <a href="./index.php?store_id=<?= $record['store_id'] ?>" class="text-decoration-none text-dark">
                                     <p class="m-0 text-dark">Product is successfully added! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
