@@ -10,6 +10,16 @@ function validate_field($field)
     }
 }
 
+function validate_number($field)
+{
+    $field = htmlentities($field);
+    if ($field < 1) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function validate_email($email)
 {
     // Check if the 'email' key exists in the $_POST array

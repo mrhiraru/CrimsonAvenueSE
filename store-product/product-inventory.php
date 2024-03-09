@@ -107,46 +107,56 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-3">
                             </div>
-                            <form method="post" action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="col-12 col-lg-8">
+                            <form method="post" action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="col-12">
                                 <div class="row">
-                                    <div class="input-group mb-2 p-0 col-12">
+                                    <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3">
+                                        <input type="number" name="stock_quantity" placeholder="Stock Quantity" class="form-control" value="<?php if (isset($_POST['stock_quantity'])) {
+                                                                                                                                                echo $_POST['stock_quantity'];
+                                                                                                                                            } ?>">
                                         <?php
-                                        if (isset($_POST['edit_var']) || isset($_POST['save_var'])) {
-                                            $var_record = $variation->fetch($_GET['variation_id']);
+                                        if (isset($_POST['stock_quantity']) && !validate_field($_POST['stock_quantity'])) {
                                         ?>
-                                            <input type="text" class="form-control" id="variation_name" name="variation_name" placeholder="Variation Name" value="<?php if (isset($_POST['variation_name'])) {
-                                                                                                                                                                        echo $_POST['variation_name'];
-                                                                                                                                                                    } else {
-                                                                                                                                                                        echo $var_record['variation_name'];
-                                                                                                                                                                    } ?>">
-                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel_var" value="Cancel">
-                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save_var" value="Save">
+                                            <p class="fs-7 text-primary m-0 ps-2">Stock Quantity is required.</p>
                                         <?php
-                                        } else {
+                                        } else if (isset($_POST['stock_quantity']) && !validate_number($_POST['stock_quantity'])) {
                                         ?>
-                                            <input type="text" class="form-control" id="variation_name" name="variation_name" placeholder="Variation Name" value="<?php if (isset($_POST['variation_name'])) {
-                                                                                                                                                                        echo $_POST['variation_name'];
-                                                                                                                                                                    } ?>">
-                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon1" name="add_var" value="Add">
+                                            <p class="fs-7 text-primary m-0 ps-2">Stock Quantity can not be less than one.</p>
                                         <?php
                                         }
                                         ?>
                                     </div>
-                                    <?php
-                                    if (isset($_POST['add_var']) && isset($_POST['variation_name']) && !validate_field($_POST['variation_name'])) {
-                                    ?>
-                                        <div class="mb-2 col-auto mb-2 p-0">
-                                            <p class="fs-7 text-primary mb-2 ps-2">Variation name is required.</p>
-                                        </div>
-                                    <?php
-                                    } else if (isset($_POST['save_var']) && isset($_POST['variation_name']) && !validate_field($_POST['variation_name'])) {
-                                    ?>
-                                        <div class="mb-2 col-auto mb-2 p-0">
-                                            <p class="fs-7 text-primary mb-2 ps-2">Update failed! Variation name is required.</p>
-                                        </div>
-                                    <?php
-                                    }
-                                    ?>
+                                    <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3">
+                                        <input type="number" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
+                                                                                                                                                echo $_POST['purchase_price'];
+                                                                                                                                            } ?>">
+                                        <?php
+                                        if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
+                                        ?>
+                                            <p class="fs-7 text-primary m-0 ps-2">Purchase price is required.</p>
+                                        <?php
+                                        } else if (isset($_POST['purchase_price']) && !validate_number($_POST['purchase_price'])) {
+                                        ?>
+                                            <p class="fs-7 text-primary m-0 ps-2">Purchase price can not be less than one.</p>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3">
+                                        <input type="number" name="selling_price" placeholder="Selling Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
+                                                                                                                                                echo $_POST['selling_price'];
+                                                                                                                                            } ?>">
+                                        <?php
+                                        if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
+                                        ?>
+                                            <p class="fs-7 text-primary m-0 ps-2">Selling price is required.</p>
+                                        <?php
+                                        } else if (isset($_POST['purchase_price']) && !validate_number($_POST['purchase_price'])) {
+                                        ?>
+                                            <p class="fs-7 text-primary m-0 ps-2">Selling price can not be less than one.</p>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
                             </form>
                             <div class="col-12 m-0 p-0 px-2 row">
