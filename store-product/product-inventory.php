@@ -157,6 +157,18 @@ include_once('../includes/preloader.php');
                                         }
                                         ?>
                                     </div>
+                                    <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3 text-end">
+                                        <?php if (isset($_POST['edit']) || isset($_POST['save'])) { ?>
+                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" name="cancel" value="Cancel">
+                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="save" value="Save">
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="add" value="Add">
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
                             </form>
                             <div class="col-12 m-0 p-0 px-2 row">
@@ -189,9 +201,9 @@ include_once('../includes/preloader.php');
                                                 <td class="text-center"><?= $item['variation_name'] ?></td>
                                                 <td class="text-end text-nowrap">
                                                     <div class="m-0 p-0">
-                                                        <form action="./product-view.php<?php echo '?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $item['variation_id'] . '#Variations'; ?>" method="post">
-                                                            <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="edit_var" value="Edit"></input>
-                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning_var" value="Delete"></input>
+                                                        <form action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" method="post">
+                                                            <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="edit" value="Edit"></input>
+                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Delete"></input>
                                                         </form>
                                                     </div>
                                                 </td>
