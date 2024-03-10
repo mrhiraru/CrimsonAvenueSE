@@ -114,3 +114,13 @@ function check_date($sdate, $edate)
         return false;
     }
 }
+
+function validate_stock_quantity($sold, $quantity)
+{
+    $sold = htmlentities($sold);
+    if ($sold > $quantity) {
+        return false;
+    } else {
+        return true;
+    }
+}

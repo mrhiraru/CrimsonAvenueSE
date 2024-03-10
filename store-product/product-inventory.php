@@ -7,6 +7,7 @@ require_once "../classes/product.class.php";
 require_once "../classes/image.class.php";
 require_once "../classes/variation.class.php";
 require_once "../classes/measurement.class.php";
+require_once "../classes/stock.class.php";
 
 
 $store = new Store();
@@ -30,6 +31,66 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 } else if (!isset($pro_record['product_id']) || !isset($var_record['variation_id']) || !isset($mea_record['measurement_id'])) {
     header('location: ./index.php?store_id=' . $record['store_id']);
 }
+
+$stock = new Stock();
+if (isset($_POST['add'])) {
+
+    $stock->stock_quantity = htmlentities($_POST['stock_quantity']);
+    $stock->purchase_price = htmlentities($_POST['purchase_price']);
+    $stock->selling_price = htmlentities($_POST['selling_price']);
+    $stock->product_id = $pro_record['product_id'];
+    $stock->variation_id = $var_record['variation_id'];
+    $stock->measurement_id = $mea_record['measurement_id'];
+
+    if (
+        validate_field($stock->stock_quantity) && validate_number($stock->stock_quantity) &&
+        validate_field($stock->purchase_price) && validate_number($stock->purchase_price) &&
+        validate_field($stock->selling_price) && validate_number($stock->selling_price)
+    ) {
+        if ($stock->add()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['save'])) {
+    $stock->stock_quantity = htmlentities($_POST['stock_quantity']);
+    $stock->purchase_price = htmlentities($_POST['purchase_price']);
+    $stock->selling_price = htmlentities($_POST['selling_price']);
+    $stock->stock_id = $_GET['stock_id'];
+
+    if (
+        validate_field($stock->stock_quantity) && validate_number($stock->stock_quantity) &&
+        validate_field($stock->purchase_price) && validate_number($stock->purchase_price) &&
+        validate_field($stock->selling_price) && validate_number($stock->selling_price) &&
+        validate_stock_quantity($_POST['stock_sold'], $_POST['stock_quantity'])
+    ) {
+        if ($stock->edit()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['cancel'])) {
+
+    header('location: ./product-inventory.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id']);
+} else if (isset($_POST['delete'])) {
+
+    $stock->stock_id = $_GET['stock_id'];
+    $stock->is_deleted = 1;
+
+    if ($stock->delete()) {
+        $success = 'success';
+    } else {
+        echo 'An error occured while adding in the database.';
+        $success = 'failed';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -107,12 +168,23 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-3">
                             </div>
-                            <form method="post" action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="col-12">
+                            <form method="post" action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . (isset($_GET['stock_id']) ? '&stock_id=' . $_GET['stock_id'] : '') ?>" class="col-12">
                                 <div class="row">
+                                    <?php
+                                    if (isset($_POST['edit']) || isset($_POST['save'])) {
+                                        $sto_record = $stock->fetch($_GET['stock_id']);
+                                    ?>
+                                        <input type="hidden" name="stock_sold" value="<?= $sto_record['stock_sold'] ?>">
+                                    <?php
+                                    }
+                                    ?>
                                     <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3">
                                         <input type="number" name="stock_quantity" placeholder="Stock Quantity" class="form-control" value="<?php if (isset($_POST['stock_quantity'])) {
                                                                                                                                                 echo $_POST['stock_quantity'];
-                                                                                                                                            } // add else if for edit same for other fields ?>">
+                                                                                                                                            } else if (isset($sto_record['stock_quantity'])) {
+                                                                                                                                                echo $sto_record['stock_quantity'];
+                                                                                                                                            }
+                                                                                                                                            ?>">
                                         <?php
                                         if (isset($_POST['stock_quantity']) && !validate_field($_POST['stock_quantity'])) {
                                         ?>
@@ -121,13 +193,21 @@ include_once('../includes/preloader.php');
                                         } else if (isset($_POST['stock_quantity']) && !validate_number($_POST['stock_quantity'])) {
                                         ?>
                                             <p class="fs-7 text-primary m-0 ps-2">Stock Quantity can not be less than one.</p>
+                                            <?php
+                                        } else if (isset($_POST['save'])) {
+                                            if (isset($_POST['stock_quantity']) && !validate_stock_quantity($_POST['stock_sold'], $_POST['stock_quantity'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">Stock quantity can not be less than stock sold.</p>
                                         <?php
+                                            }
                                         }
                                         ?>
                                     </div>
                                     <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3">
                                         <input type="number" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
                                                                                                                                                 echo $_POST['purchase_price'];
+                                                                                                                                            } else if (isset($sto_record['purchase_price'])) {
+                                                                                                                                                echo $sto_record['purchase_price'];
                                                                                                                                             } ?>">
                                         <?php
                                         if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
@@ -144,13 +224,15 @@ include_once('../includes/preloader.php');
                                     <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3">
                                         <input type="number" name="selling_price" placeholder="Selling Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
                                                                                                                                                 echo $_POST['selling_price'];
-                                                                                                                                            } ?>">
+                                                                                                                                            } else if (isset($sto_record['selling_price'])) {
+                                                                                                                                                echo $sto_record['selling_price'];
+                                                                                                                                            }  ?>">
                                         <?php
                                         if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
                                         ?>
                                             <p class="fs-7 text-primary m-0 ps-2">Selling price is required.</p>
                                         <?php
-                                        } else if (isset($_POST['purchase_price']) && !validate_number($_POST['purchase_price'])) {
+                                        } else if (isset($_POST['purchase_price']) && !validate_number($_POST['selling_price'])) {
                                         ?>
                                             <p class="fs-7 text-primary m-0 ps-2">Selling price can not be less than one.</p>
                                         <?php
@@ -188,22 +270,31 @@ include_once('../includes/preloader.php');
                                     <tbody>
                                         <?php
                                         $counter = 1;
-                                        $varArray = $variation->show($pro_record['product_id']);
-                                        foreach ($varArray as $item) {
+                                        $stockArray = $stock->show($pro_record['product_id'], $var_record['variation_id'], $mea_record['measurement_id']);
+                                        foreach ($stockArray as $item) {
                                         ?>
                                             <tr class="align-middle">
                                                 <td><?= $counter ?></td>
-                                                <td><?= $item['variation_name'] ?></td>
-                                                <td class="text-center"><?= $item['variation_name'] ?></td>
-                                                <td class="text-center"><?= $item['variation_name'] ?></td>
-                                                <td class="text-center"><?= $item['variation_name'] ?></td>
-                                                <td class="text-center"><?= $item['variation_name'] ?></td>
-                                                <td class="text-center"><?= $item['variation_name'] ?></td>
+                                                <td><?= date('F d Y', strtotime($item['is_created'])) ?></td>
+                                                <td class="text-center"><?= $item['stock_sold'] ?></td>
+                                                <td class="text-center"><?= $item['stock_quantity'] - $item['stock_sold'] ?></td>
+                                                <td class="text-center"><?= $item['stock_quantity'] ?></td>
+                                                <td class="text-center"><?= '₱ ' . $item['purchase_price'] ?></td>
+                                                <td class="text-center"><?= '₱ ' . $item['selling_price'] ?></td>
                                                 <td class="text-end text-nowrap">
                                                     <div class="m-0 p-0">
-                                                        <form action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" method="post">
+                                                        <form action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . '&stock_id=' . $item['stock_id'] ?> " method="post">
                                                             <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="edit" value="Edit"></input>
-                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Delete"></input>
+                                                            <?php if ($item['stock_sold'] < 1) {
+                                                            ?>
+                                                                <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Delete"></input>
+                                                            <?php
+                                                            } else {
+                                                            ?>
+                                                                <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold delete-disabled" disabled name="warning_false" value="Delete"></input>
+                                                            <?php
+                                                            }
+                                                            ?>
                                                         </form>
                                                     </div>
                                                 </td>
@@ -221,6 +312,112 @@ include_once('../includes/preloader.php');
             </div>
         </div>
     </main>
+    <?php
+    if (isset($_POST['add']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="<?= './product-inventory.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Stock added succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['save']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="<?= './product-inventory.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Stock updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['delete']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="<?= './product-inventory.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0 text-dark">Stock has been deleted! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['warning']) && isset($_GET['stock_id'])) {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <?php
+                                $sto_record = $stock->fetch($_GET['stock_id']);
+                                ?>
+                                <p class="m-0 text-dark">Are you sure you want to delete
+                                    <span class="text-primary fw-bold"><?= $sto_record['stock_quantity'] ?></span>
+                                    stocks added on
+                                    <span class="text-primary fw-bold"><?= date('F d Y', strtotime($sto_record['is_created'])) ?></span>
+                                    ?
+                                </p>
+                                <form action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] .  '&stock_id=' . $sto_record['stock_id'] ?>" method="post" class="mt-3">
+                                    <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 me-3 rounded border-0 fw-semibold" name="cancel" value="Cancel"></input>
+                                    <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 ms-3 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['warning_false']) && isset($_GET['stock_id'])) {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <?php
+                                $sto_record = $stock->fetch($_GET['stock_id']);
+                                ?>
+                                <a href="<?= './product-inventory.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0 text-dark">Stock with sold items can't be deleted! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
     <?php
     require_once('../includes/js.php');
     ?>

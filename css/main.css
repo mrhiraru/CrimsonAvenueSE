@@ -317,6 +317,12 @@ body {
     max-width: 200px !important;
 }
 
+/* product inventory css  */
+
+.delete-disabled {
+    color: var(--secondary) !important;
+    border-color: var(--secondary) !important;
+}
 
 @media (max-width: 992px){
     .img-custom {
