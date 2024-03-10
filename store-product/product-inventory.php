@@ -178,7 +178,7 @@ include_once('../includes/preloader.php');
                                     <?php
                                     }
                                     ?>
-                                    <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3">
+                                    <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
                                         <input type="number" name="stock_quantity" placeholder="Stock Quantity" class="form-control" value="<?php if (isset($_POST['stock_quantity'])) {
                                                                                                                                                 echo $_POST['stock_quantity'];
                                                                                                                                             } else if (isset($sto_record['stock_quantity'])) {
@@ -203,7 +203,7 @@ include_once('../includes/preloader.php');
                                         }
                                         ?>
                                     </div>
-                                    <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3">
+                                    <div class="mb-3 p-0 pe-lg-2 col-12 col-md-6 col-lg-3">
                                         <input type="number" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
                                                                                                                                                 echo $_POST['purchase_price'];
                                                                                                                                             } else if (isset($sto_record['purchase_price'])) {
@@ -221,7 +221,7 @@ include_once('../includes/preloader.php');
                                         }
                                         ?>
                                     </div>
-                                    <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3">
+                                    <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
                                         <input type="number" name="selling_price" placeholder="Selling Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
                                                                                                                                                 echo $_POST['selling_price'];
                                                                                                                                             } else if (isset($sto_record['selling_price'])) {
@@ -239,7 +239,7 @@ include_once('../includes/preloader.php');
                                         }
                                         ?>
                                     </div>
-                                    <div class="mb-3 p-0 pe-2 col-12 col-md-6 col-lg-3 text-end">
+                                    <div class="mb-3 p-0 col-12 col-md-6 col-lg-3 text-end">
                                         <?php if (isset($_POST['edit']) || isset($_POST['save'])) { ?>
                                             <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" name="cancel" value="Cancel">
                                             <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="save" value="Save">
@@ -253,8 +253,19 @@ include_once('../includes/preloader.php');
                                     </div>
                                 </div>
                             </form>
+                            <div class="col-12 m-0 p-0">
+                                <hr class="mb-3 mt-0">
+                            </div>
+                            <div class="search-keyword col-12 p-0 d-flex justify-content-end">
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="input-group">
+                                        <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
+                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-12 m-0 p-0 px-2 row">
-                                <table id="variations" class="table table-lg mt-1">
+                                <table id="stocks" class="table table-lg mt-1">
                                     <thead>
                                         <tr class="align-middle">
                                             <th scope="col"></th>
@@ -421,6 +432,7 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/js.php');
     ?>
+    <script src="../js/stock.datatable.js"></script>
 </body>
 
 </html>
