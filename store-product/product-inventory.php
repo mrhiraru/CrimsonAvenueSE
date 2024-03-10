@@ -149,7 +149,7 @@ include_once('../includes/preloader.php');
                                 $varArray = $variation->show($pro_record['product_id']);
                                 foreach ($varArray as $item) {
                                 ?>
-                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $item['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="btn <?= ($item['variation_id'] == $_GET['variation_id']) ? 'btn-primary' : 'btn-secondary' ?> fw-semibold mx-1 my-1"><?= $item['variation_name'] ?></a>
+                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $item['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="btn <?= ($item['variation_id'] == $_GET['variation_id']) ? 'btn-primary' : 'btn-secondary' ?> fw-semibold me-1 mb-1"><?= $item['variation_name'] ?></a>
                                 <?php
                                 }
                                 ?>
@@ -160,7 +160,7 @@ include_once('../includes/preloader.php');
                                 $meaArray = $measurement->show($pro_record['product_id']);
                                 foreach ($meaArray as $item) {
                                 ?>
-                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $item['measurement_id'] ?>" class="btn <?= ($item['measurement_id'] == $_GET['measurement_id']) ? 'btn-primary' : 'btn-secondary' ?> fw-semibold mx-1 my-1"><?= $item['measurement_name'] ?></a>
+                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $item['measurement_id'] ?>" class="btn <?= ($item['measurement_id'] == $_GET['measurement_id']) ? 'btn-primary' : 'btn-secondary' ?> fw-semibold me-1 mt-1"><?= $item['measurement_name'] ?></a>
                                 <?php
                                 }
                                 ?>
