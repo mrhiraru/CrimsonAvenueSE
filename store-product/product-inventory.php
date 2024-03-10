@@ -143,24 +143,24 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-3">
                             </div>
-                            <div class="col-12 m-0 mb-2 p-0 px-2 d-flex flex-row align-items-center text-secondary">
-                                Variations:
+                            <div class="col-12 m-0 mb-2 p-0 px-2 d-flex flex-row flex-wrap align-items-center text-secondary">
+                                <span class="me-1">Variations:</span>
                                 <?php
                                 $varArray = $variation->show($pro_record['product_id']);
                                 foreach ($varArray as $item) {
                                 ?>
-                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $item['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="btn <?= ($item['variation_id'] == $_GET['variation_id']) ? 'btn-primary' : 'btn-secondary' ?> btn-secondary fw-semibold mx-2"><?= $item['variation_name'] ?></a>
+                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $item['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="btn <?= ($item['variation_id'] == $_GET['variation_id']) ? 'btn-primary' : 'btn-secondary' ?> fw-semibold mx-1 my-1"><?= $item['variation_name'] ?></a>
                                 <?php
                                 }
                                 ?>
                             </div>
-                            <div class="col-12 m-0 p-0 px-2 d-flex flex-row align-items-center text-secondary">
-                                Measurements:
+                            <div class="col-12 m-0 p-0 px-2 d-flex flex-row flex-wrap align-items-center text-secondary">
+                                <span class="me-1">Measurements:</span>
                                 <?php
                                 $meaArray = $measurement->show($pro_record['product_id']);
                                 foreach ($meaArray as $item) {
                                 ?>
-                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $item['measurement_id'] ?>" class="btn <?= ($item['measurement_id'] == $_GET['measurement_id']) ? 'btn-primary' : 'btn-secondary' ?> fw-semibold mx-2"><?= $item['measurement_name'] ?></a>
+                                    <a href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $item['measurement_id'] ?>" class="btn <?= ($item['measurement_id'] == $_GET['measurement_id']) ? 'btn-primary' : 'btn-secondary' ?> fw-semibold mx-1 my-1"><?= $item['measurement_name'] ?></a>
                                 <?php
                                 }
                                 ?>
