@@ -266,7 +266,8 @@ include_once('../includes/preloader.php');
                                     }
                                     ?>
                                 </table>
-                            </div><div class="col-12 m-0 p-0 px-2">
+                            </div>
+                            <div class="col-12 m-0 p-0 px-2">
                                 <p class="m-0 p-0 fs-5 fw-bold text-dark lh-1 flex-fill">
                                     Measurements
                                 </p>
@@ -283,11 +284,9 @@ include_once('../includes/preloader.php');
                                     ?>
                                         <tr>
                                             <td class="fw-semibold text-dark">
-                                                <span class="text-secondary fw-normal">
-                                                    <?= $item['measurement_name'] ?>:
-                                                </span>
+                                                <?= $item['measurement_name'] ?>
                                                 <br class="d-block d-md-none">
-                                                <?= $item['value_unit'] ?>
+                                                <?= (isset($item['value_unit'])) ? "- " . $item['value_unit']  :  "" ?>
                                             </td>
                                         </tr>
                                     <?php
