@@ -16,7 +16,7 @@ $pages = ceil($page_count[0]['store_id'] / $limit);
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ../user/verify.php');
 } else if (!isset($_GET['page']) || $_GET['page'] < 1) {
-    // header('location: ./stores.php?page=1');
+    header('location: ./stores.php?page=1');
 } else if ($_GET['page'] > $pages) {
     header('location: ./stores.php?page=' . $pages);
 }
