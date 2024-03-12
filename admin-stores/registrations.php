@@ -48,7 +48,6 @@ include_once('../includes/preloader.php');
                                         <th scope="col" class="text-center">Store Name</th>
                                         <th scope="col" class="text-center">Administrator</th>
                                         <th scope="col" class="text-center">College</th>
-                                        <th scope="col" class="text-center">Registration</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -56,7 +55,7 @@ include_once('../includes/preloader.php');
                                     <?php
                                     $counter = 1;
                                     $store = new Store();
-                                    $storeArray = $store->show();
+                                    $storeArray = $store->show_registration();
                                     foreach ($storeArray as $item) {
                                     ?>
                                         <tr class="align-middle">
@@ -72,10 +71,9 @@ include_once('../includes/preloader.php');
                                                                     } else {
                                                                         echo $item['college_name'];
                                                                     } ?></td>
-                                            <td class="text-center"><?= $item['registration_status'] ?></td>
                                             <td class="text-center text-nowrap">
                                                 <div class="m-0 p-0">
-                                                    <a href="./store-view.php?id=<?= $item['store_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">View</a>
+                                                    <a href="./store-view.php?id=<?= $item['store_id'] ?>" type="button" class="btn btn-primary rounded border-0 fw-semibold text-decoration-none">View Details</a>
                                                 </div>
                                             </td>
                                         </tr>

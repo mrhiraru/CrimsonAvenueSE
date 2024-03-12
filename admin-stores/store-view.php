@@ -201,6 +201,25 @@ include_once('../includes/preloader.php');
                             </div>
                         </div>
                     </div>
+                    <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
+                        <div class="row d-flex justify-content-center m-0 p-0">
+                            <div class="col-12 m-0 p-0 px-2">
+                                <p class="m-0 p-0 fs-5 fw-bold text-dark lh-1 flex-fill">
+                                    Certificate
+                                </p>
+                                <div class="col-12 m-0 p-0">
+                                    <hr class="my-2">
+                                </div>
+                                <div class="col-12 m-0 p-0 d-flex flex-column align-items-center">
+                                    <img src="<?php if (isset($record['certificate'])) {
+                                                    echo "../images/data/" . $record['certificate'];
+                                                } else {
+                                                    echo "../images/main/no-profile.jpg";
+                                                } ?>" alt="" class="img-fluid border border-secondary-subtle rounded-2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </main>
             </div>
         </div>
