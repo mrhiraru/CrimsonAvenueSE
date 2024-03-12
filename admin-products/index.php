@@ -8,7 +8,6 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/store.class.php');
 require_once('../classes/product.class.php');
 ?>
 
@@ -76,7 +75,7 @@ include_once('../includes/preloader.php');
                                             <td class="text-center"><?= $item['restriction_status'] ?></td>
                                             <td class="text-center text-nowrap">
                                                 <div class="m-0 p-0">
-                                                    <a href="./store-view.php?id=<?= $item['product_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
+                                                    <a href="./product-view.php?id=<?= $item['product_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
                                                 </div>
                                             </td>
                                         </tr>

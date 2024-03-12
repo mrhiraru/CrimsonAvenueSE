@@ -126,6 +126,15 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
         <tr>
             <td class="fw-semibold text-dark">
                 <span class="text-secondary fw-normal">
+                    Restriction Status:
+                </span>
+                <br class="d-block d-md-none">
+                <?= $pro_record['restriction_status'] ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="fw-semibold text-dark">
+                <span class="text-secondary fw-normal">
                     Styles/Variations:
                 </span>
                 <br class="d-block d-md-none">
