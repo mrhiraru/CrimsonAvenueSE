@@ -274,7 +274,7 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-0">
                             </div>
-                            <div class="col-12 m-0 p-0 mb-4">
+                            <div class="col-12 m-0 p-0">
                                 <table class="table-sm m-0">
                                     <?php
                                     $measurement = new Measurement();
