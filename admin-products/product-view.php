@@ -221,7 +221,7 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-0 mt-2">
                             </div>
-                            <div class="col-12 m-0 p-0 mb-4">
+                            <div class="col-12 m-0 p-0 mb-3">
                                 <table class="table-sm m-0">
                                     <?php
                                     $description = new Description();
@@ -250,7 +250,7 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-0 mt-2">
                             </div>
-                            <div class="col-12 m-0 p-0 mb-4">
+                            <div class="col-12 m-0 p-0 mb-3">
                                 <table class="table-sm m-0">
                                     <?php
                                     $variation = new Variation();
