@@ -222,12 +222,7 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link text-secondary fw-semibold <?= $semester_page ?>" aria-current="page" href="../admin-settings/index.php">
-                                    School Year & Semester
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $admin_page ?>" href="../admin-settings/admin.php">
-                                    Admin Control
+                                    Main
                                 </a>
                             </li>
                             <li class="nav-item">
