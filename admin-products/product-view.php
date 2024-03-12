@@ -213,13 +213,13 @@ include_once('../includes/preloader.php');
                     </div>
                     <div class="container-fluid bg-white shadow rounded m-0 p-3 mt-4">
                         <div class="row d-flex justify-content-center m-0 p-0">
-                            <div class="col-12 m-0 p-0 px-2">
-                                <p class="m-0 p-0 fs-5 fw-bold text-dark lh-1 flex-fill">
+                            <div class="col-12 m-0 p-0">
+                                <p class="m-0 p-0 fs-5 fw-semibold text-dark lh-1 flex-fill">
                                     Description
                                 </p>
                             </div>
                             <div class="col-12 m-0 p-0">
-                                <hr class="mb-0">
+                                <hr class="mb-0 mt-2">
                             </div>
                             <div class="col-12 m-0 p-0 mb-4">
                                 <table class="table-sm m-0">
@@ -229,7 +229,7 @@ include_once('../includes/preloader.php');
                                     foreach ($descArray as $item) {
                                     ?>
                                         <tr>
-                                            <td class="fw-semibold text-dark">
+                                            <td class="text-dark">
                                                 <span class="text-secondary fw-normal">
                                                     <?= $item['desc_label'] ?>:
                                                 </span>
@@ -242,13 +242,13 @@ include_once('../includes/preloader.php');
                                     ?>
                                 </table>
                             </div>
-                            <div class="col-12 m-0 p-0 px-2">
-                                <p class="m-0 p-0 fs-5 fw-bold text-dark lh-1 flex-fill">
+                            <div class="col-12 m-0 p-0">
+                                <p class="m-0 p-0 fs-5 fw-semibold text-dark lh-1 flex-fill">
                                     Variations
                                 </p>
                             </div>
                             <div class="col-12 m-0 p-0">
-                                <hr class="mb-0">
+                                <hr class="mb-0 mt-2">
                             </div>
                             <div class="col-12 m-0 p-0 mb-4">
                                 <table class="table-sm m-0">
@@ -258,7 +258,7 @@ include_once('../includes/preloader.php');
                                     foreach ($varArray as $item) {
                                     ?>
                                         <tr>
-                                            <td class="fw-semibold text-dark">
+                                            <td class="text-dark">
                                                 <?= $item['variation_name'] ?>
                                             </td>
                                         </tr>
@@ -267,13 +267,13 @@ include_once('../includes/preloader.php');
                                     ?>
                                 </table>
                             </div>
-                            <div class="col-12 m-0 p-0 px-2">
-                                <p class="m-0 p-0 fs-5 fw-bold text-dark lh-1 flex-fill">
+                            <div class="col-12 m-0 p-0">
+                                <p class="m-0 p-0 fs-5 fw-semibold text-dark lh-1 flex-fill">
                                     Measurements
                                 </p>
                             </div>
                             <div class="col-12 m-0 p-0">
-                                <hr class="mb-0">
+                                <hr class="mb-0 mt-2">
                             </div>
                             <div class="col-12 m-0 p-0">
                                 <table class="table-sm m-0">
@@ -283,7 +283,7 @@ include_once('../includes/preloader.php');
                                     foreach ($meaArray as $item) {
                                     ?>
                                         <tr>
-                                            <td class="fw-semibold text-dark">
+                                            <td class="text-dark">
                                                 <?= $item['measurement_name'] ?>
                                                 <br class="d-block d-md-none">
                                                 <?= (isset($item['value_unit'])) ? "- " . $item['value_unit']  :  "" ?>
