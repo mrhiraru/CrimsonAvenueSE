@@ -14,6 +14,7 @@ class Store
     public $business_time;
     public $certificate;
     public $verification_status;
+    public $registration_status;
     public $restriction_status;
     public $is_created;
     public $is_deleted;
@@ -49,13 +50,14 @@ class Store
         $connect = $this->db->connect();
         $connect->beginTransaction();
 
-        $sql = "INSERT INTO store (store_name, college_id ,certificate, verification_status) VALUES (:store_name, :college_id, :certificate, :verification_status);";
+        $sql = "INSERT INTO store (store_name, college_id ,certificate, verification_status, registration_status) VALUES (:store_name, :college_id, :certificate, :verification_status, :registration_status);";
 
         $query = $connect->prepare($sql);
         $query->bindParam(':store_name', $this->store_name);
         $query->bindParam(':college_id', $this->college_id);
         $query->bindParam(':certificate', $this->certificate);
         $query->bindParam(':verification_status', $this->verification_status);
+        $query->bindParam(':registration_status', $this->registration_status);
 
         if ($query->execute()) {
             $last_store_id = $connect->lastInsertId();
@@ -67,7 +69,7 @@ class Store
             $sub_query->bindParam(':store_id', $last_store_id);
             $sub_query->bindParam(':staff_role', $this->staff_role);
 
-            if($sub_query->execute()) {
+            if ($sub_query->execute()) {
                 $connect->commit();
                 return true;
             } else {
@@ -91,7 +93,19 @@ class Store
         return $data;
     }
 
-    function show_mystores($account_id) {
+    function show_registration()
+    {
+        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND staff_role = 0 LEFT JOIN account a ON ss.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.registration_status = 'Not Registered' AND s.is_deleted != 1 ORDER BY s.store_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function show_mystores($account_id)
+    {
         $sql = "SELECT s.*, ss.staff_role FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND ss.is_deleted != 1 WHERE ss.account_id = :account_id AND s.is_deleted != 1 ORDER BY s.store_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $account_id);

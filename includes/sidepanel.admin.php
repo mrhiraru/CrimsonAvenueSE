@@ -85,7 +85,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $registration_page ?>" href="../admin-stores/registration.php">
+                                <a class="nav-link text-secondary fw-semibold <?= $registration_page ?>" href="../admin-stores/registrations.php">
                                     Registrations
                                 </a>
                             </li>

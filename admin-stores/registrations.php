@@ -8,7 +8,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/account.class.php')
+require_once('../classes/store.class.php')
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +35,56 @@ include_once('../includes/preloader.php');
                 <main class="col-md-9 col-lg-10 p-4 row m-0">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
                         <div class="row h-auto d-flex justify-content-center m-0 p-0">
-                            
+                            <div class="search-keyword col-12 col-lg-4 mb-2 ms-auto p-0">
+                                <div class="input-group">
+                                    <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
+                                    <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
+                                </div>
+                            </div>
+                            <table id="registrations" class="table table-lg mt-1">
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col"></th>
+                                        <th scope="col" class="text-center">Store Name</th>
+                                        <th scope="col" class="text-center">Administrator</th>
+                                        <th scope="col" class="text-center">College</th>
+                                        <th scope="col" class="text-center">Registration</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $counter = 1;
+                                    $store = new Store();
+                                    $storeArray = $store->show();
+                                    foreach ($storeArray as $item) {
+                                    ?>
+                                        <tr class="align-middle">
+                                            <td><?= $counter ?></td>
+                                            <td class="text-center"><?= $item['store_name'] ?></td>
+                                            <td class="text-center"><?php if (isset($item['middlename'])) {
+                                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
+                                                                    } else {
+                                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
+                                                                    } ?></td>
+                                            <td class="text-center"><?php if (!isset($item['college_name'])) {
+                                                                        echo 'Independent';
+                                                                    } else {
+                                                                        echo $item['college_name'];
+                                                                    } ?></td>
+                                            <td class="text-center"><?= $item['registration_status'] ?></td>
+                                            <td class="text-center text-nowrap">
+                                                <div class="m-0 p-0">
+                                                    <a href="./store-view.php?id=<?= $item['store_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">View</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        $counter++;
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </main>
@@ -45,6 +94,7 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/js.php');
     ?>
+    <script src="../js/registrations.datatable.js"></script>
 </body>
 
 </html>

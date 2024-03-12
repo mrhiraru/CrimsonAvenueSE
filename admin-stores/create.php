@@ -26,6 +26,7 @@ if (isset($_POST['create'])) {
     }
     $store->certificate = htmlentities($_POST['certificate']);
     $store->verification_status = htmlentities($_POST['verification_status']);
+    $store->registration_status = (htmlentities($_POST['verification_status']) == 'Verified') ? 'Registered' : 'Not Registered';
 
     if (
         validate_field($store->store_name) &&
@@ -167,7 +168,7 @@ include_once('../includes/preloader.php');
                                         <input class="form-check-input" type="radio" name="verification_status" id="not-verified" value="Not Verified" <?php if (isset($_POST['verification_status']) && $_POST['verification_status'] == "Not Verified") {
                                                                                                                                                             echo 'checked';
                                                                                                                                                         } ?>>
-                                        <label class="form-check-label" for="moderator">
+                                        <label class="form-check-label" for="not-verified">
                                             Not Verified
                                         </label>
                                     </div>

@@ -28,6 +28,7 @@ if (isset($_POST['register'])) {
     }
     $store->certificate = htmlentities($_POST['certificate']);
     $store->verification_status = 'Not Verified';
+    $store->registration_status = 'Not Registered';
 
     if (
         validate_field($store->store_name) &&
