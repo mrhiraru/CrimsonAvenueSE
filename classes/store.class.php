@@ -169,6 +169,23 @@ class Store
         }
     }
 
+    
+    function update_registration()
+    {
+        $sql = "UPDATE store SET registration_status = :registration_status, verification_status = :verification_status WHERE store_id = :store_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':registration_status', $this->registration_status);
+        $query->bindParam(':verification_status', $this->verification_status);
+        $query->bindParam(':store_id', $this->store_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function show_stores($start, $limit)
     {
         $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND staff_role = 0 LEFT JOIN account a ON ss.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.is_deleted != 1 ORDER BY s.store_id ASC LIMIT $start, $limit";

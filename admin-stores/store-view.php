@@ -44,6 +44,21 @@ if (isset($_POST['verification_status'])) {
     } else {
         $success = 'failed';
     }
+} else if (isset($_POST['confirm'])) {
+
+    $store->verification_status = 'Verified';
+    $store->registration_status = htmlentities($_POST['registration_status']);
+    $store->store_id = $_GET['id'];
+
+    if (validate_field($store->registration_status)) {
+        if ($store->update_registration()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
 }
 ?>
 
@@ -51,7 +66,7 @@ if (isset($_POST['verification_status'])) {
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "User View | Crimson Avenue";
+$title = "Store View | Crimson Avenue";
 $stores_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
@@ -78,6 +93,15 @@ include_once('../includes/preloader.php');
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </p>
                                 <ul class="dropdown-menu">
+                                    <?php
+                                    if ($record['registration_status'] == 'Not Registered') {
+                                    ?>
+                                        <li>
+                                            <button class="dropdown-item border-0 bg-white" data-bs-toggle="modal" data-bs-target="#registrationModal">Confirm Registration</button>
+                                        </li>
+                                    <?php
+                                    }
+                                    ?>
                                     <li>
                                         <button class="dropdown-item border-0 bg-white" data-bs-toggle="modal" data-bs-target="#verificationModal">Update Verfication Status</button>
                                     </li>
@@ -191,6 +215,15 @@ include_once('../includes/preloader.php');
                                     <tr>
                                         <td class="fw-semibold text-dark">
                                             <span class="text-secondary fw-normal">
+                                                Registration Status:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['registration_status'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
                                                 Restrictions:
                                             </span>
                                             <br class="d-block d-md-none">
@@ -251,6 +284,31 @@ include_once('../includes/preloader.php');
                                         <label class="form-check-label" for="notverified">
                                             Not Verified
                                         </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header py-2 px-3">
+                    <h1 class="modal-title fs-6 text-primary" id="exampleModalLabel">Registration</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex">
+                        <div class="col-12 text-center">
+                            <form action="./store-view.php?id=<?= $record['store_id'] ?>" method="post" class="col-12 m-0" name="registrationForm" id="registrationForm">
+                                <div class="form-group m-0 p-0 d-flex row justify-content-evenly">
+                                    <div class="col-auto m-0 p-0">
+                                        <input type="hidden" name="registration_status" value="Registered">
+                                        <p class="m-0 text-dark fs-7 mb-2">Press the button to confirm registration!</p>
+                                        <input type="submit" name="confirm" value="Confirm" class="btn btn-primary fw-bold">
                                     </div>
                                 </div>
                             </form>
@@ -333,6 +391,24 @@ include_once('../includes/preloader.php');
                             <div class="col-12 text-center">
                                 <a class="text-decoration-none text-dark" href="./store-view.php?id=<?= $record['store_id'] ?>">
                                     <p class="m-0">Restriction has been updated successfully!</br><span class="text-primary fw-bold">Click to continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['confirm']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a class="text-decoration-none text-dark" href="./store-view.php?id=<?= $record['store_id'] ?>">
+                                    <p class="m-0">Store registration has been confirmed successfully!</br><span class="text-primary fw-bold">Click to continue</span>.</p>
                                 </a>
                             </div>
                         </div>
