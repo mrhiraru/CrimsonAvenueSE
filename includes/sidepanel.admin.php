@@ -17,8 +17,8 @@
                     </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse <?php if (isset($admin_page)) {
-                                                                                        echo 'show';
-                                                                                    } ?>" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                                                    echo 'show';
+                                                                                } ?>" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
@@ -32,32 +32,27 @@
             </div>
             <div class="accordion-item border-0">
                 <h2 class="accordion-header" id="flush-headingTwo">
-                    <button class="accordion-button px-2 pt-3 pb-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                        <p class="nav-link text-secondary fw-semibold m-0 <?= $index_page ?>" aria-current="page">
+                    <button class="accordion-button px-2 pt-3 pb-2 <?php if (!isset($product_page)) {
+                                                                        echo 'collapsed';
+                                                                    } ?>" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="<?php if (isset($product_page)) {
+                                                                                                                                                                            echo 'true';
+                                                                                                                                                                        } else {
+                                                                                                                                                                            echo 'false';
+                                                                                                                                                                        } ?>" aria-controls="flush-collapseTwo">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $product_page ?>" aria-current="page">
                             <i class="fa-solid fa-boxes-stacked"></i>
                             Products
                         </p>
                     </button>
                 </h2>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseTwo" class="accordion-collapse collapse <?php if (isset($product_page)) {
+                                                                                    echo 'show';
+                                                                                } ?>" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
-                                    <i class="fa-solid fa-chart-line"></i>
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
-                                    <i class="fa-solid fa-boxes-stacked"></i>
-                                    Products
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
-                                    <i class="fa-solid fa-store"></i>
-                                    Stores
+                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" aria-current="page" href="../admin-products/index.php">
+                                    Product List
                                 </a>
                             </li>
                         </ul>
