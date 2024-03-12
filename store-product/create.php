@@ -21,7 +21,11 @@ if (isset($_POST['create'])) {
     $product->product_name = htmlentities($_POST['product_name']);
     $product->category_id = htmlentities($_POST['category_id']);
     $product->exclusivity = htmlentities($_POST['exclusivity']);
-    $product->sale_status = htmlentities($_POST['sale_status']);
+    if (isset($_POST['sale_status'])) {
+        $product->sale_status = htmlentities($_POST['sale_status']);
+    } else {
+        $product->sale_status = '';
+    }
     $product->store_id = $_GET['store_id'];
 
     if (
