@@ -4,6 +4,9 @@ session_start();
 require_once('../tools/functions.php');
 require_once('../classes/product.class.php');
 require_once('../classes/image.class.php');
+require_once('../classes/description.class.php');
+require_once('../classes/variation.class.php');
+require_once('../classes/measurement.class.php');
 
 $product = new Product();
 $record = $product->fetch($_GET['id']);
@@ -210,21 +213,87 @@ include_once('../includes/preloader.php');
                     </div>
                     <div class="container-fluid bg-white shadow rounded m-0 p-3 mt-4">
                         <div class="row d-flex justify-content-center m-0 p-0">
-                            <div class="col-12 m-0 p-0 px-2 btn-group">
-                                <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1 flex-fill">
+                            <div class="col-12 m-0 p-0 px-2">
+                                <p class="m-0 p-0 fs-5 fw-bold text-dark lh-1 flex-fill">
                                     Description
                                 </p>
-                                <p type="button" class="m-0 p-0 text-secondary border-0 bg-white fw-semibold fs-4 lh-1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                </p>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <button class="dropdown-item border-0 bg-white" data-bs-toggle="modal" data-bs-target="#restrictionModal">Update Restriction</button>
-                                    </li>
-                                </ul>
                             </div>
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-0">
+                            </div>
+                            <div class="col-12 m-0 p-0 mb-4">
+                                <table class="table-sm m-0">
+                                    <?php
+                                    $description = new Description();
+                                    $descArray = $description->show($_GET['id']);
+                                    foreach ($descArray as $item) {
+                                    ?>
+                                        <tr>
+                                            <td class="fw-semibold text-dark">
+                                                <span class="text-secondary fw-normal">
+                                                    <?= $item['desc_label'] ?>:
+                                                </span>
+                                                <br class="d-block d-md-none">
+                                                <?= $item['desc_value'] ?>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </table>
+                            </div>
+                            <div class="col-12 m-0 p-0 px-2">
+                                <p class="m-0 p-0 fs-5 fw-bold text-dark lh-1 flex-fill">
+                                    Variations
+                                </p>
+                            </div>
+                            <div class="col-12 m-0 p-0">
+                                <hr class="mb-0">
+                            </div>
+                            <div class="col-12 m-0 p-0 mb-4">
+                                <table class="table-sm m-0">
+                                    <?php
+                                    $variation = new Variation();
+                                    $varArray = $variation->show($_GET['id']);
+                                    foreach ($varArray as $item) {
+                                    ?>
+                                        <tr>
+                                            <td class="fw-semibold text-dark">
+                                                <?= $item['variation_name'] ?>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </table>
+                            </div><div class="col-12 m-0 p-0 px-2">
+                                <p class="m-0 p-0 fs-5 fw-bold text-dark lh-1 flex-fill">
+                                    Measurements
+                                </p>
+                            </div>
+                            <div class="col-12 m-0 p-0">
+                                <hr class="mb-0">
+                            </div>
+                            <div class="col-12 m-0 p-0 mb-4">
+                                <table class="table-sm m-0">
+                                    <?php
+                                    $measurement = new Measurement();
+                                    $meaArray = $measurement->show($_GET['id']);
+                                    foreach ($meaArray as $item) {
+                                    ?>
+                                        <tr>
+                                            <td class="fw-semibold text-dark">
+                                                <span class="text-secondary fw-normal">
+                                                    <?= $item['measurement_name'] ?>:
+                                                </span>
+                                                <br class="d-block d-md-none">
+                                                <?= $item['value_unit'] ?>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </table>
                             </div>
                         </div>
                     </div>
