@@ -68,7 +68,7 @@
                                                                                                                                                                         } else {
                                                                                                                                                                             echo 'false';
                                                                                                                                                                         } ?>" aria-controls="flush-collapseThree">
-                        <p class="nav-link text-secondary fw-semibold m-0 <?= $stores_page ?>" href="../admin/store.php">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $stores_page ?>">
                             <i class="fa-solid fa-store"></i>
                             Stores
                         </p>
