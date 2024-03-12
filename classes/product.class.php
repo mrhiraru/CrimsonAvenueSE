@@ -95,6 +95,17 @@ class Product
         return $data;
     }
 
+    function show_admin()
+    {
+        $sql = "SELECT p.*, s.store_name, c.category_name, i.image_file FROM product p INNER JOIN store s ON p.store_id = s.store_id AND s.is_deleted != 1 INNER JOIN category c ON p.category_id = c.category_id AND c.is_deleted != 1 LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id  WHERE p.is_deleted != 1 ORDER BY p.product_id ASC";
+        $query = $this->db->connect()->prepare($sql);
+
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function fetch_info($product_id, $store_id)
     {
         $sql = "SELECT p.*, s.store_id, c.category_name, COALESCE(v.var_count, 0) AS var_count, COALESCE(m.mea_count, 0) AS mea_count FROM product p INNER JOIN store s ON p.store_id = s.store_id INNER JOIN category c ON p.category_id = c.category_id INNER JOIN (SELECT product_id, COUNT(*) AS var_count FROM variation WHERE is_deleted != 1 GROUP BY product_id) v ON p.product_id = v.product_id INNER JOIN (SELECT product_id, COUNT(*) AS mea_count FROM measurement WHERE is_deleted != 1 GROUP BY product_id) m ON p.product_id = m.product_id WHERE p.store_id = :store_id AND p.product_id = :product_id AND p.is_deleted != 1;";

@@ -9,6 +9,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/store.class.php');
+require_once('../classes/product.class.php');
 ?>
 
 <!DOCTYPE html>
@@ -46,10 +47,10 @@ include_once('../includes/preloader.php');
                                     <tr class="align-middle">
                                         <th scope="col"></th>
                                         <th scope="col"></th>
-                                        <th scope="col" class="text-center">Store Name</th>
-                                        <th scope="col" class="text-center">Administrator</th>
-                                        <th scope="col" class="text-center">College</th>
-                                        <th scope="col" class="text-center">Verification</th>
+                                        <th scope="col" class="text-center">Product Name</th>
+                                        <th scope="col" class="text-center">Store</th>
+                                        <th scope="col" class="text-center">Category</th>
+                                        <th scope="col" class="text-center">Exclusivity</th>
                                         <th scope="col" class="text-center">Restriction</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
@@ -57,33 +58,25 @@ include_once('../includes/preloader.php');
                                 <tbody>
                                     <?php
                                     $counter = 1;
-                                    $store = new Store();
-                                    $storeArray = $store->show();
-                                    foreach ($storeArray as $item) {
+                                    $product = new Product();
+                                    $productArray = $product->show_admin();
+                                    foreach ($productArray as $item) {
                                     ?>
                                         <tr class="align-middle">
                                             <td><?= $counter ?></td>
-                                            <td> <img src="<?php if (isset($item['profile_image'])) {
-                                                                echo "../images/data/" . $item['profile_image'];
+                                            <td> <img src="<?php if (isset($item['image_file'])) {
+                                                                echo "../images/data/" . $item['image_file'];
                                                             } else {
                                                                 echo "../images/main/no-profile.jpg";
                                                             } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"> </td>
+                                            <td class="text-center"><?= $item['product_name'] ?></td>
                                             <td class="text-center"><?= $item['store_name'] ?></td>
-                                            <td class="text-center"><?php if (isset($item['middlename'])) {
-                                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
-                                                                    } else {
-                                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
-                                                                    } ?></td>
-                                            <td class="text-center"><?php if (!isset($item['college_name'])) {
-                                                                        echo 'Independent';
-                                                                    } else {
-                                                                        echo $item['college_name'];
-                                                                    } ?></td>
-                                            <td class="text-center"><?= $item['verification_status'] ?></td>
+                                            <td class="text-center"><?= $item['category_name'] ?></td>
+                                            <td class="text-center"><?= $item['exclusivity'] ?></td>
                                             <td class="text-center"><?= $item['restriction_status'] ?></td>
                                             <td class="text-center text-nowrap">
                                                 <div class="m-0 p-0">
-                                                    <a href="./store-view.php?id=<?= $item['store_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
+                                                    <a href="./store-view.php?id=<?= $item['product_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
                                                 </div>
                                             </td>
                                         </tr>
