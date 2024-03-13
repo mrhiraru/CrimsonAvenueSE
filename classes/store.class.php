@@ -92,6 +92,7 @@ class Store
         }
         return $data;
     }
+    // fix store page only show registered store!
 
     function show_registration()
     {
