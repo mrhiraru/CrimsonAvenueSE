@@ -30,7 +30,7 @@ if (isset($_POST['signup'])) {
         $account->gender = htmlentities($_POST['gender']);
     } else {
         $account->gender = '';
-    }
+    }   
 
     $college = new College();
     if ($account->affiliation == 'Non-student') {

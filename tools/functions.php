@@ -44,7 +44,12 @@ function validate_affiliation($affiliation, $college)
     if (isset($affiliation) && $affiliation == 'Non-student') {
         return true;
     } else if (isset($affiliation) && $affiliation != 'Non-student') {
-        validate_field($college);
+        $college = htmlentities($college);
+        if (strlen(trim($college)) < 1) {
+            return false;
+        } else {
+            return true;
+        }
     } else {
         return false;
     }
