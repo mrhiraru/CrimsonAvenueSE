@@ -13,7 +13,7 @@ include_once('../includes/preloader.php');
     require_once('../includes/header.user.php');
     ?>
     <div class="container-fluid">
-        <div class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center min-vh-100">
             <?php
             require_once("../includes/sidepanel.product.php");
             ?>
