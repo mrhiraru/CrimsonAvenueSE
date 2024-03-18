@@ -43,7 +43,7 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/header.user.php');
     ?>
-    <div class="container-fluid col-md-9 mt-4 mx-sm-auto">
+    <div class="container-fluid col-md-9 my-4 mx-sm-auto min-vh-100 ">
         <main>
             <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
                 <div class="row m-0 p-0 d-flex align-items-center">
@@ -119,6 +119,7 @@ include_once('../includes/preloader.php');
         <!-- Extra Section Add more Section if needed ./. -->
     </div>
     <?php
+    require_once('../includes/footer.php');
     require_once('../includes/js.php');
     ?>
 </body>

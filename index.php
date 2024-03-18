@@ -51,6 +51,7 @@ include_once('./includes/preloader.php');
         </section>
     </div>
     <?php
+    require_once('./includes/footer.php');
     require_once('./includes/js.php');
     ?>
 </body>

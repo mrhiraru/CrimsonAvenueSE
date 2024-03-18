@@ -26,7 +26,7 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/header.user.php');
     ?>
-    <div class="container-fluid col-md-9 my-4 mx-sm-auto">
+    <div class="container-fluid col-md-9 my-4 mx-sm-auto min-vh-100 ">
         <main>
             <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
                 <div class="row d-flex justify-content-between m-0 p-0">
@@ -88,6 +88,7 @@ include_once('../includes/preloader.php');
         </main>
     </div>
     <?php
+    require_once('../includes/footer.php');
     require_once('../includes/js.php');
     ?>
     <script src="../js/mystores.datatables.js"></script>
