@@ -1,209 +1,110 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block collapse">
+<nav id="sidebarMenu" class="col-md-auto d-md-block collapse">
     <div class="position-sticky pt-3 min-vh-custom">
         <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item border-0">
                 <h2 class="accordion-header bg-smoke" id="flush-headingOne">
-                    <button class="accordion-button px-2 pt-3 pb-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
+                    <button class="fs-6 bg-smoke border-0 px-2 py-1" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
                         <p class="nav-link text-secondary fw-semibold m-0" aria-current="page">
                             Categories
                         </p>
                     </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse show bg-smoke" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body px-0 pt-1 py-2">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $dashboard_page ?>" aria-current="page" href="../admin/index.php">
-                                    Main
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="accordion-body px-0 ps-2 py-1 fs-7 text-secondary border-0">
+                        <form action="">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Others
+                                </label>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="accordion-item border-0">
-                <h2 class="accordion-header bg-smoke" id="flush-headingTwo">
-                    <button class="accordion-button px-2 pt-3 pb-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="true" aria-controls="flush-collapseTwo">
+                <h2 class="accordion-header bg-smoke" id="flush-headingOne">
+                    <button class="fs-6 bg-smoke border-0 px-2 py-1" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
                         <p class="nav-link text-secondary fw-semibold m-0" aria-current="page">
-                            Products
+                            Filters
                         </p>
                     </button>
                 </h2>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse show bg-smoke" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body px-0 pt-1 py-2">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" aria-current="page" href="../admin-products/index.php">
-                                    Product List
-                                </a>
-                            </li>
-                        </ul>
+                <div id="flush-collapseOne" class="accordion-collapse collapse show bg-smoke" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body px-0 ps-2 py-1 fs-7 text-secondary border-0">
+                        <form action="">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Relevance
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Bestselling
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Recently Added
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Price (Low to High)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Price (High to Low)
+                                </label>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="accordion-item border-0">
-                <h2 class="accordion-header bg-smoke" id="flush-headingThree">
-                    <button class="accordion-button px-2 pt-3 pb-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="true" aria-controls="flush-collapseThree">
-                        <p class="nav-link text-secondary fw-semibold m-0">
-                            <i class="fa-solid fa-store"></i>
-                            Stores
+                <h2 class="accordion-header bg-smoke" id="flush-headingOne">
+                    <button class="fs-6 bg-smoke border-0 px-2 py-1" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
+                        <p class="nav-link text-secondary fw-semibold m-0" aria-current="page">
+                            Exclusivity
                         </p>
                     </button>
                 </h2>
-                <div id="flush-collapseThree" class="accordion-collapse collapse show bg-smoke" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body px-0 pt-1 py-2">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $store_page ?>" aria-current="page" href="../admin-stores/index.php">
-                                    Store List
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $registration_page ?>" href="../admin-stores/registrations.php">
-                                    Registrations
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $createstore_page ?>" href="../admin-stores/create.php">
-                                    Create Store
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item border-0">
-                <h2 class="accordion-header bg-smoke" id="flush-headingFour">
-                    <button class="accordion-button px-2 pt-3 pb-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="true" aria-controls="flush-collapseFour">
-                        <p class="nav-link text-secondary fw-semibold m-0 <?= $users_page ?>">
-                            <i class="fa-solid fa-address-book"></i>
-                            Users
-                        </p>
-                    </button>
-                </h2>
-                <div id="flush-collapseFour" class="accordion-collapse collapse show bg-smoke" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body px-0 pt-1 py-2">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $user_page ?>" aria-current="page" href="../admin-users/index.php">
-                                    User List
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $create_page ?>" href="../admin-users/create.php">
-                                    Create Account
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item border-0">
-                <h2 class="accordion-header bg-smoke" id="flush-headingFive">
-                    <button class="accordion-button px-2 pt-3 pb-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="true" aria-controls="flush-collapseFive">
-                        <p class="nav-link text-secondary fw-semibold m-0" href="../admin/message-inbox.php">
-                            <i class="fa-solid fa-envelope"></i>
-                            Messages
-                        </p>
-                    </button>
-                </h2>
-                <div id="flush-collapseFive" class="accordion-collapse collapse show bg-smoke" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body px-0 pt-1 py-2">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
-                                    <i class="fa-solid fa-chart-line"></i>
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
-                                    <i class="fa-solid fa-boxes-stacked"></i>
-                                    Products
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
-                                    <i class="fa-solid fa-store"></i>
-                                    Stores
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item border-0">
-                <h2 class="accordion-header bg-smoke" id="flush-headingSix">
-                    <button class="accordion-button px-2 pt-3 pb-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="true" aria-controls="flush-collapseSix">
-                        <p class="nav-link text-secondary fw-semibold m-0" href="../admin/report.php">
-                            <i class="fa-solid fa-scroll"></i>
-                            Reports
-                        </p>
-                    </button>
-                </h2>
-                <div id="flush-collapseSix" class="accordion-collapse collapse show bg-smoke" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body px-0 pt-1 py-2">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $index_page ?>" aria-current="page" href="../admin/index.php">
-                                    <i class="fa-solid fa-chart-line"></i>
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" href="../admin/product.php">
-                                    <i class="fa-solid fa-boxes-stacked"></i>
-                                    Products
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
-                                    <i class="fa-solid fa-store"></i>
-                                    Stores
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item border-0">
-                <h2 class="accordion-header bg-smoke" id="flush-headingSeven">
-                    <button class="accordion-button px-2 pt-3 pb-2" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="true" aria-controls="flush-collapseSeven">
-                        <p class="nav-link text-secondary fw-semibold m-0 <?= $settings_page ?>">
-                            <i class="fa-solid fa-gear"></i>
-                            Settings
-                        </p>
-                    </button>
-                </h2>
-                <div id="flush-collapseSeven" class="accordion-collapse collapse show bg-smoke" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body px-0 pt-1 py-2">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $semester_page ?>" aria-current="page" href="../admin-settings/index.php">
-                                    
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $college_page ?>" href="../admin-settings/college.php">
-                                    Colleges
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $department_page ?>" href="../admin-settings/department.php">
-                                    Departments
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $moderator_page ?>" href="../admin-settings/moderator.php">
-                                    Moderators
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $category_page ?>" href="../admin-settings/category.php">
-                                    Categories
-                                </a>
-                            </li>
-                        </ul>
+                <div id="flush-collapseOne" class="accordion-collapse collapse show bg-smoke" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body px-0 ps-2 py-1 fs-7 text-secondary border-0">
+                        <form action="">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    All Users
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    WMSU Affiliates
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Department 
+                                    <!-- change to department name  -->
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    College
+                                    <!-- change to college name -->
+                                </label>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
