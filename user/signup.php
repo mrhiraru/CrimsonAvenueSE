@@ -330,6 +330,7 @@ include_once('../includes/preloader.php');
         </div>
     </main>
     <?php
+    require_once('../includes/footer.php');
     require_once('../includes/js.php');
     ?>
 </body>
