@@ -120,7 +120,7 @@
                     <div class="accordion-body px-0 ps-2 py-1 fs-7 text-secondary border-0">
                         <form action="">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     ★★★★★
                                 </label>

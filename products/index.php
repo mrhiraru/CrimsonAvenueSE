@@ -21,7 +21,7 @@ include_once('../includes/preloader.php');
                 <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
                     <div class="row m-0 p-0 d-flex align-items-center">
                         <div class="col-6 m-0 p-0">
-                            <p class="m-0 p-0 fs-2 fw-bold text-primary lh-1">Products</p>
+                            <p class="m-0 p-0 fs-3 fw-bold text-primary lh-1">Products</p>
                         </div>
                     </div>
                     <hr>
