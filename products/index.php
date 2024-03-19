@@ -41,9 +41,9 @@ include_once('../includes/preloader.php');
                                             <img src="../images/main/no-profile.jpg" alt="" class="border border-secondary border-opacity-25 rounded img-fluid">
                                         </div>
                                         <div class="col-6 m-0 p-0 flex-fill">
-                                            <p class="fs-5 text-nowrap fw-semibold text-dark m-0 p-0 lh-sm  text-truncate"> Product Name </p>
+                                            <p class="fs-6 text-nowrap fw-semibold text-dark m-0 p-0 lh-sm  text-truncate"> Product Name </p>
                                             <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> By Seller Name </p>
-                                            <p class="fs-4 text-nowrap fw-bold text-primary m-0 mt-1 p-1 lh-1  text-truncate w-fit border border-1 border-primary "> P 300 </p>
+                                            <p class="fs-5 text-nowrap fw-bold text-primary m-0 mt-1 p-1 lh-1  text-truncate w-fit border border-1 border-primary "> P 300 </p>
                                             <p class="fs-7 text-nowrap fw-semibold text-dark m-0 mt-1 p-0 lh-sm  text-truncate"> For All User </p>
                                         </div>
                                     </div>
