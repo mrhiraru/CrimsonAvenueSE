@@ -1,5 +1,5 @@
-<nav id="sidebarMenu" class="col-md-auto pt-5 d-md-block collapse">
-    <div class="position-sticky pt-3 min-vh-custom">
+<nav id="sidebarMenu" class="col-md-auto pt-0 pt-md-5 d-md-block collapse bg-smoke">
+    <div class="position-sticky pt-3">
         <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item border-0">
                 <h2 class="accordion-header bg-smoke" id="flush-headingOne">
@@ -12,6 +12,12 @@
                 <div id="flush-collapseOne" class="accordion-collapse collapse show bg-smoke" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body px-0 ps-2 py-1 fs-7 text-secondary border-0">
                         <form action="">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    All Categories
+                                </label>
+                            </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                 <label class="form-check-label" for="flexRadioDefault1">
@@ -87,7 +93,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                 <label class="form-check-label" for="flexRadioDefault1">
-                                    WMSU Affiliates
+                                    WMSU Users
                                 </label>
                             </div>
                             <div class="form-check">
@@ -102,52 +108,6 @@
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     College
                                     <!-- change to college name -->
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item border-0">
-                <h2 class="accordion-header bg-smoke" id="flush-headingOne">
-                    <button class="fs-6 bg-smoke border-0 px-2 py-1" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
-                        <p class="nav-link text-secondary fw-semibold m-0" aria-current="page">
-                            Rating
-                        </p>
-                    </button>
-                </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse show bg-smoke" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body px-0 ps-2 py-1 fs-7 text-secondary border-0">
-                        <form action="">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    ★★★★★
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    ★★★★☆ & Up
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    ★★★☆☆ & Up
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    ★★☆☆☆ & Up
-                                </label>
-                            </div>
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    ★☆☆☆☆ & Up
                                 </label>
                             </div>
                         </form>

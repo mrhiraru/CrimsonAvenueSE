@@ -82,7 +82,7 @@ include_once('../includes/preloader.php');
                                     </div>
                                 </div>
                                 <div class="row m-0 p-0 overflow-hidden">
-                                    <p class="fs-6 text-dark lh-sm m-0 p-0 store-bio overflow-hidden"><?= (isset($item['store_bio'])) ? ucfirst(strtolower($item['store_bio'])) : 'No bio' ?></p>
+                                    <p class="fs-6 text-dark lh-sm m-0 p-0 store-bio overflow-hidden"><?= (isset($item['store_bio'])) ? ucfirst(strtolower($item['store_bio'])) : '...' ?></p>
                                 </div>
                             </a>
                         </div>

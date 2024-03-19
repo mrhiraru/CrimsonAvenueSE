@@ -118,9 +118,9 @@ include_once('../includes/preloader.php');
                                         <option value="All Users" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "All Users")) {
                                                                         echo 'selected';
                                                                     } ?>>All Users</option>
-                                        <option value="WMSU Affiliates" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "WMSU Affiliates")) {
+                                        <option value="WMSU Affiliates" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "WMSU Users")) {
                                                                             echo 'selected';
-                                                                        } ?>>WMSU Affiliates</option>
+                                                                        } ?>>WMSU Users</option>
                                         <option value="College" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "For College")) {
                                                                     echo 'selected';
                                                                 } ?>>College</option>
