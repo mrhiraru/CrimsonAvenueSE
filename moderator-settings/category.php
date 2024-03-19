@@ -77,7 +77,7 @@ include_once('../includes/preloader.php');
         <div class="container-fluid">
             <div class="row">
                 <?php
-                require_once('../includes/sidepanel.admin.php')
+                require_once('../includes/sidepanel.moderator.php')
                 ?>
                 <main class="col-md-9 col-lg-10 p-4 row m-0">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
