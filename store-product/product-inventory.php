@@ -30,8 +30,6 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../index.php');
 } else if (!isset($pro_record['product_id']) || !isset($var_record['variation_id']) || !isset($mea_record['measurement_id'])) {
     header('location: ./index.php?store_id=' . $record['store_id']);
-} else if ($pro_record['sale_status'] == "Pre-order") {
-    header('location: ./product-view.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id']);
 }
 
 $stock = new Stock();

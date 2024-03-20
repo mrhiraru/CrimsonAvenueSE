@@ -65,8 +65,8 @@ include_once('../includes/preloader.php');
                                         $first_variation = $variation->get_first($pro_record['product_id']);
                                         $first_measurement = $measurement->get_first($pro_record['product_id']);
                                         ?>
-                                        <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-secondary <?= $pro_record['sale_status'] == "Pre-order" ? "disabled" : "" ?>" href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $first_variation['variation_id'] . '&measurement_id=' . $first_measurement['measurement_id'] ?>">
-                                            Inventory<?= $pro_record['sale_status'] == "Pre-order" ? " (Unavailable)" : "" ?>
+                                        <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-secondary" href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $first_variation['variation_id'] . '&measurement_id=' . $first_measurement['measurement_id'] ?>">
+                                            Inventory
                                         </a>
                                     </li>
                                 </ul>
