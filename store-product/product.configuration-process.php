@@ -171,7 +171,7 @@ if (isset($_POST['add_img'])) {
             $success = 'failed';
         }
     } else {
-        $success = 'file-failed';
+        $success = 'failed';
     }
 } else if (isset($_POST['cancel_img'])) {
 

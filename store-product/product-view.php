@@ -96,12 +96,6 @@ include_once('../includes/preloader.php');
                                             <p class="fs-7 text-primary mb-2 ps-2">Image file is required.</p>
                                         </div>
                                     <?php
-                                    } else if (isset($_POST['add_img']) && isset($success) && $success == 'file-failed') {
-                                    ?>
-                                        <div class="mb-2 col-auto mb-2 p-0">
-                                            <p class="fs-7 text-primary mb-2 ps-2">File type is not allowed.</p>
-                                        </div>
-                                    <?php
                                     } else {
                                     ?>
                                         <div class="mb-2 col-auto mb-2 p-0">

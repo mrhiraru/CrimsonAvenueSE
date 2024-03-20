@@ -160,7 +160,7 @@ class Product
 
     function show_products($start, $limit)
     {
-        $sql = "SELECT p.*, s.store_name FROM product p LEFT JOIN store s ON p.store_id = s.store_id WHERE p.is_deleted != 1 ORDER BY s.store_id DESC LIMIT $start, $limit";
+        $sql = "SELECT p.*, s.store_name, st.selling_price, i.image_file FROM product p LEFT JOIN store s ON p.store_id = s.store_id LEFT JOIN ( SELECT * FROM stock WHERE is_deleted != 1 GROUP BY product_id) st ON p.product_id = st.product_id LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id WHERE p.is_deleted != 1 ORDER BY s.store_id DESC LIMIT $start, $limit";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {

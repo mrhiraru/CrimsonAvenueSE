@@ -121,7 +121,7 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
                 </span>
                 <br class="d-block d-md-none">
                 <?= $pro_record['sale_status'] ?>
-                <span class="text-secondary"><?= ($pro_record['sale_status'] == 'Pre-order') ? " (Change to On-hand access Inventory)" : "" ?></span>
+                <span class="text-secondary"><?= ($pro_record['sale_status'] == 'Pre-order') ? " (Switch to on-hand for inventory access)" : "" ?></span>
             </td>
         </tr>
         <?php if ($pro_record['sale_status'] == 'Pre-order') {
