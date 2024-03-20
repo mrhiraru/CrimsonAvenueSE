@@ -118,15 +118,14 @@ include_once('../includes/preloader.php');
                                         <option value="All Users" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "All Users")) {
                                                                         echo 'selected';
                                                                     } ?>>All Users</option>
-                                        <option value="WMSU Affiliates" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "WMSU Users")) {
-                                                                            echo 'selected';
-                                                                        } ?>>WMSU Users</option>
-                                        <option value="College" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "For College")) {
-                                                                    echo 'selected';
-                                                                } ?>>College</option>
-                                        <option value="Department" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "For Department")) {
+                                        <option value="WMSU Users" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "WMSU Users")) {
                                                                         echo 'selected';
-                                                                    } ?>>Department</option>
+                                                                    } ?>>WMSU Users</option>
+                                        <?php if (isset($record['college_name'])) { ?>
+                                            <option value="<?= $record['college_name'] ?>" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == $record['college_name'])) {
+                                                                        echo 'selected';
+                                                                    } ?>><?= $record['college_name'] ?></option>
+                                        <?php } ?>
                                     </select>
                                     <?php
                                     if (isset($_POST['exclusivity']) && !validate_field($_POST['exclusivity'])) {

@@ -13,18 +13,18 @@ $limit = 10;
 $page_count = $store->count_stores();
 $pages = ceil($page_count[0]['store_id'] / $limit);
 
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$start = ($page - 1) * $limit;
+
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ../user/verify.php');
-} else if (!isset($_GET['page']) || $_GET['page'] < 1) {
+} else if (!isset($_GET['page']) || $_GET['page'] < 0) {
     header('location: ./stores.php?page=1');
 } else if ($_GET['page'] > $pages) {
     header('location: ./stores.php?page=' . $pages);
 }
 
-
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$start = ($page - 1) * $limit;
-$storeArray = $store->show_stores($start < 1 ? 1 : $start, $limit);
+$storeArray = $store->show_stores($start < 1 ? 0 : $start, $limit);
 
 ?>
 

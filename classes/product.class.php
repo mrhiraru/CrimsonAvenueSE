@@ -143,4 +143,26 @@ class Product
             return false;
         }
     }
+
+    function count_products()
+    {
+        $sql = "SELECT count(product_id) AS product_id FROM product WHERE is_deleted != 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function show_products($start, $limit)
+    {
+        $sql = "SELECT p.*, s.store_name FROM product p LEFT JOIN store s ON p.store_id = s.store_id WHERE p.is_deleted != 1 ORDER BY s.store_id DESC LIMIT $start, $limit";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }

@@ -133,16 +133,11 @@ include_once('../includes/preloader.php');
                                                                         } else if ($pro_record['exclusivity'] == "WMSU Affiliates") {
                                                                             echo "selected";
                                                                         }  ?>>WMSU Affiliates</option>
-                                        <option value="College" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "For College")) {
-                                                                    echo 'selected';
-                                                                } else if ($pro_record['exclusivity'] == "For College") {
-                                                                    echo "selected";
-                                                                } ?>>College</option>
-                                        <option value="Department" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "For Department")) {
-                                                                        echo 'selected';
-                                                                    } else if ($pro_record['exclusivity'] == "For Department") {
-                                                                        echo "selected";
-                                                                    } ?>>Department</option>
+                                        <?php if (isset($record['college_name'])) { ?>
+                                            <option value="<?= $record['college_name'] ?>" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == $record['college_name'])) {
+                                                                                                echo 'selected';
+                                                                                            } ?>><?= $record['college_name'] ?></option>
+                                        <?php } ?>
                                     </select>
                                     <?php
                                     if (isset($_POST['exclusivity']) && !validate_field($_POST['exclusivity'])) {
