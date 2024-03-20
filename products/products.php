@@ -90,7 +90,27 @@ include_once('../includes/preloader.php');
                         ?>
                     </div>
                     <div class="m-2 p-0 d-flex justify-content-center align-items-center">
-                        <!-- pagination here // copy from stores/stores.php -->
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] <= 1) ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="?page=<?= $_GET['page'] - 1 ?>" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <?php
+                                for ($i = 1; $i <= $pages; $i++) {
+                                ?>
+                                    <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] == $i) ? 'active' : ''  ?>"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                                <?php
+                                }
+                                ?>
+                                <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] >= $pages) ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="?page=<?= $_GET['page'] + 1 ?>" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </main>
