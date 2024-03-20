@@ -26,6 +26,11 @@ if (isset($_POST['create'])) {
     } else {
         $product->sale_status = '';
     }
+    if ($product->sale_status == 'Pre-order') {
+        $product->preorder_price = htmlentities($_POST['preorder_price']);
+    } else {
+        $product->preorder_price = null;
+    }
     $product->store_id = $_GET['store_id'];
 
     if (
@@ -33,6 +38,7 @@ if (isset($_POST['create'])) {
         validate_field($product->category_id) &&
         validate_field($product->exclusivity) &&
         validate_field($product->sale_status) &&
+        validate_preorder($product->sale_status, $product->preorder_price) &&
         validate_field($product->store_id)
     ) {
         if ($product->add()) {
@@ -123,8 +129,8 @@ include_once('../includes/preloader.php');
                                                                     } ?>>WMSU Users</option>
                                         <?php if (isset($record['college_name'])) { ?>
                                             <option value="<?= $record['college_name'] ?>" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == $record['college_name'])) {
-                                                                        echo 'selected';
-                                                                    } ?>><?= $record['college_name'] ?></option>
+                                                                                                echo 'selected';
+                                                                                            } ?>><?= $record['college_name'] ?></option>
                                         <?php } ?>
                                     </select>
                                     <?php
@@ -156,6 +162,24 @@ include_once('../includes/preloader.php');
                                     if ((isset($_POST['sale_status']) && !validate_field($_POST['sale_status']))) {
                                     ?>
                                         <p class="fs-7 text-primary m-0 ps-2 col-12">No sale status selected.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="mb-3 p-0 col-12">
+                                    <input type="number" name="preorder_price" placeholder="Pre-order Price" class="form-control" value="<?php if (isset($_POST['preorder_price'])) {
+                                                                                                                                                echo $_POST['preorder_price'];
+                                                                                                                                            } else if (isset($sto_record['preorder_price'])) {
+                                                                                                                                                echo $sto_record['preorder_price'];
+                                                                                                                                            } ?>">
+                                    <?php
+                                    if (isset($_POST['preorder_price']) && !validate_field($_POST['preorder_price'])) {
+                                    ?>
+                                        <p class="fs-7 text-primary m-0 ps-2">Pre-order price is required.</p>
+                                    <?php
+                                    } else if (isset($_POST['preorder_price']) && !validate_number($_POST['preorder_price'])) {
+                                    ?>
+                                        <p class="fs-7 text-primary m-0 ps-2">Pre-order price can not be less than one.</p>
                                     <?php
                                     }
                                     ?>

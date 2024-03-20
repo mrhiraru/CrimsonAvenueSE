@@ -102,7 +102,7 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
                     Estimated Order Time:
                 </span>
                 <br class="d-block d-md-none">
-                <?= $pro_record['estimated_order_time']." Days" ?>
+                <?= $pro_record['estimated_order_time'] . " Days" ?>
             </td>
         </tr>
         <tr>
@@ -121,8 +121,23 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
                 </span>
                 <br class="d-block d-md-none">
                 <?= $pro_record['sale_status'] ?>
+                <span class="text-secondary"><?= ($pro_record['sale_status'] == 'Pre-order') ? " (Change to On-hand access Inventory)" : "" ?></span>
             </td>
         </tr>
+        <?php if ($pro_record['sale_status'] == 'Pre-order') {
+        ?>
+            <tr>
+                <td class="fw-semibold text-dark">
+                    <span class="text-secondary fw-normal">
+                        Pre-Order Price:
+                    </span>
+                    <br class="d-block d-md-none">
+                    ₱
+                    <?= $pro_record['preorder_price'] ?>
+                </td>
+            </tr>
+        <?php
+        } ?>
         <tr>
             <td class="fw-semibold text-dark">
                 <span class="text-secondary fw-normal">

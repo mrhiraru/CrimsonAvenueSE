@@ -9,6 +9,7 @@ class Product
     public $product_name;
     public $exclusivity;
     public $sale_status;
+    public $preorder_price;
     public $restriction_status;
     public $order_quantity_limit;
     public $estimated_order_time;
@@ -26,7 +27,7 @@ class Product
         $connect = $this->db->connect();
         $connect->beginTransaction();
 
-        $sql = "INSERT INTO product (store_id, category_id, product_name, exclusivity, sale_status) VALUES (:store_id, :category_id, :product_name, :exclusivity, :sale_status)";
+        $sql = "INSERT INTO product (store_id, category_id, product_name, exclusivity, sale_status, preorder_price) VALUES (:store_id, :category_id, :product_name, :exclusivity, :sale_status, :preorder_price)";
 
         $query = $connect->prepare($sql);
         $query->bindParam(':store_id', $this->store_id);
@@ -34,6 +35,7 @@ class Product
         $query->bindParam(':category_id', $this->category_id);
         $query->bindParam(':exclusivity', $this->exclusivity);
         $query->bindParam(':sale_status', $this->sale_status);
+        $query->bindParam(':preorder_price', $this->preorder_price);
 
         if ($query->execute()) {
             $last_product_id = $connect->lastInsertId();
@@ -65,13 +67,14 @@ class Product
 
     function edit()
     {
-        $sql = "UPDATE product SET product_name=:product_name, category_id=:category_id, exclusivity=:exclusivity, sale_status=:sale_status, estimated_order_time=:estimated_order_time, order_quantity_limit=:order_quantity_limit WHERE product_id = :product_id;";
+        $sql = "UPDATE product SET product_name=:product_name, category_id=:category_id, exclusivity=:exclusivity, sale_status=:sale_status, preorder_price=:preorder_price, estimated_order_time=:estimated_order_time, order_quantity_limit=:order_quantity_limit WHERE product_id = :product_id;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_name', $this->product_name);
         $query->bindParam(':category_id', $this->category_id);
         $query->bindParam(':exclusivity', $this->exclusivity);
         $query->bindParam(':sale_status', $this->sale_status);
+        $query->bindParam(':preorder_price', $this->preorder_price);
         $query->bindParam(':estimated_order_time', $this->estimated_order_time);
         $query->bindParam(':order_quantity_limit', $this->order_quantity_limit);
         $query->bindParam(':product_id', $this->product_id);

@@ -58,14 +58,16 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0 px-2">
                                 <ul class="nav justify-content-center">
                                     <li class="nav-item">
-                                        <a class="nav-link py-0 px-5 fw-bold text-decoration-underline active disabled" aria-current="page" href="">Configuration</a>
+                                        <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-decoration-underline active disabled" aria-current="page" href="">Configuration</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item text-truncate">
                                         <?php
                                         $first_variation = $variation->get_first($pro_record['product_id']);
                                         $first_measurement = $measurement->get_first($pro_record['product_id']);
                                         ?>
-                                        <a class="nav-link py-0 px-5 fw-bold text-secondary " href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $first_variation['variation_id'] . '&measurement_id=' . $first_measurement['measurement_id'] ?>">Inventory</a>
+                                        <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-secondary <?= $pro_record['sale_status'] == "Pre-order" ? "disabled" : "" ?>" href="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $first_variation['variation_id'] . '&measurement_id=' . $first_measurement['measurement_id'] ?>">
+                                            Inventory<?= $pro_record['sale_status'] == "Pre-order" ? " (Unavailable)" : "" ?>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>

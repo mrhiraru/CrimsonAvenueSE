@@ -30,6 +30,8 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../index.php');
 } else if (!isset($pro_record['product_id']) || !isset($var_record['variation_id']) || !isset($mea_record['measurement_id'])) {
     header('location: ./index.php?store_id=' . $record['store_id']);
+} else if ($pro_record['sale_status'] == "Pre-order") {
+    header('location: ./product-view.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id']);
 }
 
 $stock = new Stock();
@@ -124,10 +126,10 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0 px-2">
                                 <ul class="nav justify-content-center">
                                     <li class="nav-item">
-                                        <a class="nav-link py-0 px-5 fw-bold text-secondary" aria-current="page" href="./product-view.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Configuration</a>
+                                        <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-secondary" aria-current="page" href="./product-view.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Configuration</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link py-0 px-5 fw-bold text-decoration-underline active disabled" href="#">Inventory</a>
+                                        <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-decoration-underline active disabled" href="#">Inventory</a>
                                     </li>
                                 </ul>
                             </div>

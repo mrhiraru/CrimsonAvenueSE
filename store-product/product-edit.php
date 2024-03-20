@@ -28,6 +28,11 @@ if (isset($_POST['edit'])) {
     $product->product_name = htmlentities($_POST['product_name']);
     $product->category_id = htmlentities($_POST['category_id']);
     $product->sale_status = htmlentities($_POST['sale_status']);
+    if ($product->sale_status == 'Pre-order') {
+        $product->preorder_price = htmlentities($_POST['preorder_price']);
+    } else {
+        $product->preorder_price = null;
+    }
     $product->order_quantity_limit = htmlentities($_POST['order_quantity_limit']);
     $product->estimated_order_time = htmlentities($_POST['estimated_order_time']);
     $product->exclusivity = htmlentities($_POST['exclusivity']);
@@ -172,6 +177,25 @@ include_once('../includes/preloader.php');
                                     if ((isset($_POST['sale_status']) && !validate_field($_POST['sale_status']))) {
                                     ?>
                                         <p class="fs-7 text-primary m-0 ps-2 col-12">No sale status selected.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="mb-3 p-0 col-12">
+                                <label for="preorder_price" class="text-secondary m-0 p-0">Per-Order Price:</label>
+                                    <input type="number" name="preorder_price" placeholder="Pre-order Price" class="form-control" value="<?php if (isset($_POST['preorder_price'])) {
+                                                                                                                                                echo $_POST['preorder_price'];
+                                                                                                                                            } else {
+                                                                                                                                                echo $pro_record['preorder_price'];
+                                                                                                                                            } ?>">
+                                    <?php
+                                    if (isset($_POST['preorder_price']) && !validate_field($_POST['preorder_price'])) {
+                                    ?>
+                                        <p class="fs-7 text-primary m-0 ps-2">Pre-order price is required.</p>
+                                    <?php
+                                    } else if (isset($_POST['preorder_price']) && !validate_number($_POST['preorder_price'])) {
+                                    ?>
+                                        <p class="fs-7 text-primary m-0 ps-2">Pre-order price can not be less than one.</p>
                                     <?php
                                     }
                                     ?>

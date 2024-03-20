@@ -96,20 +96,17 @@
                                     WMSU Users
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    Department
-                                    <!-- change to department name  -->
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    College
-                                    <!-- change to college name -->
-                                </label>
-                            </div>
+                            <?php if (isset($_SESSION['college_name'])) {
+                            ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        <?= $_SESSION['college_name'] ?>
+                                    </label>
+                                </div>
+                            <?php
+                            }
+                            ?>
                         </form>
                     </div>
                 </div>

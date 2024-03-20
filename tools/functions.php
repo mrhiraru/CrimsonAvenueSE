@@ -55,6 +55,22 @@ function validate_affiliation($affiliation, $college)
     }
 }
 
+function validate_preorder($sale_status, $preorder_price)
+{
+    if (isset($sale_status) && $sale_status == 'On-hand') {
+        return true;
+    } else if (isset($sale_status) && $sale_status == 'Pre-order') {
+        $preorder_price = htmlentities($preorder_price);
+        if (strlen(trim($preorder_price)) < 1) {
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        return false;
+    }
+}
+
 function validate_wmsu_email($email, $affiliation)
 {
     // Check if the affiliation is 'Student'
