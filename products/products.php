@@ -9,7 +9,7 @@ require_once('../classes/product.class.php');
 
 $product = new Product();
 
-$limit = 30;
+$limit = 25;
 
 $page_count = $product->count_products();
 $pages = ceil($page_count[0]['product_id'] / $limit);

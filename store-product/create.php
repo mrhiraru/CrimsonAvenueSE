@@ -163,10 +163,10 @@ include_once('../includes/preloader.php');
                                     ?>
                                 </div>
                                 <div class="mb-3 p-0 col-12">
-                                    <input type="number" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
-                                                                                                                                echo $_POST['selling_price'];
-                                                                                                                            } else if (isset($sto_record['selling_price'])) {
-                                                                                                                                echo $sto_record['selling_price'];
+                                    <input type="number" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
+                                                                                                                                echo $_POST['purchase_price'];
+                                                                                                                            } else if (isset($sto_record['purchase_price'])) {
+                                                                                                                                echo $sto_record['purchase_price'];
                                                                                                                             } ?>">
                                     <?php
                                     if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
