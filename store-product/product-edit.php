@@ -28,11 +28,8 @@ if (isset($_POST['edit'])) {
     $product->product_name = htmlentities($_POST['product_name']);
     $product->category_id = htmlentities($_POST['category_id']);
     $product->sale_status = htmlentities($_POST['sale_status']);
-    if ($product->sale_status == 'Pre-order') {
-        $product->preorder_price = htmlentities($_POST['preorder_price']);
-    } else {
-        $product->preorder_price = null;
-    }
+    $product->purchase_price = htmlentities($_POST['purchase_price']);
+    $product->selling_price = htmlentities($_POST['selling_price']);
     $product->order_quantity_limit = htmlentities($_POST['order_quantity_limit']);
     $product->estimated_order_time = htmlentities($_POST['estimated_order_time']);
     $product->exclusivity = htmlentities($_POST['exclusivity']);
@@ -133,11 +130,11 @@ include_once('../includes/preloader.php');
                                                                     } else if ($pro_record['exclusivity'] == "All Users") {
                                                                         echo "selected";
                                                                     } ?>>All Users</option>
-                                        <option value="WMSU Affiliates" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "WMSU Affiliates")) {
+                                        <option value="WMSU Users" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "WMSU Users")) {
                                                                             echo 'selected';
-                                                                        } else if ($pro_record['exclusivity'] == "WMSU Affiliates") {
+                                                                        } else if ($pro_record['exclusivity'] == "WMSU Users") {
                                                                             echo "selected";
-                                                                        }  ?>>WMSU Affiliates</option>
+                                                                        }  ?>>WMSU Users</option>
                                         <?php if (isset($record['college_name'])) { ?>
                                             <option value="<?= $record['college_name'] ?>" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == $record['college_name'])) {
                                                                                                 echo 'selected';
@@ -182,20 +179,39 @@ include_once('../includes/preloader.php');
                                     ?>
                                 </div>
                                 <div class="mb-3 p-0 col-12">
-                                <label for="preorder_price" class="text-secondary m-0 p-0">Per-Order Price:</label>
-                                    <input type="number" name="preorder_price" placeholder="Pre-order Price" class="form-control" value="<?php if (isset($_POST['preorder_price'])) {
-                                                                                                                                                echo $_POST['preorder_price'];
+                                    <label for="purchase_price" class="text-secondary m-0 p-0">Purchase Price:</label>
+                                    <input type="number" name="purchase_price" placeholder="₱" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
+                                                                                                                                                echo $_POST['purchase_price'];
                                                                                                                                             } else {
-                                                                                                                                                echo $pro_record['preorder_price'];
+                                                                                                                                                echo $pro_record['purchase_price'];
                                                                                                                                             } ?>">
                                     <?php
-                                    if (isset($_POST['preorder_price']) && !validate_field($_POST['preorder_price'])) {
+                                    if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
                                     ?>
-                                        <p class="fs-7 text-primary m-0 ps-2">Pre-order price is required.</p>
+                                        <p class="fs-7 text-primary m-0 ps-2">Purchase price is required.</p>
                                     <?php
-                                    } else if (isset($_POST['preorder_price']) && !validate_number($_POST['preorder_price'])) {
+                                    } else if (isset($_POST['purchase_price']) && !validate_number($_POST['purchase_price'])) {
                                     ?>
-                                        <p class="fs-7 text-primary m-0 ps-2">Pre-order price can not be less than one.</p>
+                                        <p class="fs-7 text-primary m-0 ps-2">Purchase price can not be less than one.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="mb-3 p-0 col-12">
+                                    <label for="selling_price" class="text-secondary m-0 p-0">Selling Price:</label>
+                                    <input type="number" name="selling_price" placeholder="₱" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
+                                                                                                                                                echo $_POST['selling_price'];
+                                                                                                                                            } else {
+                                                                                                                                                echo $pro_record['selling_price'];
+                                                                                                                                            } ?>">
+                                    <?php
+                                    if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
+                                    ?>
+                                        <p class="fs-7 text-primary m-0 ps-2">Selling price is required.</p>
+                                    <?php
+                                    } else if (isset($_POST['selling_price']) && !validate_number($_POST['selling_price'])) {
+                                    ?>
+                                        <p class="fs-7 text-primary m-0 ps-2">Selling price can not be less than one.</p>
                                     <?php
                                     }
                                     ?>

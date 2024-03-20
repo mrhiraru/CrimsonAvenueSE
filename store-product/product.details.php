@@ -124,20 +124,26 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
                 <span class="text-secondary"><?= ($pro_record['sale_status'] == 'Pre-order') ? " (Switch to on-hand for inventory access)" : "" ?></span>
             </td>
         </tr>
-        <?php if ($pro_record['sale_status'] == 'Pre-order') {
-        ?>
-            <tr>
-                <td class="fw-semibold text-dark">
-                    <span class="text-secondary fw-normal">
-                        Pre-Order Price:
-                    </span>
-                    <br class="d-block d-md-none">
-                    ₱
-                    <?= $pro_record['preorder_price'] ?>
-                </td>
-            </tr>
-        <?php
-        } ?>
+        <tr>
+            <td class="fw-semibold text-dark">
+                <span class="text-secondary fw-normal">
+                    Purchase Price:
+                </span>
+                <br class="d-block d-md-none">
+                ₱
+                <?= $pro_record['purchase_price'] ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="fw-semibold text-dark">
+                <span class="text-secondary fw-normal">
+                    Selling Price:
+                </span>
+                <br class="d-block d-md-none">
+                ₱
+                <?= $pro_record['selling_price'] ?>
+            </td>
+        </tr>
         <tr>
             <td class="fw-semibold text-dark">
                 <span class="text-secondary fw-normal">

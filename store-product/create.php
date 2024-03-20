@@ -26,11 +26,7 @@ if (isset($_POST['create'])) {
     } else {
         $product->sale_status = '';
     }
-    if ($product->sale_status == 'Pre-order') {
-        $product->preorder_price = htmlentities($_POST['preorder_price']);
-    } else {
-        $product->preorder_price = null;
-    }
+    $product->selling_price = htmlentities($_POST['selling_price']);
     $product->store_id = $_GET['store_id'];
 
     if (
@@ -38,7 +34,7 @@ if (isset($_POST['create'])) {
         validate_field($product->category_id) &&
         validate_field($product->exclusivity) &&
         validate_field($product->sale_status) &&
-        validate_preorder($product->sale_status, $product->preorder_price) &&
+        validate_field($product->selling_price) &&
         validate_field($product->store_id)
     ) {
         if ($product->add()) {
@@ -167,19 +163,37 @@ include_once('../includes/preloader.php');
                                     ?>
                                 </div>
                                 <div class="mb-3 p-0 col-12">
-                                    <input type="number" name="preorder_price" placeholder="Pre-order Price" class="form-control" value="<?php if (isset($_POST['preorder_price'])) {
-                                                                                                                                                echo $_POST['preorder_price'];
-                                                                                                                                            } else if (isset($sto_record['preorder_price'])) {
-                                                                                                                                                echo $sto_record['preorder_price'];
-                                                                                                                                            } ?>">
+                                    <input type="number" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
+                                                                                                                                echo $_POST['selling_price'];
+                                                                                                                            } else if (isset($sto_record['selling_price'])) {
+                                                                                                                                echo $sto_record['selling_price'];
+                                                                                                                            } ?>">
                                     <?php
-                                    if (isset($_POST['preorder_price']) && !validate_field($_POST['preorder_price'])) {
+                                    if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
                                     ?>
-                                        <p class="fs-7 text-primary m-0 ps-2">Pre-order price is required.</p>
+                                        <p class="fs-7 text-primary m-0 ps-2">Purchase price is required.</p>
                                     <?php
-                                    } else if (isset($_POST['preorder_price']) && !validate_number($_POST['preorder_price'])) {
+                                    } else if (isset($_POST['purchase_price']) && !validate_number($_POST['purchase_price'])) {
                                     ?>
-                                        <p class="fs-7 text-primary m-0 ps-2">Pre-order price can not be less than one.</p>
+                                        <p class="fs-7 text-primary m-0 ps-2">Purchase price can not be less than one.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="mb-3 p-0 col-12">
+                                    <input type="number" name="selling_price" placeholder="Selling Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
+                                                                                                                                            echo $_POST['selling_price'];
+                                                                                                                                        } else if (isset($sto_record['selling_price'])) {
+                                                                                                                                            echo $sto_record['selling_price'];
+                                                                                                                                        } ?>">
+                                    <?php
+                                    if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
+                                    ?>
+                                        <p class="fs-7 text-primary m-0 ps-2">Standard price is required.</p>
+                                    <?php
+                                    } else if (isset($_POST['selling_price']) && !validate_number($_POST['selling_price'])) {
+                                    ?>
+                                        <p class="fs-7 text-primary m-0 ps-2">Standard price can not be less than one.</p>
                                     <?php
                                     }
                                     ?>

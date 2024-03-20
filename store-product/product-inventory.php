@@ -168,7 +168,7 @@ include_once('../includes/preloader.php');
                                 ?>
                             </div>
                             <div class="col-12 m-0 p-0">
-                                <hr class="mb-3">
+                                <hr class="mb-2">
                             </div>
                             <form method="post" action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . (isset($_GET['stock_id']) ? '&stock_id=' . $_GET['stock_id'] : '') ?>" class="col-12">
                                 <div class="row">
@@ -181,12 +181,13 @@ include_once('../includes/preloader.php');
                                     }
                                     ?>
                                     <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
-                                        <input type="number" name="stock_quantity" placeholder="Stock Quantity" class="form-control" value="<?php if (isset($_POST['stock_quantity'])) {
-                                                                                                                                                echo $_POST['stock_quantity'];
-                                                                                                                                            } else if (isset($sto_record['stock_quantity'])) {
-                                                                                                                                                echo $sto_record['stock_quantity'];
-                                                                                                                                            }
-                                                                                                                                            ?>">
+                                        <label for="stock_quantity" class="text-secondary m-0 p-0">Stock Quantity:</label>
+                                        <input type="number" id="stock_quantity" name="stock_quantity" placeholder="Stock Quantity" class="form-control" value="<?php if (isset($_POST['stock_quantity'])) {
+                                                                                                                                                                    echo $_POST['stock_quantity'];
+                                                                                                                                                                } else if (isset($sto_record['stock_quantity'])) {
+                                                                                                                                                                    echo $sto_record['stock_quantity'];
+                                                                                                                                                                }
+                                                                                                                                                                ?>">
                                         <?php
                                         if (isset($_POST['stock_quantity']) && !validate_field($_POST['stock_quantity'])) {
                                         ?>
@@ -206,11 +207,14 @@ include_once('../includes/preloader.php');
                                         ?>
                                     </div>
                                     <div class="mb-3 p-0 pe-lg-2 col-12 col-md-6 col-lg-3">
-                                        <input type="number" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
-                                                                                                                                                echo $_POST['purchase_price'];
-                                                                                                                                            } else if (isset($sto_record['purchase_price'])) {
-                                                                                                                                                echo $sto_record['purchase_price'];
-                                                                                                                                            } ?>">
+                                        <label for="purchase_price" class="text-secondary m-0 p-0">Purchase Price:</label>
+                                        <input type="number" id="purchase_price" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
+                                                                                                                                                                    echo $_POST['purchase_price'];
+                                                                                                                                                                } else if (isset($sto_record['purchase_price'])) {
+                                                                                                                                                                    echo $sto_record['purchase_price'];
+                                                                                                                                                                } else {
+                                                                                                                                                                    echo $pro_record['purchase_price'];
+                                                                                                                                                                } ?>">
                                         <?php
                                         if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
                                         ?>
@@ -224,11 +228,14 @@ include_once('../includes/preloader.php');
                                         ?>
                                     </div>
                                     <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
-                                        <input type="number" name="selling_price" placeholder="Selling Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
-                                                                                                                                                echo $_POST['selling_price'];
-                                                                                                                                            } else if (isset($sto_record['selling_price'])) {
-                                                                                                                                                echo $sto_record['selling_price'];
-                                                                                                                                            }  ?>">
+                                        <label for="selling_price" class="text-secondary m-0 p-0">Selling Price:</label>
+                                        <input type="number" id="selling_price" name="selling_price" placeholder="Selling Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
+                                                                                                                                                                    echo $_POST['selling_price'];
+                                                                                                                                                                } else if (isset($sto_record['selling_price'])) {
+                                                                                                                                                                    echo $sto_record['selling_price'];
+                                                                                                                                                                } else {
+                                                                                                                                                                    echo $pro_record['selling_price'];
+                                                                                                                                                                } ?>">
                                         <?php
                                         if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
                                         ?>
@@ -243,11 +250,13 @@ include_once('../includes/preloader.php');
                                     </div>
                                     <div class="mb-3 p-0 col-12 col-md-6 col-lg-3 text-end">
                                         <?php if (isset($_POST['edit']) || isset($_POST['save'])) { ?>
+                                            <br>
                                             <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" name="cancel" value="Cancel">
                                             <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="save" value="Save">
                                         <?php
                                         } else {
                                         ?>
+                                            <br>
                                             <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="add" value="Add">
                                         <?php
                                         }

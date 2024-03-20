@@ -39,22 +39,6 @@ function validate_email($email)
     }
 }
 
-function validate_affiliation($affiliation, $college)
-{
-    if (isset($affiliation) && $affiliation == 'Non-student') {
-        return true;
-    } else if (isset($affiliation) && $affiliation != 'Non-student') {
-        $college = htmlentities($college);
-        if (strlen(trim($college)) < 1) {
-            return false;
-        } else {
-            return true;
-        }
-    } else {
-        return false;
-    }
-}
-
 function validate_preorder($sale_status, $preorder_price)
 {
     if (isset($sale_status) && $sale_status == 'On-hand') {

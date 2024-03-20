@@ -9,7 +9,8 @@ class Product
     public $product_name;
     public $exclusivity;
     public $sale_status;
-    public $preorder_price;
+    public $purchase_price;
+    public $selling_price;
     public $restriction_status;
     public $order_quantity_limit;
     public $estimated_order_time;
@@ -27,7 +28,7 @@ class Product
         $connect = $this->db->connect();
         $connect->beginTransaction();
 
-        $sql = "INSERT INTO product (store_id, category_id, product_name, exclusivity, sale_status, preorder_price) VALUES (:store_id, :category_id, :product_name, :exclusivity, :sale_status, :preorder_price)";
+        $sql = "INSERT INTO product (store_id, category_id, product_name, exclusivity, sale_status, selling_price, purchase_price) VALUES (:store_id, :category_id, :product_name, :exclusivity, :sale_status, :selling_price, :purchase_price)";
 
         $query = $connect->prepare($sql);
         $query->bindParam(':store_id', $this->store_id);
@@ -35,7 +36,8 @@ class Product
         $query->bindParam(':category_id', $this->category_id);
         $query->bindParam(':exclusivity', $this->exclusivity);
         $query->bindParam(':sale_status', $this->sale_status);
-        $query->bindParam(':preorder_price', $this->preorder_price);
+        $query->bindParam(':selling_price', $this->selling_price);
+        $query->bindParam(':purchase_price', $this->selling_price);
 
         if ($query->execute()) {
             $last_product_id = $connect->lastInsertId();
@@ -67,14 +69,15 @@ class Product
 
     function edit()
     {
-        $sql = "UPDATE product SET product_name=:product_name, category_id=:category_id, exclusivity=:exclusivity, sale_status=:sale_status, preorder_price=:preorder_price, estimated_order_time=:estimated_order_time, order_quantity_limit=:order_quantity_limit WHERE product_id = :product_id;";
+        $sql = "UPDATE product SET product_name=:product_name, category_id=:category_id, exclusivity=:exclusivity, sale_status=:sale_status, selling_price=:selling_price, purchase_price=:purchase_price, estimated_order_time=:estimated_order_time, order_quantity_limit=:order_quantity_limit WHERE product_id = :product_id;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_name', $this->product_name);
         $query->bindParam(':category_id', $this->category_id);
         $query->bindParam(':exclusivity', $this->exclusivity);
         $query->bindParam(':sale_status', $this->sale_status);
-        $query->bindParam(':preorder_price', $this->preorder_price);
+        $query->bindParam(':purchase_price', $this->purchase_price);
+        $query->bindParam(':selling_price', $this->selling_price);
         $query->bindParam(':estimated_order_time', $this->estimated_order_time);
         $query->bindParam(':order_quantity_limit', $this->order_quantity_limit);
         $query->bindParam(':product_id', $this->product_id);
@@ -160,7 +163,7 @@ class Product
 
     function show_products($start, $limit)
     {
-        $sql = "SELECT p.*, s.store_name, st.selling_price, i.image_file FROM product p LEFT JOIN store s ON p.store_id = s.store_id LEFT JOIN ( SELECT * FROM stock WHERE is_deleted != 1 GROUP BY product_id) st ON p.product_id = st.product_id LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id WHERE p.is_deleted != 1 ORDER BY s.store_id DESC LIMIT $start, $limit";
+        $sql = "SELECT p.*, s.store_name, i.image_file FROM product p LEFT JOIN store s ON p.store_id = s.store_id LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id WHERE p.is_deleted != 1 ORDER BY s.store_id DESC LIMIT $start, $limit";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {
