@@ -122,6 +122,7 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/footer.php');
     require_once('../includes/js.php');
+    require_once('../includes/sidepanel.product-js.php');
     ?>
 </body>
 
