@@ -13,7 +13,7 @@
                     <div class="accordion-body px-0 ps-2 py-1 fs-7 text-secondary border-0">
                         <form action="">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="" checked>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     All Categories
                                 </label>
@@ -25,7 +25,7 @@
                             foreach ($categoryArray as $item) {
                             ?>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2<?= $counter ?>">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2<?= $counter ?>" value="<?= $item['category_name'] ?>">
                                     <label class="form-check-label" for="flexRadioDefault2<?= $counter ?>">
                                         <?= $item['category_name'] ?>
                                     </label>
@@ -51,31 +51,29 @@
                     <div class="accordion-body px-0 ps-2 py-1 fs-7 text-secondary border-0">
                         <form action="">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" value="<?php // date is_create descending
+                                                                                                                                    ?>" checked>
                                 <label class="form-check-label" for="flexRadioDefault3">
                                     Recently Added
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" value="<?php // count completed orders 
+                                                                                                                                    ?>">
                                 <label class="form-check-label" for="flexRadioDefault4">
                                     Bestselling
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault5">
-                                <label class="form-check-label" for="flexRadioDefault5">
-                                    Recently Added
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault6">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault6" value="<?php // price ascending 
+                                                                                                                                    ?>">
                                 <label class="form-check-label" for="flexRadioDefault6">
                                     Price (Low to High)
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault7">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault7" value="<?php // price descending 
+                                                                                                                                    ?>">
                                 <label class="form-check-label" for="flexRadioDefault7">
                                     Price (High to Low)
                                 </label>
@@ -96,13 +94,13 @@
                     <div class="accordion-body px-0 ps-2 py-1 fs-7 text-secondary border-0">
                         <form action="">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault8" checked>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault8" value="All Users" checked>
                                 <label class="form-check-label" for="flexRadioDefault8">
                                     All Users
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault9">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault9" value="WMSU Users">
                                 <label class="form-check-label" for="flexRadioDefault9">
                                     WMSU Users
                                 </label>
@@ -110,7 +108,7 @@
                             <?php if (isset($_SESSION['college_name'])) {
                             ?>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault10">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault10" value="<?= $_SESSION['college_name'] ?>">
                                     <label class="form-check-label" for="flexRadioDefault10">
                                         <?= $_SESSION['college_name'] ?>
                                     </label>
