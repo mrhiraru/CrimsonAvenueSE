@@ -131,14 +131,16 @@ include_once('../includes/preloader.php');
                                                                         echo "selected";
                                                                     } ?>>All Users</option>
                                         <option value="WMSU Users" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == "WMSU Users")) {
-                                                                            echo 'selected';
-                                                                        } else if ($pro_record['exclusivity'] == "WMSU Users") {
-                                                                            echo "selected";
-                                                                        }  ?>>WMSU Users</option>
+                                                                        echo 'selected';
+                                                                    } else if ($pro_record['exclusivity'] == "WMSU Users") {
+                                                                        echo "selected";
+                                                                    }  ?>>WMSU Users</option>
                                         <?php if (isset($record['college_name'])) { ?>
                                             <option value="<?= $record['college_name'] ?>" <?php if ((isset($_POST['exclusivity']) && $_POST['exclusivity'] == $record['college_name'])) {
                                                                                                 echo 'selected';
-                                                                                            } ?>><?= $record['college_name'] ?></option>
+                                                                                            } else if ($pro_record['exclusivity'] ==  $record['college_name']) {
+                                                                                                echo "selected";
+                                                                                            }  ?>><?= $record['college_name'] ?></option>
                                         <?php } ?>
                                     </select>
                                     <?php
@@ -181,10 +183,10 @@ include_once('../includes/preloader.php');
                                 <div class="mb-3 p-0 col-12">
                                     <label for="purchase_price" class="text-secondary m-0 p-0">Purchase Price:</label>
                                     <input type="number" name="purchase_price" placeholder="₱" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
-                                                                                                                                                echo $_POST['purchase_price'];
-                                                                                                                                            } else {
-                                                                                                                                                echo $pro_record['purchase_price'];
-                                                                                                                                            } ?>">
+                                                                                                                                echo $_POST['purchase_price'];
+                                                                                                                            } else {
+                                                                                                                                echo $pro_record['purchase_price'];
+                                                                                                                            } ?>">
                                     <?php
                                     if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
                                     ?>
@@ -200,10 +202,10 @@ include_once('../includes/preloader.php');
                                 <div class="mb-3 p-0 col-12">
                                     <label for="selling_price" class="text-secondary m-0 p-0">Selling Price:</label>
                                     <input type="number" name="selling_price" placeholder="₱" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
-                                                                                                                                                echo $_POST['selling_price'];
-                                                                                                                                            } else {
-                                                                                                                                                echo $pro_record['selling_price'];
-                                                                                                                                            } ?>">
+                                                                                                                                echo $_POST['selling_price'];
+                                                                                                                            } else {
+                                                                                                                                echo $pro_record['selling_price'];
+                                                                                                                            } ?>">
                                     <?php
                                     if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
                                     ?>
