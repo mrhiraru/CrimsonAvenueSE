@@ -39,13 +39,13 @@ function validate_email($email)
     }
 }
 
-function validate_preorder($sale_status, $preorder_price)
+function validate_affiliation($affiliation, $college)
 {
-    if (isset($sale_status) && $sale_status == 'On-hand') {
+    if (isset($affiliation) && $affiliation == 'Non-student') {
         return true;
-    } else if (isset($sale_status) && $sale_status == 'Pre-order') {
-        $preorder_price = htmlentities($preorder_price);
-        if (strlen(trim($preorder_price)) < 1) {
+    } else if (isset($affiliation) && $affiliation != 'Non-student') {
+        $college = htmlentities($college);
+        if (strlen(trim($college)) < 1) {
             return false;
         } else {
             return true;
