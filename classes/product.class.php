@@ -171,4 +171,22 @@ class Product
         }
         return $data;
     }
+
+    function show_products_filter($start, $limit, $search, $category, $sort, $exclusivity)
+    {
+        $sql = "SELECT p.*, s.store_name, i.image_file 
+        FROM product p 
+        LEFT JOIN store s ON p.store_id = s.store_id 
+        LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
+        WHERE p.is_deleted != 1 
+        ORDER BY p.product_id DESC 
+        LIMIT $start, $limit";
+
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }

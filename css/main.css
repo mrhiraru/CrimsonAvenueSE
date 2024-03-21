@@ -164,6 +164,17 @@ input:focus, input:active, select:focus, select:active, button:focus, button:act
     
 }
 
+.border-filter {
+    border: var(--secondary) 1px solid !important;
+}
+
+.border-filter:hover {
+    border: var(--whitesmoke-hover) 1px solid !important;
+    background-color: var(--whitesmoke-hover) !important;
+    color: var(--light) !important;
+    transition: ease 0.3sba;
+}
+
 /* pagination css  */
 
 .page-link {

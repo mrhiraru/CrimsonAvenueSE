@@ -139,8 +139,33 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="w-100 d-flex" role="search" action="../index.php">
+                <form class="w-100 d-flex" role="search" action="../products/products.php?">
+                    <input type="hidden" name="page" value="1">
                     <input class="form-control me-auto border border-primary" type="search" name="search" placeholder="Search" aria-label="Search">
+                    <?php
+                    if (isset($_GET['category'])) {
+                    ?>
+                        <input type="hidden" name="category" value="<?= $_GET['category'] ?>">
+                    <?php
+                    }
+                    ?>
+                    <?php
+                    if (isset($_GET['sort'])) {
+                    ?>
+                        <input type="hidden" name="filter" value="<?= $_GET['sort'] ?>">
+                    <?php
+                    }
+                    ?>
+                    <?php
+                    if (isset($_GET['exclusivity'])) {
+                    ?>
+                        <input type="hidden" name="exclusivity" value="<?= $_GET['exclusivity'] ?>">
+                    <?php
+                    }
+                    ?>
+
+
+
                 </form>
             </div>
         </div>
