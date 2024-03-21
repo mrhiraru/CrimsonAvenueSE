@@ -2,10 +2,9 @@
 session_start();
 
 require_once('../tools/functions.php');
-require_once('../classes/college.class.php');
-require_once('../classes/account.class.php');
-require_once('../classes/store.class.php');
 require_once('../classes/product.class.php');
+require_once('../classes/category.class.php');
+
 
 $product = new Product();
 

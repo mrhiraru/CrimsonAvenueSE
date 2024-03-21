@@ -18,12 +18,23 @@
                                     All Categories
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    Others
-                                </label>
-                            </div>
+                            <?php
+                            $counter = 1;
+                            $category = new Category();
+                            $categoryArray = $category->show();
+                            foreach ($categoryArray as $item) {
+                            ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2<?= $counter ?>">
+                                    <label class="form-check-label" for="flexRadioDefault2<?= $counter ?>">
+                                        <?= $item['category_name'] ?>
+                                    </label>
+                                </div>
+                            <?php
+                                $counter++;
+                            }
+
+                            ?>
                         </form>
                     </div>
                 </div>
