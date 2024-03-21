@@ -21,7 +21,7 @@
                             }
                             ?>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="category" id="flexRadioDefault1" value="All" onchange="categoryFilter()" checked>
+                                <input class="form-check-input" type="radio" name="category" id="flexRadioDefault1" value="All" onchange="categoryFilter()" <?= isset($_GET['category']) && $_GET['category'] == "All" ? "checked" : "" ?>>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     All Categories
                                 </label>
