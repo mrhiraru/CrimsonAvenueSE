@@ -193,10 +193,8 @@ class Product
 
         $sql = "SELECT COUNT(p.product_id) as selected_count
         FROM product p 
-        LEFT JOIN store s ON p.store_id = s.store_id 
         LEFT JOIN category c ON p.category_id = c.category_id 
-        LEFT JOIN (SELECT product_id, desc_value FROM product_desc WHERE is_deleted != 1) pd ON p.product_id = pd.product_id
-        LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
+        LEFT JOIN (SELECT product_id, desc_value FROM product_desc WHERE is_deleted != 1 GROUP BY product_id) pd ON p.product_id = pd.product_id
         WHERE p.is_deleted != 1";
 
         if (isset($search) && $search != '') {
@@ -231,7 +229,7 @@ class Product
             $sql .= " AND p.exclusivity = :exclusivity";
         }
 
-        $sql .= " GROUP BY p.product_id;";
+       // $sql .= " GROUP BY p.product_id;";
 
 
         $query = $this->db->connect()->prepare($sql);

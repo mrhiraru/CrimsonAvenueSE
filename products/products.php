@@ -5,18 +5,16 @@ require_once('../tools/functions.php');
 require_once('../classes/product.class.php');
 require_once('../classes/category.class.php');
 
-
 $product = new Product();
 
+$extension = (isset($_GET['search']) ? '&search=' . $_GET['search'] : "") . (isset($_GET['category']) ? '&category=' . $_GET['category'] : "")  . (isset($_GET['sort']) ? '&sort=' . $_GET['sort'] : "")  . (isset($_GET['exclusivity']) ? '&exclusivity=' . $_GET['exclusivity'] : "");
 $limit = 3;
 
 $page_count = $product->count_products_filter(isset($_GET['search']) ? $_GET['search'] : "", isset($_GET['category']) ? $_GET['category'] : "All", isset($_GET['sort']) ? $_GET['sort'] : "", isset($_GET['exclusivity']) ? $_GET['exclusivity'] : "All");
 $pages = ceil($page_count[0]['selected_count'] / $limit);
-var_dump($page_count[0]['selected_count']);
-var_dump($pages);
 
 if (isset($_GET['page']) && !is_numeric($_GET['page'])) {
-    header('location: ./products.php?page=1');
+    //header('location: ./products.php?page=1');
 }
 
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -25,9 +23,9 @@ $start = ($page - 1) * $limit;
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ../user/verify.php');
 } else if (!isset($_GET['page']) || $_GET['page'] < 0) {
-    header('location: ./products.php?page=1');
+    header('location: ./products.php?page=1' . $extension);
 } else if ($_GET['page'] > $pages) {
-    header('location: ./products.php?page=' . $pages);
+    header('location: ./products.php?page=' . $pages . $extension);
 }
 
 $productArray = $product->show_products_filter($start < 1 ? 0 : $start, $limit, isset($_GET['search']) ? $_GET['search'] : "", isset($_GET['category']) ? $_GET['category'] : "All", isset($_GET['sort']) ? $_GET['sort'] : "", isset($_GET['exclusivity']) ? $_GET['exclusivity'] : "All");
@@ -66,60 +64,72 @@ include_once('../includes/preloader.php');
                         </div>
                     </div>
                     <hr>
-                    <div class="row m-0 p-0 row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
-                        <?php
-                        $counter = 1;
-                        foreach ($productArray as $item) {
-                        ?>
-                            <div class="col m-0 p-1 d-flex justify-content-center align-items-center">
-                                <a class="card product-card p-3 text-decoration-none overflow-hidden" href="./product-view.php">
-                                    <div class="row m-0 mb-2 p-0 d-flex align-items-center">
-                                        <div class="col-auto m-0 mb-1 p-0 custom-product-img">
-                                            <img src="<?php if (isset($item['image_file'])) {
-                                                            echo "../images/data/" . $item['image_file'];
-                                                        } else {
-                                                            echo "../images/main/no-profile.jpg";
-                                                        } ?>" alt="" class="border border-secondary border-opacity-25 rounded img-fluid">
-                                        </div>
-                                        <div class="col-6 m-0 p-0 flex-fill">
-                                            <p class="fs-6 text-nowrap fw-semibold text-dark m-0 p-0 lh-sm  text-truncate"> <?= $item['product_name'] ?> </p>
-                                            <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> By <span class="text-primary"><?= $item['store_name'] ?></span> </p>
-                                            <p class="fs-5 text-nowrap fw-bold text-primary m-0 mt-1 lh-1  text-truncate"> ₱ <?= $item['selling_price'] ?> </p>
-                                            <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> For <span class="text-primary"><?= $item['exclusivity'] ?></span> </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        <?php
-                        }
-                        ?>
-                    </div>
-                    <div class="m-2 p-0 d-flex justify-content-center align-items-center">
-                        <nav aria-label="Page navigation example">
+
+                    <?php
+                    $counter = 1;
+                    if (empty($productArray)) {
+                    ?>
+                        <div class="row m-0 p-0 d-flex align-items-center">
+                            <p class="text-center fw-semibold text-secondary"> No Product Found </p>
+                        </div>
+                    <?php
+                    } else {
+                    ?>
+                        <div class="row m-0 p-0 row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
                             <?php
-                            $extension = (isset($_GET['search']) ? '&search=' . $_GET['search'] : '') . (isset($_GET['category']) ? '&category=' . $_GET['category'] : '')  . (isset($_GET['sort']) ? '&sort=' . $_GET['sort'] : '')  . (isset($_GET['exclusivity']) ? '&exclusivity=' . $_GET['exclusivity'] : '');
+                            foreach ($productArray as $item) {
                             ?>
-                            <ul class="pagination">
-                                <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] <= 1) ? 'disabled' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $_GET['page'] - 1 . $extension ?>" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
+                                <div class="col m-0 p-1 d-flex justify-content-center align-items-center">
+                                    <a class="card product-card p-3 text-decoration-none overflow-hidden" href="./product-view.php">
+                                        <div class="row m-0 mb-2 p-0 d-flex align-items-center">
+                                            <div class="col-auto m-0 mb-1 p-0 custom-product-img">
+                                                <img src="<?php if (isset($item['image_file'])) {
+                                                                echo "../images/data/" . $item['image_file'];
+                                                            } else {
+                                                                echo "../images/main/no-profile.jpg";
+                                                            } ?>" alt="" class="border border-secondary border-opacity-25 rounded img-fluid">
+                                            </div>
+                                            <div class="col-6 m-0 p-0 flex-fill">
+                                                <p class="fs-6 text-nowrap fw-semibold text-dark m-0 p-0 lh-sm  text-truncate"> <?= $item['product_name'] ?> </p>
+                                                <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> By <span class="text-primary"><?= $item['store_name'] ?></span> </p>
+                                                <p class="fs-5 text-nowrap fw-bold text-primary m-0 mt-1 lh-1  text-truncate"> ₱ <?= $item['selling_price'] ?> </p>
+                                                <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> For <span class="text-primary"><?= $item['exclusivity'] ?></span> </p>
+                                            </div>
+                                        </div>
                                     </a>
-                                </li>
-                                <?php
-                                for ($i = 1; $i <= $pages; $i++) {
-                                ?>
-                                    <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] == $i) ? 'active' : ''  ?>"><a class="page-link" href="?page=<?= $i . $extension  ?>"><?= $i ?></a></li>
-                                <?php
-                                }
-                                ?>
-                                <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] >= $pages) ? 'disabled' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $_GET['page'] + 1 . $extension ?>" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <div class="m-2 p-0 d-flex justify-content-center align-items-center">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] <= 1) ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?page=<?= $_GET['page'] - 1 . $extension ?>" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <?php
+                                    for ($i = 1; $i <= $pages; $i++) {
+                                    ?>
+                                        <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] == $i) ? 'active' : ''  ?>"><a class="page-link" href="?page=<?= $i . $extension  ?>"><?= $i ?></a></li>
+                                    <?php
+                                    }
+                                    ?>
+                                    <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] >= $pages) ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?page=<?= $_GET['page'] + 1 . $extension ?>" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
+
                 </div>
             </main>
         </div>
