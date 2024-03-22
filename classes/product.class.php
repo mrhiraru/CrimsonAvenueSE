@@ -161,6 +161,59 @@ class Product
         return $data;
     }
 
+    function count_products_filter($search)
+    {
+        if (isset($search) && $search == 'No') {
+            $search = '';
+        }
+
+        if (isset($search) && $search != '') {
+            $search = trim(htmlentities($search));
+            $searches = explode(" ", $search);
+        }
+
+        $sql = "SELECT count(p.product_id) as selected_count
+        FROM product p 
+        LEFT JOIN (SELECT product_id, desc_value FROM product_desc WHERE is_deleted != 1) pd ON p.product_id = pd.product_id
+        WHERE p.is_deleted != 1";
+
+        if (isset($search) && $search != '') {
+            $first_counter = 0;
+            foreach ($searches as $key => $word) {
+                if ($first_counter == 0) {
+                    $sql .= " AND ((p.product_name LIKE :search_$key";
+                } else {
+                    $sql .= " OR p.product_name LIKE :search_$key";
+                }
+                $first_counter++;
+            }
+            $sql .= ")";
+            $second_counter = 0;
+            foreach ($searches as $key => $word) {
+                if ($second_counter == 0) {
+                    $sql .= " OR (pd.desc_value LIKE :search_$key";
+                } else {
+                    $sql .= " OR pd.desc_value LIKE :search_$key";
+                }
+                $second_counter++;
+            }
+            $sql .= ")) GROUP BY p.product_id";
+        }
+
+        $query = $this->db->connect()->prepare($sql);
+        if (isset($search) && $search != '') {
+            foreach ($searches as $key => $word) {
+                $query->bindValue(":search_$key", "%$word%");
+            }
+        }
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function show_products($start, $limit)
     {
         $sql = "SELECT p.*, s.store_name, i.image_file FROM product p LEFT JOIN store s ON p.store_id = s.store_id LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id WHERE p.is_deleted != 1 ORDER BY p.product_id LIMIT $start, $limit";
@@ -175,10 +228,6 @@ class Product
     // set search to No by default, set category to All by default, set exclusivity to No by default, set sort to Newest by default
     function show_products_filter($start, $limit, $search, $category, $sort, $exclusivity)
     {
-        if (isset($search) && $search == 'No') {
-            $search = '';
-        }
-
         if (isset($search) && $search != '') {
             $search = trim(htmlentities($search));
             $searches = explode(" ", $search);
@@ -203,10 +252,9 @@ class Product
             } else if ($sort == "Highest") {
                 $sort = "p.selling_price DESC";
             } else {
-                $sort = "p.product_id";
+                $sort = "p.is_updated DESC";
             }
         }
-
 
         $sql = "SELECT p.*, s.store_name, i.image_file, pd.desc_value, c.category_name
         FROM product p 
@@ -220,7 +268,7 @@ class Product
             $first_counter = 0;
             foreach ($searches as $key => $word) {
                 if ($first_counter == 0) {
-                    $sql .= " AND (p.product_name LIKE :search_$key";
+                    $sql .= " AND ((p.product_name LIKE :search_$key";
                 } else {
                     $sql .= " OR p.product_name LIKE :search_$key";
                 }
@@ -236,7 +284,7 @@ class Product
                 }
                 $second_counter++;
             }
-            $sql .= ")";
+            $sql .= "))";
         }
 
 

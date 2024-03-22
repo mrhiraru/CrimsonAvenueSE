@@ -8,7 +8,7 @@ require_once('../classes/category.class.php');
 
 $product = new Product();
 
-$limit = 25;
+$limit = 3;
 
 $page_count = $product->count_products();
 $pages = ceil($page_count[0]['product_id'] / $limit);
@@ -28,7 +28,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./products.php?page=' . $pages);
 }
 
-$productArray = $product->show_products_filter($start < 1 ? 0 : $start, $limit, isset($_GET['search']) ? $_GET['search'] : "No", isset($_GET['category']) ? $_GET['category'] : "All", isset($_GET['sort']) ? $_GET['sort'] : "Newest", isset($_GET['exclusivity']) ? $_GET['exclusivity'] : "All");
+$productArray = $product->show_products_filter($start < 1 ? 0 : $start, $limit, isset($_GET['search']) ? $_GET['search'] : "", isset($_GET['category']) ? $_GET['category'] : "All", isset($_GET['sort']) ? $_GET['sort'] : "", isset($_GET['exclusivity']) ? $_GET['exclusivity'] : "All");
 
 ?>
 
@@ -94,21 +94,24 @@ include_once('../includes/preloader.php');
                     </div>
                     <div class="m-2 p-0 d-flex justify-content-center align-items-center">
                         <nav aria-label="Page navigation example">
+                            <?php
+                            $extension = (isset($_GET['search']) ? '&search=' . $_GET['search'] : '') . (isset($_GET['category']) ? '&category=' . $_GET['category'] : '')  . (isset($_GET['sort']) ? '&sort=' . $_GET['sort'] : '')  . (isset($_GET['exclusivity']) ? '&exclusivity=' . $_GET['exclusivity'] : '');
+                            ?>
                             <ul class="pagination">
                                 <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] <= 1) ? 'disabled' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $_GET['page'] - 1 ?>" aria-label="Previous">
+                                    <a class="page-link" href="?page=<?= $_GET['page'] - 1 . $extension ?>" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
                                 <?php
                                 for ($i = 1; $i <= $pages; $i++) {
                                 ?>
-                                    <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] == $i) ? 'active' : ''  ?>"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                                    <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] == $i) ? 'active' : ''  ?>"><a class="page-link" href="?page=<?= $i . $extension  ?>"><?= $i ?></a></li>
                                 <?php
                                 }
                                 ?>
                                 <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] >= $pages) ? 'disabled' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $_GET['page'] + 1 ?>" aria-label="Next">
+                                    <a class="page-link" href="?page=<?= $_GET['page'] + 1 . $extension ?>" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
