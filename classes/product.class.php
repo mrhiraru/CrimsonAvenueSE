@@ -220,9 +220,9 @@ class Product
             $first_counter = 0;
             foreach ($searches as $key => $word) {
                 if ($first_counter == 0) {
-                    $sql .= " AND (p.product_name LIKE :desc_value_$key";
+                    $sql .= " AND (p.product_name LIKE :search_$key";
                 } else {
-                    $sql .= " OR p.product_name LIKE :desc_value_$key";
+                    $sql .= " OR p.product_name LIKE :search_$key";
                 }
                 $first_counter++;
             }
@@ -230,9 +230,9 @@ class Product
             $second_counter = 0;
             foreach ($searches as $key => $word) {
                 if ($second_counter == 0) {
-                    $sql .= " OR (pd.desc_value LIKE :desc_value_$key";
+                    $sql .= " OR (pd.desc_value LIKE :search_$key";
                 } else {
-                    $sql .= " OR pd.desc_value LIKE :desc_value_$key";
+                    $sql .= " OR pd.desc_value LIKE :search_$key";
                 }
                 $second_counter++;
             }
@@ -255,7 +255,7 @@ class Product
 
         if (isset($search) && $search != '') {
             foreach ($searches as $key => $word) {
-                $query->bindValue(":desc_value_$key", "%$word%");
+                $query->bindValue(":search_$key", "%$word%");
             }
         }
 

@@ -189,11 +189,11 @@ include_once('../includes/preloader.php');
                                     <?php
                                     if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
                                     ?>
-                                        <p class="fs-7 text-primary m-0 ps-2">Standard price is required.</p>
+                                        <p class="fs-7 text-primary m-0 ps-2">Selling price is required.</p>
                                     <?php
                                     } else if (isset($_POST['selling_price']) && !validate_number($_POST['selling_price'])) {
                                     ?>
-                                        <p class="fs-7 text-primary m-0 ps-2">Standard price can not be less than one.</p>
+                                        <p class="fs-7 text-primary m-0 ps-2">Selling price can not be less than one.</p>
                                     <?php
                                     }
                                     ?>
