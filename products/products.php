@@ -13,6 +13,10 @@ $limit = 25;
 $page_count = $product->count_products();
 $pages = ceil($page_count[0]['product_id'] / $limit);
 
+if (isset($_GET['page']) && !is_numeric($_GET['page'])) {
+    header('location: ./products.php?page=1');
+}
+
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $start = ($page - 1) * $limit;
 

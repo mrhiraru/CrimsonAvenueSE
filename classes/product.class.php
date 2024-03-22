@@ -174,6 +174,22 @@ class Product
 
     function show_products_filter($start, $limit, $search, $category, $sort, $exclusivity)
     {
+        if (isset($search)) {
+            $search = trim(htmlentities($search));
+            $words = explode(" ", $search);
+            $new_words = [];
+            $counter = 0;
+            foreach ($words as $word) {
+                if ($counter == 0) {
+                    $new_word = "AND desc_value = " . $word;
+                } else {
+                    $new_word = "OR desc_value = " . $word;
+                }
+                array_push($new_words, $new_word);
+                $counter++;
+            }
+        }
+
         $sql = "SELECT p.*, s.store_name, i.image_file 
         FROM product p 
         LEFT JOIN store s ON p.store_id = s.store_id 
@@ -183,6 +199,13 @@ class Product
         LIMIT $start, $limit";
 
         $query = $this->db->connect()->prepare($sql);
+
+        foreach ($new_words as $word) {
+            $paramName = ":desc_value_" . $word;
+            $query->bindValue($paramName, $word);
+        }
+
+
         $data = null;
         if ($query->execute()) {
             $data = $query->fetchAll();

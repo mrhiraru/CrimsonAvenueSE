@@ -13,6 +13,10 @@ $limit = 10;
 $page_count = $store->count_stores();
 $pages = ceil($page_count[0]['store_id'] / $limit);
 
+if (isset($_GET['page']) && !is_numeric($_GET['page'])) {
+    header('location: ./stores.php?page=1');
+}
+
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $start = ($page - 1) * $limit;
 
