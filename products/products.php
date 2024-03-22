@@ -8,7 +8,7 @@ require_once('../classes/category.class.php');
 $product = new Product();
 
 $extension = (isset($_GET['search']) ? '&search=' . $_GET['search'] : "") . (isset($_GET['category']) ? '&category=' . $_GET['category'] : "")  . (isset($_GET['sort']) ? '&sort=' . $_GET['sort'] : "")  . (isset($_GET['exclusivity']) ? '&exclusivity=' . $_GET['exclusivity'] : "");
-$limit = 3;
+$limit = 25;
 
 $page_count = $product->count_products_filter(isset($_GET['search']) ? $_GET['search'] : "", isset($_GET['category']) ? $_GET['category'] : "All", isset($_GET['sort']) ? $_GET['sort'] : "", isset($_GET['exclusivity']) ? $_GET['exclusivity'] : "All");
 $pages = ceil($page_count[0]['selected_count'] / $limit);
@@ -128,8 +128,6 @@ include_once('../includes/preloader.php');
                     <?php
                     }
                     ?>
-
-
                 </div>
             </main>
         </div>
