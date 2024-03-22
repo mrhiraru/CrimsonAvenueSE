@@ -208,28 +208,37 @@ class Product
         }
 
 
-
         $sql = "SELECT p.*, s.store_name, i.image_file, pd.desc_value, c.category_name
         FROM product p 
         LEFT JOIN store s ON p.store_id = s.store_id 
-        LEFT JOIN category c ON p.category_id = c.category_id
-        INNER JOIN (SELECT product_id, desc_value FROM product_desc WHERE is_deleted != 1";
-
-        if (isset($search) && $search != '') {
-            $counter = 0;
-            foreach ($searches as $key => $word) {
-                if ($counter == 0) {
-                    $sql .= " AND desc_value LIKE :desc_value_$key";
-                } else {
-                    $sql .= " OR desc_value LIKE :desc_value_$key";
-                }
-                $counter++;
-            }
-        }
-
-        $sql .= " GROUP BY product_id) pd ON p.product_id = pd.product_id
+        LEFT JOIN category c ON p.category_id = c.category_id 
+        LEFT JOIN (SELECT product_id, desc_value FROM product_desc WHERE is_deleted != 1) pd ON p.product_id = pd.product_id
         LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
         WHERE p.is_deleted != 1";
+
+        if (isset($search) && $search != '') {
+            $first_counter = 0;
+            foreach ($searches as $key => $word) {
+                if ($first_counter == 0) {
+                    $sql .= " AND (p.product_name LIKE :desc_value_$key";
+                } else {
+                    $sql .= " OR p.product_name LIKE :desc_value_$key";
+                }
+                $first_counter++;
+            }
+            $sql .= ")";
+            $second_counter = 0;
+            foreach ($searches as $key => $word) {
+                if ($second_counter == 0) {
+                    $sql .= " OR (pd.desc_value LIKE :desc_value_$key";
+                } else {
+                    $sql .= " OR pd.desc_value LIKE :desc_value_$key";
+                }
+                $second_counter++;
+            }
+            $sql .= ")";
+        }
+
 
         if (isset($category) && $category != "All") {
             $sql .= " AND c.category_name = :category";
@@ -239,7 +248,7 @@ class Product
             $sql .= " AND p.exclusivity = :exclusivity";
         }
 
-        $sql .= " ORDER BY $sort
+        $sql .= " GROUP BY p.product_id ORDER BY $sort
         LIMIT $start, $limit";
 
         $query = $this->db->connect()->prepare($sql);
