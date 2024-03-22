@@ -161,20 +161,42 @@ class Product
         return $data;
     }
 
-    function count_products_filter($search)
+    function count_products_filter($search, $category, $sort, $exclusivity)
     {
-        if (isset($search) && $search == 'No') {
-            $search = '';
-        }
-
         if (isset($search) && $search != '') {
             $search = trim(htmlentities($search));
             $searches = explode(" ", $search);
         }
 
-        $sql = "SELECT count(p.product_id) as selected_count
+        if (isset($category) && $category != "All") {
+            $category = trim(htmlentities($category));
+        }
+
+        if (isset($exclusivity) && $exclusivity != 'All') {
+            $exclusivity = trim(htmlentities($exclusivity));
+        }
+
+        if (isset($sort)) {
+            $sort = trim(htmlentities($sort));
+            if ($sort == "Newest") {
+                $sort = "p.is_created DESC";
+            } else if ($sort == "Oldest") {
+                $sort = "p.is_created ASC";
+            } else if ($sort == "Lowest") {
+                $sort = "p.selling_price ASC";
+            } else if ($sort == "Highest") {
+                $sort = "p.selling_price DESC";
+            } else {
+                $sort = "p.is_updated DESC";
+            }
+        }
+
+        $sql = "SELECT COUNT(p.product_id) as selected_count
         FROM product p 
+        LEFT JOIN store s ON p.store_id = s.store_id 
+        LEFT JOIN category c ON p.category_id = c.category_id 
         LEFT JOIN (SELECT product_id, desc_value FROM product_desc WHERE is_deleted != 1) pd ON p.product_id = pd.product_id
+        LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
         WHERE p.is_deleted != 1";
 
         if (isset($search) && $search != '') {
@@ -197,14 +219,35 @@ class Product
                 }
                 $second_counter++;
             }
-            $sql .= ")) GROUP BY p.product_id";
+            $sql .= "))";
         }
 
+
+        if (isset($category) && $category != "All") {
+            $sql .= " AND c.category_name = :category";
+        }
+
+        if (isset($exclusivity) && $exclusivity != 'All') {
+            $sql .= " AND p.exclusivity = :exclusivity";
+        }
+
+        $sql .= " GROUP BY p.product_id;";
+
+
         $query = $this->db->connect()->prepare($sql);
+
         if (isset($search) && $search != '') {
             foreach ($searches as $key => $word) {
                 $query->bindValue(":search_$key", "%$word%");
             }
+        }
+
+        if (isset($category) && $category != "All") {
+            $query->bindValue(":category", $category);
+        }
+
+        if (isset($exclusivity) && $exclusivity != 'All') {
+            $query->bindValue(":exclusivity", $exclusivity);
         }
 
         $data = null;
@@ -225,7 +268,6 @@ class Product
         return $data;
     }
 
-    // set search to No by default, set category to All by default, set exclusivity to No by default, set sort to Newest by default
     function show_products_filter($start, $limit, $search, $category, $sort, $exclusivity)
     {
         if (isset($search) && $search != '') {

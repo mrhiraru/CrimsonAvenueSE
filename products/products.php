@@ -10,8 +10,10 @@ $product = new Product();
 
 $limit = 3;
 
-$page_count = $product->count_products();
-$pages = ceil($page_count[0]['product_id'] / $limit);
+$page_count = $product->count_products_filter(isset($_GET['search']) ? $_GET['search'] : "", isset($_GET['category']) ? $_GET['category'] : "All", isset($_GET['sort']) ? $_GET['sort'] : "", isset($_GET['exclusivity']) ? $_GET['exclusivity'] : "All");
+$pages = ceil($page_count[0]['selected_count'] / $limit);
+var_dump($page_count[0]['selected_count']);
+var_dump($pages);
 
 if (isset($_GET['page']) && !is_numeric($_GET['page'])) {
     header('location: ./products.php?page=1');
