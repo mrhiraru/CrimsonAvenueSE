@@ -152,7 +152,7 @@
                     <?php
                     if (isset($_GET['sort'])) {
                     ?>
-                        <input type="hidden" name="filter" value="<?= $_GET['sort'] ?>">
+                        <input type="hidden" name="sort" value="<?= $_GET['sort'] ?>">
                     <?php
                     }
                     ?>

@@ -145,6 +145,12 @@
                             }
                             ?>
                             <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exclusivity" id="flexRadioDefault81" value="All" onchange="exclusivityFilter()" <?= isset($_GET['exclusivity']) && $_GET['exclusivity'] == "All"  ? "checked" : "" ?>>
+                                <label class="form-check-label" for="flexRadioDefault81">
+                                    All Exclusivity
+                                </label>
+                            </div>
+                            <div class="form-check">
                                 <input class="form-check-input" type="radio" name="exclusivity" id="flexRadioDefault8" value="All Users" onchange="exclusivityFilter()" <?= isset($_GET['exclusivity']) && $_GET['exclusivity'] == "All Users"  ? "checked" : "" ?>>
                                 <label class="form-check-label" for="flexRadioDefault8">
                                     All Users

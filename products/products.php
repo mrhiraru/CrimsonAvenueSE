@@ -28,7 +28,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./products.php?page=' . $pages);
 }
 
-$productArray = $product->show_products($start < 1 ? 0 : $start, $limit);
+$productArray = $product->show_products_filter($start < 1 ? 0 : $start, $limit, isset($_GET['search']) ? $_GET['search'] : "No", isset($_GET['category']) ? $_GET['category'] : "All", isset($_GET['sort']) ? $_GET['sort'] : "Newest", isset($_GET['exclusivity']) ? $_GET['exclusivity'] : "All");
 
 ?>
 

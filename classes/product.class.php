@@ -172,10 +172,10 @@ class Product
         return $data;
     }
 
-    // set search to None by default, set category to All by default
+    // set search to No by default, set category to All by default, set exclusivity to No by default, set sort to Newest by default
     function show_products_filter($start, $limit, $search, $category, $sort, $exclusivity)
     {
-        if (isset($search) && $search == 'None') {
+        if (isset($search) && $search == 'No') {
             $search = '';
         }
 
@@ -184,42 +184,79 @@ class Product
             $searches = explode(" ", $search);
         }
 
-        $paramBindings = [];
+        if (isset($category) && $category != "All") {
+            $category = trim(htmlentities($category));
+        }
 
-        $sql = "SELECT p.*, s.store_name, i.image_file, pd.desc_value
+        if (isset($exclusivity) && $exclusivity != 'All') {
+            $exclusivity = trim(htmlentities($exclusivity));
+        }
+
+        if (isset($sort)) {
+            $sort = trim(htmlentities($sort));
+            if ($sort == "Newest") {
+                $sort = "p.is_created DESC";
+            } else if ($sort == "Oldest") {
+                $sort = "p.is_created ASC";
+            } else if ($sort == "Lowest") {
+                $sort = "p.selling_price ASC";
+            } else if ($sort == "Highest") {
+                $sort = "p.selling_price DESC";
+            } else {
+                $sort = "p.product_id";
+            }
+        }
+
+
+
+        $sql = "SELECT p.*, s.store_name, i.image_file, pd.desc_value, c.category_name
         FROM product p 
         LEFT JOIN store s ON p.store_id = s.store_id 
-        LEFT JOIN (SELECT product_id, desc_value FROM product_desc WHERE is_deleted != 1";
+        LEFT JOIN category c ON p.category_id = c.category_id
+        INNER JOIN (SELECT product_id, desc_value FROM product_desc WHERE is_deleted != 1";
 
         if (isset($search) && $search != '') {
             $counter = 0;
-            foreach ($paramBindings as $binding) {
+            foreach ($searches as $key => $word) {
                 if ($counter == 0) {
-                    $sql .= " AND desc_value = " . $binding;
+                    $sql .= " AND desc_value LIKE :desc_value_$key";
                 } else {
-                    $sql .= " OR desc_value = " . $binding;
+                    $sql .= " OR desc_value LIKE :desc_value_$key";
                 }
+                $counter++;
             }
         }
 
         $sql .= " GROUP BY product_id) pd ON p.product_id = pd.product_id
         LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
-        WHERE p.is_deleted != 1 
-        ORDER BY p.product_id DESC 
+        WHERE p.is_deleted != 1";
+
+        if (isset($category) && $category != "All") {
+            $sql .= " AND c.category_name = :category";
+        }
+
+        if (isset($exclusivity) && $exclusivity != 'All') {
+            $sql .= " AND p.exclusivity = :exclusivity";
+        }
+
+        $sql .= " ORDER BY $sort
         LIMIT $start, $limit";
 
         $query = $this->db->connect()->prepare($sql);
 
         if (isset($search) && $search != '') {
-            foreach ($searches as $word) {
-                $paramName = ":desc_value_" . $word;
-                $query->bindValue($paramName, $word);
-                array_push($paramBindings, $paramName);
+            foreach ($searches as $key => $word) {
+                $query->bindValue(":desc_value_$key", "%$word%");
             }
         }
 
-        if ()
+        if (isset($category) && $category != "All") {
+            $query->bindValue(":category", $category);
+        }
 
+        if (isset($exclusivity) && $exclusivity != 'All') {
+            $query->bindValue(":exclusivity", $exclusivity);
+        }
 
         $data = null;
         if ($query->execute()) {
