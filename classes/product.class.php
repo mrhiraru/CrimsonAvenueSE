@@ -172,22 +172,26 @@ class Product
         return $data;
     }
 
-    // set search to None by default,
+    // set search to None by default, set category to All by default
     function show_products_filter($start, $limit, $search, $category, $sort, $exclusivity)
     {
-        if (isset($search) && $search != 'None') {
+        if (isset($search) && $search == 'None') {
+            $search = '';
+        }
+
+        if (isset($search) && $search != '') {
             $search = trim(htmlentities($search));
             $searches = explode(" ", $search);
         }
 
         $paramBindings = [];
 
-        $sql = "SELECT p.*, s.store_name, i.image_file 
+        $sql = "SELECT p.*, s.store_name, i.image_file, pd.desc_value
         FROM product p 
         LEFT JOIN store s ON p.store_id = s.store_id 
         LEFT JOIN (SELECT product_id, desc_value FROM product_desc WHERE is_deleted != 1";
 
-        if (isset($search) && $search != 'None') {
+        if (isset($search) && $search != '') {
             $counter = 0;
             foreach ($paramBindings as $binding) {
                 if ($counter == 0) {
@@ -206,13 +210,15 @@ class Product
 
         $query = $this->db->connect()->prepare($sql);
 
-        if (isset($search) && $search != 'None') {
+        if (isset($search) && $search != '') {
             foreach ($searches as $word) {
                 $paramName = ":desc_value_" . $word;
                 $query->bindValue($paramName, $word);
                 array_push($paramBindings, $paramName);
             }
         }
+
+        if ()
 
 
         $data = null;
