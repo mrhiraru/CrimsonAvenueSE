@@ -172,37 +172,46 @@ class Product
         return $data;
     }
 
+    // set search to None by default,
     function show_products_filter($start, $limit, $search, $category, $sort, $exclusivity)
     {
-        if (isset($search)) {
+        if (isset($search) && $search != 'None') {
             $search = trim(htmlentities($search));
-            $words = explode(" ", $search);
-            $new_words = [];
-            $counter = 0;
-            foreach ($words as $word) {
-                if ($counter == 0) {
-                    $new_word = "AND desc_value = " . $word;
-                } else {
-                    $new_word = "OR desc_value = " . $word;
-                }
-                array_push($new_words, $new_word);
-                $counter++;
-            }
+            $searches = explode(" ", $search);
         }
+
+        $paramBindings = [];
 
         $sql = "SELECT p.*, s.store_name, i.image_file 
         FROM product p 
         LEFT JOIN store s ON p.store_id = s.store_id 
-        LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
+        LEFT JOIN (SELECT product_id, desc_value FROM product_desc WHERE is_deleted != 1";
+
+        if (isset($search) && $search != 'None') {
+            $counter = 0;
+            foreach ($paramBindings as $binding) {
+                if ($counter == 0) {
+                    $sql .= " AND desc_value = " . $binding;
+                } else {
+                    $sql .= " OR desc_value = " . $binding;
+                }
+            }
+        }
+
+        $sql .= " GROUP BY product_id) pd ON p.product_id = pd.product_id
+        LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
         WHERE p.is_deleted != 1 
         ORDER BY p.product_id DESC 
         LIMIT $start, $limit";
 
         $query = $this->db->connect()->prepare($sql);
 
-        foreach ($new_words as $word) {
-            $paramName = ":desc_value_" . $word;
-            $query->bindValue($paramName, $word);
+        if (isset($search) && $search != 'None') {
+            foreach ($searches as $word) {
+                $paramName = ":desc_value_" . $word;
+                $query->bindValue($paramName, $word);
+                array_push($paramBindings, $paramName);
+            }
         }
 
 
