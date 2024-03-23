@@ -338,12 +338,7 @@ body {
 /* products css  */
 
 .product-card {
-    height: max-content;
-    width: 100%;
-}
-
-.custom-product-img {
-    height: 100%;
+    height: 100% !important;
     width: 100%;
 }
 

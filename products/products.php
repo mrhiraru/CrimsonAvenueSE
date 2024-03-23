@@ -46,8 +46,8 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/header.user.php');
     ?>
-    <div class="container-fluid">
-        <div class="row d-flex justify-content-center min-vh-100">
+    <div class="container-fluid m-0 p-0">
+        <div class="row m-0 p-0 d-flex flex-row justify-content-center min-vh-100">
             <?php
             require_once("../includes/sidepanel.product.php");
             ?>
@@ -80,21 +80,19 @@ include_once('../includes/preloader.php');
                             foreach ($productArray as $item) {
                             ?>
                                 <div class="col m-0 p-1 d-flex justify-content-center align-items-center">
-                                    <a class="card product-card p-3 text-decoration-none overflow-hidden" href="./product-view.php">
-                                        <div class="row m-0 mb-2 p-0 d-flex align-items-center">
-                                            <div class="col-auto m-0 mb-1 p-0 custom-product-img">
-                                                <img src="<?php if (isset($item['image_file'])) {
-                                                                echo "../images/data/" . $item['image_file'];
-                                                            } else {
-                                                                echo "../images/main/no-profile.jpg";
-                                                            } ?>" alt="" class="border border-secondary border-opacity-25 rounded img-fluid">
-                                            </div>
-                                            <div class="col-6 m-0 p-0 flex-fill">
-                                                <p class="fs-6 text-nowrap fw-semibold text-dark m-0 p-0 lh-sm  text-truncate"> <?= $item['product_name'] ?> </p>
-                                                <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> By <span class="text-primary"><?= $item['store_name'] ?></span> </p>
-                                                <p class="fs-5 text-nowrap fw-bold text-primary m-0 mt-1 lh-1  text-truncate"> ₱ <?= $item['selling_price'] ?> </p>
-                                                <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> For <span class="text-primary"><?= $item['exclusivity'] ?></span> </p>
-                                            </div>
+                                    <a class="card row product-card p-3 text-decoration-none overflow-hidden d-flex flex-row align-items-end" href="./product-view.php">
+                                        <div class="col-12 m-0 p-0">
+                                            <img src="<?php if (isset($item['image_file'])) {
+                                                            echo "../images/data/" . $item['image_file'];
+                                                        } else {
+                                                            echo "../images/main/no-profile.jpg";
+                                                        } ?>" alt="" class="border border-secondary border-opacity-25 rounded img-fluid">
+                                        </div>
+                                        <div class="col-12 m-0 mt-1 p-0 d-flex flex-column">
+                                            <p class="fs-6 text-nowrap fw-semibold text-dark m-0 p-0 lh-sm  text-truncate"> <?= $item['product_name'] ?> </p>
+                                            <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> By <span class="text-primary"><?= $item['store_name'] ?></span> </p>
+                                            <p class="fs-5 text-nowrap fw-bold text-primary m-0 mt-1 lh-1  text-truncate"> ₱ <?= $item['selling_price'] ?> </p>
+                                            <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> For <span class="text-primary"><?= $item['exclusivity'] ?></span> </p>
                                         </div>
                                     </a>
                                 </div>
