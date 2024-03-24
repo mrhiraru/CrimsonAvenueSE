@@ -64,7 +64,6 @@ include_once('../includes/preloader.php');
                         </div>
                     </div>
                     <hr>
-
                     <?php
                     $counter = 1;
                     if (empty($productArray)) {

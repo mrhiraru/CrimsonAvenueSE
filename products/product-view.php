@@ -78,14 +78,31 @@ include_once('../includes/preloader.php');
                     </div>
                     <div class="col-12 col-md-6 m-0 p-0 pt-3 pt-md-0 ps-md-3 d-flex flex-fill flex-column align-items-start">
                         <p class="fs-2 text-nowrap fw-bold text-dark m-0 p-0 lh-1  text-truncate"> <?= $record['product_name'] ?> </p>
-                        <p class="fs-6 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-1 text-truncate">
-                            By
-                            <span class="text-primary"><?= $record['store_name'] ?>
-                            </span>
-                            Exclusive For
-                            <span class="text-primary"><?= $record['exclusivity'] ?></span>
-                        </p>
-                        <p class="fs-2 text-nowrap fw-bold text-primary m-0 mt-1 lh-1  text-truncate"> ₱ <?= $record['selling_price'] ?> </p>
+                        <div class="row m-0 p-0 w-100">
+                            <div class="col-auto m-0 p-0">
+                                <p class="fs-6 text-nowrap text-secondary m-0 mt-1 p-0 lh-1 text-truncate">
+                                    By
+                                    <span class="text-primary fw-semibold"><?= $record['store_name'] ?></span>
+                                </p>
+                            </div>
+                            <div class="col-auto m-0 mx-1 p-0">
+                                <p class="fs-5 text-nowrap text-secondary m-0 p-0 lh-1 text-truncate">
+                                    |
+                                </p>
+                            </div>
+                            <div class="col-auto m-0 p-0">
+                                <p class="fs-6 text-nowrap text-secondary m-0 mt-1 p-0 lh-1 text-truncate">
+                                    For
+                                    <span class="text-primary fw-semibold"><?= $record['exclusivity'] ?></span>
+                                </p>
+                            </div>
+                            <div class="col-auto m-0 p-0 text-end flex-grow-1">
+                                <a href="" class="text-secondary text-decoration-none">Report</a>
+                            </div>
+                        </div>
+                        <div class="col-12 m-0 my-1 p-0 border-top"></div>
+                        <p class="fs-1 text-nowrap fw-bold text-primary m-0 lh-1  text-truncate"> ₱ <?= $record['selling_price'] ?> </p>
+                        <div class="col-12 m-0 my-1 p-0 border-top"></div>
                     </div>
                 </div>
             </div>
