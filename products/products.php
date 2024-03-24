@@ -80,7 +80,7 @@ include_once('../includes/preloader.php');
                             foreach ($productArray as $item) {
                             ?>
                                 <div class="col m-0 p-1 d-flex justify-content-center align-items-center">
-                                    <a class="card row product-card p-3 text-decoration-none overflow-hidden d-flex flex-row align-items-end" href="./product-view.php">
+                                    <a class="card row product-card p-3 text-decoration-none overflow-hidden d-flex flex-row align-items-end" href="./product-view.php?product_id=<?= $item['product_id'] ?>">
                                         <div class="col-12 m-0 p-0">
                                             <img src="<?php if (isset($item['image_file'])) {
                                                             echo "../images/data/" . $item['image_file'];

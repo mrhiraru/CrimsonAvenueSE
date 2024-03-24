@@ -16,10 +16,10 @@ $product = new Product();
 $pro_record = $product->fetch_info($_GET['product_id'], $record['store_id']);
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
-    header('location: ./user/verify.php');
+    header('location: ../user/verify.php');
 } else if (!isset($record['store_id']) || $record['is_deleted'] == 1 || !isset($record['staff_role'])) {
     header('location: ../index.php');
-} else if (!isset($pro_record['product_id'])) {
+} else if (!isset($pro_record['product_id']) || $pro_record['is_deleted'] == 1) {
     header('location: ./index.php?store_id=' . $record['store_id']);
 }
 

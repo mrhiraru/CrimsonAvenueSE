@@ -126,7 +126,7 @@ class Product
 
     function fetch($product_id)
     {
-        $sql = "SELECT p.*, s.store_id, c.category_name, COALESCE(v.var_count, 0) AS var_count, COALESCE(m.mea_count, 0) AS mea_count FROM product p INNER JOIN store s ON p.store_id = s.store_id INNER JOIN category c ON p.category_id = c.category_id INNER JOIN (SELECT product_id, COUNT(*) AS var_count FROM variation WHERE is_deleted != 1 GROUP BY product_id) v ON p.product_id = v.product_id INNER JOIN (SELECT product_id, COUNT(*) AS mea_count FROM measurement WHERE is_deleted != 1 GROUP BY product_id) m ON p.product_id = m.product_id WHERE p.product_id = :product_id AND p.is_deleted != 1;";
+        $sql = "SELECT p.*, s.store_id, s.store_name, c.category_name, COALESCE(v.var_count, 0) AS var_count, COALESCE(m.mea_count, 0) AS mea_count FROM product p INNER JOIN store s ON p.store_id = s.store_id INNER JOIN category c ON p.category_id = c.category_id INNER JOIN (SELECT product_id, COUNT(*) AS var_count FROM variation WHERE is_deleted != 1 GROUP BY product_id) v ON p.product_id = v.product_id INNER JOIN (SELECT product_id, COUNT(*) AS mea_count FROM measurement WHERE is_deleted != 1 GROUP BY product_id) m ON p.product_id = m.product_id WHERE p.product_id = :product_id AND p.is_deleted != 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_id', $product_id);
         if ($query->execute()) {
