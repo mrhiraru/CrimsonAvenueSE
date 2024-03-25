@@ -115,7 +115,7 @@ include_once('../includes/preloader.php');
                                 ?>
                                     <div class="m-0 p-0 me-1 mb-1">
                                         <input type="radio" class="btn-check" name="variation" id="<?= $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= count($varArray) < 2 ? "checked" : "" ?>>
-                                        <label class="btn btn-product-size btn-sm btn-outline-primary px-2 py-1" for="<?= $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
+                                        <label class="btn btn-product-size btn-sm btn-outline-primary px-2 py-1 fs-7" for="<?= $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
                                     </div>
                                 <?php
                                 }
@@ -132,7 +132,7 @@ include_once('../includes/preloader.php');
                                 ?>
                                     <div class="m-0 p-0 me-1 mb-1">
                                         <input type="radio" class="btn-check" name="measurement" id="<?= $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= count($meaArray) < 2 ? "checked" : "" ?>>
-                                        <label class="btn btn-product-size btn-sm btn-outline-primary px-2 py-1" for="<?= $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
+                                        <label class="btn btn-product-size btn-sm btn-outline-primary px-2 py-1 fs-7" for="<?= $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
                                     </div>
                                 <?php
                                 }
@@ -140,12 +140,12 @@ include_once('../includes/preloader.php');
                             </div>
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
-                                    <label for="quantity">Quantity:</label>
+                                    <label for="quantity">Quantity: <?= isset($record['order_quantity_limit']) && $record['order_quantity_limit'] > 0 ? $record['order_quantity_limit']." Limit per Order" : "" ?></label>
                                 </div>
                                 <div class="m-0 p-0 me-1 mb-1">
-                                    <input type="number" class="form-control btn-product-size focus-primary rounded-1 px-2 py-1" name="quantity" id="quantity" value="">
+                                    <input type="number" class="form-control btn-product-size focus-primary rounded-1 px-2 py-1 fs-7" name="quantity" id="quantity" value="">
                                 </div>
-                                <div class="m-0 p-0 me-1 mb-1 text-dark">
+                                <div class="m-0 p-0 me-1 mb-1 text-dark fs-7">
                                     Stock Here
                                 </div>
                             </div>
