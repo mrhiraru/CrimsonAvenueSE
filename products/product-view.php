@@ -103,7 +103,7 @@ include_once('../includes/preloader.php');
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
                         <p class="fs-1 text-nowrap fw-bold text-primary m-0 lh-1  text-truncate"> ₱ <?= $record['selling_price'] ?> </p>
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
-                        <form action="" method="post">
+                        <form action="" method="post" class="col-12">
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
                                     Variations:
@@ -145,7 +145,7 @@ include_once('../includes/preloader.php');
                                 <div class="m-0 p-0 me-1 mb-1">
                                     <input type="number" class="form-control btn-product-size focus-primary rounded-1 px-2 py-1 fs-7" name="quantity" id="quantity" value="">
                                 </div>
-                                <div class="m-0 p-0 me-1 mb-1 text-dark fs-7">
+                                <div class="m-0 p-0 me-1 mb-1 text-dark fs-7 text-end">
                                     Stock Here
                                 </div>
                             </div>
