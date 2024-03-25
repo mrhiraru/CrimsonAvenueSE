@@ -122,6 +122,19 @@ input:focus, input:active, select:focus, select:active, button:focus, button:act
     height: 38px;
 }
 
+.btn-outline-primary {
+    border: 1px solid var(--primary) !important;
+    color: var(--primary) !important;
+}
+
+.btn-check:checked+.btn, .btn-outline-primary:hover {
+    border: 1px solid var(--primary) !important;
+    background-color: var(--primary) !important;
+    color: var(--light) !important;
+}
+
+
+
 .btn {
     height: 38px !important;
 }
@@ -351,6 +364,14 @@ body {
 .product-view-width {
     max-height: 380px !important;
     max-width: 380px !important;
+}
+
+.btn-product-size {
+    height: fit-content !important;
+}
+
+.focus-primary:focus {
+    border: 1px solid var(--primary) !important;
 }
 
 @media (max-width: 1199px){

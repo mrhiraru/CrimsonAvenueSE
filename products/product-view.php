@@ -103,6 +103,53 @@ include_once('../includes/preloader.php');
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
                         <p class="fs-1 text-nowrap fw-bold text-primary m-0 lh-1  text-truncate"> ₱ <?= $record['selling_price'] ?> </p>
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
+                        <form action="" method="post">
+                            <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
+                                <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
+                                    Variations:
+                                </div>
+                                <?php
+                                $variation = new Variation();
+                                $varArray = $variation->show($record['product_id']);
+                                foreach ($varArray as $item) {
+                                ?>
+                                    <div class="m-0 p-0 me-1 mb-1">
+                                        <input type="radio" class="btn-check" name="variation" id="<?= $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= count($varArray) < 2 ? "checked" : "" ?>>
+                                        <label class="btn btn-product-size btn-sm btn-outline-primary px-2 py-1" for="<?= $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
+                                <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
+                                    Measurements:
+                                </div>
+                                <?php
+                                $measurement = new Measurement();
+                                $meaArray = $measurement->show($record['product_id']);
+                                foreach ($meaArray as $item) {
+                                ?>
+                                    <div class="m-0 p-0 me-1 mb-1">
+                                        <input type="radio" class="btn-check" name="measurement" id="<?= $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= count($meaArray) < 2 ? "checked" : "" ?>>
+                                        <label class="btn btn-product-size btn-sm btn-outline-primary px-2 py-1" for="<?= $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
+                                <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
+                                    <label for="quantity">Quantity:</label>
+                                </div>
+                                <div class="m-0 p-0 me-1 mb-1">
+                                    <input type="number" class="form-control btn-product-size focus-primary rounded-1 px-2 py-1" name="quantity" id="quantity" value="">
+                                </div>
+                                <div class="m-0 p-0 me-1 mb-1 text-dark">
+                                    Stock Here
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
