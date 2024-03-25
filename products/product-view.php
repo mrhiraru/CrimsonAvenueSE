@@ -145,7 +145,7 @@ include_once('../includes/preloader.php');
                                 <div class="m-0 p-0 me-1 mb-1">
                                     <input type="number" class="form-control btn-product-size focus-primary rounded-1 px-2 py-1 fs-7" name="quantity" id="quantity" value="">
                                 </div>
-                                <div class="m-0 p-0 me-1 mb-1 text-dark fs-7 text-end">
+                                <div class="m-0 p-0 me-1 mb-1 text-dark fs-7">
                                     Stock Here
                                 </div>
                             </div>
