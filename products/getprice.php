@@ -10,6 +10,8 @@ $price = sprintf("%.2f", htmlentities($_GET['price']));
 
 $stock_record = $stock->show_stock($product_id, $variation_id, $measurement_id);
 
-
-?>
-<?= isset($stock_record['selling_price']) ? "₱ " . $stock_record['selling_price'] : "₱ " . $price ?>
+if (isset($stock_record['selling_price'])) {
+    echo "₱ " . $stock_record['selling_price'];
+} else {
+    echo "₱ " . $price;
+}

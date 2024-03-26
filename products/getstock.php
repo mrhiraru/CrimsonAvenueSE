@@ -11,12 +11,9 @@ $stock_record = $stock->show_stock($product_id, $variation_id, $measurement_id);
 
 
 if (isset($stock_record['total_stock_quantity']) && isset($stock_record['total_stock_sold'])) {
-?>
-    <?= $stock_record['total_stock_quantity'] - $stock_record['total_stock_sold'] ?> available stocks.
-<?php
+    echo $stock_record['total_stock_quantity'] - $stock_record['total_stock_sold'];
+
 } else {
-?>
-    No available stocks.
-<?php
+    echo 0;
 }
 ?>

@@ -148,6 +148,7 @@ include_once('../includes/preloader.php');
                             </div>
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <div class="m-0 p-0 me-1 mb-1 text-secondary fs-7">
+                                    <input type="hidden" name="available_stock" id="available_stock" value="">
                                     <?php
                                     if (isset($record['sale_status']) && $record['sale_status'] == "Pre-order") {
                                         if (isset($record['estimated_order_time']) && $record['estimated_order_time'] > 0) {
@@ -158,7 +159,7 @@ include_once('../includes/preloader.php');
                                     } else if (isset($record['sale_status']) && $record['sale_status'] == "On-hand") {
                                         ?>
                                         <div id="stock" class="m-0 p-0">
-                                            
+
                                         </div>
                                     <?php
                                     }
@@ -168,8 +169,8 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 my-1 p-0 border-top"></div>
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <div class="col-12 m-0 p-0 me-1 mt-2 d-flex justify-content-evenly">
-                                    <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 me-1" value="Add to Cart" name="add">
-                                    <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 ms-1" value="<?= $record['sale_status'] == "On-hand" ? "Buy Now" : "Pre Order" ?>" name="buy">
+                                    <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 me-1" value="Add to Cart" name="add" id="add">
+                                    <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 ms-1" value="<?= $record['sale_status'] == "On-hand" ? "Buy Now" : "Pre Order" ?>" name="buy" id="buy">
                                 </div>
                             </div>
                         </form>
@@ -194,7 +195,14 @@ include_once('../includes/preloader.php');
             if (variation !== '' && measurement !== '') {
                 const xhttp = new XMLHttpRequest();
                 xhttp.onload = function() {
-                    document.getElementById("stock").innerHTML = this.responseText;
+                    var available_stock = this.responseText;
+                    if (available_stock === "0") {
+                        document.getElementById("stock").innerHTML = "No available stocks.";
+                    } else {
+                        document.getElementById("stock").innerHTML = available_stock + " available stocks.";
+                    }
+                    document.getElementById("available_stock").value = available_stock;
+                    disableButton(available_stock);
                 }
                 xhttp.open("GET", "getstock.php?product_id=" + product + "&variation_id=" + variation + "&measurement_id=" + measurement);
                 xhttp.send();
@@ -208,10 +216,24 @@ include_once('../includes/preloader.php');
             if (variation !== '' && measurement !== '') {
                 const xhttp = new XMLHttpRequest();
                 xhttp.onload = function() {
-                    document.getElementById("price").innerHTML = this.responseText;
+                    var stock_price = this.responseText;
+                    document.getElementById("price").innerHTML = stock_price;
                 }
                 xhttp.open("GET", "getprice.php?product_id=" + product + "&variation_id=" + variation + "&measurement_id=" + measurement + "&price=" + price);
                 xhttp.send();
+            }
+        }
+
+        function disableButton(available_stock) {
+            var add_btn = document.getElementById('add');
+            var buy_btn = document.getElementById('buy');
+
+            if (available_stock === "0") {
+                add_btn.disabled = true;
+                buy_btn.disabled = true;
+            } else {
+                add_btn.disabled = false;
+                buy_btn.disabled = false;
             }
         }
     </script>

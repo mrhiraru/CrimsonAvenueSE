@@ -133,7 +133,10 @@ input:focus, input:active, select:focus, select:active, button:focus, button:act
     color: var(--primary) !important;
 }
 
-
+.btn-primary:disabled{
+    background-color: var(--secondary);
+    border: 1px solid var(--secondary) !important;
+}
 
 .btn {
     height: 38px !important;
