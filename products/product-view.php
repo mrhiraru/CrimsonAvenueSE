@@ -33,7 +33,7 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/header.user.php');
     ?>
-    <div class="container-fluid col-md-9 mt-4 mx-sm-auto min-vh-100 ">
+    <div class="container-fluid col-md-9 mt-4 mx-sm-auto">
         <main class="">
             <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
                 <div class="row d-flex justify-content-start m-0 p-0">
@@ -179,7 +179,47 @@ include_once('../includes/preloader.php');
             </div>
         </main>
         <section>
-            <!-- Code Here Extra Section -->
+            <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3 h-100">
+                <div class="row d-flex justify-content-start m-0 p-0">
+                    <div class="col-12 m-0 p-0">
+                        <p class="m-0 p-0 fs-5 fw-semibold text-dark lh-1 flex-fill">
+                            Descriptions
+                        </p>
+                    </div>
+                    <div class="col-12 m-0 p-0">
+                        <hr class="mb-0 mt-2">
+                    </div>
+                    <div class="col-12 m-0 p-0">
+                        <table class="table-sm m-0">
+                            <?php
+                            $description = new Description();
+                            $descArray = $description->show($_GET['product_id']);
+                            if (empty($descArray)) {
+                            ?>
+                                <p class="text-secondary m-0 mt-1 p-0">
+                                    No product descriptions.
+                                </p>
+                                <?php
+                            } else {
+                                foreach ($descArray as $item) {
+                                ?>
+                                    <tr>
+                                        <td class="text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                <?= $item['desc_label'] ?>:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $item['desc_value'] ?>
+                                        </td>
+                                    </tr>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </section>
         <!-- Extra Section Add more Section if needed ./. -->
     </div>
