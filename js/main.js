@@ -12,6 +12,23 @@ function validateinput(input) {
   input.value = input.value.replace(/[^0-9]/g, "");
 }
 
+function validateinputqty(input, limit) {
+  // Remove any non-digit characters
+  input.value = input.value.replace(/[^0-9]/g, "");
+
+  // Convert input value to a number
+  let quantity = parseInt(input.value);
+
+  // Check if input is NaN (not a number) or less than 0
+  if (quantity < 1) {
+    // Set input value to 0 if it's less than 0
+    input.value = "1";
+  } else if (quantity > limit) {
+    // Set input value to the limit if it's greater than the specified limit
+    input.value = limit.toString();
+  }
+}
+
 function validateinputsem(input) {
   // Remove any non-digit characters
   input.value = input.value.replace(/[^1-3]/g, "");
@@ -72,3 +89,4 @@ if (modalElement) {
 // window.onload = function () {
 //   updateClock();
 // };
+

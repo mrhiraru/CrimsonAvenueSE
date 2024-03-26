@@ -115,7 +115,7 @@ include_once('../includes/preloader.php');
                                 ?>
                                     <div class="m-0 p-0 me-1 mb-1">
                                         <input type="radio" class="btn-check" name="variation" id="<?= $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= count($varArray) < 2 ? "checked" : "" ?>>
-                                        <label class="btn btn-product-size btn-sm btn-outline-primary px-2 py-1 fs-7" for="<?= $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
+                                        <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
                                     </div>
                                 <?php
                                 }
@@ -132,7 +132,7 @@ include_once('../includes/preloader.php');
                                 ?>
                                     <div class="m-0 p-0 me-1 mb-1">
                                         <input type="radio" class="btn-check" name="measurement" id="<?= $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= count($meaArray) < 2 ? "checked" : "" ?>>
-                                        <label class="btn btn-product-size btn-sm btn-outline-primary px-2 py-1 fs-7" for="<?= $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
+                                        <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
                                     </div>
                                 <?php
                                 }
@@ -140,13 +140,37 @@ include_once('../includes/preloader.php');
                             </div>
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
-                                    <label for="quantity">Quantity: <?= isset($record['order_quantity_limit']) && $record['order_quantity_limit'] > 0 ? $record['order_quantity_limit']." Limit per Order" : "" ?></label>
+                                    <label for="quantity">Quantity: <?= isset($record['order_quantity_limit']) && $record['order_quantity_limit'] > 0 ? $record['order_quantity_limit'] . " Limit per Order" : "" ?></label>
                                 </div>
                                 <div class="m-0 p-0 me-1 mb-1">
-                                    <input type="number" class="form-control btn-product-size focus-primary rounded-1 px-2 py-1 fs-7" name="quantity" id="quantity" value="">
+                                    <input type="number" class="form-control btn-product-size focus-primary px-2 py-1 fs-7" name="quantity" id="quantity" oninput="validateinputqty(this, <?= $record['order_quantity_limit'] > 0 ? $record['order_quantity_limit'] : INF  ?>)" value="">
                                 </div>
-                                <div class="m-0 p-0 me-1 mb-1 text-dark fs-7">
-                                    Stock Here
+                            </div>
+                            <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
+                                <div class="m-0 p-0 me-1 mb-1 text-secondary fs-7">
+                                    <?php
+                                    if (isset($record['sale_status']) && $record['sale_status'] == "Pre-order") {
+                                        if (isset($record['order_quantity_limit']) && $record['order_quantity_limit'] > 0) {
+                                    ?>
+                                            Estimated order processing time: <?= $record['order_quantity_limit'] ?> Days
+                                        <?php
+                                        }
+                                    } else if (isset($record['sale_status']) && $record['sale_status'] == "On-hand") {
+                                        ?>
+                                        <div>
+                                            Stock Here
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="col-12 m-0 my-1 p-0 border-top"></div>
+                            <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
+
+                                <div class="col-12 m-0 p-0 me-1 mt-2 d-flex justify-content-evenly">
+                                    <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 me-1" value="Add to Cart" name="add">
+                                    <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 ms-1" value="<?= $record['sale_status'] == "On-hand" ? "Buy Now" : "Pre Order" ?>" name="buy">
                                 </div>
                             </div>
                         </form>

@@ -95,4 +95,16 @@ class Stock
             return false;
         }
     }
+
+    function show_stock($product_id, $variation_id, $measurement_id){
+        $sql = "SELECT * FROM stock WHERE stock_id = :stock_id LIMIT 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':product_id', $product_id);
+        $query->bindParam(':variation_id', $variation_id);
+        $query->bindParam(':measurement_id', $measurement_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
 }
