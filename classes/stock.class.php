@@ -97,7 +97,7 @@ class Stock
     }
 
     function show_stock($product_id, $variation_id, $measurement_id){
-        $sql = "SELECT * FROM stock WHERE stock_id = :stock_id LIMIT 1;";
+        $sql = "SELECT *, SUM(stock_quantity) AS total_stock_quantity, SUM(stock_sold) AS total_stock_sold FROM stock WHERE product_id = :product_id AND variation_id = :variation_id AND measurement_id = :measurement_id AND is_deleted != 1 AND stock_sold < stock_quantity ORDER BY stock_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_id', $product_id);
         $query->bindParam(':variation_id', $variation_id);

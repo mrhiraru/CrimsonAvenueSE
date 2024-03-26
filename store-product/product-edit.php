@@ -182,7 +182,7 @@ include_once('../includes/preloader.php');
                                 </div>
                                 <div class="mb-3 p-0 col-12">
                                     <label for="purchase_price" class="text-secondary m-0 p-0">Purchase Price:</label>
-                                    <input type="number" name="purchase_price" placeholder="₱" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
+                                    <input type="number" name="purchase_price" placeholder="₱" step="any" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
                                                                                                                                 echo $_POST['purchase_price'];
                                                                                                                             } else {
                                                                                                                                 echo $pro_record['purchase_price'];
@@ -201,7 +201,7 @@ include_once('../includes/preloader.php');
                                 </div>
                                 <div class="mb-3 p-0 col-12">
                                     <label for="selling_price" class="text-secondary m-0 p-0">Selling Price:</label>
-                                    <input type="number" name="selling_price" placeholder="₱" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
+                                    <input type="number" name="selling_price" placeholder="₱" step="any" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
                                                                                                                                 echo $_POST['selling_price'];
                                                                                                                             } else {
                                                                                                                                 echo $pro_record['selling_price'];

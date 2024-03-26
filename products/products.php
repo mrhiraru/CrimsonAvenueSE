@@ -88,7 +88,7 @@ include_once('../includes/preloader.php');
                                                         } ?>" alt="" class="border border-secondary border-opacity-25 rounded img-fluid">
                                         </div>
                                         <div class="col-12 m-0 mt-1 p-0 d-flex flex-column">
-                                            <p class="fs-6 text-nowrap fw-semibold text-dark m-0 p-0 lh-sm  text-truncate"> <?= $item['product_name'] ?> </p>
+                                            <p class="fs-6 text-nowrap fw-semibold text-dark m-0 p-0 lh-sm text-truncate"> <?= ucwords(strtolower($item['product_name'])) ?> </p>
                                             <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> By <span class="text-primary"><?= $item['store_name'] ?></span> </p>
                                             <p class="fs-5 text-nowrap fw-bold text-primary m-0 mt-1 lh-1  text-truncate"> ₱ <?= $item['selling_price'] ?> </p>
                                             <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> For <span class="text-primary"><?= $item['exclusivity'] ?></span> </p>
