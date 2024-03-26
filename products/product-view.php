@@ -158,6 +158,7 @@ include_once('../includes/preloader.php');
                                     } else if (isset($record['sale_status']) && $record['sale_status'] == "On-hand") {
                                         ?>
                                         <div id="stock" class="m-0 p-0">
+                                            
                                         </div>
                                     <?php
                                     }
