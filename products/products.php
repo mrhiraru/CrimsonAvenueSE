@@ -14,7 +14,7 @@ $page_count = $product->count_products_filter(isset($_GET['search']) ? $_GET['se
 $pages = ceil($page_count[0]['selected_count'] / $limit);
 
 if (isset($_GET['page']) && !is_numeric($_GET['page'])) {
-    //header('location: ./products.php?page=1');
+    header('location: ./products.php?page=1');
 }
 
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
