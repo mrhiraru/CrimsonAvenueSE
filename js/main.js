@@ -16,6 +16,8 @@ function validateinputqty(input, limit) {
   // Remove any non-digit characters
   input.value = input.value.replace(/[^0-9]/g, "");
 
+  var available_stock = parseInt(document.getElementById("available_stock").value);
+
   // Convert input value to a number
   let quantity = parseInt(input.value);
 
@@ -26,6 +28,8 @@ function validateinputqty(input, limit) {
   } else if (quantity > limit) {
     // Set input value to the limit if it's greater than the specified limit
     input.value = limit.toString();
+  } else if (input.value > available_stock) {
+    input.value = available_stock.toString();
   }
 }
 
@@ -89,4 +93,3 @@ if (modalElement) {
 // window.onload = function () {
 //   updateClock();
 // };
-
