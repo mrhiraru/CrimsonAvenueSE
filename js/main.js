@@ -28,7 +28,7 @@ function validateinputqty(input, limit) {
   } else if (quantity > limit) {
     // Set input value to the limit if it's greater than the specified limit
     input.value = limit.toString();
-  } else if (input.value > available_stock) {
+  } else if (quantity > available_stock) {
     input.value = available_stock.toString();
   }
 }
