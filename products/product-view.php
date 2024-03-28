@@ -103,7 +103,7 @@ include_once('../includes/preloader.php');
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
                         <p class="fs-1 text-nowrap fw-bold text-primary m-0 lh-1  text-truncate" id="price"> ₱ <?= $record['selling_price'] ?> </p>
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
-                        <form action="" method="post" class="col-12">
+                        <form action="../index.php" method="post" class="col-12" id="orderForm">
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
                                     Variations:
@@ -143,7 +143,7 @@ include_once('../includes/preloader.php');
                                     <label for="quantity">Quantity: <?= isset($record['order_quantity_limit']) && $record['order_quantity_limit'] > 0 ? $record['order_quantity_limit'] . " Limit per Order" : "" ?></label>
                                 </div>
                                 <div class="m-0 p-0 me-1 mb-1">
-                                    <input type="number" class="form-control btn-product-size focus-primary px-2 py-1 fs-7" name="quantity" id="quantity" oninput="validateinputqty(this, <?= $record['order_quantity_limit'] > 0 ? $record['order_quantity_limit'] : 'Infinity'  ?>)" value="">
+                                    <input type="number" class="form-control btn-product-size focus-primary px-2 py-1 fs-7" name="quantity" id="quantity" oninput="validateinputqty(this, <?= $record['order_quantity_limit'] > 0 ? $record['order_quantity_limit'] : 'Infinity'  ?>)" value="1">
                                 </div>
                             </div>
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
@@ -289,6 +289,25 @@ include_once('../includes/preloader.php');
                 buy_btn.disabled = false;
             }
         }
+
+        function changeActionLink(event) {
+            var form = document.getElementById("orderForm");
+
+            const queryLink = window.location.href;
+            const urlParams = new URLSearchParams(queryLink);
+            const product_id = urlParams.get("product_id");
+
+            if (event.target.id === "add") {
+
+                form.action = queryLink;
+            } else if (event.target.id === "buy") {
+
+                form.action = "../order/checkout.php";
+            }
+        }
+
+        document.getElementById("add").addEventListener("click", changeActionLink);
+        document.getElementById("buy").addEventListener("click", changeActionLink);
     </script>
 </body>
 
