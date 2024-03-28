@@ -8,7 +8,7 @@
                 </a>
                 <button class="btn mx-3 p-0 fs-4 text-light border-0" type="button" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
                 <a href="../notification.php" class="mx-3 text-light"><i class="fa-solid fa-bell"></i></a>
-                <a href="../cart.php" class="mx-3 text-light"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="../order/cart.php" class="mx-3 text-light"><i class="fa-solid fa-cart-shopping"></i></a>
 
                 <div class="dropdown d-none d-lg-block">
                     <button class="mx-3 text-light border-0 bg-tertiary d-flex align-items-center justify-content-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">

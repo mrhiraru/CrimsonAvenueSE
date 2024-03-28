@@ -103,7 +103,7 @@ include_once('../includes/preloader.php');
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
                         <p class="fs-1 text-nowrap fw-bold text-primary m-0 lh-1  text-truncate" id="price"> ₱ <?= $record['selling_price'] ?> </p>
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
-                        <form action="../index.php" method="post" class="col-12" id="orderForm">
+                        <form action="" method="post" class="col-12" id="orderForm">
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
                                     Variations:
