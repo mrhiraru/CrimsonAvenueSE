@@ -319,26 +319,28 @@ include_once('../includes/preloader.php');
         function changeActionLink(event) {
             var form = document.getElementById("orderForm");
 
-            var inputsWithValue = Array.from(form.elements).some(function(input) {
-                return input.value.trim() !== ''; // Check if input value is not empty after trimming whitespace
-            });
-
-            if (!inputsWithValue) {
-                // If no inputs have values, prevent action link change
-                event.preventDefault();
-                return;
-            }
-
             const queryLink = window.location.href;
             const urlParams = new URLSearchParams(queryLink);
             const product_id = urlParams.get("product_id");
 
-            if (event.target.id === "add") {
 
+            const variationChecked = document.querySelector('input[name="variation"]:checked') ||
+                document.querySelector('input[name="variation"][type="hidden"][value]');
+            const measurementChecked = document.querySelector('input[name="measurement"]:checked') ||
+                document.querySelector('input[name="measurement"][type="hidden"][value]');
+
+            if (!variationChecked || !measurementChecked) {
+
+            }
+
+            if (event.target.id === "add") {
                 form.action = queryLink;
             } else if (event.target.id === "buy") {
-
-                form.action = "../order/checkout.php";
+                if (!variationChecked || !measurementChecked) {
+                    form.action = queryLink;
+                } else {
+                    form.action = "../order/checkout.php";
+                }
             }
         }
 
