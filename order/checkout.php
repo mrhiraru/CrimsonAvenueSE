@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+require_once "../tools/functions.php";
+require_once "../classes/product.class.php";
+
+$product = new Product();
+$record = $product->checkout($_POST['product_id'], $_POST['variation'], $_POST['measurement']);
 
 ?>
 
@@ -26,6 +33,44 @@ include_once('../includes/preloader.php');
                     </div>
                 </div>
                 <hr>
+                <table id="ordersummary" class="table table-lg mt-1">
+                    <thead>
+                        <tr class="align-middle">
+                            <th scope="col"></th>
+                            <th scope="col" class="">Product Name</th>
+                            <th scope="col" class="text-center">Variation</th>
+                            <th scope="col" class="text-center">Measurement</th>
+                            <th scope="col" class="text-center">Quantity</th>
+                            <th scope="col" class="text-center">Price</th>
+                            <th scope="col" class="text-center">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // $counter = 1;
+                        // $store = new Store();
+                        // $storeArray = $store->show_mystores($_SESSION['account_id']);
+                        // foreach ($storeArray as $item) {
+                        ?>
+                        <tr class="align-middle">
+                            <td> <img src="<?php if (isset($record['image_file'])) {
+                                                echo "../images/data/" . $record['image_file'];
+                                            } else {
+                                                echo "../images/main/no-profile.jpg";
+                                            } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"> </td>
+                            <td class=""><?= $record['product_name'] ?></td>
+                            <td class="text-center"><?= $record['variation_name'] ?></td>
+                            <td class="text-center"><?= $record['measurement_name'] ?></td>
+                            <td class="text-center"><?= $_POST['quantity'] ?></td>
+                            <td class="text-center"><?= isset($record['stock_selling_price']) ? $record['stock_selling_price'] : $record['product_selling_price'] ?></td>
+                            <td class="text-center"><?= sprintf("%.2f", (isset($record['stock_selling_price']) ? $record['stock_selling_price'] : $record['product_selling_price']) * $_POST['quantity']) ?></td>
+                        </tr>
+                        <?php
+                        //     $counter++;
+                        // }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </main>
         <section>

@@ -107,4 +107,5 @@ class Stock
         }
         return $data;
     }
+
 }

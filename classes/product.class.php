@@ -229,7 +229,7 @@ class Product
             $sql .= " AND p.exclusivity = :exclusivity";
         }
 
-       // $sql .= " GROUP BY p.product_id;";
+        // $sql .= " GROUP BY p.product_id;";
 
 
         $query = $this->db->connect()->prepare($sql);
@@ -358,6 +358,26 @@ class Product
         $data = null;
         if ($query->execute()) {
             $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function checkout($product_id, $variation_id, $measurement_id)
+    {
+        $sql = "SELECT  p.product_name, p.selling_price AS product_selling_price, i.image_file, v.variation_name, m.measurement_name, s.*, s.selling_price AS stock_selling_price 
+        FROM product p 
+        LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
+        INNER JOIN variation v ON p.product_id = v.product_id AND v.variation_id = :variation_id
+        INNER JOIN measurement m ON p.product_id = m.product_id AND m.measurement_id = :measurement_id
+        LEFT JOIN (SELECT * FROM stock WHERE product_id = :product_id AND variation_id = :variation_id AND measurement_id = :measurement_id AND is_deleted != 1 AND stock_sold < stock_quantity ORDER BY stock_id ASC) s ON p.product_id = s.product_id 
+        WHERE p.product_id = :product_id;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':product_id', $product_id);
+        $query->bindParam(':variation_id', $variation_id);
+        $query->bindParam(':measurement_id', $measurement_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
         }
         return $data;
     }

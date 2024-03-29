@@ -104,6 +104,7 @@ include_once('../includes/preloader.php');
                         <p class="fs-1 text-nowrap fw-bold text-primary m-0 lh-1  text-truncate" id="price"> ₱ <?= $record['selling_price'] ?> </p>
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
                         <form action="" method="post" class="col-12" id="orderForm">
+                            <input type="hidden" name="product_id" value="<?= $record['product_id'] ?>">
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <?php
                                 $variation = new Variation();
@@ -274,8 +275,10 @@ include_once('../includes/preloader.php');
     ?>
     <script>
         function showStocks(product) {
-            var variation_input = document.querySelector('input[name="variation"]:checked');
-            var measurement_input = document.querySelector('input[name="measurement"]:checked');
+            var variation_input = document.querySelector('input[name="variation"]:checked') ||
+                document.querySelector('input[name="variation"][type="hidden"][value]');
+            var measurement_input = document.querySelector('input[name="measurement"]:checked') ||
+                document.querySelector('input[name="measurement"][type="hidden"][value]');
 
             if (variation_input !== null && measurement_input !== null) {
                 var variation = variation_input.value;
@@ -298,8 +301,10 @@ include_once('../includes/preloader.php');
         }
 
         function showPrice(product, price) {
-            var variation_input = document.querySelector('input[name="variation"]:checked');
-            var measurement_input = document.querySelector('input[name="measurement"]:checked');
+            var variation_input = document.querySelector('input[name="variation"]:checked') ||
+                document.querySelector('input[name="variation"][type="hidden"][value]');
+            var measurement_input = document.querySelector('input[name="measurement"]:checked') ||
+                document.querySelector('input[name="measurement"][type="hidden"][value]');
 
             if (variation_input !== null && measurement_input !== null) {
                 var variation = variation_input.value;
@@ -309,6 +314,7 @@ include_once('../includes/preloader.php');
                 xhttp.onload = function() {
                     var stock_price = this.responseText;
                     document.getElementById("price").innerHTML = stock_price;
+                    document.querySelector('input[name="price"][type="hidden"]').value = stock_price;
                 }
                 xhttp.open("GET", "getprice.php?product_id=" + product + "&variation_id=" + variation + "&measurement_id=" + measurement + "&price=" + price);
                 xhttp.send();
