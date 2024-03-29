@@ -123,7 +123,7 @@ include_once('../includes/preloader.php');
                                     } else {
                                     ?>
                                         <div class="m-0 p-0 me-1 mb-1">
-                                            <input type="radio" class="btn-check" name="variation" id="<?= $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= count($varArray) < 2 ? "checked" : "" ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
+                                            <input type="radio" class="btn-check" name="variation" id="<?= $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= (isset($_POST['variation']) && $_POST['variation'] == $item['variation_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
                                             <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
                                         </div>
 
@@ -156,7 +156,7 @@ include_once('../includes/preloader.php');
                                     } else {
                                     ?>
                                         <div class="m-0 p-0 me-1 mb-1">
-                                            <input type="radio" class="btn-check" name="measurement" id="<?= $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= count($meaArray) < 2 ? "checked" : "" ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
+                                            <input type="radio" class="btn-check" name="measurement" id="<?= $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= (isset($_POST['measurement']) && $_POST['measurement'] == $item['measurement_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
                                             <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
                                         </div>
 
@@ -203,7 +203,7 @@ include_once('../includes/preloader.php');
                                 <?php
                                 if ($record['restriction_status'] == "Unrestricted") {
                                 ?>
-                                    <div class="col-12 m-0 p-0 me-1 mt-2 d-flex justify-content-evenly align-items-sm-end">
+                                    <div class="col-12 m-0 p-0 me-1 mt-2 d-flex justify-content-evenly">
                                         <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 me-1" value="Add to Cart" name="add" id="add">
                                         <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 ms-1" value="<?= $record['sale_status'] == "On-hand" ? "Buy Now" : "Pre Order" ?>" name="buy" id="buy">
                                     </div>
