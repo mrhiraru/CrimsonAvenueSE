@@ -105,36 +105,56 @@ include_once('../includes/preloader.php');
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
                         <form action="" method="post" class="col-12" id="orderForm">
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
-                                <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
-                                    Variations:
-                                </div>
                                 <?php
                                 $variation = new Variation();
                                 $varArray = $variation->show($record['product_id']);
-                                foreach ($varArray as $item) {
+                                if (count($varArray) >= 2) {
                                 ?>
-                                    <div class="m-0 p-0 me-1 mb-1">
-                                        <input type="radio" class="btn-check" name="variation" id="<?= $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= count($varArray) < 2 ? "checked" : "" ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
-                                        <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
+                                    <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
+                                        Variation:
                                     </div>
+                                    <?php
+                                }
+                                foreach ($varArray as $item) {
+                                    if (count($varArray) <= 1) {
+                                    ?>
+                                        <input type="hidden" name="variation" value="<?= $item['variation_id'] ?>">
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <div class="m-0 p-0 me-1 mb-1">
+                                            <input type="radio" class="btn-check" name="variation" id="<?= $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= count($varArray) < 2 ? "checked" : "" ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
+                                            <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
+                                        </div>
                                 <?php
+                                    }
                                 }
                                 ?>
                             </div>
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
-                                <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
-                                    Measurements:
-                                </div>
                                 <?php
                                 $measurement = new Measurement();
                                 $meaArray = $measurement->show($record['product_id']);
-                                foreach ($meaArray as $item) {
+                                if (count($meaArray) >= 2) {
                                 ?>
-                                    <div class="m-0 p-0 me-1 mb-1">
-                                        <input type="radio" class="btn-check" name="measurement" id="<?= $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= count($meaArray) < 2 ? "checked" : "" ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
-                                        <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
+                                    <div class="col-12 m-0 p-0 me-1 mb-1 fs-7">
+                                        Measurements:
                                     </div>
+                                    <?php
+                                }
+                                foreach ($meaArray as $item) {
+                                    if (count($meaArray) <= 1) {
+                                    ?>
+                                        <input type="hidden" name="measurement" value="<?= $item['measurement_id'] ?>">
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <div class="m-0 p-0 me-1 mb-1">
+                                            <input type="radio" class="btn-check" name="measurement" id="<?= $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= count($meaArray) < 2 ? "checked" : "" ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
+                                            <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
+                                        </div>
                                 <?php
+                                    }
                                 }
                                 ?>
                             </div>
@@ -298,6 +318,16 @@ include_once('../includes/preloader.php');
 
         function changeActionLink(event) {
             var form = document.getElementById("orderForm");
+
+            var inputsWithValue = Array.from(form.elements).some(function(input) {
+                return input.value.trim() !== ''; // Check if input value is not empty after trimming whitespace
+            });
+
+            if (!inputsWithValue) {
+                // If no inputs have values, prevent action link change
+                event.preventDefault();
+                return;
+            }
 
             const queryLink = window.location.href;
             const urlParams = new URLSearchParams(queryLink);
