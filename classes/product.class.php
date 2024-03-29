@@ -37,7 +37,7 @@ class Product
         $query->bindParam(':exclusivity', $this->exclusivity);
         $query->bindParam(':sale_status', $this->sale_status);
         $query->bindParam(':selling_price', $this->selling_price);
-        $query->bindParam(':purchase_price', $this->selling_price);
+        $query->bindParam(':purchase_price', $this->purchase_price);
 
         if ($query->execute()) {
             $last_product_id = $connect->lastInsertId();

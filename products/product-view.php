@@ -323,15 +323,10 @@ include_once('../includes/preloader.php');
             const urlParams = new URLSearchParams(queryLink);
             const product_id = urlParams.get("product_id");
 
-
             const variationChecked = document.querySelector('input[name="variation"]:checked') ||
                 document.querySelector('input[name="variation"][type="hidden"][value]');
             const measurementChecked = document.querySelector('input[name="measurement"]:checked') ||
                 document.querySelector('input[name="measurement"][type="hidden"][value]');
-
-            if (!variationChecked || !measurementChecked) {
-
-            }
 
             if (event.target.id === "add") {
                 form.action = queryLink;

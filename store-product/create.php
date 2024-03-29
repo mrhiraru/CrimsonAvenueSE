@@ -27,6 +27,7 @@ if (isset($_POST['create'])) {
         $product->sale_status = '';
     }
     $product->selling_price = htmlentities($_POST['selling_price']);
+    $product->purchase_price = htmlentities($_POST['purchase_price']);
     $product->store_id = $_GET['store_id'];
 
     if (
@@ -35,6 +36,7 @@ if (isset($_POST['create'])) {
         validate_field($product->exclusivity) &&
         validate_field($product->sale_status) &&
         validate_field($product->selling_price) &&
+        validate_field($product->purchase_price) &&
         validate_field($product->store_id)
     ) {
         if ($product->add()) {
@@ -155,7 +157,7 @@ include_once('../includes/preloader.php');
                                         </label>
                                     </div>
                                     <?php
-                                    if ((isset($_POST['sale_status']) && !validate_field($_POST['sale_status']))) {
+                                    if ((isset($_POST['create']) && !isset($_POST['sale_status'])) || (isset($_POST['sale_status']) && !validate_field($_POST['sale_status']))) {
                                     ?>
                                         <p class="fs-7 text-primary m-0 ps-2 col-12">No sale status selected.</p>
                                     <?php
