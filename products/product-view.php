@@ -77,7 +77,7 @@ include_once('../includes/preloader.php');
                         </div>
                     </div>
                     <div class="col-12 col-md-6 m-0 p-0 pt-3 pt-md-0 ps-md-3 d-flex flex-fill flex-column align-items-start">
-                        <p class="col-12 fs-2 fw-bold text-dark m-0 p-0 text-truncate text-capitalize"> <?= ucwords(strtolower($record['product_name'])) ?> </p>
+                        <p class="col-12 fs-2 fw-bold text-dark m-0 p-0 text-wrap lh-sm"> <?= ucwords(strtolower($record['product_name'])) ?> </p>
                         <div class="row m-0 p-0 w-100">
                             <div class="col-auto m-0 p-0">
                                 <p class="fs-6 text-nowrap text-secondary m-0 mt-1 p-0 lh-1 text-truncate">
