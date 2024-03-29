@@ -242,10 +242,13 @@ include_once('../includes/preloader.php');
     ?>
     <script>
         function showStocks(product) {
-            var variation = document.querySelector('input[name="variation"]:checked').value;
-            var measurement = document.querySelector('input[name="measurement"]:checked').value;
+            var variation_input = document.querySelector('input[name="variation"]:checked');
+            var measurement_input = document.querySelector('input[name="measurement"]:checked');
 
-            if (variation !== '' && measurement !== '') {
+            if (variation_input !== null && measurement_input !== null) {
+                var variation = variation_input.value;
+                var measurement = measurement_input.value;
+
                 const xhttp = new XMLHttpRequest();
                 xhttp.onload = function() {
                     var available_stock = this.responseText;
@@ -263,10 +266,13 @@ include_once('../includes/preloader.php');
         }
 
         function showPrice(product, price) {
-            var variation = document.querySelector('input[name="variation"]:checked').value;
-            var measurement = document.querySelector('input[name="measurement"]:checked').value;
+            var variation_input = document.querySelector('input[name="variation"]:checked');
+            var measurement_input = document.querySelector('input[name="measurement"]:checked');
 
-            if (variation !== '' && measurement !== '') {
+            if (variation_input !== null && measurement_input !== null) {
+                var variation = variation_input.value;
+                var measurement = measurement_input.value;
+
                 const xhttp = new XMLHttpRequest();
                 xhttp.onload = function() {
                     var stock_price = this.responseText;
