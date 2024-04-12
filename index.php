@@ -5,7 +5,6 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./user/verify.php');
 }
 
-
 ?>
 
 <!DOCTYPE html>
