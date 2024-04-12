@@ -81,7 +81,7 @@ include_once('../includes/preloader.php');
                         foreach ($storeArray as $item) {
                         ?>
                             <div class="col-12 col-lg-6 m-0 p-1 d-flex justify-content-center align-items-center">
-                                <a class="card store-card p-3 text-decoration-none overflow-hidden" href="./stores.php">
+                                <a class="card store-card p-3 text-decoration-none overflow-hidden" href="./store-view.php?store_id=<?= $item['store_id'] ?>">
                                     <div class="row m-0 mb-2 p-0 d-flex align-items-center">
                                         <div class="col-auto m-0 mb-1 p-0">
                                             <img src="../images/main/no-profile.jpg" width="60" height="60" alt="" class="border border-secondary border-opacity-25 rounded ">
