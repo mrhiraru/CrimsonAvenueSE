@@ -56,6 +56,18 @@ class Department
         }
         return $data;
     }
+    function show_moderator($college_assigned)
+    {
+        $sql = "SELECT d.*, c.college_name FROM department d JOIN college c ON d.college_id = c.college_id WHERE d.is_deleted != 1 AND c.is_deleted != 1 AND c.college_id = :college_assigned ORDER BY d.department_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_assigned', $college_assigned);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 
     function fetch($department_id)
     {

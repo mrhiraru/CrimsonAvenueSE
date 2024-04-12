@@ -160,6 +160,18 @@ class Account
         }
         return $data;
     }
+    function show_moderator($college_assigned)
+    {
+        $sql = "SELECT * FROM account WHERE is_deleted != 1 AND college_id = :college_assigned ORDER BY account_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_assigned', $college_assigned);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 
     function fetch($account_id){
         $sql = "SELECT a.*, c.college_name, d.department_name FROM account a LEFT JOIN college c ON a.college_id = c.college_id LEFT JOIN department d ON a.department_id = d.department_id WHERE account_id = :account_id LIMIT 1;";

@@ -58,7 +58,7 @@ include_once('../includes/preloader.php');
                                     <?php
                                     $counter = 1;
                                     $user = new Account();
-                                    $userArray = $user->show();
+                                    $userArray = $user->show_moderator($_SESSION['college_assigned']);
                                     foreach ($userArray as $item) {
                                     ?>
                                         <tr class="align-middle">
