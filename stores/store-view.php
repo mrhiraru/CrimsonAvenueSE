@@ -24,13 +24,7 @@ include_once('../includes/preloader.php');
     <div class="container-fluid col-md-9 mt-4 mx-sm-auto min-vh-100 ">
         <main>
         
-        <?php if (isset($record['middlename'])) {
-                                                echo ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname']));
-                                            } else {
-                                                echo ucwords(strtolower($record['firstname'] . ' ' . $record['lastname']));
-                                            } ?>
-
-        </main>
+   
         <section>
             <!-- Code Here Extra Section -->
         </section>
