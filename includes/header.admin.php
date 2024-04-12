@@ -7,14 +7,14 @@
                 </button>
                 <a class="navbar-brand h-1 fs-3 fw-bolder ms-3 me-auto d-flex align-items-center text-light" href="../admin/index.php">
                     <img src="../images/main/ca-nospace.png" alt="" width="40" height="40" class="d-inline-block me-2">
-                    <span class="d-lg-inline d-md-inline d-none">Administrator Panel</span>
+                    <span class="d-lg-inline d-md-inline d-none"><?= $_SESSION['user_role'] == 0 ? "Administrator" : "Moderator" ?> Panel</span>
                 </a>
                 <div class="dropdown">
                     <button class="mx-3 text-light dropdown-toggle border-0 bg-tertiary d-flex align-items-center justify-content-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="<?php if (isset($_SESSION['profile_image'])) {
                                         echo "../images/data/" . $_SESSION['profile_image'];
                                     } else {
-                                        echo "../images/main/no-profile.jpg";
+                                        echo "../images/main/no-profile.jpg";   
                                     } ?>" alt="" width="38" height="38" class="d-inline rounded-5 border border-light border-2 me-2">
                         <div class="m-0 lh-sm ">
                             <div class="align-bottom">
