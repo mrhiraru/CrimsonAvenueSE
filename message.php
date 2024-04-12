@@ -4,6 +4,7 @@
 // Change title for each page.
 $title = "Message | Crimson Avenue";
 $page_name = "active";
+
 require_once('./includes/head.php');
 include_once('./includes/preloader.php');
 ?>
