@@ -168,164 +168,241 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-2">
                             </div>
-                            <form method="post" action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . (isset($_GET['stock_id']) ? '&stock_id=' . $_GET['stock_id'] : '') ?>" class="col-12">
-                                <div class="row">
-                                    <?php
-                                    if (isset($_POST['edit']) || isset($_POST['save'])) {
-                                        $sto_record = $stock->fetch($_GET['stock_id']);
-                                    ?>
-                                        <input type="hidden" name="stock_sold" value="<?= $sto_record['stock_sold'] ?>">
-                                    <?php
-                                    }
-                                    ?>
-                                    <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
-                                        <label for="stock_quantity" class="text-secondary m-0 p-0">Stock Quantity:</label>
-                                        <input type="number" id="stock_quantity" name="stock_quantity" placeholder="Stock Quantity" class="form-control" value="<?php if (isset($_POST['stock_quantity'])) {
-                                                                                                                                                                    echo $_POST['stock_quantity'];
-                                                                                                                                                                } else if (isset($sto_record['stock_quantity'])) {
-                                                                                                                                                                    echo $sto_record['stock_quantity'];
-                                                                                                                                                                }
-                                                                                                                                                                ?>">
+                            <?php
+                            if ($pro_record['sale_status'] == "On-hand") {
+                            ?>
+                                <form method="post" action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . (isset($_GET['stock_id']) ? '&stock_id=' . $_GET['stock_id'] : '') ?>" class="col-12">
+                                    <div class="row">
                                         <?php
-                                        if (isset($_POST['stock_quantity']) && !validate_field($_POST['stock_quantity'])) {
+                                        if (isset($_POST['edit']) || isset($_POST['save'])) {
+                                            $sto_record = $stock->fetch($_GET['stock_id']);
                                         ?>
-                                            <p class="fs-7 text-primary m-0 ps-2">Stock Quantity is required.</p>
+                                            <input type="hidden" name="stock_sold" value="<?= $sto_record['stock_sold'] ?>">
                                         <?php
-                                        } else if (isset($_POST['stock_quantity']) && !validate_number($_POST['stock_quantity'])) {
+                                        }
                                         ?>
-                                            <p class="fs-7 text-primary m-0 ps-2">Stock Quantity can not be less than one.</p>
+                                        <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
+                                            <label for="stock_quantity" class="text-secondary m-0 p-0">Stock Quantity:</label>
+                                            <input type="number" id="stock_quantity" name="stock_quantity" placeholder="<?= $pro_record['sale_status'] == "Pre-order" ? "0" : "Stock Quantity" ?>" <?= $pro_record['sale_status'] == "Pre-order" ? "disabled" : "" ?> class="form-control" value="<?php if (isset($_POST['stock_quantity'])) {
+                                                                                                                                                                                                                                                                                                        echo $_POST['stock_quantity'];
+                                                                                                                                                                                                                                                                                                    } else if (isset($sto_record['stock_quantity'])) {
+                                                                                                                                                                                                                                                                                                        echo $sto_record['stock_quantity'];
+                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                    ?>">
                                             <?php
-                                        } else if (isset($_POST['save'])) {
-                                            if (isset($_POST['stock_quantity']) && !validate_stock_quantity($_POST['stock_sold'], $_POST['stock_quantity'])) {
+                                            if (isset($_POST['stock_quantity']) && !validate_field($_POST['stock_quantity'])) {
                                             ?>
-                                                <p class="fs-7 text-primary m-0 ps-2">Stock quantity can not be less than stock sold.</p>
-                                        <?php
+                                                <p class="fs-7 text-primary m-0 ps-2">Stock Quantity is required.</p>
+                                            <?php
+                                            } else if (isset($_POST['stock_quantity']) && !validate_number($_POST['stock_quantity'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">Stock Quantity can not be less than one.</p>
+                                                <?php
+                                            } else if (isset($_POST['save'])) {
+                                                if (isset($_POST['stock_quantity']) && !validate_stock_quantity($_POST['stock_sold'], $_POST['stock_quantity'])) {
+                                                ?>
+                                                    <p class="fs-7 text-primary m-0 ps-2">Stock quantity can not be less than stock sold.</p>
+                                            <?php
+                                                }
                                             }
-                                        }
-                                        ?>
+                                            ?>
+                                        </div>
+                                        <div class="mb-3 p-0 pe-lg-2 col-12 col-md-6 col-lg-3">
+                                            <label for="purchase_price" class="text-secondary m-0 p-0">Purchase Price:</label>
+                                            <input type="number" id="purchase_price" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
+                                                                                                                                                                        echo $_POST['purchase_price'];
+                                                                                                                                                                    } else if (isset($sto_record['purchase_price'])) {
+                                                                                                                                                                        echo $sto_record['purchase_price'];
+                                                                                                                                                                    } else {
+                                                                                                                                                                        echo $pro_record['purchase_price'];
+                                                                                                                                                                    } ?>">
+                                            <?php
+                                            if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">Purchase price is required.</p>
+                                            <?php
+                                            } else if (isset($_POST['purchase_price']) && !validate_number($_POST['purchase_price'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">Purchase price can not be less than one.</p>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
+                                            <label for="selling_price" class="text-secondary m-0 p-0">Selling Price:</label>
+                                            <input type="number" id="selling_price" name="selling_price" placeholder="Selling Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
+                                                                                                                                                                        echo $_POST['selling_price'];
+                                                                                                                                                                    } else if (isset($sto_record['selling_price'])) {
+                                                                                                                                                                        echo $sto_record['selling_price'];
+                                                                                                                                                                    } else {
+                                                                                                                                                                        echo $pro_record['selling_price'];
+                                                                                                                                                                    } ?>">
+                                            <?php
+                                            if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">Selling price is required.</p>
+                                            <?php
+                                            } else if (isset($_POST['purchase_price']) && !validate_number($_POST['selling_price'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">Selling price can not be less than one.</p>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="mb-3 p-0 col-12 col-md-6 col-lg-3 text-end">
+                                            <?php if (isset($_POST['edit']) || isset($_POST['save'])) { ?>
+                                                <br>
+                                                <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" name="cancel" value="Cancel">
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="save" value="Save">
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <br>
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="add" value="Add">
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
-                                    <div class="mb-3 p-0 pe-lg-2 col-12 col-md-6 col-lg-3">
-                                        <label for="purchase_price" class="text-secondary m-0 p-0">Purchase Price:</label>
-                                        <input type="number" id="purchase_price" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
-                                                                                                                                                                    echo $_POST['purchase_price'];
-                                                                                                                                                                } else if (isset($sto_record['purchase_price'])) {
-                                                                                                                                                                    echo $sto_record['purchase_price'];
-                                                                                                                                                                } else {
-                                                                                                                                                                    echo $pro_record['purchase_price'];
-                                                                                                                                                                } ?>">
-                                        <?php
-                                        if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
-                                        ?>
-                                            <p class="fs-7 text-primary m-0 ps-2">Purchase price is required.</p>
-                                        <?php
-                                        } else if (isset($_POST['purchase_price']) && !validate_number($_POST['purchase_price'])) {
-                                        ?>
-                                            <p class="fs-7 text-primary m-0 ps-2">Purchase price can not be less than one.</p>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
-                                    <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
-                                        <label for="selling_price" class="text-secondary m-0 p-0">Selling Price:</label>
-                                        <input type="number" id="selling_price" name="selling_price" placeholder="Selling Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
-                                                                                                                                                                    echo $_POST['selling_price'];
-                                                                                                                                                                } else if (isset($sto_record['selling_price'])) {
-                                                                                                                                                                    echo $sto_record['selling_price'];
-                                                                                                                                                                } else {
-                                                                                                                                                                    echo $pro_record['selling_price'];
-                                                                                                                                                                } ?>">
-                                        <?php
-                                        if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
-                                        ?>
-                                            <p class="fs-7 text-primary m-0 ps-2">Selling price is required.</p>
-                                        <?php
-                                        } else if (isset($_POST['purchase_price']) && !validate_number($_POST['selling_price'])) {
-                                        ?>
-                                            <p class="fs-7 text-primary m-0 ps-2">Selling price can not be less than one.</p>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
-                                    <div class="mb-3 p-0 col-12 col-md-6 col-lg-3 text-end">
-                                        <?php if (isset($_POST['edit']) || isset($_POST['save'])) { ?>
-                                            <br>
-                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" name="cancel" value="Cancel">
-                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="save" value="Save">
-                                        <?php
-                                        } else {
-                                        ?>
-                                            <br>
-                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="add" value="Add">
-                                        <?php
-                                        }
-                                        ?>
+                                </form>
+                                <div class="col-12 m-0 p-0">
+                                    <hr class="mb-3 mt-0">
+                                </div>
+                                <div class="search-keyword col-12 p-0 d-flex justify-content-end">
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="input-group">
+                                            <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
+                                            <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
-                            <div class="col-12 m-0 p-0">
-                                <hr class="mb-3 mt-0">
-                            </div>
-                            <div class="search-keyword col-12 p-0 d-flex justify-content-end">
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="input-group">
-                                        <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
-                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 m-0 p-0 px-2 row">
-                                <table id="stocks" class="table table-lg mt-1">
-                                    <thead>
-                                        <tr class="align-middle">
-                                            <th scope="col"></th>
-                                            <th scope="col">Date Added</th>
-                                            <th scope="col" class="text-center">Sold</th>
-                                            <th scope="col" class="text-center">Remaining</th>
-                                            <th scope="col" class="text-center">Total Stocks</th>
-                                            <th scope="col" class="text-center">Purchase Price</th>
-                                            <th scope="col" class="text-center">Selling Price</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $counter = 1;
-                                        $stockArray = $stock->show($pro_record['product_id'], $var_record['variation_id'], $mea_record['measurement_id']);
-                                        foreach ($stockArray as $item) {
-                                        ?>
+                                <div class="col-12 m-0 p-0 px-2 row">
+                                    <table id="stocks" class="table table-lg mt-1">
+                                        <thead>
                                             <tr class="align-middle">
-                                                <td><?= $counter ?></td>
-                                                <td><?= date('F d Y', strtotime($item['is_created'])) ?></td>
-                                                <td class="text-center"><?= $item['stock_sold'] ?></td>
-                                                <td class="text-center"><?= $item['stock_quantity'] - $item['stock_sold'] ?></td>
-                                                <td class="text-center"><?= $item['stock_quantity'] ?></td>
-                                                <td class="text-center"><?= '₱ ' . $item['purchase_price'] ?></td>
-                                                <td class="text-center"><?= '₱ ' . $item['selling_price'] ?></td>
-                                                <td class="text-end text-nowrap">
-                                                    <div class="m-0 p-0">
-                                                        <form action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . '&stock_id=' . $item['stock_id'] ?> " method="post">
-                                                            <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="edit" value="Edit"></input>
-                                                            <?php if ($item['stock_sold'] < 1) {
-                                                            ?>
-                                                                <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Delete"></input>
-                                                            <?php
-                                                            } else {
-                                                            ?>
-                                                                <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold delete-disabled" disabled name="warning_false" value="Delete"></input>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </form>
-                                                    </div>
-                                                </td>
+                                                <th scope="col"></th>
+                                                <th scope="col">Date Added</th>
+                                                <th scope="col" class="text-center">Sold</th>
+                                                <th scope="col" class="text-center">Remaining</th>
+                                                <th scope="col" class="text-center">Total Stocks</th>
+                                                <th scope="col" class="text-center">Purchase Price</th>
+                                                <th scope="col" class="text-center">Selling Price</th>
+                                                <th scope="col"></th>
                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $counter = 1;
+                                            $stockArray = $stock->show($pro_record['product_id'], $var_record['variation_id'], $mea_record['measurement_id']);
+                                            foreach ($stockArray as $item) {
+                                            ?>
+                                                <tr class="align-middle">
+                                                    <td><?= $counter ?></td>
+                                                    <td><?= date('F d Y', strtotime($item['is_created'])) ?></td>
+                                                    <td class="text-center"><?= $item['stock_sold'] ?></td>
+                                                    <td class="text-center"><?= $item['stock_quantity'] - $item['stock_sold'] ?></td>
+                                                    <td class="text-center"><?= $item['stock_quantity'] ?></td>
+                                                    <td class="text-center"><?= '₱ ' . $item['purchase_price'] ?></td>
+                                                    <td class="text-center"><?= '₱ ' . $item['selling_price'] ?></td>
+                                                    <td class="text-end text-nowrap">
+                                                        <div class="m-0 p-0">
+                                                            <form action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . '&stock_id=' . $item['stock_id'] ?> " method="post">
+                                                                <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="edit" value="Edit"></input>
+                                                                <?php if ($item['stock_sold'] < 1) {
+                                                                ?>
+                                                                    <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Delete"></input>
+                                                                <?php
+                                                                } else {
+                                                                ?>
+                                                                    <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold delete-disabled" disabled name="warning_false" value="Delete"></input>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php
+                                                $counter++;
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <?php
+                            } else if ($pro_record['sale_status'] == "Pre-order") {
+                            ?>
+                                <form method="post" action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . (isset($_GET['stock_id']) ? '&stock_id=' . $_GET['stock_id'] : '') ?>" class="col-12">
+                                    <div class="row">
                                         <?php
-                                            $counter++;
+                                        if (isset($_POST['edit']) || isset($_POST['save'])) {
+                                            $sto_record = $stock->fetch($_GET['stock_id']);
+                                        ?>
+                                            <input type="hidden" name="stock_sold" value="<?= $sto_record['stock_sold'] ?>">
+                                        <?php
                                         }
                                         ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                        <div class="mb-3 p-0 pe-lg-2 col-12 col-md-6 col-lg-3">
+                                            <label for="purchase_price" class="text-secondary m-0 p-0">Purchase Price:</label>
+                                            <input type="number" id="purchase_price" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
+                                                                                                                                                                        echo $_POST['purchase_price'];
+                                                                                                                                                                    } else if (isset($sto_record['purchase_price'])) {
+                                                                                                                                                                        echo $sto_record['purchase_price'];
+                                                                                                                                                                    } else {
+                                                                                                                                                                        echo $pro_record['purchase_price'];
+                                                                                                                                                                    } ?>">
+                                            <?php
+                                            if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">Purchase price is required.</p>
+                                            <?php
+                                            } else if (isset($_POST['purchase_price']) && !validate_number($_POST['purchase_price'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">Purchase price can not be less than one.</p>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
+                                            <label for="selling_price" class="text-secondary m-0 p-0">Selling Price:</label>
+                                            <input type="number" id="selling_price" name="selling_price" placeholder="Selling Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
+                                                                                                                                                                        echo $_POST['selling_price'];
+                                                                                                                                                                    } else if (isset($sto_record['selling_price'])) {
+                                                                                                                                                                        echo $sto_record['selling_price'];
+                                                                                                                                                                    } else {
+                                                                                                                                                                        echo $pro_record['selling_price'];
+                                                                                                                                                                    } ?>">
+                                            <?php
+                                            if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">Selling price is required.</p>
+                                            <?php
+                                            } else if (isset($_POST['purchase_price']) && !validate_number($_POST['selling_price'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">Selling price can not be less than one.</p>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="mb-3 p-0 col-12 col-md-6 col-lg-6 text-end">
+                                            <?php if (isset($_POST['edit']) || isset($_POST['save'])) { ?>
+                                                <br>
+                                                <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" name="cancel" value="Cancel">
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="save" value="Save">
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <br>
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="add" value="Add">
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </form>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </main>
