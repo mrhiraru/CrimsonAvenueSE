@@ -23,8 +23,11 @@ include_once('../includes/preloader.php');
     ?>
     <div class="container-fluid col-md-9 mt-4 mx-sm-auto min-vh-100 ">
         <main>
+
+        </main>
+
         
-   
+
         <section>
             <!-- Code Here Extra Section -->
         </section>
