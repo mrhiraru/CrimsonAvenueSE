@@ -22,7 +22,7 @@ include_once('./includes/preloader.php');
                     <button class="btn btn-primary border-0 flex-grow-1 flex-sm-grow-0" type="button" data-bs-toggle="modal" data-bs-target="#newMessage">
                         New Message
                     </button>
-                    <a href="./message-inbox.php" class="text-decoration-none text-white btn btn-primary border-0 flex-grow-1 flex-sm-grow-0 ms-2">
+                    <a href="messages.php" class="text-decoration-none text-white btn btn-primary border-0 flex-grow-1 flex-sm-grow-0 ms-2">
                         Go Back to Messages
                     </a>
                 </div>
@@ -328,7 +328,7 @@ include_once('./includes/preloader.php');
         <!-- Extra Section Add more Section if needed ./. -->
     </div>
     <?php
-    require_once('../includes/footer.php');
+    require_once('./includes/footer.php');
     require_once('./includes/js.php');
     ?>
 </body>
