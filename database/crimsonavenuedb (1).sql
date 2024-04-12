@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2024 at 02:41 PM
+-- Generation Time: Apr 12, 2024 at 06:33 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -268,6 +268,14 @@ CREATE TABLE `prices` (
   `is_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `is_deleted` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `prices`
+--
+
+INSERT INTO `prices` (`price_id`, `product_id`, `variation_id`, `measurement_id`, `purchase_price`, `selling_price`, `is_created`, `is_updated`, `is_deleted`) VALUES
+(1, 12, 27, 21, 20.00, 1100.00, '2024-04-12 15:08:53', '2024-04-12 15:09:28', 0),
+(2, 12, 38, 21, 20.00, 300.00, '2024-04-12 15:15:14', '2024-04-12 15:15:14', 0);
 
 -- --------------------------------------------------------
 
@@ -714,7 +722,7 @@ ALTER TABLE `moderator`
 -- AUTO_INCREMENT for table `prices`
 --
 ALTER TABLE `prices`
-  MODIFY `price_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `price_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product`
