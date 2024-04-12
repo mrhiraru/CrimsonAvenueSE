@@ -127,7 +127,7 @@ include_once('../includes/preloader.php');
                                         <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-secondary" aria-current="page" href="./product-view.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Configuration</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-decoration-underline active disabled" href="#">Inventory</a>
+                                        <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-decoration-underline active disabled" href="#"><?= $pro_record['sale_status'] == "Pre-order" ? "Change Prices" : "Inventory" ?></a>
                                     </li>
                                 </ul>
                             </div>
