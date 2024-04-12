@@ -31,7 +31,7 @@
                             <?php
                             } else if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1) {
                             ?>
-                                <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="#">Moderator Panel</a></li>
+                                <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../moderator/index.php">Moderator Panel</a></li>
                             <?php
                             }
                             ?>
