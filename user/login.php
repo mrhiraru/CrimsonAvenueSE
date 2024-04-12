@@ -20,7 +20,7 @@ if (isset($_POST['login'])) {
         $_SESSION['email'] = $account->email;
         $_SESSION['affiliation'] = $account->affiliation;
         if (isset($account->middlename)) {
-            $_SESSION['full_name'] = ucwords(strtolower($account->firstname. ' ' . $account->middlename . ' ' . $account->lastname));
+            $_SESSION['full_name'] = ucwords(strtolower($account->firstname . ' ' . $account->middlename . ' ' . $account->lastname));
         } else {
             $_SESSION['full_name'] = ucwords(strtolower($account->firstname . ' ' . $account->lastname));
         }
@@ -37,13 +37,12 @@ if (isset($_POST['login'])) {
         $_SESSION['address'] = $account->address;
         $_SESSION['college_name'] = $account->college_name;
         $_SESSION['department_name'] = $account->department_name;
+        $_SESSION['college_assigned'] = $account->college_assigned;
     } else {
         $error = 'Login failed: Invalid email or password.';
     }
 }
 ?>
-
-
 
 
 <!DOCTYPE html>
