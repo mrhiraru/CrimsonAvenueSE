@@ -253,7 +253,7 @@ include_once('../includes/preloader.php');
                                                                                                                                                                         echo $sto_record['purchase_price'];
                                                                                                                                                                     } else {
                                                                                                                                                                         echo $pro_record['purchase_price'];
-                                                                                                                                                                    } ?>">
+                                                                                                                                                                    } ?>" step="any">
                                             <?php
                                             if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
                                             ?>
@@ -274,7 +274,7 @@ include_once('../includes/preloader.php');
                                                                                                                                                                         echo $sto_record['selling_price'];
                                                                                                                                                                     } else {
                                                                                                                                                                         echo $pro_record['selling_price'];
-                                                                                                                                                                    } ?>">
+                                                                                                                                                                    } ?>" step="any">
                                             <?php
                                             if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
                                             ?>
@@ -384,7 +384,7 @@ include_once('../includes/preloader.php');
                                                                                                                                                                         echo $pri_record['purchase_price'];
                                                                                                                                                                     } else {
                                                                                                                                                                         echo $pro_record['purchase_price'];
-                                                                                                                                                                    } ?>">
+                                                                                                                                                                    } ?>" step="any">
                                             <?php
                                             if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
                                             ?>
@@ -405,7 +405,7 @@ include_once('../includes/preloader.php');
                                                                                                                                                                         echo $pri_record['selling_price'];
                                                                                                                                                                     } else {
                                                                                                                                                                         echo $pro_record['selling_price'];
-                                                                                                                                                                    } ?>">
+                                                                                                                                                                    } ?>" step="any">
                                             <?php
                                             if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
                                             ?>
