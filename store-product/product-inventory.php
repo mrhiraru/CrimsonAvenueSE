@@ -98,7 +98,6 @@ if (isset($_POST['add'])) {
     $stock->measurement_id = $mea_record['measurement_id'];
 
     if (
-        validate_field($stock->stock_quantity) && validate_number($stock->stock_quantity) &&
         validate_field($stock->purchase_price) && validate_number($stock->purchase_price) &&
         validate_field($stock->selling_price) && validate_number($stock->selling_price)
     ) {
@@ -419,14 +418,16 @@ include_once('../includes/preloader.php');
                                             ?>
                                         </div>
                                         <div class="mb-3 p-0 col-12 col-md-6 col-lg-6 text-end">
-                                            <?php if (isset($_POST[$pri_record])) { ?>
+                                            <?php
+                                            if (isset($pri_record['price_id'])) {
+                                            ?>
                                                 <br>
-                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="save_price" value="Save">
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="save_price" value="Update">
                                             <?php
                                             } else {
                                             ?>
                                                 <br>
-                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="add_price" value="Add">
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="add_price" value="Update">
                                             <?php
                                             }
                                             ?>
