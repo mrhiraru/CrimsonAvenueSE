@@ -81,6 +81,52 @@ class Stock
         return $data;
     }
 
+    function price_add()
+    {
+        $sql = "INSERT INTO prices (product_id, variation_id, measurement_id, purchase_price, selling_price) VALUES (:product_id, :variation_id, :measurement_id, :purchase_price, :selling_price)";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':product_id', $this->product_id);
+        $query->bindParam(':variation_id', $this->variation_id);
+        $query->bindParam(':measurement_id', $this->measurement_id);
+        $query->bindParam(':purchase_price', $this->purchase_price);
+        $query->bindParam(':selling_price', $this->selling_price);
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function price_edit($price_id)
+    {
+        $sql = "UPDATE prices SET purchase_price=:purchase_price, selling_price=:selling_price WHERE price_id = :price_id;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':price_id', $price_id);
+        $query->bindParam(':purchase_price', $this->purchase_price);
+        $query->bindParam(':selling_price', $this->selling_price);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function price_fetch($variation_id, $measurement_id, $product_id)
+    {
+        $sql = "SELECT * FROM prices WHERE variation_id = :variation_id AND measurement_id = :measurement_id AND product_id = :product_id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':variation_id', $variation_id);
+        $query->bindParam(':measurement_id', $measurement_id);
+        $query->bindParam(':product_id', $product_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
     function delete()
     {
         $sql = "UPDATE stock SET is_deleted=:is_deleted WHERE stock_id = :stock_id;";
@@ -96,7 +142,8 @@ class Stock
         }
     }
 
-    function show_stock($product_id, $variation_id, $measurement_id){
+    function show_stock($product_id, $variation_id, $measurement_id)
+    {
         $sql = "SELECT *, SUM(stock_quantity) AS total_stock_quantity, SUM(stock_sold) AS total_stock_sold FROM stock WHERE product_id = :product_id AND variation_id = :variation_id AND measurement_id = :measurement_id AND is_deleted != 1 AND stock_sold < stock_quantity ORDER BY stock_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_id', $product_id);
@@ -107,5 +154,4 @@ class Stock
         }
         return $data;
     }
-
 }

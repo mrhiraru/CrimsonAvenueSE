@@ -89,6 +89,44 @@ if (isset($_POST['add'])) {
         echo 'An error occured while adding in the database.';
         $success = 'failed';
     }
+} else if (isset($_POST['add_price'])) {
+
+    $stock->purchase_price = htmlentities($_POST['purchase_price']);
+    $stock->selling_price = htmlentities($_POST['selling_price']);
+    $stock->product_id = $pro_record['product_id'];
+    $stock->variation_id = $var_record['variation_id'];
+    $stock->measurement_id = $mea_record['measurement_id'];
+
+    if (
+        validate_field($stock->stock_quantity) && validate_number($stock->stock_quantity) &&
+        validate_field($stock->purchase_price) && validate_number($stock->purchase_price) &&
+        validate_field($stock->selling_price) && validate_number($stock->selling_price)
+    ) {
+        if ($stock->price_add()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['save_price'])) {
+    $stock->purchase_price = htmlentities($_POST['purchase_price']);
+    $stock->selling_price = htmlentities($_POST['selling_price']);
+    $price_id = htmlentities($_POST['price_id']);
+
+    if (
+        validate_field($stock->purchase_price) && validate_number($stock->purchase_price) &&
+        validate_field($stock->selling_price) && validate_number($stock->selling_price)
+    ) {
+        if ($stock->price_edit($price_id)) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
 }
 
 ?>
@@ -335,19 +373,15 @@ include_once('../includes/preloader.php');
                                 <form method="post" action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . (isset($_GET['stock_id']) ? '&stock_id=' . $_GET['stock_id'] : '') ?>" class="col-12">
                                     <div class="row">
                                         <?php
-                                        if (isset($_POST['edit']) || isset($_POST['save'])) {
-                                            $sto_record = $stock->fetch($_GET['stock_id']);
+                                        $pri_record = $stock->price_fetch($_GET['variation_id'], $_GET['measurement_id'], $_GET['product_id']);
                                         ?>
-                                            <input type="hidden" name="stock_sold" value="<?= $sto_record['stock_sold'] ?>">
-                                        <?php
-                                        }
-                                        ?>
+                                        <input type="hidden" name="price_id" value="<?= $pri_record['price_id'] ?>">
                                         <div class="mb-3 p-0 pe-lg-2 col-12 col-md-6 col-lg-3">
                                             <label for="purchase_price" class="text-secondary m-0 p-0">Purchase Price:</label>
                                             <input type="number" id="purchase_price" name="purchase_price" placeholder="Purchase Price" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
                                                                                                                                                                         echo $_POST['purchase_price'];
-                                                                                                                                                                    } else if (isset($sto_record['purchase_price'])) {
-                                                                                                                                                                        echo $sto_record['purchase_price'];
+                                                                                                                                                                    } else if (isset($pri_record['purchase_price'])) {
+                                                                                                                                                                        echo $pri_record['purchase_price'];
                                                                                                                                                                     } else {
                                                                                                                                                                         echo $pro_record['purchase_price'];
                                                                                                                                                                     } ?>">
@@ -367,8 +401,8 @@ include_once('../includes/preloader.php');
                                             <label for="selling_price" class="text-secondary m-0 p-0">Selling Price:</label>
                                             <input type="number" id="selling_price" name="selling_price" placeholder="Selling Price" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
                                                                                                                                                                         echo $_POST['selling_price'];
-                                                                                                                                                                    } else if (isset($sto_record['selling_price'])) {
-                                                                                                                                                                        echo $sto_record['selling_price'];
+                                                                                                                                                                    } else if (isset($pri_record['selling_price'])) {
+                                                                                                                                                                        echo $pri_record['selling_price'];
                                                                                                                                                                     } else {
                                                                                                                                                                         echo $pro_record['selling_price'];
                                                                                                                                                                     } ?>">
@@ -385,15 +419,14 @@ include_once('../includes/preloader.php');
                                             ?>
                                         </div>
                                         <div class="mb-3 p-0 col-12 col-md-6 col-lg-6 text-end">
-                                            <?php if (isset($_POST['edit']) || isset($_POST['save'])) { ?>
+                                            <?php if (isset($_POST[$pri_record])) { ?>
                                                 <br>
-                                                <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" name="cancel" value="Cancel">
-                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="save" value="Save">
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="save_price" value="Save">
                                             <?php
                                             } else {
                                             ?>
                                                 <br>
-                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="add" value="Add">
+                                                <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" name="add_price" value="Add">
                                             <?php
                                             }
                                             ?>
@@ -505,6 +538,42 @@ include_once('../includes/preloader.php');
                                 ?>
                                 <a href="<?= './product-inventory.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="text-decoration-none text-dark">
                                     <p class="m-0 text-dark">Stock with sold items can't be deleted! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['add_price']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="<?= './product-inventory.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Price updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['save_price']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="<?= './product-inventory.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Price updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
                         </div>
