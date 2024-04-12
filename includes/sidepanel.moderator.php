@@ -51,7 +51,7 @@
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" aria-current="page" href="..moderator-products/index.php">
+                                <a class="nav-link text-secondary fw-semibold <?= $products_page ?>" aria-current="page" href="../moderator-products/index.php">
                                     Product List
                                 </a>
                             </li>
