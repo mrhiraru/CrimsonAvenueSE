@@ -137,7 +137,7 @@ include_once('../includes/preloader.php');
                         <div class="row d-flex justify-content-between m-0 p-0">
                             <div class="col-12 m-0 p-0 px-2">
                                 <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1 flex-fill">
-                                    Stocks
+                                    <?= $pro_record['sale_status'] == "On-hand" ? "Stocks" : "Prices" ?>
                                 </p>
                             </div>
                             <div class="col-12 m-0 p-0">
