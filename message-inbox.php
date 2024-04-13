@@ -1,7 +1,9 @@
 
     <!DOCTYPE html>
+
 <html lang="en">
 <?php
+session_start();
 // Change title for each page.
 $title = "Page Name | Crimson Avenue";
 $page_name = "active";
@@ -18,12 +20,10 @@ include_once('./includes/preloader.php');
         <div class="container-fluid mb-3 p-3 bg-white shadow rounded">
             <div class="row h-auto mb-4 d-flex justify-content-center">
                 <div class="row m-0 p-0 d-flex align-items-center">
-                    <div class="col-6 m-0 p-0">
+                <div class="col-6 m-0 p-0">
                         <p class="m-3 p-0 fs-3 fw-bold text-primary lh-1">Messages</p>
                     </div>
-                        <div class="col-6 m-0 p-3 text-end">
-                            <a href="message.php" class="text-primary fw-semibold fs-6">My Messages</a>
-                        </div>
+                        
                 </div>
                 <hr class="text-secondary">
                 <!-- datatable start -->

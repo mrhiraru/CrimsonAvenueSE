@@ -16,7 +16,12 @@ include_once('./includes/preloader.php');
     <main class="col-md-9 pt-3 mx-sm-auto col-lg-10 p-md-4">
         <div class="container-fluid mb-3 p-3 bg-white shadow rounded">
             <div class="row h-auto mb-4 d-flex justify-content-center">
-                <h2 class="h2 text-primary fw-bold">Messages</h2>
+            <div class="col-6 m-0 p-0">
+                        <p class="m-3 p-0 fs-3 fw-bold text-primary lh-1">Messages</p>
+                    </div>
+                        <div class="col-6 m-0 p-3 text-end">
+                            <a href="message-inbox.php" class="text-primary fw-semibold fs-6">My Messages</a>
+                        </div>
                 <hr class="text-secondary">
                 <div class="d-flex mb-md-2 mb-lg-0 col-12 justify-content-end">
                     <button class="btn btn-primary border-0 flex-grow-1 flex-sm-grow-0" type="button" data-bs-toggle="modal" data-bs-target="#newMessage">
