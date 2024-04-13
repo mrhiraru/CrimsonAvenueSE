@@ -58,7 +58,7 @@ include_once('../includes/preloader.php');
                                     <?php
                                     $counter = 1;
                                     $product = new Product();
-                                    $productArray = $product->show_admin();
+                                    $productArray = $product->show_moderator($_SESSION['college_assigned']);
                                     foreach ($productArray as $item) {
                                     ?>
                                         <tr class="align-middle">
