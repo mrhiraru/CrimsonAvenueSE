@@ -62,8 +62,20 @@ include_once('../includes/preloader.php');
                             <td class="text-center"><?= $record['variation_name'] ?></td>
                             <td class="text-center"><?= $record['measurement_name'] ?></td>
                             <td class="text-center"><?= $_POST['quantity'] ?></td>
-                            <td class="text-center"><?= isset($record['stock_selling_price']) ? $record['stock_selling_price'] : $record['product_selling_price'] ?></td>
-                            <td class="text-center"><?= sprintf("%.2f", (isset($record['stock_selling_price']) ? $record['stock_selling_price'] : $record['product_selling_price']) * $_POST['quantity']) ?></td>
+                            <td class="text-center"><?php if (isset($record['stock_selling_price'])) {
+                                                        echo $record['stock_selling_price'];
+                                                    } else if (isset($record['prices_selling_price'])) {
+                                                        echo $record['prices_selling_price'];
+                                                    } else {
+                                                        echo $record['product_selling_price'];
+                                                    } ?></td>
+                            <td class="text-center"><?php if (isset($record['stock_selling_price'])) {
+                                                        echo sprintf("%.2f", $record['stock_selling_price'] * $_POST['quantity']);
+                                                    } else if (isset($record['prices_selling_price'])) {
+                                                        echo sprintf("%.2f", $record['prices_selling_price'] * $_POST['quantity']);
+                                                    } else {
+                                                        echo sprintf("%.2f", $record['product_selling_price'] * $_POST['quantity']);
+                                                    } ?></td>
                         </tr>
                         <?php
                         //     $counter++;

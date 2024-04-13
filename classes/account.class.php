@@ -22,6 +22,8 @@ class Account
     public $user_role;
     public $verification_status;
 
+    public $college_assigned;
+
     protected $db;
 
     function __construct()
@@ -31,7 +33,7 @@ class Account
 
     function sign_in_account()
     {
-        $sql = "SELECT a.*, c.college_name, d.department_name FROM account a LEFT JOIN college c ON a.college_id = c.college_id LEFT JOIN department d ON a.department_id = d.department_id WHERE email = :email LIMIT 1;";
+        $sql = "SELECT a.*, c.college_name, d.department_name, m.college_id AS college_assigned FROM account a LEFT JOIN college c ON a.college_id = c.college_id LEFT JOIN department d ON a.department_id = d.department_id LEFT JOIN moderator m ON a.account_id = m.account_id WHERE email = :email LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':email', $this->email);
 
@@ -52,6 +54,7 @@ class Account
                 $this->address = $accountData['address'];
                 $this->college_name = $accountData['college_name'];
                 $this->department_name = $accountData['department_name'];
+                $this->college_assigned = $accountData['college_assigned'];
 
                 return true;
             }
