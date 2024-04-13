@@ -225,26 +225,14 @@
                                     Main
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $college_page ?>" href="../moderator-settings/college.php">
-                                    Colleges
-                                </a>
-                            </li>
+                           
                             <li class="nav-item">
                                 <a class="nav-link text-secondary fw-semibold <?= $department_page ?>" href="../moderator-settings/department.php">
                                     Departments
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $moderator_page ?>" href="../moderator-settings/moderator.php">
-                                    Moderators
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $category_page ?>" href="../moderator-settings/category.php">
-                                    Categories
-                                </a>
-                            </li>
+                           
+                         
                         </ul>
                     </div>
                 </div>

@@ -97,11 +97,14 @@ include_once('../includes/preloader.php');
                                                 <?php
                                                 $college = new College();
                                                 $collegeArray = $college->show();
-                                                foreach ($collegeArray as $item) { ?>
+                                                foreach ($collegeArray as $item) { 
+                                                    if ($item['college_id'] == $_SESSION['college_assigned']){
+                                                    ?>
                                                     <option value="<?= $item['college_id'] ?>" <?php if ((isset($_POST['col-id']) && $_POST['col-id'] == $item['college_id']) || (isset($_POST['edit']) && $record['college_id'] == $item['college_id'])) {
                                                                                                     echo 'selected';
                                                                                                 } ?>><?= $item['college_name'] ?></option>
                                                 <?php
+                                                    }
                                                 }
                                                 ?>
                                             </select>
@@ -120,11 +123,14 @@ include_once('../includes/preloader.php');
                                                 <?php
                                                 $college = new College();
                                                 $collegeArray = $college->show();
-                                                foreach ($collegeArray as $item) { ?>
+                                                foreach ($collegeArray as $item) { 
+                                                    if ($item['college_id'] == $_SESSION['college_assigned']){
+                                                        ?>
                                                     <option value="<?= $item['college_id'] ?>" <?php if (isset($_POST['col-id']) && $_POST['col-id'] == $item['college_id']) {
                                                                                                     echo 'selected';
                                                                                                 } ?>><?= $item['college_name'] ?></option>
                                                 <?php
+                                                    }
                                                 }
                                                 ?>
                                             </select>
@@ -199,7 +205,7 @@ include_once('../includes/preloader.php');
                                 <tbody>
                                     <?php
                                     $counter = 1;
-                                    $departmentArray = $department->show();
+                                    $departmentArray = $department->show_moderator($_SESSION['college_assigned']);
                                     foreach ($departmentArray as $item) {
                                     ?>
                                         <tr class="align-middle">

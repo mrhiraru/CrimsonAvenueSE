@@ -92,12 +92,35 @@ class Store
         }
         return $data;
     }
+    function show_moderator($college_assigned)
+    {
+        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND staff_role = 0 LEFT JOIN account a ON ss.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.registration_status = 'Registered' AND s.is_deleted != 1 AND s.college_id = :college_assigned ORDER BY s.store_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_assigned', $college_assigned);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
     // fix store page only show registered store!
 
     function show_registration()
     {
         $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND staff_role = 0 LEFT JOIN account a ON ss.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.registration_status = 'Not Registered' AND s.is_deleted != 1 ORDER BY s.store_id ASC;";
         $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+    function show_registration_moderator($college_assigned)
+    {
+        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND staff_role = 0 LEFT JOIN account a ON ss.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.registration_status = 'Not Registered' AND s.is_deleted != 1 AND s.college_id = :college_assigned  ORDER BY s.store_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_assigned', $college_assigned);
+
         $data = null;
         if ($query->execute()) {
             $data = $query->fetchAll();

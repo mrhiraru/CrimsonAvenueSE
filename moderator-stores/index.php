@@ -58,7 +58,7 @@ include_once('../includes/preloader.php');
                                     <?php
                                     $counter = 1;
                                     $store = new Store();
-                                    $storeArray = $store->show();
+                                    $storeArray = $store->show_moderator($_SESSION['college_assigned']);
                                     foreach ($storeArray as $item) {
                                     ?>
                                         <tr class="align-middle">
