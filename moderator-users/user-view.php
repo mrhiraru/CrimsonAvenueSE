@@ -9,7 +9,7 @@ $record = $account->fetch($_GET['id']);
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
-} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 0) {
+} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
     header('location: ../index.php');
 } else if (!isset($_GET['id']) || $record['is_deleted'] == 1 || !isset($record['account_id'])) {
     header('location: ./index.php');

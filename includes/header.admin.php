@@ -14,7 +14,7 @@
                         <img src="<?php if (isset($_SESSION['profile_image'])) {
                                         echo "../images/data/" . $_SESSION['profile_image'];
                                     } else {
-                                        echo "../images/main/no-profile.jpg";
+                                        echo "../images/main/no-profile.jpg";   
                                     } ?>" alt="" width="38" height="38" class="d-inline rounded-5 border border-light border-2 me-2">
                         <div class="m-0 lh-sm ">
                             <div class="align-bottom">
