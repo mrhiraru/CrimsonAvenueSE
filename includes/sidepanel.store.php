@@ -157,7 +157,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php">
+                                <a class="nav-link text-secondary fw-semibold <?= $stores_page ?>" href="../admin/store.php=">
                                     <i class="fa-solid fa-store"></i>
                                     Stores
                                 </a>
@@ -187,28 +187,8 @@
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $semester_page ?>" aria-current="page" href="../admin-settings/index.php">
-                                    School Year & Semester
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $college_page ?>" href="../admin-settings/college.php">
-                                    Colleges
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $department_page ?>" href="../admin-settings/department.php">
-                                    Departments
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $moderator_page ?>" href="../admin-settings/moderator.php">
-                                    Moderators
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $admin_page ?>" href="../admin-settings/admin.php">
-                                    Admin Control
+                                <a class="nav-link text-secondary fw-semibold <?= $semester_page ?>" aria-current="page" href="../store-settings/store-information.php?store_id=<?= $record['store_id'] ?>">
+                                    Store Information
                                 </a>
                             </li>
                         </ul>
