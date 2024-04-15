@@ -23,6 +23,7 @@ class Account
     public $verification_status;
 
     public $college_assigned;
+    public $cart_id;
 
     protected $db;
 
@@ -33,7 +34,7 @@ class Account
 
     function sign_in_account()
     {
-        $sql = "SELECT a.*, c.college_name, d.department_name, m.college_id AS college_assigned FROM account a LEFT JOIN college c ON a.college_id = c.college_id LEFT JOIN department d ON a.department_id = d.department_id LEFT JOIN moderator m ON a.account_id = m.account_id AND m.is_deleted !=1 WHERE email = :email LIMIT 1;";
+        $sql = "SELECT a.*, c.college_name, d.department_name, m.college_id AS college_assigned, ct.cart_id FROM account a LEFT JOIN college c ON a.college_id = c.college_id LEFT JOIN department d ON a.department_id = d.department_id LEFT JOIN moderator m ON a.account_id = m.account_id AND m.is_deleted !=1 INNER JOIN cart ct ON a.account_id = ct.account_id WHERE email = :email LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':email', $this->email);
 
@@ -55,6 +56,7 @@ class Account
                 $this->college_name = $accountData['college_name'];
                 $this->department_name = $accountData['department_name'];
                 $this->college_assigned = $accountData['college_assigned'];
+                $this->cart_id = $accountData['cart_id'];
 
                 return true;
             }
@@ -64,9 +66,12 @@ class Account
 
     function add()
     {
+        $connect = $this->db->connect();
+        $connect->beginTransaction();
+
         $sql = "INSERT INTO account (email, password, affiliation, firstname, middlename, lastname, gender, college_id, contact, user_role) VALUES (:email, :password, :affiliation, :firstname, :middlename, :lastname, :gender, :college_id, :contact, :user_role)";
 
-        $query = $this->db->connect()->prepare($sql);
+        $query = $connect->prepare($sql);
         $query->bindParam(':email', $this->email);
         $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
         $query->bindParam(':password', $hashedPassword);
@@ -80,8 +85,22 @@ class Account
         $query->bindParam('user_role', $this->user_role);
 
         if ($query->execute()) {
-            return true;
+            $last_product_id = $connect->lastInsertId();
+
+            $sec_sql = "INSERT INTO cart (account_id) VALUES (:account_id)";
+
+            $sec_query = $connect->prepare($sec_sql);
+            $sec_query->bindParam(':account_id', $last_product_id);
+
+            if ($sec_query->execute()) {
+                $connect->commit();
+                return true;
+            } else {
+                $connect->rollBack();
+                return false;
+            }
         } else {
+            $connect->rollBack();
             return false;
         }
     }
@@ -173,7 +192,8 @@ class Account
         return $data;
     }
 
-    function fetch($account_id){
+    function fetch($account_id)
+    {
         $sql = "SELECT a.*, c.college_name, d.department_name FROM account a LEFT JOIN college c ON a.college_id = c.college_id LEFT JOIN department d ON a.department_id = d.department_id WHERE account_id = :account_id LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $account_id);

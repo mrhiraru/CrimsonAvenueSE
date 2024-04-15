@@ -38,6 +38,7 @@ if (isset($_POST['login'])) {
         $_SESSION['college_name'] = $account->college_name;
         $_SESSION['department_name'] = $account->department_name;
         $_SESSION['college_assigned'] = $account->college_assigned;
+        $_SESSION['cart_id'] = $account->cart_id;
     } else {
         $error = 'Login failed: Invalid email or password.';
     }

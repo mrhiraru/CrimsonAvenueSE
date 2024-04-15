@@ -7,6 +7,7 @@ require_once "../classes/description.class.php";
 require_once "../classes/variation.class.php";
 require_once "../classes/measurement.class.php";
 require_once "../classes/image.class.php";
+require_once "../classes/cart.class.php";
 
 $product = new Product();
 $record = $product->fetch($_GET['product_id']);
@@ -15,6 +16,44 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../user/verify.php');
 } else if (!isset($record['product_id']) || $record['is_deleted'] == 1) {
     header('location: ../products/products.php?page=1');
+}
+
+if (isset($_POST['add'])) {
+    $cart = new Cart;
+
+    $cart->cart_id = $_SESSION['cart_id'];
+    $cart->product_id = htmlentities($_POST['product_id']);
+    if (isset($_POST['variation'])) {
+        $cart->variation_id = htmlentities($_POST['variation']);
+    } else {
+        $cart->variation_id = '';
+    }
+    if (isset($_POST['measurement'])) {
+        $cart->measurement_id = htmlentities($_POST['measurement']);
+    } else {
+        $cart->measurement_id = '';
+    }
+    $cart->quantity = htmlentities($_POST['quantity']);
+    $cart->selling_price = htmlentities($_POST['selling_price']);
+
+    var_dump(htmlentities($_POST['selling_price']));
+
+    if (
+        validate_field($cart->cart_id) &&
+        validate_field($cart->product_id) &&
+        validate_field($cart->variation_id) &&
+        validate_field($cart->measurement_id) &&
+        validate_field($cart->quantity) &&
+        validate_field($cart->selling_price)
+    ) {
+        if ($cart->add()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
 }
 
 ?>
@@ -105,6 +144,7 @@ include_once('../includes/preloader.php');
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
                         <form action="" method="post" class="col-12" id="orderForm">
                             <input type="hidden" name="product_id" value="<?= $record['product_id'] ?>">
+                            <input type="hidden" name="selling_price" value="<?= $record['selling_price'] ?>">
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <?php
                                 $variation = new Variation();
@@ -270,6 +310,27 @@ include_once('../includes/preloader.php');
         <!-- Extra Section Add more Section if needed ./. -->
     </div>
     <?php
+    if (isset($_POST['add']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./product-view.php?product_id=<?= $record['product_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0 text-dark">Product is successfully added to cart! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
+    <?php
     require_once('../includes/footer.php');
     require_once('../includes/js.php');
     ?>
@@ -314,7 +375,7 @@ include_once('../includes/preloader.php');
                 xhttp.onload = function() {
                     var stock_price = this.responseText;
                     document.getElementById("price").innerHTML = stock_price;
-                    document.querySelector('input[name="price"][type="hidden"]').value = stock_price;
+                    document.querySelector('input[name="selling_price"][type="hidden"]').value = stock_price;
                 }
                 xhttp.open("GET", "getprice.php?product_id=" + product + "&variation_id=" + variation + "&measurement_id=" + measurement + "&price=" + price);
                 xhttp.send();
