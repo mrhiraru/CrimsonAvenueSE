@@ -36,8 +36,6 @@ if (isset($_POST['add'])) {
     $cart->quantity = htmlentities($_POST['quantity']);
     $cart->selling_price = htmlentities($_POST['selling_price']);
 
-    var_dump(htmlentities($_POST['selling_price']));
-
     if (
         validate_field($cart->cart_id) &&
         validate_field($cart->product_id) &&
@@ -159,13 +157,13 @@ include_once('../includes/preloader.php');
                                 foreach ($varArray as $item) {
                                     if (count($varArray) <= 1) {
                                     ?>
-                                        <input type="hidden" name="variation" value="<?= $item['variation_id'] ?>">
+                                        <input type="hidden" name="variation" value="<?= "variation_" . $item['variation_id'] ?>">
                                     <?php
                                     } else {
                                     ?>
                                         <div class="m-0 p-0 me-1 mb-1">
-                                            <input type="radio" class="btn-check" name="variation" id="<?= $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= (isset($_POST['variation']) && $_POST['variation'] == $item['variation_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
-                                            <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
+                                            <input type="radio" class="btn-check" name="variation" id="<?= "variation_" . $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= (isset($_POST['variation']) && $_POST['variation'] == $item['variation_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
+                                            <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= "variation_" . $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
                                         </div>
 
                                     <?php
@@ -192,13 +190,13 @@ include_once('../includes/preloader.php');
                                 foreach ($meaArray as $item) {
                                     if (count($meaArray) <= 1) {
                                     ?>
-                                        <input type="hidden" name="measurement" value="<?= $item['measurement_id'] ?>">
+                                        <input type="hidden" name="measurement" value="<?= "measurement_" . $item['measurement_id'] ?>">
                                     <?php
                                     } else {
                                     ?>
                                         <div class="m-0 p-0 me-1 mb-1">
-                                            <input type="radio" class="btn-check" name="measurement" id="<?= $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= (isset($_POST['measurement']) && $_POST['measurement'] == $item['measurement_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
-                                            <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
+                                            <input type="radio" class="btn-check" name="measurement" id="<?= "measurement_" . $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= (isset($_POST['measurement']) && $_POST['measurement'] == $item['measurement_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
+                                            <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= "measurement_" . $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
                                         </div>
 
                                     <?php
