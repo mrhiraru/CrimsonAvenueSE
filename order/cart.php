@@ -44,15 +44,15 @@ include_once('../includes/preloader.php');
                             array_push($storeArray, $store);
                         }
                     }
-
+                    $counter = 0;
                     foreach ($storeArray as $store) {
                     ?>
                         <div class="row m-0 p-0 p-3 border rounded mb-3">
-                            <form action="" method="post" class="m-0 p-0">
+                            <form action="" method="post" class="m-0 p-0 row">
                                 <table id="products" class="table table-lg m-0 ">
                                     <thead>
                                         <tr class="">
-                                            <th><input class="form-check-input" type="checkbox" value="<?= $store['store_id'] ?>" id="<?= $store['store_name'] ?>"></th>
+                                            <th><input class="form-check-input" type="checkbox" onchange="checkAll(this, this.value)" value="<?= $counter ?>"></th>
                                             <th><label class="form-check-label" for="<?= $store['store_name'] ?>">
                                                     <p class="m-0 p-0 fs-6 fw-bold text-dark lh-1">
                                                         <?= $store['store_name'] ?>
@@ -75,7 +75,7 @@ include_once('../includes/preloader.php');
                                         ?>
                                                 <tr class="align-middle">
                                                     <td class="">
-                                                        <input class="form-check-input" type="checkbox" value="<?= $item['cart_item_id'] ?>" id="<?= $item['cart_item_id'] . $item['product_id'] ?>">
+                                                        <input class="form-check-input" type="checkbox" name="<?= $counter ?>" value="<?= $item['cart_item_id'] ?>" id="<?= $item['cart_item_id'] . $item['product_id'] ?>">
                                                     </td>
                                                     <td class=""><img src="<?php if (isset($item['image_file'])) {
                                                                                 echo "../images/data/" . $item['image_file'];
@@ -100,14 +100,19 @@ include_once('../includes/preloader.php');
                                         ?>
                                     </tbody>
                                 </table>
-                                <p class="m-0 p-0 fs-6 text-dark lh-1 mt-3 fw-semibold align-center">
-                                    Total Price:
-                                    <span class="text-primary fw-bold"><?= '₱' . number_format($total, 2, '.', ',') ?></span>
-                                    <span class="float-end"><input type="submit" class="btn btn-primary fw-semibold" name="checkout" value="Checkout"></span>
-                                </p>
+                                <div class="col-8 m-0 p-0 d-flex align-items-center mt-2">
+                                    <p class="m-0 p-0 fs-6 text-dark lh-1 fw-semibold align-center">
+                                        Total Price:
+                                        <span class="text-primary fw-bold fs-5"><?= '₱' . number_format($total, 2, '.', ',') ?></span>
+                                    </p>
+                                </div>
+                                <div class="col-4 m-0 p-0 align-middle mt-2">
+                                    <input type="submit" class="btn btn-primary fw-semibold float-end" name="checkout" value="Checkout">
+                                </div>
                             </form>
                         </div>
                     <?php
+                        $counter++;
                     }
                     ?>
                 </div>
@@ -122,6 +127,19 @@ include_once('../includes/preloader.php');
     require_once('../includes/footer.php');
     require_once('../includes/js.php');
     ?>
+    <script>
+        function checkAll(checkallbox, counter) {
+            var checkboxes = document.getElementsByName(counter);
+
+            checkboxes.forEach(function(checkbox) {
+                if (checkallbox.checked == false) {
+                    checkbox.checked = false;
+                } else {
+                    checkbox.checked = true;
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
