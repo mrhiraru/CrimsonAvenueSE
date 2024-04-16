@@ -34,8 +34,14 @@ include_once('../includes/preloader.php');
                     $cartArray = $cart->show($_SESSION['cart_id']);
                     $storeArray = [];
                     foreach ($cartArray as $item) {
-                        if (!in_array($item['store_id'], $storeArray)) {
-                            array_push($storeArray, [$item['store_id'], $item['store_name']]);
+                        $store = array(
+                            'store_id' => $item['store_id'],
+                            'store_name' => $item['store_name']
+                        );
+
+                        if (!in_array($store, $storeArray)) {
+
+                            array_push($storeArray, $store);
                         }
                     }
 
@@ -43,30 +49,28 @@ include_once('../includes/preloader.php');
                     ?>
                         <div class="row m-0 p-0 p-3 border rounded mb-3">
                             <form action="" class="m-0 p-0">
-                                <input class="form-check-input" type="checkbox" value="<?= $store[0] ?>" id="<?= $store[1] ?>">
-                                <label class="form-check-label" for="<?= $store[1] ?>">
-                                    <p class="m-0 p-0 fs-6 fw-bold text-dark lh-1">
-                                        <?= $store[1] ?>
-                                    </p>
-                                </label>
                                 <table id="products" class="table table-lg m-0 ">
                                     <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
+                                        <tr class="">
+                                            <th><input class="form-check-input" type="checkbox" value="<?= $store['store_id'] ?>" id="<?= $store['store_name'] ?>"></th>
+                                            <th><label class="form-check-label" for="<?= $store['store_name'] ?>">
+                                                    <p class="m-0 p-0 fs-6 fw-bold text-dark lh-1">
+                                                        <?= $store['store_name'] ?>
+                                                    </p>
+                                                </label></th>
+                                            <th class="text-secondary fs-8 fw-semibold">Product Name</th>
+                                            <th class="text-secondary fs-8 fw-semibold">Variation</th>
+                                            <th class="text-secondary fs-8 fw-semibold">Measurement</th>
+                                            <th class="text-secondary fs-8 fw-semibold">Quantity</th>
+                                            <th class="text-secondary fs-8 fw-semibold">Price</th>
+                                            <th class="text-secondary fs-8 fw-semibold">Subtotal</th>
+                                            <th class="text-secondary fs-8 fw-semibold"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         foreach ($cartArray as $item) {
-                                            if ($item['store_id'] === $store[0]) {
+                                            if ($item['store_id'] === $store['store_id']) {
                                         ?>
                                                 <tr class="align-middle">
                                                     <td class="">
@@ -83,7 +87,10 @@ include_once('../includes/preloader.php');
                                                     <td class=""><?= $item['quantity'] ?></td>
                                                     <td class=""><?= $item['selling_price'] ?></td>
                                                     <td class=""><?= sprintf("%.2f", $item['selling_price'] * $item['quantity']) ?></td>
-                                                    <td class=" text-end">Action</td>
+                                                    <td class="text-end fs-7"><button type="button" class="bg-white border-0 remove-btn-hover">
+                                                            Delete
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                         <?php
                                             }
@@ -91,8 +98,9 @@ include_once('../includes/preloader.php');
                                         ?>
                                     </tbody>
                                 </table>
-                                <p class="m-0 p-0 fs-6 text-dark lh-1 mt-3">
-                                    Total Price: 24353.00
+                                <p class="m-0 p-0 fs-6 text-dark lh-1 mt-3 fw-semibold">
+                                    Total Price: 
+                                    <span class="text-primary fw-bold">24353.00</span>
                                     <span class="float-end">Checkout Button</span>
                                 </p>
                             </form>
