@@ -65,7 +65,7 @@ if (isset($_POST['add'])) {
         validate_field($stock->stock_quantity) && validate_number($stock->stock_quantity) &&
         validate_field($stock->purchase_price) && validate_number($stock->purchase_price) &&
         validate_field($stock->selling_price) && validate_number($stock->selling_price) &&
-        validate_stock_quantity($_POST['stock_sold'], $_POST['stock_quantity'])
+        validate_stock_quantity($_POST['stock_allocated'], $_POST['stock_quantity'])
     ) {
         if ($stock->edit()) {
             $success = 'success';
@@ -214,7 +214,7 @@ include_once('../includes/preloader.php');
                                         if (isset($_POST['edit']) || isset($_POST['save'])) {
                                             $sto_record = $stock->fetch($_GET['stock_id']);
                                         ?>
-                                            <input type="hidden" name="stock_sold" value="<?= $sto_record['stock_sold'] ?>">
+                                            <input type="hidden" name="stock_allocated" value="<?= $sto_record['stock_allocated'] ?>">
                                         <?php
                                         }
                                         ?>
@@ -236,7 +236,7 @@ include_once('../includes/preloader.php');
                                                 <p class="fs-7 text-primary m-0 ps-2">Stock Quantity can not be less than one.</p>
                                                 <?php
                                             } else if (isset($_POST['save'])) {
-                                                if (isset($_POST['stock_quantity']) && !validate_stock_quantity($_POST['stock_sold'], $_POST['stock_quantity'])) {
+                                                if (isset($_POST['stock_quantity']) && !validate_stock_quantity($_POST['stock_allocated'], $_POST['stock_quantity'])) {
                                                 ?>
                                                     <p class="fs-7 text-primary m-0 ps-2">Stock quantity can not be less than stock sold.</p>
                                             <?php
@@ -319,7 +319,7 @@ include_once('../includes/preloader.php');
                                             <tr class="align-middle">
                                                 <th scope="col"></th>
                                                 <th scope="col">Date Added</th>
-                                                <th scope="col" class="text-center">Sold</th>
+                                                <th scope="col" class="text-center">Allocated</th>
                                                 <th scope="col" class="text-center">Remaining</th>
                                                 <th scope="col" class="text-center">Total Stocks</th>
                                                 <th scope="col" class="text-center">Purchase Price</th>
@@ -336,8 +336,8 @@ include_once('../includes/preloader.php');
                                                 <tr class="align-middle">
                                                     <td><?= $counter ?></td>
                                                     <td><?= date('F d Y', strtotime($item['is_created'])) ?></td>
-                                                    <td class="text-center"><?= $item['stock_sold'] ?></td>
-                                                    <td class="text-center"><?= $item['stock_quantity'] - $item['stock_sold'] ?></td>
+                                                    <td class="text-center"><?= $item['stock_allocated'] ?></td>
+                                                    <td class="text-center"><?= $item['stock_quantity'] - $item['stock_allocated'] ?></td>
                                                     <td class="text-center"><?= $item['stock_quantity'] ?></td>
                                                     <td class="text-center"><?= '₱ ' . $item['purchase_price'] ?></td>
                                                     <td class="text-center"><?= '₱ ' . $item['selling_price'] ?></td>
@@ -345,7 +345,7 @@ include_once('../includes/preloader.php');
                                                         <div class="m-0 p-0">
                                                             <form action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . '&stock_id=' . $item['stock_id'] ?> " method="post">
                                                                 <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="edit" value="Edit"></input>
-                                                                <?php if ($item['stock_sold'] < 1) {
+                                                                <?php if ($item['stock_allocated'] < 1) {
                                                                 ?>
                                                                     <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Delete"></input>
                                                                 <?php

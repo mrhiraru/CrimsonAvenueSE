@@ -4,7 +4,6 @@ require_once "../classes/product.class.php";
 
 
 $stock = new Stock();
-
 $product_id = htmlentities($_GET['product_id']);
 $variation_id = htmlentities($_GET['variation_id']);
 $measurement_id = htmlentities($_GET['measurement_id']);

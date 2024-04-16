@@ -8,7 +8,7 @@ class Stock
     public $variation_id;
     public $measurement_id;
     public $stock_quantity;
-    public $stock_sold;
+    public $stock_allocated;
     public $purchase_price;
     public $selling_price;
     public $is_created;
@@ -144,7 +144,7 @@ class Stock
 
     function show_stock($product_id, $variation_id, $measurement_id)
     {
-        $sql = "SELECT *, SUM(stock_quantity) AS total_stock_quantity, SUM(stock_sold) AS total_stock_sold FROM stock WHERE product_id = :product_id AND variation_id = :variation_id AND measurement_id = :measurement_id AND is_deleted != 1 AND stock_sold < stock_quantity ORDER BY stock_id ASC;";
+        $sql = "SELECT *, stock_quantity AS total_stock_quantity, stock_allocated AS total_stock_allocated FROM stock WHERE product_id = :product_id AND variation_id = :variation_id AND measurement_id = :measurement_id AND is_deleted != 1 AND stock_allocated < stock_quantity ORDER BY stock_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_id', $product_id);
         $query->bindParam(':variation_id', $variation_id);
@@ -153,5 +153,20 @@ class Stock
             $data = $query->fetch();
         }
         return $data;
+    }
+
+    function take_stock()
+    {
+        $sql = "UPDATE stock SET stock_allocated=:stock_allocated WHERE stock_id = :stock_id;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':stock_id', $this->stock_id);
+        $query->bindParam(':stock_allocated', $this->stock_allocated);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

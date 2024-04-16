@@ -8,6 +8,7 @@ require_once "../classes/variation.class.php";
 require_once "../classes/measurement.class.php";
 require_once "../classes/image.class.php";
 require_once "../classes/cart.class.php";
+require_once "../classes/stock.class.php";
 
 $product = new Product();
 $record = $product->fetch($_GET['product_id']);
@@ -20,6 +21,8 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 if (isset($_POST['add'])) {
     $cart = new Cart;
+
+    $record_checkout = $product->checkout($_POST['product_id'], $_POST['variation'], $_POST['measurement']);
 
     $cart->cart_id = $_SESSION['cart_id'];
     $cart->product_id = htmlentities($_POST['product_id']);
@@ -34,7 +37,14 @@ if (isset($_POST['add'])) {
         $cart->measurement_id = '';
     }
     $cart->quantity = htmlentities($_POST['quantity']);
-    $cart->selling_price = htmlentities($_POST['selling_price']);
+
+    if (isset($record_checkout['stock_selling_price']) && $record_checkout['sale_status'] == "On-hand") {
+        $cart->selling_price = $record_checkout['stock_selling_price'];
+    } else if (isset($record_checkout['prices_selling_price']) && $record_checkout['sale_status'] == "Pre-order") {
+        $cart->selling_price = $record_checkout['prices_selling_price'];
+    } else {
+        $cart->selling_price = $record_checkout['product_selling_price'];
+    }
 
     if (
         validate_field($cart->cart_id) &&
@@ -45,7 +55,16 @@ if (isset($_POST['add'])) {
         validate_field($cart->selling_price)
     ) {
         if ($cart->add()) {
-            $success = 'success';
+            $stock = new Stock();
+            $stock->stock_allocated = $record_checkout['stock_allocated'] + $cart->quantity;
+            $stock->stock_id = $record_checkout['stock_id'];
+            if ($record_checkout['sale_status'] == "On-hand") {
+                if ($stock->take_stock()) {
+                    $success = 'success';
+                }
+            } else if ($record_checkout['sale_status'] == "Pre-order") {
+                $success = 'success';
+            }
         } else {
             echo 'An error occured while adding in the database.';
         }
@@ -142,7 +161,6 @@ include_once('../includes/preloader.php');
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
                         <form action="" method="post" class="col-12" id="orderForm">
                             <input type="hidden" name="product_id" value="<?= $record['product_id'] ?>">
-                            <input type="hidden" name="selling_price" value="<?= $record['selling_price'] ?>">
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <?php
                                 $variation = new Variation();

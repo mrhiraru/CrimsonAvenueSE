@@ -10,8 +10,8 @@ $measurement_id = htmlentities($_GET['measurement_id']);
 $stock_record = $stock->show_stock($product_id, $variation_id, $measurement_id);
 
 
-if (isset($stock_record['total_stock_quantity']) && isset($stock_record['total_stock_sold'])) {
-    echo $stock_record['total_stock_quantity'] - $stock_record['total_stock_sold'];
+if (isset($stock_record['total_stock_quantity']) && isset($stock_record['total_stock_allocated'])) {
+    echo $stock_record['total_stock_quantity'] - $stock_record['total_stock_allocated'];
 
 } else {
     echo 0;
