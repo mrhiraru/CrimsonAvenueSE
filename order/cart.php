@@ -85,8 +85,8 @@ include_once('../includes/preloader.php');
                                                     <td class=""><?= $item['variation_name'] ?></td>
                                                     <td class=""><?= $item['measurement_name'] ?></td>
                                                     <td class=""><?= $item['quantity'] ?></td>
-                                                    <td class=""><?= '₱'.$item['selling_price'] ?></td>
-                                                    <td class=""><?= '₱'.sprintf("%.2f", $item['selling_price'] * $item['quantity']) ?></td>
+                                                    <td class=""><?= '₱' . $item['selling_price'] ?></td>
+                                                    <td class=""><?= '₱' . sprintf("%.2f", $item['selling_price'] * $item['quantity']) ?></td>
                                                     <td class="text-end fs-7"><button type="button" class="bg-white border-0 remove-btn-hover">
                                                             Delete
                                                         </button>
@@ -99,7 +99,7 @@ include_once('../includes/preloader.php');
                                     </tbody>
                                 </table>
                                 <p class="m-0 p-0 fs-6 text-dark lh-1 mt-3 fw-semibold">
-                                    Total Price: 
+                                    Total Price:
                                     <span class="text-primary fw-bold">24353.00</span>
                                     <span class="float-end">Checkout Button</span>
                                 </p>
