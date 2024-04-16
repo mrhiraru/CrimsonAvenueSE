@@ -43,10 +43,10 @@ include_once('../includes/preloader.php');
                     ?>
                         <div class="row m-0 p-0 p-3 border rounded mb-3">
                             <form action="" class="m-0 p-0">
-                                <input class="form-check-input" type="checkbox" value="<?= $store['store_id'] ?>" id="<?= $store['store_id'] ?>">
-                                <label class="form-check-label" for="<?= $store['store_name'] ?>">
+                                <input class="form-check-input" type="checkbox" value="<?= $store[0] ?>" id="<?= $store[1] ?>">
+                                <label class="form-check-label" for="<?= $store[1] ?>">
                                     <p class="m-0 p-0 fs-6 fw-bold text-dark lh-1">
-                                        <?= $store['store_name'] ?>
+                                        <?= $store[1] ?>
                                     </p>
                                 </label>
                                 <table id="products" class="table table-lg m-0 ">
@@ -66,7 +66,7 @@ include_once('../includes/preloader.php');
                                     <tbody>
                                         <?php
                                         foreach ($cartArray as $item) {
-                                            if ($item['store_id'] === $store['store_id']) {
+                                            if ($item['store_id'] === $store[0]) {
                                         ?>
                                                 <tr class="align-middle">
                                                     <td class="">
@@ -97,10 +97,10 @@ include_once('../includes/preloader.php');
                                 </p>
                             </form>
                         </div>
-                </div>
-            <?php
+                    <?php
                     }
-            ?>
+                    ?>
+                </div>
             </div>
         </main>
         <section>
