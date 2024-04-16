@@ -108,8 +108,8 @@ include_once('../includes/preloader.php');
                                         <span class="text-primary fw-bold fs-5" id="total<?= $counter ?>"></span>
                                     </p>
                                 </div>
-                                <div class="col-4 m-0 p-0 align-middle mt-2">
-                                    <input type="submit" class="btn btn-primary fw-semibold float-end" name="checkout" value="Checkout">
+                                <div class="col-4 m-0 p-0 d-flex align-items-center justify-content-end mt-2">
+                                    <input type="submit" class="btn btn-primary fw-semibold" name="checkout" value="Checkout">
                                 </div>
                             </form>
                         </div>
