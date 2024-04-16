@@ -43,7 +43,7 @@ if (isset($_POST['add'])) {
     } else if (isset($record_checkout['prices_selling_price']) && $record_checkout['sale_status'] == "Pre-order") {
         $cart->selling_price = $record_checkout['prices_selling_price'];
     } else {
-        $cart->selling_price = $record_checkout['product_selling_price'];
+        $cart->selling_price = $record_checkout['product_selling_price'];  
     }
 
     if (
@@ -175,7 +175,7 @@ include_once('../includes/preloader.php');
                                 foreach ($varArray as $item) {
                                     if (count($varArray) <= 1) {
                                     ?>
-                                        <input type="hidden" name="variation" value="<?= "variation_" . $item['variation_id'] ?>">
+                                        <input type="hidden" name="variation" value="<?= $item['variation_id'] ?>">
                                     <?php
                                     } else {
                                     ?>
@@ -208,7 +208,7 @@ include_once('../includes/preloader.php');
                                 foreach ($meaArray as $item) {
                                     if (count($meaArray) <= 1) {
                                     ?>
-                                        <input type="hidden" name="measurement" value="<?= "measurement_" . $item['measurement_id'] ?>">
+                                        <input type="hidden" name="measurement" value="<?= $item['measurement_id'] ?>">
                                     <?php
                                     } else {
                                     ?>

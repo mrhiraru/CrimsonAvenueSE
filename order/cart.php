@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+require_once "../classes/cart.class.php";
+
+$cart = new Cart();
+
 ?>
 
 <!DOCTYPE html>
@@ -25,29 +30,77 @@ include_once('../includes/preloader.php');
                         </div>
                     </div>
                     <hr class="my-3">
-                    <div class="row m-0 p-0 px-3">
-                        <p class="m-0 p-0 fs-6 fw-bold text-dark lh-1">Store Name</p>
-                        <table id="products" class="table table-lg my-1">
-                            <tbody>
-                                <tr class="">
-                                    <td class="border-0">checkbox</td>
-                                    <td class="border-0">Image</td>
-                                    <td class="border-0">Name</td>
-                                    <td class="border-0">Variation</td>
-                                    <td class="border-0">Measurement</td>
-                                    <td class="border-0">quantity</td>
-                                    <td class="border-0">Price</td>
-                                    <td class="border-0">Subtotal</td>
-                                    <td class="border-0 text-end">Action</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p class="m-0 p-0 fs-6 text-dark lh-1">
-                            Total Price: 24353.00
-                            <span class="float-end">Checkout Button</span>
-                        </p>
-                    </div>
+                    <?php
+                    $cartArray = $cart->show($_SESSION['cart_id']);
+                    $storeArray = [];
+                    foreach ($cartArray as $item) {
+                        if (!in_array($item['store_id'], $storeArray)) {
+                            array_push($storeArray, [$item['store_id'], $item['store_name']]);
+                        }
+                    }
+
+                    foreach ($storeArray as $store) {
+                    ?>
+                        <div class="row m-0 p-0 p-3 border rounded mb-3">
+                            <form action="" class="m-0 p-0">
+                                <input class="form-check-input" type="checkbox" value="<?= $store['store_id'] ?>" id="<?= $store['store_id'] ?>">
+                                <label class="form-check-label" for="<?= $store['store_name'] ?>">
+                                    <p class="m-0 p-0 fs-6 fw-bold text-dark lh-1">
+                                        <?= $store['store_name'] ?>
+                                    </p>
+                                </label>
+                                <table id="products" class="table table-lg m-0 ">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        foreach ($cartArray as $item) {
+                                            if ($item['store_id'] === $store['store_id']) {
+                                        ?>
+                                                <tr class="align-middle">
+                                                    <td class="">
+                                                        <input class="form-check-input" type="checkbox" value="<?= $item['cart_item_id'] ?>" id="<?= $item['cart_item_id'] . $item['product_id'] ?>">
+                                                    </td>
+                                                    <td class=""><img src="<?php if (isset($item['image_file'])) {
+                                                                                echo "../images/data/" . $item['image_file'];
+                                                                            } else {
+                                                                                echo "../images/main/no-profile.jpg";
+                                                                            } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"></td>
+                                                    <td class=""><?= $item['product_name'] ?></td>
+                                                    <td class=""><?= $item['variation_name'] ?></td>
+                                                    <td class=""><?= $item['measurement_name'] ?></td>
+                                                    <td class=""><?= $item['quantity'] ?></td>
+                                                    <td class=""><?= $item['selling_price'] ?></td>
+                                                    <td class=""><?= sprintf("%.2f", $item['selling_price'] * $item['quantity']) ?></td>
+                                                    <td class=" text-end">Action</td>
+                                                </tr>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                                <p class="m-0 p-0 fs-6 text-dark lh-1 mt-3">
+                                    Total Price: 24353.00
+                                    <span class="float-end">Checkout Button</span>
+                                </p>
+                            </form>
+                        </div>
                 </div>
+            <?php
+                    }
+            ?>
             </div>
         </main>
         <section>
