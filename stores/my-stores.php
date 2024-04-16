@@ -33,10 +33,10 @@ include_once('../includes/preloader.php');
                     <div class="col-6 m-0 p-0">
                         <p class="m-0 p-0 fs-4 fw-bold text-primary lh-1">My Stores</p>
                     </div>
-
-                    <div class="col-6 m-0 p-0 text-end">
+                    <div class="col-6 m-0 p-0 text-end mb-3">
                         <a href="./registration.php" class="text-primary fw-semibold fs-6">Register Store</a>
                     </div>
+                    <hr>
                     <table id="mystores" class="table table-lg mt-1">
                         <thead>
                             <tr class="align-middle">

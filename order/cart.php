@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -24,8 +24,30 @@ include_once('../includes/preloader.php');
                             <p class="m-0 p-0 fs-3 fw-bold text-primary lh-1">Cart</p>
                         </div>
                     </div>
+                    <hr class="my-3">
+                    <div class="row m-0 p-0 px-3">
+                        <p class="m-0 p-0 fs-6 fw-bold text-dark lh-1">Store Name</p>
+                        <table id="products" class="table table-lg my-1">
+                            <tbody>
+                                <tr class="">
+                                    <td class="border-0">checkbox</td>
+                                    <td class="border-0">Image</td>
+                                    <td class="border-0">Name</td>
+                                    <td class="border-0">Variation</td>
+                                    <td class="border-0">Measurement</td>
+                                    <td class="border-0">quantity</td>
+                                    <td class="border-0">Price</td>
+                                    <td class="border-0">Subtotal</td>
+                                    <td class="border-0 text-end">Action</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="m-0 p-0 fs-6 text-dark lh-1">
+                            Total Price: 24353.00
+                            <span class="float-end">Checkout Button</span>
+                        </p>
+                    </div>
                 </div>
-                <hr>
             </div>
         </main>
         <section>
