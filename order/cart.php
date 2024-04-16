@@ -75,13 +75,14 @@ include_once('../includes/preloader.php');
                                         ?>
                                                 <tr class="align-middle">
                                                     <td class="">
-                                                        <input class="form-check-input" type="checkbox" name="<?= $counter ?>" value="<?= $item['cart_item_id'] ?>" id="<?= $item['cart_item_id'] . $item['product_id'] ?>">
+                                                        <input class="form-check-input" type="checkbox" name="<?= $counter ?>" value="<?= $item['cart_item_id'] ?>" data-subtotal="<?= $item['selling_price'] * $item['quantity'] ?>" onchange="updateTotal(this, <?= $counter ?>)">
                                                     </td>
-                                                    <td class=""><img src="<?php if (isset($item['image_file'])) {
+                                                    <td class=""><img src=" <?php if (isset($item['image_file'])) {
                                                                                 echo "../images/data/" . $item['image_file'];
                                                                             } else {
                                                                                 echo "../images/main/no-profile.jpg";
-                                                                            } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"></td>
+                                                                            } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1">
+                                                    </td>
                                                     <td class=""><?= $item['product_name'] ?></td>
                                                     <td class=""><?= $item['variation_name'] ?></td>
                                                     <td class=""><?= $item['measurement_name'] ?></td>
@@ -101,9 +102,10 @@ include_once('../includes/preloader.php');
                                     </tbody>
                                 </table>
                                 <div class="col-8 m-0 p-0 d-flex align-items-center mt-2">
-                                    <p class="m-0 p-0 fs-6 text-dark lh-1 fw-semibold align-center">
+                                    <input type="hidden" name="total<?= $counter ?>" value="0">
+                                    <p class="m-0 p-0 fs-6 text-dark lh-1 fw-semibold align-center" id="total_id">
                                         Total Price:
-                                        <span class="text-primary fw-bold fs-5"><?= '₱' . number_format($total, 2, '.', ',') ?></span>
+                                        <span class="text-primary fw-bold fs-5" id="total<?= $counter ?>"></span>
                                     </p>
                                 </div>
                                 <div class="col-4 m-0 p-0 align-middle mt-2">
@@ -128,15 +130,46 @@ include_once('../includes/preloader.php');
     require_once('../includes/js.php');
     ?>
     <script>
+        var totalArray = {};
+
         function checkAll(checkallbox, counter) {
             var checkboxes = document.getElementsByName(counter);
 
+            if (!(counter in totalArray)) {
+                totalArray[counter] = parseFloat(document.querySelector('input[name="total' + counter + '"][type="hidden"]').value);
+            }
+
             checkboxes.forEach(function(checkbox) {
-                if (checkallbox.checked == false) {
+                if (checkallbox.checked == false && checkbox.checked == true) {
                     checkbox.checked = false;
-                } else {
+                    totalArray[counter] -= parseFloat(checkbox.getAttribute('data-subtotal'));
+                } else if (checkallbox.checked == true && checkbox.checked == false) {
                     checkbox.checked = true;
+                    totalArray[counter] += parseFloat(checkbox.getAttribute('data-subtotal'));
                 }
+            });
+
+            document.getElementById('total' + counter).innerHTML = "₱" + totalArray[counter].toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function updateTotal(checkbox, counter) {
+            if (!(counter in totalArray)) {
+                totalArray[counter] = parseFloat(document.querySelector('input[name="total' + counter + '"][type="hidden"]').value);
+            }
+
+            if (checkbox.checked) {
+                totalArray[counter] += parseFloat(checkbox.getAttribute('data-subtotal'));
+            } else {
+                totalArray[counter] -= parseFloat(checkbox.getAttribute('data-subtotal'));;
+            }
+
+            // Update the HTML with the value from totalArray
+            document.getElementById('total' + counter).innerHTML = "₱" + totalArray[counter].toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
             });
         }
     </script>
