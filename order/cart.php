@@ -105,7 +105,7 @@ include_once('../includes/preloader.php');
                                     <input type="hidden" name="total<?= $counter ?>" value="0">
                                     <p class="m-0 p-0 fs-6 text-dark lh-1 fw-semibold align-center" id="total_id">
                                         Total Price:
-                                        <span class="text-primary fw-bold fs-5" id="total<?= $counter ?>"></span>
+                                        <span class="text-primary fw-bold fs-5" id="total<?= $counter ?>">₱0.00</span>
                                     </p>
                                 </div>
                                 <div class="col-4 m-0 p-0 d-flex align-items-center justify-content-end mt-2">
