@@ -5,6 +5,8 @@ require_once "../classes/cart.class.php";
 
 $cart = new Cart();
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +54,7 @@ include_once('../includes/preloader.php');
                                 <table id="products" class="table table-lg m-0 ">
                                     <thead>
                                         <tr class="">
-                                            <th><input class="form-check-input" type="checkbox" onchange="checkAll(this, this.value)" value="<?= $counter ?>"></th>
+                                            <th><input class="form-check-input" type="checkbox" onchange="checkAll(this, this.value)" value="<?= $counter ?>" id="checkall<?= $counter ?>"></th>
                                             <th><label class="form-check-label" for="<?= $store['store_name'] ?>">
                                                     <p class="m-0 p-0 fs-6 fw-bold text-dark lh-1">
                                                         <?= $store['store_name'] ?>
@@ -89,9 +91,8 @@ include_once('../includes/preloader.php');
                                                     <td class=""><?= $item['quantity'] ?></td>
                                                     <td class=""><?= '₱' . number_format($item['selling_price'], 2, '.', ',') ?></td>
                                                     <td class=""><?= '₱' . number_format($item['selling_price'] * $item['quantity'], 2, '.', ',') ?></td>
-                                                    <td class="text-end fs-7"><button type="button" class="bg-white border-0 remove-btn-hover">
-                                                            Delete
-                                                        </button>
+                                                    <td class="text-end fs-7">
+                                                        <input type="submit" class="bg-white border-0 remove-btn-hover" name="delete" value="Delete">
                                                     </td>
                                                 </tr>
                                         <?php
@@ -156,6 +157,9 @@ include_once('../includes/preloader.php');
         }
 
         function updateTotal(checkbox, counter) {
+            var checkallbox = document.getElementById('checkall' + counter);
+            var checkboxes = document.getElementsByName(counter);
+
             if (!(counter in totalArray)) {
                 totalArray[counter] = parseFloat(document.querySelector('input[name="total' + counter + '"][type="hidden"]').value);
             }
@@ -163,7 +167,25 @@ include_once('../includes/preloader.php');
             if (checkbox.checked) {
                 totalArray[counter] += parseFloat(checkbox.getAttribute('data-subtotal'));
             } else {
-                totalArray[counter] -= parseFloat(checkbox.getAttribute('data-subtotal'));;
+                totalArray[counter] -= parseFloat(checkbox.getAttribute('data-subtotal'));
+            }
+
+            var checkcount = 0;
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    checkcount++;
+                }
+            });
+
+            if (checkcount === checkboxes.length) {
+                checkallbox.indeterminate = false;
+                checkallbox.checked = true;
+            } else if (checkcount === 0) {
+                checkallbox.indeterminate = false;
+                checkallbox.checked = false;
+            } else {
+                checkallbox.checked = false;
+                checkallbox.indeterminate = true;
             }
 
             // Update the HTML with the value from totalArray
