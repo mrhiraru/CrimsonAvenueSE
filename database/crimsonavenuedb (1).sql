@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2024 at 06:33 PM
+-- Generation Time: Apr 18, 2024 at 04:00 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -69,7 +69,65 @@ INSERT INTO `account` (`account_id`, `email`, `password`, `affiliation`, `firstn
 (69, 'qb202100243@wmsu.edu.ph', '$2y$10$jNoLwJTWhRmyVkq4bG1Cee27a3jwflUX3cP.Znbgq4QYDuRGTedyu', 'Non-student', 'Qweqer', 'Werwe', 'Erter', 'Male', NULL, NULL, '09222222222', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-03-13 01:45:11', '2024-03-13 01:45:11', 0),
 (70, 'sirjaydee@wmsu.edu.ph', '$2y$10$eMWzttGZQ9xreuD6KBInUeSpWsLAT0OvBrvUnWZu89ZfSpr86ATCS', 'Student', 'Qwe', 'Weqw', 'We', 'Male', 28, NULL, '09222222222', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-03-13 01:59:55', '2024-03-13 01:59:55', 0),
 (71, 'qweqwe@wmsu.edu.ph', '$2y$10$SpisZe.1X1WcGgLJ0IeICe0xsfnXkVk5wl.RWH8dWMKbjb2UODf2a', 'Student', 'Qweasd', 'Zxcz', 'Zxc', 'Male', 28, NULL, '09666666666', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-03-13 02:01:56', '2024-03-13 02:01:56', 0),
-(72, 'haha@wmsu.edu.ph', '$2y$10$6.7a1Xbz1UR7qcBf8pHXJuy8EpPz7GeT9PGvgaxD8tjlZOyntC2/m', 'Student', 'Qweqwe', 'Qwe', 'Qwqrw', 'Male', 15, NULL, '09444444444', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-03-21 01:34:21', '2024-03-21 01:34:21', 0);
+(72, 'haha@wmsu.edu.ph', '$2y$10$6.7a1Xbz1UR7qcBf8pHXJuy8EpPz7GeT9PGvgaxD8tjlZOyntC2/m', 'Student', 'Qweqwe', 'Qwe', 'Qwqrw', 'Male', 15, NULL, '09444444444', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-03-21 01:34:21', '2024-03-21 01:34:21', 0),
+(73, 'imastudent@wmsu.edu.ph', '$2y$10$eqMTJfGj6EK82aB9IxNd2O2xIOzdiUKm/rH5V42ukihpx.kct/qtu', 'Student', 'Testcartfir', 'Testcartmid', 'Testcartlas', 'Female', 23, NULL, '09222222222', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-04-15 16:30:05', '2024-04-15 16:30:05', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `cart_id` int(11) NOT NULL,
+  `account_id` int(11) DEFAULT NULL,
+  `is_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_deleted` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`cart_id`, `account_id`, `is_created`, `is_updated`, `is_deleted`) VALUES
+(1, 73, '2024-04-15 16:30:05', '2024-04-15 16:30:05', 0),
+(2, 54, '2024-04-15 16:33:05', '2024-04-15 16:33:05', 0),
+(3, 53, '2024-04-15 16:33:11', '2024-04-15 16:33:56', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart_item`
+--
+
+CREATE TABLE `cart_item` (
+  `cart_item_id` int(11) NOT NULL,
+  `cart_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `variation_id` int(11) DEFAULT NULL,
+  `measurement_id` int(11) DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
+  `selling_price` decimal(12,2) NOT NULL,
+  `is_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_deleted` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart_item`
+--
+
+INSERT INTO `cart_item` (`cart_item_id`, `cart_id`, `product_id`, `variation_id`, `measurement_id`, `quantity`, `selling_price`, `is_created`, `is_updated`, `is_deleted`) VALUES
+(16, 2, 14, 29, 23, 10, 500.00, '2024-04-16 02:39:05', '2024-04-16 02:39:05', 0),
+(17, 2, 14, 29, 23, 390, 500.00, '2024-04-16 02:43:35', '2024-04-16 02:43:35', 0),
+(18, 2, 14, 29, 23, 5, 500.00, '2024-04-16 02:43:53', '2024-04-16 02:43:53', 0),
+(19, 2, 12, 27, 21, 3, 1100.00, '2024-04-16 02:46:17', '2024-04-16 02:46:17', 0),
+(20, 2, 17, 43, 35, 10, 46.00, '2024-04-16 02:48:16', '2024-04-16 02:48:16', 0),
+(21, 2, 19, 34, 28, 1, 40.00, '2024-04-16 05:50:09', '2024-04-16 05:50:09', 0),
+(22, 2, 19, 34, 28, 1, 40.00, '2024-04-16 05:50:12', '2024-04-16 05:50:12', 0),
+(23, 2, 19, 34, 28, 1, 65.00, '2024-04-16 05:50:44', '2024-04-16 05:50:44', 0),
+(24, 2, 12, 39, 32, 3, 100.25, '2024-04-16 13:38:19', '2024-04-16 13:38:19', 0);
 
 -- --------------------------------------------------------
 
@@ -212,7 +270,9 @@ INSERT INTO `measurement` (`measurement_id`, `product_id`, `measurement_name`, `
 (38, 24, 'Default', NULL, '2024-03-29 06:27:36', '2024-03-29 06:27:36', 0),
 (39, 25, 'Default', NULL, '2024-03-29 06:28:48', '2024-03-29 06:28:48', 0),
 (40, 26, 'Default', NULL, '2024-03-29 06:29:26', '2024-03-29 06:29:26', 0),
-(41, 26, '546', '567', '2024-03-29 06:35:51', '2024-03-29 06:35:51', 0);
+(41, 26, '546', '567', '2024-03-29 06:35:51', '2024-03-29 06:35:51', 0),
+(42, 14, 'test', '232', '2024-04-15 17:46:14', '2024-04-15 17:46:14', 0),
+(43, 19, 'tetstst', '22', '2024-04-16 05:48:00', '2024-04-16 05:49:57', 1);
 
 -- --------------------------------------------------------
 
@@ -248,8 +308,45 @@ INSERT INTO `moderator` (`moderator_id`, `college_id`, `account_id`, `is_created
 (13, 9, 65, '2024-02-12 06:59:55', '2024-02-12 06:59:55', 0),
 (14, 6, 53, '2024-02-12 08:57:47', '2024-02-12 09:04:53', 1),
 (15, 8, 53, '2024-02-12 09:05:06', '2024-02-12 09:07:06', 1),
-(16, 7, 53, '2024-02-12 09:19:53', '2024-02-12 09:19:53', 0),
+(16, 18, 53, '2024-02-12 09:19:53', '2024-04-12 17:59:27', 0),
 (17, 15, 55, '2024-03-23 03:10:10', '2024-03-23 03:10:10', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `order_id` int(11) NOT NULL,
+  `account_id` int(11) DEFAULT NULL,
+  `total_payment` decimal(12,2) NOT NULL,
+  `fulfillment_method` varchar(32) NOT NULL,
+  `payment_method` varchar(32) NOT NULL,
+  `order_status` varchar(16) NOT NULL,
+  `is_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_deleted` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_item`
+--
+
+CREATE TABLE `order_item` (
+  `order_item_id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `variation_id` int(11) DEFAULT NULL,
+  `measurement_id` int(11) DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
+  `selling_price` decimal(12,2) NOT NULL,
+  `is_created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_deleted` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -275,7 +372,8 @@ CREATE TABLE `prices` (
 
 INSERT INTO `prices` (`price_id`, `product_id`, `variation_id`, `measurement_id`, `purchase_price`, `selling_price`, `is_created`, `is_updated`, `is_deleted`) VALUES
 (1, 12, 27, 21, 20.00, 1100.00, '2024-04-12 15:08:53', '2024-04-12 15:09:28', 0),
-(2, 12, 38, 21, 20.00, 300.00, '2024-04-12 15:15:14', '2024-04-12 15:15:14', 0);
+(2, 12, 38, 21, 20.00, 300.00, '2024-04-12 15:15:14', '2024-04-12 15:15:14', 0),
+(3, 14, 29, 23, 400.00, 450.00, '2024-04-15 17:45:41', '2024-04-15 17:45:41', 0);
 
 -- --------------------------------------------------------
 
@@ -307,12 +405,12 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`product_id`, `store_id`, `category_id`, `product_name`, `exclusivity`, `sale_status`, `purchase_price`, `selling_price`, `restriction_status`, `order_quantity_limit`, `estimated_order_time`, `is_created`, `is_updated`, `is_deleted`) VALUES
 (12, 33, 2, 'Final Necklace', 'All Users', 'Pre-order', 20.00, 100.25, 'Unrestricted', 10, 30, '2024-03-20 13:36:42', '2024-03-27 01:34:28', 0),
 (13, 33, 5, 'Spicy Eyedrops', 'All Users', 'Pre-order', 99.00, 9990.00, 'Unrestricted', 0, 0, '2024-03-20 13:37:12', '2024-03-21 05:27:25', 0),
-(14, 33, 1, 'Smiley Hoodie ', 'WMSU Users', 'On-hand', 0.00, 500.00, 'Unrestricted', 0, 0, '2024-03-20 15:07:26', '2024-03-20 16:27:29', 0),
+(14, 33, 1, 'Smiley Hoodie ', 'WMSU Users', 'On-hand', 400.00, 500.00, 'Unrestricted', 0, 0, '2024-03-20 15:07:26', '2024-04-16 02:10:02', 0),
 (15, 33, 7, 'Nothing', 'WMSU Users', 'Pre-order', 4.00, 300.00, 'Unrestricted', 0, 0, '2024-03-20 15:08:01', '2024-03-22 20:42:18', 0),
 (16, 33, 6, 'Venom Newspaper', 'WMSU Users', 'On-hand', 10.00, 20.00, 'Unrestricted', 0, 0, '2024-03-20 16:28:42', '2024-03-20 16:47:02', 0),
 (17, 33, 7, 'Poison Candy', 'All Users', 'On-hand', 2.00, 10.00, 'Unrestricted', 10, 0, '2024-03-20 16:49:08', '2024-03-27 04:53:59', 0),
 (18, 33, 5, 'test long name product for design HAHAHAHHAAHAHA', 'WMSU Users', 'Pre-order', 2.00, 2.00, 'Unrestricted', 0, 0, '2024-03-20 17:04:03', '2024-03-20 17:04:03', 0),
-(19, 35, 4, 'Special Chicken BBQ', 'Computing Studies', 'Pre-order', 30.00, 65.00, 'Unrestricted', 0, 0, '2024-03-20 17:18:12', '2024-03-20 23:57:15', 0),
+(19, 35, 4, 'Special Chicken BBQ', 'Computing Studies', 'Pre-order', 30.00, 65.00, 'Unrestricted', 0, 0, '2024-03-20 17:18:12', '2024-04-16 05:50:31', 0),
 (20, 33, 4, 'Tubig Kanal', 'WMSU Users', 'Pre-order', 200.00, 200.00, 'Restricted', 0, 0, '2024-03-22 16:59:34', '2024-03-27 01:39:16', 0),
 (21, 33, 1, 'a', 'WMSU Users', 'Pre-order', 3.00, 3.00, 'Unrestricted', 0, 0, '2024-03-22 18:07:12', '2024-03-22 18:07:12', 0),
 (22, 33, 1, 'ab', 'WMSU Users', 'On-hand', 6.00, 6.50, 'Unrestricted', 0, 0, '2024-03-22 18:08:03', '2024-03-26 18:03:59', 0),
@@ -416,7 +514,7 @@ CREATE TABLE `stock` (
   `variation_id` int(11) DEFAULT NULL,
   `measurement_id` int(11) DEFAULT NULL,
   `stock_quantity` int(11) NOT NULL,
-  `stock_sold` int(11) NOT NULL DEFAULT 0,
+  `stock_allocated` int(11) NOT NULL DEFAULT 0,
   `purchase_price` decimal(12,2) NOT NULL,
   `selling_price` decimal(12,2) NOT NULL,
   `is_created` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -428,7 +526,7 @@ CREATE TABLE `stock` (
 -- Dumping data for table `stock`
 --
 
-INSERT INTO `stock` (`stock_id`, `product_id`, `variation_id`, `measurement_id`, `stock_quantity`, `stock_sold`, `purchase_price`, `selling_price`, `is_created`, `is_updated`, `is_deleted`) VALUES
+INSERT INTO `stock` (`stock_id`, `product_id`, `variation_id`, `measurement_id`, `stock_quantity`, `stock_allocated`, `purchase_price`, `selling_price`, `is_created`, `is_updated`, `is_deleted`) VALUES
 (2, 2, 1, 1, 50, 3, 400.00, 550.00, '2024-03-10 04:08:43', '2024-03-10 05:33:29', 0),
 (3, 2, 1, 5, 40, 0, 400.00, 550.00, '2024-03-10 04:43:10', '2024-03-10 04:43:10', 0),
 (4, 2, 1, 1, 1, 0, 1.00, 1.00, '2024-03-10 04:46:26', '2024-03-10 05:07:03', 0),
@@ -437,9 +535,9 @@ INSERT INTO `stock` (`stock_id`, `product_id`, `variation_id`, `measurement_id`,
 (7, 2, 22, 1, 55, 0, 500.00, 400.00, '2024-03-11 04:36:10', '2024-03-11 04:36:10', 0),
 (8, 2, 1, 1, 5, 0, 100.00, 200.00, '2024-03-11 05:45:52', '2024-03-11 05:45:52', 0),
 (9, 14, 29, 23, 30, 0, 300.00, 500.00, '2024-03-20 15:10:33', '2024-03-20 16:13:19', 1),
-(10, 14, 29, 23, 20, 0, 300.00, 999.00, '2024-03-20 16:04:04', '2024-03-20 16:10:49', 0),
+(10, 14, 29, 23, 20, 0, 300.00, 999.00, '2024-03-20 16:04:04', '2024-04-15 17:45:04', 1),
 (11, 17, 32, 26, 50, 0, 2.00, 5.00, '2024-03-20 16:52:17', '2024-03-20 16:52:17', 0),
-(12, 19, 34, 28, 5, 0, 30.00, 65.00, '2024-03-21 01:18:37', '2024-03-21 01:18:37', 0),
+(12, 19, 34, 28, 5, 2, 30.00, 40.00, '2024-03-21 01:18:37', '2024-04-16 05:50:12', 0),
 (13, 13, 28, 22, 9, 0, 2.00, 9990.00, '2024-03-21 05:19:50', '2024-03-21 05:19:50', 0),
 (14, 16, 31, 25, 20, 20, 10.00, 20.00, '2024-03-26 16:36:14', '2024-03-26 16:41:12', 0),
 (15, 16, 31, 25, 40, 40, 10.00, 20.00, '2024-03-26 16:36:19', '2024-03-26 16:48:35', 0),
@@ -451,10 +549,12 @@ INSERT INTO `stock` (`stock_id`, `product_id`, `variation_id`, `measurement_id`,
 (21, 17, 42, 34, 30, 0, 2.00, 23.00, '2024-03-26 17:20:20', '2024-03-26 18:08:32', 0),
 (22, 17, 42, 35, 40, 0, 2.00, 50.00, '2024-03-26 17:20:27', '2024-03-26 18:09:11', 0),
 (23, 17, 43, 34, 50, 0, 2.00, 23.00, '2024-03-26 17:20:36', '2024-03-26 18:08:41', 0),
-(24, 17, 43, 35, 60, 0, 2.00, 46.00, '2024-03-26 17:20:42', '2024-03-26 18:08:55', 0),
+(24, 17, 43, 35, 60, 10, 2.00, 46.00, '2024-03-26 17:20:42', '2024-04-16 02:48:16', 0),
 (25, 22, 37, 31, 2, 0, 7.00, 6.50, '2024-03-26 18:04:28', '2024-03-26 18:05:08', 1),
 (26, 17, 43, 36, 4, 0, 2.00, 30.00, '2024-03-27 04:48:40', '2024-03-27 04:48:40', 0),
-(27, 12, 38, 21, 1, 0, 300.00, 400.00, '2024-04-12 11:05:27', '2024-04-12 11:29:02', 1);
+(27, 12, 38, 21, 1, 0, 300.00, 400.00, '2024-04-12 11:05:27', '2024-04-12 11:29:02', 1),
+(28, 14, 29, 23, 400, 400, 40.00, 500.00, '2024-04-15 17:44:56', '2024-04-16 02:43:35', 0),
+(29, 14, 29, 23, 300, 5, 400.00, 500.00, '2024-04-16 02:40:04', '2024-04-16 02:43:53', 0);
 
 -- --------------------------------------------------------
 
@@ -562,7 +662,8 @@ INSERT INTO `variation` (`variation_id`, `product_id`, `variation_name`, `is_cre
 (46, 23, 'Default', '2024-03-29 06:25:47', '2024-03-29 06:25:47', 0),
 (47, 24, 'Default', '2024-03-29 06:27:36', '2024-03-29 06:27:36', 0),
 (48, 25, 'Default', '2024-03-29 06:28:48', '2024-03-29 06:28:48', 0),
-(49, 26, 'Default', '2024-03-29 06:29:26', '2024-03-29 06:29:26', 0);
+(49, 26, 'Default', '2024-03-29 06:29:26', '2024-03-29 06:29:26', 0),
+(50, 14, 'test', '2024-04-15 17:46:07', '2024-04-15 17:46:07', 0);
 
 --
 -- Indexes for dumped tables
@@ -576,6 +677,23 @@ ALTER TABLE `account`
   ADD UNIQUE KEY `email` (`email`),
   ADD KEY `fk_colacc` (`college_id`),
   ADD KEY `fk_deptacc` (`department_id`);
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `fk_caracc` (`account_id`);
+
+--
+-- Indexes for table `cart_item`
+--
+ALTER TABLE `cart_item`
+  ADD PRIMARY KEY (`cart_item_id`),
+  ADD KEY `fk_citcar` (`cart_id`),
+  ADD KEY `fk_citpro` (`product_id`),
+  ADD KEY `fk_citvar` (`variation_id`),
+  ADD KEY `fk_citmea` (`measurement_id`);
 
 --
 -- Indexes for table `category`
@@ -609,6 +727,23 @@ ALTER TABLE `measurement`
 ALTER TABLE `moderator`
   ADD PRIMARY KEY (`moderator_id`),
   ADD KEY `fk_colmod` (`college_id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `fk_ordacc` (`account_id`);
+
+--
+-- Indexes for table `order_item`
+--
+ALTER TABLE `order_item`
+  ADD PRIMARY KEY (`order_item_id`),
+  ADD KEY `fk_oitord` (`order_id`),
+  ADD KEY `fk_oitpro` (`product_id`),
+  ADD KEY `fk_oitvar` (`variation_id`),
+  ADD KEY `fk_oitmea` (`measurement_id`);
 
 --
 -- Indexes for table `prices`
@@ -686,7 +821,19 @@ ALTER TABLE `variation`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `cart_item`
+--
+ALTER TABLE `cart_item`
+  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -710,7 +857,7 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `measurement`
 --
 ALTER TABLE `measurement`
-  MODIFY `measurement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `measurement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `moderator`
@@ -719,10 +866,22 @@ ALTER TABLE `moderator`
   MODIFY `moderator_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `order_item`
+--
+ALTER TABLE `order_item`
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `prices`
 --
 ALTER TABLE `prices`
-  MODIFY `price_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `price_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -752,7 +911,7 @@ ALTER TABLE `semester`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `store`
@@ -770,7 +929,7 @@ ALTER TABLE `store_staff`
 -- AUTO_INCREMENT for table `variation`
 --
 ALTER TABLE `variation`
-  MODIFY `variation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `variation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Constraints for dumped tables
@@ -782,6 +941,21 @@ ALTER TABLE `variation`
 ALTER TABLE `account`
   ADD CONSTRAINT `fk_colacc` FOREIGN KEY (`college_id`) REFERENCES `college` (`college_id`),
   ADD CONSTRAINT `fk_deptacc` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`);
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `fk_caracc` FOREIGN KEY (`account_id`) REFERENCES `account` (`account_id`);
+
+--
+-- Constraints for table `cart_item`
+--
+ALTER TABLE `cart_item`
+  ADD CONSTRAINT `fk_citcar` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`),
+  ADD CONSTRAINT `fk_citmea` FOREIGN KEY (`measurement_id`) REFERENCES `measurement` (`measurement_id`),
+  ADD CONSTRAINT `fk_citpro` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
+  ADD CONSTRAINT `fk_citvar` FOREIGN KEY (`variation_id`) REFERENCES `variation` (`variation_id`);
 
 --
 -- Constraints for table `department`
@@ -801,6 +975,21 @@ ALTER TABLE `measurement`
 ALTER TABLE `moderator`
   ADD CONSTRAINT `fk_accmod` FOREIGN KEY (`account_id`) REFERENCES `account` (`account_id`),
   ADD CONSTRAINT `fk_colmod` FOREIGN KEY (`college_id`) REFERENCES `college` (`college_id`);
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `fk_ordacc` FOREIGN KEY (`account_id`) REFERENCES `account` (`account_id`);
+
+--
+-- Constraints for table `order_item`
+--
+ALTER TABLE `order_item`
+  ADD CONSTRAINT `fk_oitmea` FOREIGN KEY (`measurement_id`) REFERENCES `measurement` (`measurement_id`),
+  ADD CONSTRAINT `fk_oitord` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  ADD CONSTRAINT `fk_oitpro` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
+  ADD CONSTRAINT `fk_oitvar` FOREIGN KEY (`variation_id`) REFERENCES `variation` (`variation_id`);
 
 --
 -- Constraints for table `prices`
