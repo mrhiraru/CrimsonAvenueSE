@@ -22,7 +22,6 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 if (isset($_POST['add'])) {
     $cart = new Cart;
 
-    $record_checkout = $product->checkout($_POST['product_id'], $_POST['variation'], $_POST['measurement']);
 
     $cart->cart_id = $_SESSION['cart_id'];
     $cart->product_id = htmlentities($_POST['product_id']);
@@ -38,12 +37,21 @@ if (isset($_POST['add'])) {
     }
     $cart->quantity = htmlentities($_POST['quantity']);
 
+    $record_checkout = $product->add_to_cart($cart->product_id, $cart->variation_id, $cart->measurement_id);
+
+
     if (isset($record_checkout['stock_selling_price']) && $record_checkout['sale_status'] == "On-hand") {
         $cart->selling_price = $record_checkout['stock_selling_price'];
     } else if (isset($record_checkout['prices_selling_price']) && $record_checkout['sale_status'] == "Pre-order") {
         $cart->selling_price = $record_checkout['prices_selling_price'];
     } else {
-        $cart->selling_price = $record_checkout['product_selling_price'];  
+        $cart->selling_price = $record_checkout['product_selling_price'];
+    }
+
+    if ($record_checkout['sale_status'] == "On-hand") {
+        $cart->stock_id = htmlentities($_POST['stock_id']);
+    } else {
+        $cart->stock_id = null;
     }
 
     if (
@@ -89,7 +97,7 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/header.user.php');
     ?>
-    <div class="container-fluid col-md-9 mt-4 mx-sm-auto">
+    <div class="container-fluid col-md-9 mt-4 mx-sm-auto  min-vh-100 ">
         <main class="">
             <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
                 <div class="row d-flex justify-content-start m-0 p-0">
@@ -180,7 +188,7 @@ include_once('../includes/preloader.php');
                                     } else {
                                     ?>
                                         <div class="m-0 p-0 me-1 mb-1">
-                                            <input type="radio" class="btn-check" name="variation" id="<?= "variation_" . $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= (isset($_POST['variation']) && $_POST['variation'] == $item['variation_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
+                                            <input type="radio" class="btn-check" name="variation" id="<?= "variation_" . $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= (isset($_POST['variation']) && $_POST['variation'] == $item['variation_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>); showStockId(<?= $_GET['product_id'] ?>)">
                                             <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= "variation_" . $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
                                         </div>
 
@@ -213,7 +221,7 @@ include_once('../includes/preloader.php');
                                     } else {
                                     ?>
                                         <div class="m-0 p-0 me-1 mb-1">
-                                            <input type="radio" class="btn-check" name="measurement" id="<?= "measurement_" . $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= (isset($_POST['measurement']) && $_POST['measurement'] == $item['measurement_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
+                                            <input type="radio" class="btn-check" name="measurement" id="<?= "measurement_" . $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= (isset($_POST['measurement']) && $_POST['measurement'] == $item['measurement_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>); showStockId(<?= $_GET['product_id'] ?>)">
                                             <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= "measurement_" . $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
                                         </div>
 
@@ -238,6 +246,8 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <div class="m-0 p-0 me-1 mb-1 text-secondary fs-7">
                                     <input type="hidden" name="available_stock" id="available_stock" value="">
+                                    <input type="hidden" name="stock_id" id="stock_id" value="">
+                                    <input type="hidden" name="selling_price" id="selling_price" value="">
                                     <?php
                                     if (isset($record['sale_status']) && $record['sale_status'] == "Pre-order") {
                                         if (isset($record['estimated_order_time']) && $record['estimated_order_time'] > 0) {
@@ -373,6 +383,26 @@ include_once('../includes/preloader.php');
                     disableButton(available_stock);
                 }
                 xhttp.open("GET", "getstock.php?product_id=" + product + "&variation_id=" + variation + "&measurement_id=" + measurement);
+                xhttp.send();
+            }
+        }
+
+        function showStockId(product) {
+            var variation_input = document.querySelector('input[name="variation"]:checked') ||
+                document.querySelector('input[name="variation"][type="hidden"][value]');
+            var measurement_input = document.querySelector('input[name="measurement"]:checked') ||
+                document.querySelector('input[name="measurement"][type="hidden"][value]');
+
+            if (variation_input !== null && measurement_input !== null) {
+                var variation = variation_input.value;
+                var measurement = measurement_input.value;
+
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function() {
+                    var stock_id = this.responseText;
+                    document.getElementById("stock_id").value = stock_id;
+                }
+                xhttp.open("GET", "getstockid.php?product_id=" + product + "&variation_id=" + variation + "&measurement_id=" + measurement);
                 xhttp.send();
             }
         }

@@ -4,12 +4,15 @@ require_once("../classes/database.php");
 class Cart
 {
     public $cart_id;
+    public $cart_item_id;
     public $account_id;
     public $product_id;
     public $variation_id;
     public $measurement_id;
+    public $stock_id;
     public $quantity;
     public $selling_price;
+    public $is_deleted;
     protected $db;
 
     function __construct()
@@ -19,13 +22,14 @@ class Cart
 
     function add()
     {
-        $sql = "INSERT INTO cart_item (cart_id, product_id, variation_id, measurement_id, quantity, selling_price) VALUES (:cart_id, :product_id, :variation_id, :measurement_id, :quantity, :selling_price)";
+        $sql = "INSERT INTO cart_item (cart_id, product_id, variation_id, measurement_id, stock_id, quantity, selling_price) VALUES (:cart_id, :product_id, :variation_id, :measurement_id, :stock_id, :quantity, :selling_price)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':cart_id', $this->cart_id);
         $query->bindParam(':product_id', $this->product_id);
         $query->bindParam(':variation_id', $this->variation_id);
         $query->bindParam(':measurement_id', $this->measurement_id);
+        $query->bindParam(':stock_id', $this->stock_id);
         $query->bindParam(':quantity', $this->quantity);
         $query->bindParam(':selling_price', $this->selling_price);
 
@@ -38,7 +42,7 @@ class Cart
 
     function show($cart_id)
     {
-        $sql = "SELECT ci.*, p.product_name, s.store_name, s.store_id, v.variation_name, m.measurement_name, i.image_file
+        $sql = "SELECT ci.*, p.product_name, p.sale_status, s.store_name, s.store_id, v.variation_name, m.measurement_name, i.image_file
         FROM cart_item ci 
         INNER JOIN product p ON p.product_id = ci.product_id AND p.is_deleted != 1 
         INNER JOIN store s ON s.store_id = p.store_id AND s.is_deleted != 1
@@ -54,5 +58,20 @@ class Cart
             $data = $query->fetchAll();
         }
         return $data;
+    }
+
+    function delete()
+    {
+        $sql = "UPDATE cart_item SET is_deleted = :is_deleted WHERE cart_item_id = :cart_item_id;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':is_deleted', $this->is_deleted);
+        $query->bindParam(':cart_item_id', $this->cart_item_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

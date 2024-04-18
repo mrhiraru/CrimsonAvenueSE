@@ -2,13 +2,32 @@
 session_start();
 
 require_once "../classes/cart.class.php";
+require_once "../classes/stock.class.php";
 
 $cart = new Cart();
+if (isset($_GET['delete']) && $_GET['delete'] == "True") {
+    $cart->cart_item_id = htmlentities($_GET['cart_item_id']);
+    $cart->is_deleted = 1;
 
+    if ($cart->delete()) {
+        $stock = new Stock();
+        $stock->stock_allocated = htmlentities($_GET['quantity']);
+        $stock->stock_id = htmlentities($_GET['stock_id']);
 
+        if (htmlentities($_GET['sale_status']) == "On-hand") {
+            if ($stock->return_stock()) {
+                header("Location: ./cart.php");
+            }
+        } else if (htmlentities($_GET['sale_status']) == "Pre-order") {
+            header("Location: ./cart.php");
+        }
+    } else {
+        echo 'An error occured while adding in the database.';
+        $success = 'failed';
+    }
+}
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <?php
@@ -34,88 +53,97 @@ include_once('../includes/preloader.php');
                     <hr class="my-3">
                     <?php
                     $cartArray = $cart->show($_SESSION['cart_id']);
-                    $storeArray = [];
-                    foreach ($cartArray as $item) {
-                        $store = array(
-                            'store_id' => $item['store_id'],
-                            'store_name' => $item['store_name']
-                        );
-
-                        if (!in_array($store, $storeArray)) {
-
-                            array_push($storeArray, $store);
-                        }
-                    }
-                    $counter = 0;
-                    foreach ($storeArray as $store) {
+                    if (empty($cartArray)) {
                     ?>
-                        <div class="row m-0 p-0 p-3 border rounded mb-3">
-                            <form action="" method="post" class="m-0 p-0 row">
-                                <table id="products" class="table table-lg m-0 ">
-                                    <thead>
-                                        <tr class="">
-                                            <th><input class="form-check-input" type="checkbox" onchange="checkAll(this, this.value)" value="<?= $counter ?>" id="checkall<?= $counter ?>"></th>
-                                            <th><label class="form-check-label" for="<?= $store['store_name'] ?>">
-                                                    <p class="m-0 p-0 fs-6 fw-bold text-dark lh-1">
-                                                        <?= $store['store_name'] ?>
-                                                    </p>
-                                                </label></th>
-                                            <th class="text-secondary fs-8 fw-semibold">Product Name</th>
-                                            <th class="text-secondary fs-8 fw-semibold">Variation</th>
-                                            <th class="text-secondary fs-8 fw-semibold">Measurement</th>
-                                            <th class="text-secondary fs-8 fw-semibold">Quantity</th>
-                                            <th class="text-secondary fs-8 fw-semibold">Price</th>
-                                            <th class="text-secondary fs-8 fw-semibold">Subtotal</th>
-                                            <th class="text-secondary fs-8 fw-semibold"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $total = 0;
-                                        foreach ($cartArray as $item) {
-                                            if ($item['store_id'] === $store['store_id']) {
-                                        ?>
-                                                <tr class="align-middle">
-                                                    <td class="">
-                                                        <input class="form-check-input" type="checkbox" name="<?= $counter ?>" value="<?= $item['cart_item_id'] ?>" data-subtotal="<?= $item['selling_price'] * $item['quantity'] ?>" onchange="updateTotal(this, <?= $counter ?>)">
-                                                    </td>
-                                                    <td class=""><img src=" <?php if (isset($item['image_file'])) {
-                                                                                echo "../images/data/" . $item['image_file'];
-                                                                            } else {
-                                                                                echo "../images/main/no-profile.jpg";
-                                                                            } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1">
-                                                    </td>
-                                                    <td class=""><?= $item['product_name'] ?></td>
-                                                    <td class=""><?= $item['variation_name'] ?></td>
-                                                    <td class=""><?= $item['measurement_name'] ?></td>
-                                                    <td class=""><?= $item['quantity'] ?></td>
-                                                    <td class=""><?= '₱' . number_format($item['selling_price'], 2, '.', ',') ?></td>
-                                                    <td class=""><?= '₱' . number_format($item['selling_price'] * $item['quantity'], 2, '.', ',') ?></td>
-                                                    <td class="text-end fs-7">
-                                                        <input type="submit" class="bg-white border-0 remove-btn-hover" name="delete" value="Delete">
-                                                    </td>
-                                                </tr>
-                                        <?php
-                                                $total += ($item['selling_price'] * $item['quantity']);
-                                            }
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-                                <div class="col-8 m-0 p-0 d-flex align-items-center mt-2">
-                                    <input type="hidden" name="total<?= $counter ?>" value="0">
-                                    <p class="m-0 p-0 fs-6 text-dark lh-1 fw-semibold align-center" id="total_id">
-                                        Total Price:
-                                        <span class="text-primary fw-bold fs-5" id="total<?= $counter ?>">₱0.00</span>
-                                    </p>
-                                </div>
-                                <div class="col-4 m-0 p-0 d-flex align-items-center justify-content-end mt-2">
-                                    <input type="submit" class="btn btn-primary fw-semibold" name="checkout" value="Checkout">
-                                </div>
-                            </form>
+                        <div class="row m-0 p-0 d-flex align-items-center">
+                            <p class="text-center fw-semibold text-secondary"> No products have been added to the cart. </p>
                         </div>
+                        <?php
+                    } else {
+                        $storeArray = [];
+                        foreach ($cartArray as $item) {
+                            $store = array(
+                                'store_id' => $item['store_id'],
+                                'store_name' => $item['store_name']
+                            );
+
+                            if (!in_array($store, $storeArray)) {
+
+                                array_push($storeArray, $store);
+                            }
+                        }
+                        $counter = 0;
+                        foreach ($storeArray as $store) {
+                        ?>
+                            <div class="row m-0 p-0 p-3 border rounded mb-3">
+                                <form action="" method="post" class="m-0 p-0 row" id="cartForm">
+                                    <table id="products" class="table table-lg m-0 ">
+                                        <thead>
+                                            <tr class="">
+                                                <th><input class="form-check-input" type="checkbox" onchange="checkAll(this, this.value)" value="<?= $counter ?>" id="checkall<?= $counter ?>"></th>
+                                                <th><label class="form-check-label" for="<?= $store['store_name'] ?>">
+                                                        <p class="m-0 p-0 fs-6 fw-bold text-dark lh-1">
+                                                            <?= $store['store_name'] ?>
+                                                        </p>
+                                                    </label></th>
+                                                <th class="text-secondary fs-8 fw-semibold">Product Name</th>
+                                                <th class="text-secondary fs-8 fw-semibold">Variation</th>
+                                                <th class="text-secondary fs-8 fw-semibold">Measurement</th>
+                                                <th class="text-secondary fs-8 fw-semibold">Quantity</th>
+                                                <th class="text-secondary fs-8 fw-semibold">Price</th>
+                                                <th class="text-secondary fs-8 fw-semibold">Subtotal</th>
+                                                <th class="text-secondary fs-8 fw-semibold"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $total = 0;
+                                            foreach ($cartArray as $item) {
+                                                if ($item['store_id'] === $store['store_id']) {
+                                            ?>
+                                                    <tr class="align-middle">
+                                                        <td class="">
+                                                            <input class="form-check-input" type="checkbox" name="<?= $counter ?>" value="<?= $item['cart_item_id'] ?>" data-subtotal="<?= $item['selling_price'] * $item['quantity'] ?>" onchange="updateTotal(this, <?= $counter ?>)">
+                                                        </td>
+                                                        <td class=""><img src=" <?php if (isset($item['image_file'])) {
+                                                                                    echo "../images/data/" . $item['image_file'];
+                                                                                } else {
+                                                                                    echo "../images/main/no-profile.jpg";
+                                                                                } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1">
+                                                        </td>
+                                                        <td class=""><?= $item['product_name'] ?></td>
+                                                        <td class=""><?= $item['variation_name'] ?></td>
+                                                        <td class=""><?= $item['measurement_name'] ?></td>
+                                                        <td class=""><?= $item['quantity'] ?></td>
+                                                        <td class=""><?= '₱' . number_format($item['selling_price'], 2, '.', ',') ?></td>
+                                                        <td class=""><?= '₱' . number_format($item['selling_price'] * $item['quantity'], 2, '.', ',') ?></td>
+                                                        <td class="text-end fs-7">
+                                                            <input type="submit" class="bg-white border-0 remove-btn-hover" name="delete" value="Delete" onclick="changeActionLink(this)" data-itemid="<?= $item['cart_item_id'] ?>" data-qty="<?= $item['quantity'] ?>">
+                                                            <a href="./cart.php<?= '?cart_item_id=' . $item['cart_item_id'] . '&quantity=' . $item['quantity'] . '&sale_status=' . $item['sale_status'] . '&stock_id=' . $item['stock_id'] . '&delete=True' ?>  ">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                            <?php
+                                                    $total += ($item['selling_price'] * $item['quantity']);
+                                                }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                    <div class="col-8 m-0 p-0 d-flex align-items-center mt-2">
+                                        <input type="hidden" name="total<?= $counter ?>" value="0">
+                                        <p class="m-0 p-0 fs-6 text-dark lh-1 fw-semibold align-center" id="total_id">
+                                            Total Price:
+                                            <span class="text-primary fw-bold fs-5" id="total<?= $counter ?>">₱0.00</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-4 m-0 p-0 d-flex align-items-center justify-content-end mt-2">
+                                        <input type="submit" class="btn btn-primary fw-semibold" name="checkout" value="Checkout">
+                                    </div>
+                                </form>
+                            </div>
                     <?php
-                        $counter++;
+                            $counter++;
+                        }
                     }
                     ?>
                 </div>
@@ -193,6 +221,23 @@ include_once('../includes/preloader.php');
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             });
+        }
+
+        function changeActionLink(button) {
+            var form = document.getElementById("cartForm");
+
+            const queryLink = window.location.href;
+            const urlParams = new URLSearchParams(queryLink);
+
+            var cart_item_id = parseInt(button.getAttribute('data-itemid'));
+            var quantity = parseInt(button.getAttribute('data-qty'));
+
+            if (queryLink.includes("?")) {
+                form.action = queryLink.split('?')[0] + "?cart_item_id=" + cart_item_id + "&quantity=" + quantity;
+            } else {
+                form.action = queryLink + "?cart_item_id=" + cart_item_id + "&quantity=" + quantity;
+            }
+
         }
     </script>
 </body>

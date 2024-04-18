@@ -105,7 +105,7 @@ class Product
     {
         $sql = "SELECT p.*, s.store_name, c.category_name, i.image_file FROM product p INNER JOIN store s ON p.store_id = s.store_id AND s.is_deleted != 1 INNER JOIN category c ON p.category_id = c.category_id AND c.is_deleted != 1 LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id  WHERE p.is_deleted != 1 ORDER BY p.product_id ASC";
         $query = $this->db->connect()->prepare($sql);
-        
+
 
         if ($query->execute()) {
             $data = $query->fetchAll();
@@ -138,7 +138,14 @@ class Product
 
     function fetch($product_id)
     {
-        $sql = "SELECT p.*, s.store_id, s.store_name, c.category_name, COALESCE(v.var_count, 0) AS var_count, COALESCE(m.mea_count, 0) AS mea_count FROM product p INNER JOIN store s ON p.store_id = s.store_id INNER JOIN category c ON p.category_id = c.category_id INNER JOIN (SELECT product_id, COUNT(*) AS var_count FROM variation WHERE is_deleted != 1 GROUP BY product_id) v ON p.product_id = v.product_id INNER JOIN (SELECT product_id, COUNT(*) AS mea_count FROM measurement WHERE is_deleted != 1 GROUP BY product_id) m ON p.product_id = m.product_id WHERE p.product_id = :product_id AND p.is_deleted != 1;";
+        $sql = "SELECT p.*, s.store_id, s.store_name, c.category_name, COALESCE(v.var_count, 0) AS var_count, COALESCE(m.mea_count, 0) AS mea_count 
+        FROM product p 
+        INNER JOIN store s ON p.store_id = s.store_id 
+        INNER JOIN category c ON p.category_id = c.category_id 
+        INNER JOIN (SELECT product_id, COUNT(*) AS var_count FROM variation WHERE is_deleted != 1 GROUP BY product_id) v ON p.product_id = v.product_id 
+        INNER JOIN (SELECT product_id, COUNT(*) AS mea_count FROM measurement WHERE is_deleted != 1 GROUP BY product_id) m ON p.product_id = m.product_id 
+        WHERE p.product_id = :product_id AND p.is_deleted != 1;";
+
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_id', $product_id);
         if ($query->execute()) {
@@ -381,6 +388,27 @@ class Product
         LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
         INNER JOIN variation v ON p.product_id = v.product_id AND v.variation_id = :variation_id
         INNER JOIN measurement m ON p.product_id = m.product_id AND m.measurement_id = :measurement_id
+        LEFT JOIN (SELECT * FROM stock WHERE product_id = :product_id AND variation_id = :variation_id AND measurement_id = :measurement_id AND is_deleted != 1 AND stock_allocated < stock_quantity ORDER BY stock_id ASC) s ON p.product_id = s.product_id 
+        LEFT JOIN (SELECT * FROM prices WHERE product_id = :product_id AND variation_id = :variation_id AND measurement_id = :measurement_id AND is_deleted != 1) pr ON p.product_id = pr.product_id
+        WHERE p.product_id = :product_id;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':product_id', $product_id);
+        $query->bindParam(':variation_id', $variation_id);
+        $query->bindParam(':measurement_id', $measurement_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
+    function add_to_cart($product_id, $variation_id, $measurement_id)
+    {
+        $sql = "SELECT  p.sale_status, p.product_name, p.selling_price AS product_selling_price, i.image_file, v.variation_name, m.measurement_name, s.*, s.selling_price AS stock_selling_price, pr.*, pr.selling_price AS prices_selling_price
+        FROM product p 
+        LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
+        LEFT JOIN variation v ON p.product_id = v.product_id AND v.variation_id = :variation_id
+        LEFT JOIN measurement m ON p.product_id = m.product_id AND m.measurement_id = :measurement_id
         LEFT JOIN (SELECT * FROM stock WHERE product_id = :product_id AND variation_id = :variation_id AND measurement_id = :measurement_id AND is_deleted != 1 AND stock_allocated < stock_quantity ORDER BY stock_id ASC) s ON p.product_id = s.product_id 
         LEFT JOIN (SELECT * FROM prices WHERE product_id = :product_id AND variation_id = :variation_id AND measurement_id = :measurement_id AND is_deleted != 1) pr ON p.product_id = pr.product_id
         WHERE p.product_id = :product_id;";
