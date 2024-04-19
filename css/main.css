@@ -387,6 +387,13 @@ body {
     color: var(--primary) !important;
 }
 
+/* checkout css */
+
+.btn-small {
+    height: 30px !important;
+    width: 130px !important;
+}
+
 @media (max-width: 1199px){
     .product-view-img {
         width: 340px;
