@@ -135,7 +135,7 @@ include_once('../includes/preloader.php');
             <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
                 <div class="row d-flex justify-content-between m-0 p-0">
                     <div class="row m-0 p-0">
-                        <div class="form-group m-0 p-0 row col-12 d-flex justify-content-md-end align-items-center">
+                        <div class="form-group m-0 p-0 row col-12 d-flex justify-content-md-end align-items-start">
                             <div class="col-sm-12 col-md-auto m-0 p-0 mb-2 flex-fill">
                                 <p class="m-0 p-0 fs-7 fw-semibold text-dark lh-1">Payment Method:</p>
                             </div>
