@@ -97,7 +97,6 @@ include_once('../includes/preloader.php');
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $total = 0;
                                             foreach ($cartArray as $item) {
                                                 if ($item['store_id'] === $store['store_id']) {
                                             ?>
@@ -118,12 +117,10 @@ include_once('../includes/preloader.php');
                                                         <td class=""><?= '₱' . number_format($item['selling_price'], 2, '.', ',') ?></td>
                                                         <td class=""><?= '₱' . number_format($item['selling_price'] * $item['quantity'], 2, '.', ',') ?></td>
                                                         <td class="text-end fs-7">
-                                                            <input type="submit" class="bg-white border-0 remove-btn-hover" name="delete" value="Delete" onclick="changeActionLink(this)" data-itemid="<?= $item['cart_item_id'] ?>" data-qty="<?= $item['quantity'] ?>">
-                                                            <a href="./cart.php<?= '?cart_item_id=' . $item['cart_item_id'] . '&quantity=' . $item['quantity'] . '&sale_status=' . $item['sale_status'] . '&stock_id=' . $item['stock_id'] . '&delete=True' ?>  ">Delete</a>
+                                                            <a class="text-dark remove-btn-hover fw-semibold text-decoration-none" href="./cart.php<?= '?cart_item_id=' . $item['cart_item_id'] . '&quantity=' . $item['quantity'] . '&sale_status=' . $item['sale_status'] . '&stock_id=' . $item['stock_id'] . '&delete=True' ?>  ">Delete</a>
                                                         </td>
                                                     </tr>
                                             <?php
-                                                    $total += ($item['selling_price'] * $item['quantity']);
                                                 }
                                             }
                                             ?>
@@ -136,8 +133,10 @@ include_once('../includes/preloader.php');
                                             <span class="text-primary fw-bold fs-5" id="total<?= $counter ?>">₱0.00</span>
                                         </p>
                                     </div>
+                                    <input type="hidden" name="counter" value="<?= $counter ?>">
+                                    <input type="hidden" id="allchecked<?= $counter ?>" name="allchecked<?= $counter ?>" value="">
                                     <div class="col-4 m-0 p-0 d-flex align-items-center justify-content-end mt-2">
-                                        <input type="submit" class="btn btn-primary fw-semibold" name="checkout" value="Checkout">
+                                        <input type="submit" class="btn btn-primary fw-semibold" name="checkout<?= $counter ?>" value="Checkout">
                                     </div>
                                 </form>
                             </div>
@@ -163,18 +162,27 @@ include_once('../includes/preloader.php');
 
         function checkAll(checkallbox, counter) {
             var checkboxes = document.getElementsByName(counter);
+            var checkedvalues = document.getElementById('allchecked' + counter);
 
             if (!(counter in totalArray)) {
                 totalArray[counter] = parseFloat(document.querySelector('input[name="total' + counter + '"][type="hidden"]').value);
             }
 
+
             checkboxes.forEach(function(checkbox) {
                 if (checkallbox.checked == false && checkbox.checked == true) {
                     checkbox.checked = false;
                     totalArray[counter] -= parseFloat(checkbox.getAttribute('data-subtotal'));
+                    var valuesArray = checkedvalues.value.split(',');
+                    var index = valuesArray.indexOf(checkbox.value);
+                    if (index !== -1) {
+                        valuesArray.splice(index, 1);
+                        checkedvalues.value = valuesArray.join(',');
+                    }
                 } else if (checkallbox.checked == true && checkbox.checked == false) {
                     checkbox.checked = true;
                     totalArray[counter] += parseFloat(checkbox.getAttribute('data-subtotal'));
+                    checkedvalues.value += (checkedvalues.value === '' ? '' : ',') + checkbox.value;
                 }
             });
 
@@ -187,15 +195,31 @@ include_once('../includes/preloader.php');
         function updateTotal(checkbox, counter) {
             var checkallbox = document.getElementById('checkall' + counter);
             var checkboxes = document.getElementsByName(counter);
+            var checkedvalues = document.getElementById('allchecked' + counter);
 
             if (!(counter in totalArray)) {
                 totalArray[counter] = parseFloat(document.querySelector('input[name="total' + counter + '"][type="hidden"]').value);
             }
 
+
+            if (checkedvalues.value === null || checkedvalues.value === undefined) {
+                checkedvalues.value = "";
+            } else {
+                checkedvalues.value = checkedvalues.value.toString();
+            }
+
+
             if (checkbox.checked) {
                 totalArray[counter] += parseFloat(checkbox.getAttribute('data-subtotal'));
+                checkedvalues.value += (checkedvalues.value === "" ? "" : ",") + checkbox.value;
             } else {
                 totalArray[counter] -= parseFloat(checkbox.getAttribute('data-subtotal'));
+                var valuesArray = checkedvalues.value.split(',');
+                var index = valuesArray.indexOf(checkbox.value);
+                if (index !== -1) {
+                    valuesArray.splice(index, 1);
+                }
+                checkedvalues.value = valuesArray.join(',');
             }
 
             var checkcount = 0;
@@ -221,23 +245,6 @@ include_once('../includes/preloader.php');
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             });
-        }
-
-        function changeActionLink(button) {
-            var form = document.getElementById("cartForm");
-
-            const queryLink = window.location.href;
-            const urlParams = new URLSearchParams(queryLink);
-
-            var cart_item_id = parseInt(button.getAttribute('data-itemid'));
-            var quantity = parseInt(button.getAttribute('data-qty'));
-
-            if (queryLink.includes("?")) {
-                form.action = queryLink.split('?')[0] + "?cart_item_id=" + cart_item_id + "&quantity=" + quantity;
-            } else {
-                form.action = queryLink + "?cart_item_id=" + cart_item_id + "&quantity=" + quantity;
-            }
-
         }
     </script>
 </body>
