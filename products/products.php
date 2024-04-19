@@ -46,12 +46,12 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/header.user.php');
     ?>
-    <div class="container-fluid m-0 p-0">
+    <div class="container-fluid m-0 p-0 ">
         <div class="row m-0 p-0 d-flex flex-row justify-content-center min-vh-100">
             <?php
             require_once("../includes/sidepanel.product.php");
             ?>
-            <main class="col-md-9 col-lg-10 p-4 row m-0">
+            <main class="col-md-9 col-lg-10 p-4 pb-0 row m-0">
                 <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
                     <div class="row m-0 p-0 d-flex align-items-center">
                         <div class="col-6 m-0 p-0">
@@ -100,7 +100,7 @@ include_once('../includes/preloader.php');
                             ?>
                         </div>
                         <div class="m-2 p-0 d-flex justify-content-center align-items-center">
-                            <nav aria-label="Page navigation example">
+                            <nav class="">
                                 <ul class="pagination">
                                     <li class="page-item <?= (isset($_GET['page']) && $_GET['page'] <= 1) ? 'disabled' : '' ?>">
                                         <a class="page-link" href="?page=<?= $_GET['page'] - 1 . $extension ?>" aria-label="Previous">
