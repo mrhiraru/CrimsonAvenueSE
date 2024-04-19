@@ -75,9 +75,9 @@ include_once('../includes/preloader.php');
                         $counter = 0;
                         foreach ($storeArray as $store) {
                         ?>
-                            <div class="row m-0 p-0 p-3 border rounded mb-3">
+                            <div class="row m-0 p-2 pb-3 pt-1 border rounded mb-3">
                                 <form action="" method="post" class="m-0 p-0 row" id="checkoutForm<?= $counter ?>" onsubmit="changeActionLink(this, <?= $counter ?>)">
-                                    <table id="products" class="table table-lg m-0 ">
+                                    <table id="cart<?= $counter ?>" class="table table-lg m-0 ">
                                         <thead>
                                             <tr class="">
                                                 <th><input class="form-check-input" type="checkbox" onchange="checkAll(this, this.value)" value="<?= $counter ?>" id="checkall<?= $counter ?>"></th>
@@ -92,7 +92,7 @@ include_once('../includes/preloader.php');
                                                 <th class="text-secondary fs-8 fw-semibold">Quantity</th>
                                                 <th class="text-secondary fs-8 fw-semibold">Price</th>
                                                 <th class="text-secondary fs-8 fw-semibold">Subtotal</th>
-                                                <th class="text-secondary fs-8 fw-semibold"></th>
+                                                <th class="text-secondary fs-8 fw-semibold"><span class="d-lg-none">Action</span></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -116,7 +116,7 @@ include_once('../includes/preloader.php');
                                                         <td class=""><?= $item['quantity'] ?></td>
                                                         <td class=""><?= '₱' . number_format($item['selling_price'], 2, '.', ',') ?></td>
                                                         <td class=""><?= '₱' . number_format($item['selling_price'] * $item['quantity'], 2, '.', ',') ?></td>
-                                                        <td class="text-end fs-7">
+                                                        <td class="text-lg-end fs-7">
                                                             <a class="text-dark remove-btn-hover fw-semibold text-decoration-none" href="./cart.php<?= '?cart_item_id=' . $item['cart_item_id'] . '&quantity=' . $item['quantity'] . '&sale_status=' . $item['sale_status'] . '&stock_id=' . $item['stock_id'] . '&delete=True' ?>  ">Delete</a>
                                                         </td>
                                                     </tr>
@@ -128,14 +128,14 @@ include_once('../includes/preloader.php');
                                     </table>
                                     <div class="col-8 m-0 p-0 d-flex align-items-center mt-2">
                                         <input type="hidden" name="total<?= $counter ?>" value="0">
-                                        <p class="m-0 p-0 fs-6 text-dark lh-1 fw-semibold align-center" id="total_id">
+                                        <p class="m-0 p-0 ps-2 fs-6 text-dark lh-1 fw-semibold align-center" id="total_id">
                                             Total Price:
                                             <span class="text-primary fw-bold fs-5" id="total<?= $counter ?>">₱0.00</span>
                                         </p>
                                     </div>
                                     <input type="hidden" name="counter" value="<?= $counter ?>">
                                     <input type="hidden" id="allchecked<?= $counter ?>" name="allchecked<?= $counter ?>" value="">
-                                    <div class="col-4 m-0 p-0 d-flex align-items-center justify-content-end mt-2">
+                                    <div class="col-4 m-0 p-0 pe-2 d-flex align-items-center justify-content-end mt-2">
                                         <input type="submit" class="btn btn-primary fw-semibold" name="checkout<?= $counter ?>" value="Checkout">
                                     </div>
                                     <?php
@@ -166,6 +166,7 @@ include_once('../includes/preloader.php');
     require_once('../includes/footer.php');
     require_once('../includes/js.php');
     ?>
+    <script src="../js/cart.datatable.js"></script>
     <script>
         var totalArray = {};
 
