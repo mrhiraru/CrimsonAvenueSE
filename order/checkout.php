@@ -4,9 +4,9 @@ session_start();
 require_once "../tools/functions.php";
 require_once "../classes/product.class.php";
 
-$product = new Product();
-$record = $product->checkout($_POST['product_id'], $_POST['variation'], $_POST['measurement']);
-
+//$product = new Product();
+//$record = $product->checkout($_POST['product_id'], $_POST['variation'], $_POST['measurement']);
+var_dump($_POST['allchecked' . $_POST['counter']]);
 ?>
 
 <!DOCTYPE html>
@@ -63,18 +63,18 @@ include_once('../includes/preloader.php');
                             <td class="text-center"><?= $record['measurement_name'] ?></td>
                             <td class="text-center"><?= $_POST['quantity'] ?></td>
                             <td class="text-center"><?php if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
-                                                        echo '₱'.$record['stock_selling_price'];
+                                                        echo '₱' . $record['stock_selling_price'];
                                                     } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
-                                                        echo '₱'.$record['prices_selling_price'];
+                                                        echo '₱' . $record['prices_selling_price'];
                                                     } else {
-                                                        echo '₱'.$record['product_selling_price'];
+                                                        echo '₱' . $record['product_selling_price'];
                                                     } ?></td>
                             <td class="text-center"><?php if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
-                                                        echo '₱'.sprintf("%.2f", $record['stock_selling_price'] * $_POST['quantity']);
+                                                        echo '₱' . sprintf("%.2f", $record['stock_selling_price'] * $_POST['quantity']);
                                                     } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
-                                                        echo '₱'.sprintf("%.2f", $record['prices_selling_price'] * $_POST['quantity']);
+                                                        echo '₱' . sprintf("%.2f", $record['prices_selling_price'] * $_POST['quantity']);
                                                     } else {
-                                                        echo '₱'.sprintf("%.2f", $record['product_selling_price'] * $_POST['quantity']);
+                                                        echo '₱' . sprintf("%.2f", $record['product_selling_price'] * $_POST['quantity']);
                                                     } ?></td>
                         </tr>
                         <?php

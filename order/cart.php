@@ -76,7 +76,7 @@ include_once('../includes/preloader.php');
                         foreach ($storeArray as $store) {
                         ?>
                             <div class="row m-0 p-0 p-3 border rounded mb-3">
-                                <form action="" method="post" class="m-0 p-0 row" id="cartForm">
+                                <form action="./checkout.php" method="post" class="m-0 p-0 row" id="cartForm">
                                     <table id="products" class="table table-lg m-0 ">
                                         <thead>
                                             <tr class="">
