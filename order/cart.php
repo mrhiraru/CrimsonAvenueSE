@@ -76,7 +76,7 @@ include_once('../includes/preloader.php');
                         foreach ($storeArray as $store) {
                         ?>
                             <div class="row m-0 p-0 p-3 border rounded mb-3">
-                                <form action="./checkout.php" method="post" class="m-0 p-0 row" id="cartForm">
+                                <form action="./checkout.php" method="post" class="m-0 p-0 row">
                                     <table id="products" class="table table-lg m-0 ">
                                         <thead>
                                             <tr class="">
@@ -102,7 +102,7 @@ include_once('../includes/preloader.php');
                                             ?>
                                                     <tr class="align-middle">
                                                         <td class="">
-                                                            <input class="form-check-input" type="checkbox" name="<?= $counter ?>" value="<?= $item['cart_item_id'] ?>" data-subtotal="<?= $item['selling_price'] * $item['quantity'] ?>" onchange="updateTotal(this, <?= $counter ?>)">
+                                                            <input class="form-check-input" type="checkbox" name="<?= $counter ?>" value="<?= $item['cart_item_id'] ?>" data-subtotal="<?= $item['selling_price'] * $item['quantity'] ?>" data-counter="<?= $counter ?>" onchange="updateTotal(this, <?= $counter ?>)">
                                                         </td>
                                                         <td class=""><img src=" <?php if (isset($item['image_file'])) {
                                                                                     echo "../images/data/" . $item['image_file'];
@@ -246,6 +246,18 @@ include_once('../includes/preloader.php');
                 maximumFractionDigits: 2
             });
         }
+
+        window.onload = function() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+            alert("loaded");
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked === false) {
+                    checkbox.setAttribute("checked", "checked");
+                }
+                checkbox.setAttribute("", "checked");
+            });
+        };
     </script>
 </body>
 
