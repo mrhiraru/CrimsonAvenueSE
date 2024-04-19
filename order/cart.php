@@ -247,17 +247,7 @@ include_once('../includes/preloader.php');
             });
         }
 
-        window.onload = function() {
-            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-            alert("loaded");
-            checkboxes.forEach(function(checkbox) {
-                if (checkbox.checked === false) {
-                    checkbox.setAttribute("checked", "checked");
-                }
-                checkbox.setAttribute("", "checked");
-            });
-        };
+        // forget this just add cancel button on checkout :>
     </script>
 </body>
 
