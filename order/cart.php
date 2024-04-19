@@ -76,7 +76,7 @@ include_once('../includes/preloader.php');
                         foreach ($storeArray as $store) {
                         ?>
                             <div class="row m-0 p-0 p-3 border rounded mb-3">
-                                <form action="./checkout.php" method="post" class="m-0 p-0 row">
+                                <form action="" method="post" class="m-0 p-0 row" id="checkoutForm<?= $counter ?>" onsubmit="changeActionLink(this, <?= $counter ?>)">
                                     <table id="products" class="table table-lg m-0 ">
                                         <thead>
                                             <tr class="">
@@ -138,6 +138,15 @@ include_once('../includes/preloader.php');
                                     <div class="col-4 m-0 p-0 d-flex align-items-center justify-content-end mt-2">
                                         <input type="submit" class="btn btn-primary fw-semibold" name="checkout<?= $counter ?>" value="Checkout">
                                     </div>
+                                    <?php
+                                    if (isset($_POST['checkout' . $counter])) {
+                                    ?>
+                                        <div class="col-12 m-0 p-0 d-flex justify-content-evenly text-primary">
+                                            Please select item(s) to proceed with checkout.
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
                                 </form>
                             </div>
                     <?php
@@ -247,7 +256,22 @@ include_once('../includes/preloader.php');
             });
         }
 
-        // forget this just add cancel button on checkout :>
+        function changeActionLink(form, counter) {
+            var checkboxes = document.getElementsByName(counter);
+            const queryLink = window.location.href;
+
+            var isChecked = false;
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    isChecked = true;
+                }
+            });
+            if (isChecked) {
+                form.action = "./checkout.php";
+            } else {
+                form.action = queryLink;
+            }
+        }
     </script>
 </body>
 

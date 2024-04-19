@@ -445,8 +445,6 @@ include_once('../includes/preloader.php');
             var form = document.getElementById("orderForm");
 
             const queryLink = window.location.href;
-            const urlParams = new URLSearchParams(queryLink);
-            const product_id = urlParams.get("product_id");
 
             const variationChecked = document.querySelector('input[name="variation"]:checked') ||
                 document.querySelector('input[name="variation"][type="hidden"][value]');
