@@ -4,6 +4,12 @@ session_start();
 require_once "../classes/cart.class.php";
 require_once "../classes/stock.class.php";
 
+if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
+    header('location: ../user/verify.php');
+} else if (!isset($_SESSION['user_role'])) {
+    header('location: ../user/login.php');
+}
+
 $cart = new Cart();
 if (isset($_GET['delete']) && $_GET['delete'] == "True") {
     $cart->cart_item_id = htmlentities($_GET['cart_item_id']);

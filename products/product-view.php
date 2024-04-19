@@ -22,6 +22,9 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 if (isset($_POST['add'])) {
     $cart = new Cart;
 
+    if (!isset($_SESSION['cart_id'])) {
+        header("Location: ../user/login.php");
+    }
 
     $cart->cart_id = $_SESSION['cart_id'];
     $cart->product_id = htmlentities($_POST['product_id']);

@@ -4,9 +4,22 @@ session_start();
 require_once "../tools/functions.php";
 require_once "../classes/product.class.php";
 
-//$product = new Product();
-//$record = $product->checkout($_POST['product_id'], $_POST['variation'], $_POST['measurement']);
-var_dump($_POST['allchecked' . $_POST['counter']]);
+if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
+    header('location: ../user/verify.php');
+} else if (!isset($_SESSION['user_role'])) {
+    header('location: ../user/login.php');
+}
+
+$product = new Product();
+if (isset($_POST['counter']) && isset($_POST['checkout' . $_POST['counter']])) {
+
+    var_dump($_POST['allchecked' . $_POST['counter']]);
+    echo "cart_item_id";
+} else if (isset($_POST['add']) || isset($_POST['buy'])) {
+
+    $record = $product->checkout($_POST['product_id'], $_POST['variation'], $_POST['measurement']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +41,7 @@ include_once('../includes/preloader.php');
                 <div class="row d-flex justify-content-between m-0 p-0">
                     <div class="row m-0 p-0">
                         <div class="col-12 m-0 p-0">
-                            <p class="m-0 p-0 fs-3 fw-bold text-primary lh-1">Order Summary</p>
+                            <p class="m-0 p-0 fs-3 fw-bold text-primary lh-1">Checkout</p>
                         </div>
                     </div>
                 </div>
