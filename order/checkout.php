@@ -137,7 +137,7 @@ include_once('../includes/preloader.php');
                     <div class="row m-0 p-0">
                         <div class="form-group m-0 p-0 row col-12 d-flex justify-content-md-end align-items-center">
                             <div class="col-sm-12 col-md-auto m-0 p-0 mb-2 flex-fill">
-                                <p class="m-0 p-0 fs-6 fw-semibold text-secondary lh-1">Payment Method:</p>
+                                <p class="m-0 p-0 fs-7 fw-semibold text-dark lh-1">Payment Method:</p>
                             </div>
                             <div class="m-0 p-0 col-6 col-md-auto me-md-3 mb-2 text-center">
                                 <input class="form-check-input btn-check" type="radio" name="method" id="Cash" value="Cash">
@@ -156,7 +156,7 @@ include_once('../includes/preloader.php');
                     <div class="row m-0 p-0">
                         <div class="form-group m-0 p-0 row col-12 d-flex justify-content-md-end align-items-center">
                             <div class="col-sm-12 col-md-auto m-0 p-0 mb-2 flex-fill">
-                                <p class="m-0 p-0 fs-6 fw-semibold text-secondary lh-1">Order Fulfillment:</p>
+                                <p class="m-0 p-0 fs-7 fw-semibold text-dark lh-1">Order Fulfillment:</p>
                             </div>
                             <div class="m-0 p-0 col-6 col-md-auto me-md-3 mb-2 text-center">
                                 <input class="form-check-input btn-check" type="radio" name="fulfillment" id="Pickup" value="Pickup">
