@@ -392,7 +392,12 @@ body {
 .btn-small {
     height: 30px !important;
     width: 130px !important;
-}
+}    
+
+.border-checkout {
+        border-left: var(--secondary) solid 1px;
+    }
+
 
 @media (max-width: 1199px){
     .product-view-img {
@@ -419,6 +424,10 @@ body {
     .product-view-width {
         max-height: 250px !important;
         max-width: 250px !important;
+    }
+
+    .border-checkout {
+        border-left: none;
     }
 }
 
