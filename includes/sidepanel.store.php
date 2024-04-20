@@ -181,13 +181,13 @@
                         </p>
                     </button>
                 </h2>
-                <div id="flush-collapseSeven" class="accordion-collapse collapse <?php if (isset($settings_page)) {
+                <div id="flush-collapseSeven" class="accordion-collapse collapse <?php if (isset($settingsindex_page)) {
                                                                                         echo 'show';
                                                                                     } ?>" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $semester_page ?>" aria-current="page" href="../store-settings/store-information.php?store_id=<?= $record['store_id'] ?>">
+                                <a class="nav-link text-secondary fw-semibold <?= $settingsindex_page ?>" aria-current="page" href="../store-settings/index.php?store_id=<?= $record['store_id'] ?>">
                                     Store Information
                                 </a>
                             </li>

@@ -210,8 +210,15 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0 mb-1 d-flex justify-content-evenly">
                                 <input type="submit" class="btn btn-primary fw-semibold flex-grow-1" value="Place Order" name="confirm" id="Confirm">
                             </div>
+                            <?php
+                            if (isset($_POST['counter']) && isset($_POST['checkout' . $_POST['counter']])) {
+                                $cancel_link = "./cart.php";
+                            } else if (isset($_POST['add']) || isset($_POST['buy'])) {
+                                $cancel_link = "../products/product-view.php?product_id=" . $_POST['product_id'];
+                            }
+                            ?>
                             <div class="col-12 m-0 p-0 mt-2 d-flex justify-content-evenly">
-                                <a href="./cart.php" class="fs-7 fw-semibold text-secondary remove-btn-hover lh-1">Cancel Checkout</a>
+                                <a href="<?= $cancel_link ?>" class="fs-7 fw-semibold text-secondary remove-btn-hover lh-1">Cancel Checkout</a>
                             </div>
                         </div>
                     </div>
