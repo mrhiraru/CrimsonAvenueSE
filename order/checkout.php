@@ -64,6 +64,7 @@ include_once('../includes/preloader.php');
                         </thead>
                         <tbody>
                             <?php
+                            $product_total = 0;
                             if (isset($_POST['counter']) && isset($_POST['checkout' . $_POST['counter']])) {
                                 $counter = 1;
                                 foreach ($cartArray as $item) {
@@ -96,6 +97,13 @@ include_once('../includes/preloader.php');
                                     </tr>
                                 <?php
                                     $counter++;
+                                    if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
+                                        $product_total += $item['stock_selling_price'] * $item['quantity'];
+                                    } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
+                                        $product_total += $item['prices_selling_price'] * $item['quantity'];
+                                    } else {
+                                        $product_total += $item['product_selling_price'] * $item['quantity'];
+                                    }
                                 }
                             } else if (isset($_POST['add']) || isset($_POST['buy'])) {
                                 ?>
@@ -126,6 +134,13 @@ include_once('../includes/preloader.php');
                                                     } ?></td>
                                 </tr>
                             <?php
+                                if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
+                                    $product_total += $record['stock_selling_price'] * $_POST['quantity'];
+                                } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
+                                    $product_total += $record['prices_selling_price'] * $_POST['quantity'];
+                                } else {
+                                    $product_total += $record['product_selling_price'] * $_POST['quantity'];
+                                }
                             }
                             ?>
                         </tbody>
@@ -135,7 +150,7 @@ include_once('../includes/preloader.php');
             <section>
                 <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
                     <div class="row m-0 p-0 d-flex justify-content-end">
-                        <div class="row m-0 p-0 col-12 col-lg-8 pe-lg-2">
+                        <div class="row m-0 p-0 col-12 col-lg-8 pe-lg-2 d-flex flex-column align-items-start">
                             <div class="form-group m-0 p-0 row col-12 d-flex justify-content-end align-items-start">
                                 <div class="col-auto m-0 p-0 mb-2 flex-fill">
                                     <p class="m-0 p-0 fs-7 fw-semibold text-dark lh-1">Payment Method:</p>
@@ -153,7 +168,7 @@ include_once('../includes/preloader.php');
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group m-0 p-0 row col-12 d-flex justify-content-end align-items-center">
+                            <div class="form-group m-0 p-0 row col-12 d-flex justify-content-end align-items-start">
                                 <div class="col-auto m-0 p-0 mb-2 flex-fill">
                                     <p class="m-0 p-0 fs-7 fw-semibold text-dark lh-1">Order Fulfillment:</p>
                                 </div>
@@ -171,17 +186,23 @@ include_once('../includes/preloader.php');
                                 </div>
                             </div>
                         </div>
-                        <div class="m-0 p-0 col-12 col-md-8 col-lg-4 ps-lg-2 border-checkout">
+                        <div class="m-0 p-0 col-12 col-lg-4 ps-lg-2 border-checkout">
                             <p class="mb-1 lh-1 text-secondary fs-7 d-flex align-items-start justify-content-between">
                                 Product Subtotal:
-                                <span class="text-dark fw-semibold fs-6">₱999</span>
+                                <span class="text-dark fw-semibold fs-6"><?= '₱' . sprintf("%.2f", $product_total) ?> </span>
                             </p>
+                            <?php
+                            $delivery_charge = 0;
+                            ?>
                             <p class="mb-1 lh-1 text-secondary fs-7 d-flex align-items-start justify-content-between">
                                 Delivery Charge:
-                                <span class="text-dark fw-semibold fs-6">₱999</span>
+                                <span class="text-dark fw-semibold fs-6"><?= '₱' . sprintf("%.2f", $delivery_charge) ?> </span>
                             </p>
-                            <div class="col-12 m-0 p-0 me-1 mt-2 d-flex justify-content-evenly">
+                            <div class="col-12 m-0 p-0 mb-1 d-flex justify-content-evenly">
                                 <input type="submit" class="btn btn-primary fw-semibold flex-grow-1" value="Place Order" name="confirm" id="Confirm">
+                            </div>
+                            <div class="col-12 m-0 p-0 mt-2 d-flex justify-content-evenly">
+                                <a href="./cart.php" class="fs-7 fw-semibold text-secondary remove-btn-hover lh-1">Cancel Checkout</a>
                             </div>
                         </div>
                     </div>
