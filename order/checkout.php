@@ -87,13 +87,15 @@ include_once('../includes/preloader.php');
                                                         } else {
                                                             echo '₱' . $item['product_selling_price'];
                                                         } ?></td>
-                                        <td class=""><?php if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
-                                                            echo '₱' . sprintf("%.2f", $item['stock_selling_price'] * $item['quantity']);
+                                        <td class=""><?php
+                                                        if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
+                                                            echo '₱' . number_format($item['stock_selling_price'] * $item['quantity'], 2, '.', ',');
                                                         } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
-                                                            echo '₱' . sprintf("%.2f", $item['prices_selling_price'] * $item['quantity']);
+                                                            echo '₱' . number_format($item['prices_selling_price'] * $item['quantity'], 2, '.', ',');
                                                         } else {
-                                                            echo '₱' . sprintf("%.2f", $item['product_selling_price'] * $item['quantity']);
-                                                        } ?></td>
+                                                            echo '₱' . number_format($item['product_selling_price'] * $item['quantity'], 2, '.', ',');
+                                                        }
+                                                        ?></td>
                                     </tr>
                                 <?php
                                     $counter++;
@@ -125,13 +127,15 @@ include_once('../includes/preloader.php');
                                                     } else {
                                                         echo '₱' . $record['product_selling_price'];
                                                     } ?></td>
-                                    <td class=""><?php if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
-                                                        echo '₱' . sprintf("%.2f", $record['stock_selling_price'] * $_POST['quantity']);
+                                    <td class=""><?php
+                                                    if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
+                                                        echo '₱' . number_format($record['stock_selling_price'] * $_POST['quantity'], 2, '.', ',');
                                                     } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
-                                                        echo '₱' . sprintf("%.2f", $record['prices_selling_price'] * $_POST['quantity']);
+                                                        echo '₱' . number_format($record['prices_selling_price'] * $_POST['quantity'], 2, '.', ',');
                                                     } else {
-                                                        echo '₱' . sprintf("%.2f", $record['product_selling_price'] * $_POST['quantity']);
-                                                    } ?></td>
+                                                        echo '₱' . number_format($record['product_selling_price'] * $_POST['quantity'], 2, '.', ',');
+                                                    }
+                                                    ?></td>
                                 </tr>
                             <?php
                                 if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
@@ -153,7 +157,7 @@ include_once('../includes/preloader.php');
                         <div class="row m-0 p-0 col-12 col-lg-8 pe-lg-2 d-flex flex-column align-items-start">
                             <div class="form-group m-0 p-0 row col-12 d-flex justify-content-end align-items-start">
                                 <div class="col-auto m-0 p-0 mb-2 flex-fill">
-                                    <p class="m-0 p-0 fs-7 fw-semibold text-dark lh-1">Payment Method:</p>
+                                    <p class="m-0 p-0 fs-7 fw-semibold text-secondary lh-1">Payment Method:</p>
                                 </div>
                                 <div class="m-0 p-0 col-auto ms-2 mb-2 text-center">
                                     <input class="form-check-input btn-check" type="radio" name="method" id="Cash" value="Cash">
@@ -170,7 +174,7 @@ include_once('../includes/preloader.php');
                             </div>
                             <div class="form-group m-0 p-0 row col-12 d-flex justify-content-end align-items-start">
                                 <div class="col-auto m-0 p-0 mb-2 flex-fill">
-                                    <p class="m-0 p-0 fs-7 fw-semibold text-dark lh-1">Order Fulfillment:</p>
+                                    <p class="m-0 p-0 fs-7 fw-semibold text-secondary lh-1">Order Fulfillment:</p>
                                 </div>
                                 <div class="m-0 p-0 col-auto ms-2 mb-2 text-center">
                                     <input class="form-check-input btn-check" type="radio" name="fulfillment" id="Pickup" value="Pickup">
@@ -189,14 +193,19 @@ include_once('../includes/preloader.php');
                         <div class="m-0 p-0 col-12 col-lg-4 ps-lg-2 border-checkout">
                             <p class="mb-1 lh-1 text-secondary fs-7 d-flex align-items-start justify-content-between">
                                 Product Subtotal:
-                                <span class="text-dark fw-semibold fs-6"><?= '₱' . sprintf("%.2f", $product_total) ?> </span>
+                                <span class="text-dark fw-semibold fs-6"><?= '₱' . number_format($product_total, 2, '.', ',') ?> </span>
                             </p>
                             <?php
                             $delivery_charge = 0;
+                            $total_payment = $product_total + $delivery_charge;
                             ?>
                             <p class="mb-1 lh-1 text-secondary fs-7 d-flex align-items-start justify-content-between">
                                 Delivery Charge:
-                                <span class="text-dark fw-semibold fs-6"><?= '₱' . sprintf("%.2f", $delivery_charge) ?> </span>
+                                <span class="text-dark fw-semibold fs-6"><?= '₱' . number_format($delivery_charge, 2, '.', ',') ?> </span>
+                            </p>
+                            <p class="mb-1 lh-1 text-secondary fs-7 d-flex align-items-start justify-content-between">
+                                Total Payment:
+                                <span class="text-primary fw-bold fs-5"><?= '₱' . number_format($total_payment, 2, '.', ',') ?> </span>
                             </p>
                             <div class="col-12 m-0 p-0 mb-1 d-flex justify-content-evenly">
                                 <input type="submit" class="btn btn-primary fw-semibold flex-grow-1" value="Place Order" name="confirm" id="Confirm">
