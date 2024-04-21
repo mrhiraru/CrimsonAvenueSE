@@ -73,7 +73,11 @@ if (isset($_POST['save-sem'])) {
         validate_field($admin_settings->commission_type)
     ) {
         if ($admin_settings->update_commission()) {
-            $success = 'success';
+            if ($admin_settings->calculate_commissions($admin_settings->commission, $admin_settings->commission_type)) {
+                $success = 'success';
+            } else {
+                echo 'An error occured while adding in the database.';
+            }
         } else {
             echo 'An error occured while adding in the database.';
         }

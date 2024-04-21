@@ -33,7 +33,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 } else if (!isset($record['store_id']) || $record['is_deleted'] == 1 || !isset($record['staff_role'])) {
     header('location: ../index.php');
 } else if (!isset($pro_record['product_id']) || !isset($var_record['variation_id']) || !isset($mea_record['measurement_id'])) {
-    header('location: ./index.php?store_id=' . $record['store_id']);
+    header('location: ./product-view.php?store_id=' . $record['store_id'] . '&product_id=' . $pro_record['product_id']);
 }
 
 $stock = new Stock();
@@ -47,7 +47,7 @@ if (isset($_POST['add'])) {
     if ($admin_data['commission_type'] == "Fixed") {
         $stock->commission = $stock->selling_price + $admin_data['commission'];
     } else if ($admin_data['commission_type'] == "Percentage") {
-        $stock->commission = $stock->selling_price * ($admin_data['commission'] * 0.01);
+        $stock->commission = $stock->selling_price * ($admin_data['commission'] / 100);
     }
 
     $stock->product_id = $pro_record['product_id'];
@@ -76,7 +76,7 @@ if (isset($_POST['add'])) {
     if ($admin_data['commission_type'] == "Fixed") {
         $stock->commission = $stock->selling_price + $admin_data['commission'];
     } else if ($admin_data['commission_type'] == "Percentage") {
-        $stock->commission = $stock->selling_price * ($admin_data['commission'] * 0.01);
+        $stock->commission = $stock->selling_price * ($admin_data['commission'] / 100);
     }
 
     $stock->stock_id = $_GET['stock_id'];
@@ -120,7 +120,7 @@ if (isset($_POST['add'])) {
     if ($admin_data['commission_type'] == "Fixed") {
         $stock->commission = $stock->selling_price + $admin_data['commission'];
     } else if ($admin_data['commission_type'] == "Percentage") {
-        $stock->commission = $stock->selling_price * ($admin_data['commission'] * 0.01);
+        $stock->commission = $stock->selling_price * ($admin_data['commission'] / 100);
     }
 
     if (
@@ -143,7 +143,7 @@ if (isset($_POST['add'])) {
     if ($admin_data['commission_type'] == "Fixed") {
         $stock->commission = $stock->selling_price + $admin_data['commission'];
     } else if ($admin_data['commission_type'] == "Percentage") {
-        $stock->commission = $stock->selling_price * ($admin_data['commission'] * 0.01);
+        $stock->commission = $stock->selling_price * ($admin_data['commission'] / 100);
     }
 
     if (
@@ -196,7 +196,7 @@ include_once('../includes/preloader.php');
                                         <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-secondary" aria-current="page" href="./product-view.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Configuration</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-decoration-underline active disabled" href="#"><?= $pro_record['sale_status'] == "Pre-order" ? "Change Prices" : "Inventory" ?></a>
+                                        <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-decoration-underline active disabled" href="#"><?= $pro_record['sale_status'] == "Pre-order" ? "Inventory" : "Inventory" ?></a>
                                     </li>
                                 </ul>
                             </div>

@@ -42,7 +42,7 @@ if (isset($_POST['edit'])) {
     if ($admin_data['commission_type'] == "Fixed") {
         $product->commission = $product->selling_price + $admin_data['commission'];
     } else if ($admin_data['commission_type'] == "Percentage") {
-        $product->commission = $product->selling_price * ($admin_data['commission'] * 0.01);
+        $product->commission = $product->selling_price * ($admin_data['commission'] / 100);
     }
 
     if (validate_field($product->product_name &&

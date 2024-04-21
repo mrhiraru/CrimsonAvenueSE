@@ -33,6 +33,34 @@ class AdminSettings
         }
     }
 
+    function calculate_commissions($commission, $type)
+    {
+        $sql = "UPDATE product p, prices pr, stock st SET 
+        p.commission = CASE 
+            WHEN :type = 'Fixed' THEN :commission
+            WHEN :type = 'Percentage' THEN p.selling_price * (:commission / 100)
+        END,
+        pr.commission = CASE 
+            WHEN :type = 'Fixed' THEN :commission
+            WHEN :type = 'Percentage' THEN pr.selling_price * (:commission / 100)
+        END,
+        st.commission = CASE 
+            WHEN :type = 'Fixed' THEN :commission
+            WHEN :type = 'Percentage' THEN st.selling_price * (:commission / 100)
+        END
+        ";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':commission', $commission);
+        $query->bindParam(':type', $type);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function fetch()
     {
         $sql = "SELECT * FROM admin_settings WHERE settings_id = 1 LIMIT 1;";

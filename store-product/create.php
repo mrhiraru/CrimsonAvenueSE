@@ -35,7 +35,7 @@ if (isset($_POST['create'])) {
     if ($admin_data['commission_type'] == "Fixed") {
         $product->commission = $product->selling_price + $admin_data['commission'];
     } else if ($admin_data['commission_type'] == "Percentage") {
-        $product->commission = $product->selling_price * ($admin_data['commission'] * 0.01);
+        $product->commission = $product->selling_price * ($admin_data['commission'] / 100);
     }
 
     $product->store_id = $_GET['store_id'];
