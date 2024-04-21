@@ -121,7 +121,7 @@ include_once('../includes/preloader.php');
                                             } ?>" alt="" class="profile-size border border-secondary-subtle rounded-2">
                             </div>
                             <div class="col-auto d-none d-lg-block p-0 m-0 border-start"></div>
-                            <div class="col-12 col-lg-auto m-0 p-2 d-flex justify-content-start align-items-start flex-fill row">
+                            <div class="col-12 col-lg-8 m-0 p-2 d-flex justify-content-start align-items-start flex-fill row">
                                 <table class="table-sm m-0">
                                     <tr>
                                         <td class="fw-semibold text-dark">
@@ -138,7 +138,7 @@ include_once('../includes/preloader.php');
                                                 Bio:
                                             </span>
                                             <br class="d-block d-md-none">
-                                            <?= $record['store_bio'] ?>
+                                            <?= nl2br($record['store_bio']) ?>
                                         </td>
                                     </tr>
                                     <tr>

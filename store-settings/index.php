@@ -15,6 +15,36 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 } else if (!isset($record['store_id']) || $record['is_deleted'] == 1 || !isset($record['staff_role'])) {
     header('location: ../index.php');
 }
+
+if (isset($_POST['save-info'])) {
+
+    $store->store_name = htmlentities($_POST['store_name']);
+    $store->college_id = htmlentities($_POST['college_id']);
+    $store->store_bio = htmlentities($_POST['store_bio']);
+    $store->store_email = htmlentities($_POST['store_email']);
+    $store->store_contact = htmlentities($_POST['store_contact']);
+    $store->store_location = htmlentities($_POST['store_location']);
+    $store->business_time = htmlentities($_POST['business_time']);
+    $store->store_id = $record['store_id'];
+
+    if (
+        validate_field($store->store_name) &&
+        validate_field($store->store_bio) &&
+        validate_field($store->store_email) &&
+        validate_field($store->store_contact) &&
+        validate_field($store->store_location) &&
+        validate_field($store->business_time)
+    ) {
+        if ($store->edit()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +113,18 @@ include_once('../includes/preloader.php');
                                     </div>
                                     <div class="mb-2 p-0 pe-md-2 col-12">
                                         <label for="store_bio" class="form-label m-1">Store Bio:</label>
-                                        <textarea id="store_bio" name="store_bio" rows="4" cols="50" class="form-control"></textarea>
+                                        <textarea id="store_bio" name="store_bio" rows="4" class="form-control"><?php if (isset($_POST['store_bio'])) {
+                                                                                                                    echo $_POST['store_bio'];
+                                                                                                                } else {
+                                                                                                                    echo $record['store_bio'];
+                                                                                                                } ?></textarea>
+                                        <?php
+                                        if (isset($_POST['store_bio']) && !validate_field($_POST['store_bio'])) {
+                                        ?>
+                                            <p class="fs-7 text-primary m-0 ps-2"> Store bio is required.</p>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                     <div class="mb-2 p-0 pe-md-2 col-12 col-md-6">
                                         <span class="m-1">Store Email:</span>
@@ -141,6 +182,29 @@ include_once('../includes/preloader.php');
                         <div class="row d-flex justify-content-start m-0 p-0">
                             <div class="col-12 m-0 p-0 px-1">
                                 <p class="m-0 p-0 fs-5 fw-medium text-dark lh-1 flex-fill">
+                                    Certificate
+                                </p>
+                            </div>
+                            <div class="col-12 m-0 p-0">
+                                <hr class="my-2">
+                            </div>
+                            <form method="post" action="" class="col-12">
+                                <div class="row">
+                                    <div class="mb-2 p-0 pe-md-2 col-12 col-md-6 col-lg-4">
+                                        file input
+                                    </div>
+                                    <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-8 text-end">
+                                        <br>
+                                        <input type="submit" class="btn btn-primary btn-settings-size" name="save-delivery" value="Save">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="container-fluid bg-white shadow rounded m-0 mb-3 p-3">
+                        <div class="row d-flex justify-content-start m-0 p-0">
+                            <div class="col-12 m-0 p-0 px-1">
+                                <p class="m-0 p-0 fs-5 fw-medium text-dark lh-1 flex-fill">
                                     Delivery
                                 </p>
                             </div>
@@ -172,6 +236,28 @@ include_once('../includes/preloader.php');
             </div>
         </div>
     </main>
+    <!-- semester modal  -->
+    <?php
+    if (isset($_POST['save-info']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./index.php?store_id=<?= $_GET['store_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Store information is successfully updated! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
     <?php
     require_once('../includes/js.php');
     ?>
