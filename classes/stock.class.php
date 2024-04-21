@@ -61,7 +61,7 @@ class Stock
 
     function show($product_id, $variation_id, $measurement_id)
     {
-        $sql = "SELECT * FROM stock WHERE product_id = :product_id AND variation_id = :variation_id AND measurement_id = :measurement_id AND is_deleted != 1 ORDER BY stock_id ASC;";
+        $sql = "SELECT * FROM stock WHERE product_id = :product_id AND variation_id = :variation_id AND measurement_id = :measurement_id AND is_deleted != 1 ORDER BY CASE WHEN stock_quantity - stock_allocated = 0 THEN 1 ELSE 0 END ASC, stock_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_id', $product_id);
         $query->bindParam(':variation_id', $variation_id);
