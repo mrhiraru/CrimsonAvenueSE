@@ -51,6 +51,15 @@ if (isset($_POST['add'])) {
         $cart->selling_price = $record_checkout['product_selling_price'];
     }
 
+    if (isset($record_checkout['stock_commission']) && $record_checkout['sale_status'] == "On-hand") {
+        $cart->commission = $record_checkout['stock_commission'];
+    } else if (isset($record_checkout['prices_commission']) && $record_checkout['sale_status'] == "Pre-order") {
+        $cart->commission = $record_checkout['prices_commission'];
+    } else {
+        $cart->commission = $record_checkout['product_commission'];
+    }
+
+
     if ($record_checkout['sale_status'] == "On-hand") {
         $cart->stock_id = htmlentities($_POST['stock_id']);
     } else {
