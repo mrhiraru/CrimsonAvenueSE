@@ -248,7 +248,7 @@ include_once('../includes/preloader.php');
                                     </div>
                                     <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-4 text-end">
                                         <br>
-                                        <input type="submit" class="btn btn-primary btn-settings-size" value="Save" name="save-com">
+                                        <input type="submit" class="btn btn-primary btn-settings-size" value="Update" name="save-com">
                                     </div>
                                 </div>
                             </form>

@@ -188,7 +188,7 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link text-secondary fw-semibold <?= $settingsindex_page ?>" aria-current="page" href="../store-settings/index.php?store_id=<?= $record['store_id'] ?>">
-                                    Store Information
+                                    Main
                                 </a>
                             </li>
                         </ul>
