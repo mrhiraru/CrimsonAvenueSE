@@ -85,8 +85,6 @@ if (isset($_POST['save-sem'])) {
         $success = 'failed';
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
