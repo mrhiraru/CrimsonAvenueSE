@@ -42,24 +42,6 @@ if (isset($_POST['add'])) {
 
     $record_checkout = $product->add_to_cart($cart->product_id, $cart->variation_id, $cart->measurement_id);
 
-
-    if (isset($record_checkout['stock_selling_price']) && $record_checkout['sale_status'] == "On-hand") {
-        $cart->selling_price = $record_checkout['stock_selling_price'];
-    } else if (isset($record_checkout['prices_selling_price']) && $record_checkout['sale_status'] == "Pre-order") {
-        $cart->selling_price = $record_checkout['prices_selling_price'];
-    } else {
-        $cart->selling_price = $record_checkout['product_selling_price'];
-    }
-
-    if (isset($record_checkout['stock_commission']) && $record_checkout['sale_status'] == "On-hand") {
-        $cart->commission = $record_checkout['stock_commission'];
-    } else if (isset($record_checkout['prices_commission']) && $record_checkout['sale_status'] == "Pre-order") {
-        $cart->commission = $record_checkout['prices_commission'];
-    } else {
-        $cart->commission = $record_checkout['product_commission'];
-    }
-
-
     if ($record_checkout['sale_status'] == "On-hand") {
         $cart->stock_id = htmlentities($_POST['stock_id']);
     } else {
@@ -71,8 +53,7 @@ if (isset($_POST['add'])) {
         validate_field($cart->product_id) &&
         validate_field($cart->variation_id) &&
         validate_field($cart->measurement_id) &&
-        validate_field($cart->quantity) &&
-        validate_field($cart->selling_price)
+        validate_field($cart->quantity)
     ) {
         if ($cart->add()) {
             $stock = new Stock();

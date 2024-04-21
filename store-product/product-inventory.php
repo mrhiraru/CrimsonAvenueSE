@@ -340,10 +340,12 @@ include_once('../includes/preloader.php');
                                 <div class="col-12 m-0 p-0">
                                     <hr class="mb-3 mt-0">
                                 </div>
-                                <div class="search-keyword col-12 col-md-6 col-lg-4 p-0 d-flex justify-content-end">
-                                    <div class="input-group">
-                                        <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
-                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
+                                <div class="search-keyword p-0 col-12 d-flex justify-content-end">
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="input-group">
+                                            <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
+                                            <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 m-0 p-0 px-2 row">

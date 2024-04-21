@@ -108,7 +108,15 @@ include_once('../includes/preloader.php');
                                             ?>
                                                     <tr class="align-middle">
                                                         <td class="">
-                                                            <input class="form-check-input" type="checkbox" name="<?= $counter ?>" value="<?= $item['cart_item_id'] ?>" data-subtotal="<?= $item['selling_price'] * $item['quantity'] ?>" data-counter="<?= $counter ?>" onchange="updateTotal(this, <?= $counter ?>)">
+                                                            <input class="form-check-input" type="checkbox" name="<?= $counter ?>" value="<?= $item['cart_item_id'] ?>" data-subtotal="<?php
+                                                                                                                                                                                        if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
+                                                                                                                                                                                            echo ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
+                                                                                                                                                                                        } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
+                                                                                                                                                                                            echo ($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'];
+                                                                                                                                                                                        } else {
+                                                                                                                                                                                            echo ($item['product_selling_price'] + $item['product_commission']) * $item['quantity'];
+                                                                                                                                                                                        }
+                                                                                                                                                                                        ?>" data-counter="<?= $counter ?>" onchange="updateTotal(this, <?= $counter ?>)">
                                                         </td>
                                                         <td class=""><img src=" <?php if (isset($item['image_file'])) {
                                                                                     echo "../images/data/" . $item['image_file'];
@@ -120,8 +128,22 @@ include_once('../includes/preloader.php');
                                                         <td class=""><?= $item['variation_name'] ?></td>
                                                         <td class=""><?= $item['measurement_name'] ?></td>
                                                         <td class=""><?= $item['quantity'] ?></td>
-                                                        <td class=""><?= '₱' . number_format($item['selling_price'] + $item['commission'], 2, '.', ',') ?></td>
-                                                        <td class=""><?= '₱' . number_format(($item['selling_price'] + $item['commission']) * $item['quantity'], 2, '.', ',') ?></td>
+                                                        <td class=""><?php if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
+                                                                            echo '₱' . number_format($item['stock_selling_price'] + $item['stock_commission'], 2, '.', ',');
+                                                                        } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
+                                                                            echo '₱' . number_format($item['prices_selling_price'] + $item['prices_commission'], 2, '.', ',');
+                                                                        } else {
+                                                                            echo '₱' . number_format($item['product_selling_price'] + $item['product_commission'], 2, '.', ',');
+                                                                        } ?></td>
+                                                        <td class=""><?php
+                                                                        if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
+                                                                            echo '₱' . number_format(($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'], 2, '.', ',');
+                                                                        } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
+                                                                            echo '₱' . number_format(($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'], 2, '.', ',');
+                                                                        } else {
+                                                                            echo '₱' . number_format(($item['product_selling_price'] + $item['product_commission']) * $item['quantity'], 2, '.', ',');
+                                                                        }
+                                                                        ?></td>
                                                         <td class="text-lg-end fs-7">
                                                             <a class="text-dark remove-btn-hover fw-semibold text-decoration-none" href="./cart.php<?= '?cart_item_id=' . $item['cart_item_id'] . '&quantity=' . $item['quantity'] . '&sale_status=' . $item['sale_status'] . '&stock_id=' . $item['stock_id'] . '&delete=True' ?>  ">Delete</a>
                                                         </td>

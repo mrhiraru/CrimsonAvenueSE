@@ -81,11 +81,11 @@ include_once('../includes/preloader.php');
                                         <td class=""><?= $item['measurement_name'] ?></td>
                                         <td class=""><?= $item['quantity'] ?></td>
                                         <td class=""><?php if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
-                                                            echo '₱' . $item['stock_selling_price']  + $item['stock_commission'];
+                                                            echo '₱' . number_format($item['stock_selling_price'] + $item['stock_commission'], 2, '.', ',');
                                                         } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
-                                                            echo '₱' . $item['prices_selling_price'] + $item['prices_commission'];
+                                                            echo '₱' . number_format($item['prices_selling_price'] + $item['prices_commission'], 2, '.', ',');
                                                         } else {
-                                                            echo '₱' . $item['product_selling_price'] + $item['product_commission'];
+                                                            echo '₱' . number_format($item['product_selling_price'] + $item['product_commission'], 2, '.', ',');
                                                         } ?></td>
                                         <td class=""><?php
                                                         if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
@@ -100,11 +100,11 @@ include_once('../includes/preloader.php');
                                 <?php
                                     $counter++;
                                     if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
-                                        $product_total += $item['stock_selling_price'] * $item['quantity'];
+                                        $product_total += ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
                                     } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
-                                        $product_total += $item['prices_selling_price'] * $item['quantity'];
+                                        $product_total += ($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'];
                                     } else {
-                                        $product_total += $item['product_selling_price'] * $item['quantity'];
+                                        $product_total += ($item['product_selling_price'] + $item['product_commission']) * $item['quantity'];
                                     }
                                 }
                             } else if (isset($_POST['add']) || isset($_POST['buy'])) {
@@ -121,29 +121,29 @@ include_once('../includes/preloader.php');
                                     <td class=""><?= $record['measurement_name'] ?></td>
                                     <td class=""><?= $_POST['quantity'] ?></td>
                                     <td class=""><?php if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
-                                                        echo '₱' . $record['stock_selling_price'] + $record['commission'];
+                                                        echo '₱' . number_format($record['stock_selling_price'] + $record['stock_commission'], 2, '.', ',');
                                                     } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
-                                                        echo '₱' . $record['prices_selling_price'];
+                                                        echo '₱' . number_format($record['prices_selling_price'] + $record['prices_commission'], 2, '.', ',');
                                                     } else {
-                                                        echo '₱' . $record['product_selling_price'];
+                                                        echo '₱' . number_format($record['product_selling_price'] + $record['product_commission'], 2, '.', ',');
                                                     } ?></td>
                                     <td class=""><?php
                                                     if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
-                                                        echo '₱' . number_format($record['stock_selling_price'] * $_POST['quantity'], 2, '.', ',');
+                                                        echo '₱' . number_format(($record['stock_selling_price'] + $record['stock_commission']) * $_POST['quantity'], 2, '.', ',');
                                                     } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
-                                                        echo '₱' . number_format($record['prices_selling_price'] * $_POST['quantity'], 2, '.', ',');
+                                                        echo '₱' . number_format(($record['prices_selling_price'] + $record['prices_commission']) * $_POST['quantity'], 2, '.', ',');
                                                     } else {
-                                                        echo '₱' . number_format($record['product_selling_price'] * $_POST['quantity'], 2, '.', ',');
+                                                        echo '₱' . number_format(($record['product_selling_price'] + $record['product_commission']) * $_POST['quantity'], 2, '.', ',');
                                                     }
                                                     ?></td>
                                 </tr>
                             <?php
-                                if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
-                                    $product_total += $record['stock_selling_price'] * $_POST['quantity'];
-                                } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
-                                    $product_total += $record['prices_selling_price'] * $_POST['quantity'];
+                                if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
+                                    $product_total += ($record['stock_selling_price']  + $record['stock_commission']) * $_POST['quantity'];
+                                } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
+                                    $product_total += ($record['prices_selling_price'] + $record['prices_commission']) * $_POST['quantity'];
                                 } else {
-                                    $product_total += $record['product_selling_price'] * $_POST['quantity'];
+                                    $product_total += ($record['product_selling_price'] + $record['product_commission']) * $_POST['quantity'];
                                 }
                             }
                             ?>
