@@ -5,6 +5,7 @@ require_once "../tools/functions.php";
 require_once "../classes/store.class.php";
 require_once "../classes/category.class.php";
 require_once "../classes/product.class.php";
+require_once "../classes/admin-settings.class.php";
 
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
@@ -16,8 +17,10 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 if (isset($_POST['create'])) {
-    $product = new Product();
+    $admin_settings = new AdminSettings();
+    $admin_data = $admin_settings->fetch();
 
+    $product = new Product();
     $product->product_name = htmlentities($_POST['product_name']);
     $product->category_id = htmlentities($_POST['category_id']);
     $product->exclusivity = htmlentities($_POST['exclusivity']);
@@ -28,6 +31,13 @@ if (isset($_POST['create'])) {
     }
     $product->selling_price = htmlentities($_POST['selling_price']);
     $product->purchase_price = htmlentities($_POST['purchase_price']);
+
+    if ($admin_data['commission_type'] == "Fixed") {
+        $product->final_price = $product->selling_price + $admin_data['commission'];
+    } else if ($admin_data['commission_type'] == "Percentage") {
+        $product->final_price = $product->selling_price + ($product->selling_price * ($admin_data['commission'] * 0.01));
+    }
+
     $product->store_id = $_GET['store_id'];
 
     if (
@@ -37,6 +47,7 @@ if (isset($_POST['create'])) {
         validate_field($product->sale_status) &&
         validate_field($product->selling_price) &&
         validate_field($product->purchase_price) &&
+        validate_field($product->final_price) &&
         validate_field($product->store_id)
     ) {
         if ($product->add()) {
@@ -166,10 +177,10 @@ include_once('../includes/preloader.php');
                                 </div>
                                 <div class="mb-3 p-0 col-12">
                                     <input type="number" name="purchase_price" placeholder="Purchase Price" step="any" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
-                                                                                                                                echo $_POST['purchase_price'];
-                                                                                                                            } else if (isset($sto_record['purchase_price'])) {
-                                                                                                                                echo $sto_record['purchase_price'];
-                                                                                                                            } ?>">
+                                                                                                                                                        echo $_POST['purchase_price'];
+                                                                                                                                                    } else if (isset($sto_record['purchase_price'])) {
+                                                                                                                                                        echo $sto_record['purchase_price'];
+                                                                                                                                                    } ?>">
                                     <?php
                                     if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
                                     ?>
@@ -184,10 +195,10 @@ include_once('../includes/preloader.php');
                                 </div>
                                 <div class="mb-3 p-0 col-12">
                                     <input type="number" name="selling_price" placeholder="Selling Price" step="any" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
-                                                                                                                                            echo $_POST['selling_price'];
-                                                                                                                                        } else if (isset($sto_record['selling_price'])) {
-                                                                                                                                            echo $sto_record['selling_price'];
-                                                                                                                                        } ?>">
+                                                                                                                                                        echo $_POST['selling_price'];
+                                                                                                                                                    } else if (isset($sto_record['selling_price'])) {
+                                                                                                                                                        echo $sto_record['selling_price'];
+                                                                                                                                                    } ?>">
                                     <?php
                                     if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
                                     ?>

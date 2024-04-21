@@ -8,6 +8,7 @@ require_once "../classes/image.class.php";
 require_once "../classes/variation.class.php";
 require_once "../classes/measurement.class.php";
 require_once "../classes/stock.class.php";
+require_once "../classes/admin-settings.class.php";
 
 
 $store = new Store();
@@ -24,6 +25,9 @@ $mea_record = $measurement->fetch_info($_GET['measurement_id'], $pro_record['pro
 
 $image = new Image();
 
+$admin_settings = new AdminSettings();
+$admin_data = $admin_settings->fetch();
+
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
 } else if (!isset($record['store_id']) || $record['is_deleted'] == 1 || !isset($record['staff_role'])) {
@@ -35,9 +39,17 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 $stock = new Stock();
 if (isset($_POST['add'])) {
 
+
     $stock->stock_quantity = htmlentities($_POST['stock_quantity']);
     $stock->purchase_price = htmlentities($_POST['purchase_price']);
     $stock->selling_price = htmlentities($_POST['selling_price']);
+
+    if ($admin_data['commission_type'] == "Fixed") {
+        $stock->final_price = $stock->selling_price + $admin_data['commission'];
+    } else if ($admin_data['commission_type'] == "Percentage") {
+        $stock->final_price = $stock->selling_price + ($stock->selling_price * ($admin_data['commission'] * 0.01));
+    }
+
     $stock->product_id = $pro_record['product_id'];
     $stock->variation_id = $var_record['variation_id'];
     $stock->measurement_id = $mea_record['measurement_id'];
@@ -56,9 +68,17 @@ if (isset($_POST['add'])) {
         $success = 'failed';
     }
 } else if (isset($_POST['save'])) {
+
     $stock->stock_quantity = htmlentities($_POST['stock_quantity']);
     $stock->purchase_price = htmlentities($_POST['purchase_price']);
     $stock->selling_price = htmlentities($_POST['selling_price']);
+
+    if ($admin_data['commission_type'] == "Fixed") {
+        $stock->final_price = $stock->selling_price + $admin_data['commission'];
+    } else if ($admin_data['commission_type'] == "Percentage") {
+        $stock->final_price = $stock->selling_price + ($stock->selling_price * ($admin_data['commission'] * 0.01));
+    }
+
     $stock->stock_id = $_GET['stock_id'];
 
     if (
@@ -300,17 +320,18 @@ include_once('../includes/preloader.php');
                                             }
                                             ?>
                                         </div>
+                                        <div class="mb-3 p-0 ps-1 col-12">
+                                            <p class="text-secondary m-0 lh-1">Note: <?= $admin_data['commission_type'] == "Percentage" ? $admin_data['commission'] . "% is added to the original selling price as commission." : "₱" . $admin_data['commission'] . " is added to selling price as commission."  ?></p>
+                                        </div>
                                     </div>
                                 </form>
                                 <div class="col-12 m-0 p-0">
                                     <hr class="mb-3 mt-0">
                                 </div>
-                                <div class="search-keyword col-12 p-0 d-flex justify-content-end">
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="input-group">
-                                            <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
-                                            <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
-                                        </div>
+                                <div class="search-keyword col-12 col-md-6 col-lg-4 p-0 d-flex justify-content-end">
+                                    <div class="input-group">
+                                        <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
+                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
                                     </div>
                                 </div>
                                 <div class="col-12 m-0 p-0 px-2 row">
@@ -323,7 +344,7 @@ include_once('../includes/preloader.php');
                                                 <th scope="col" class="text-center">Remaining</th>
                                                 <th scope="col" class="text-center">Total Stocks</th>
                                                 <th scope="col" class="text-center">Purchase Price</th>
-                                                <th scope="col" class="text-center">Selling Price</th>
+                                                <th scope="col" class="text-center">Selling Price w/ Commission</th>
                                                 <th scope="col"></th>
                                             </tr>
                                         </thead>
@@ -340,7 +361,7 @@ include_once('../includes/preloader.php');
                                                     <td class="text-center"><?= $item['stock_quantity'] - $item['stock_allocated'] ?></td>
                                                     <td class="text-center"><?= $item['stock_quantity'] ?></td>
                                                     <td class="text-center"><?= '₱ ' . $item['purchase_price'] ?></td>
-                                                    <td class="text-center"><?= '₱ ' . $item['selling_price'] ?></td>
+                                                    <td class="text-center"><?= '₱ ' . $item['final_price'] ?></td>
                                                     <td class="text-end text-nowrap">
                                                         <div class="m-0 p-0">
                                                             <form action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . '&stock_id=' . $item['stock_id'] ?> " method="post">

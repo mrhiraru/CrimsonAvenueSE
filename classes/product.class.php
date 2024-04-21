@@ -11,6 +11,7 @@ class Product
     public $sale_status;
     public $purchase_price;
     public $selling_price;
+    public $final_price;
     public $restriction_status;
     public $order_quantity_limit;
     public $estimated_order_time;
@@ -28,7 +29,7 @@ class Product
         $connect = $this->db->connect();
         $connect->beginTransaction();
 
-        $sql = "INSERT INTO product (store_id, category_id, product_name, exclusivity, sale_status, selling_price, purchase_price) VALUES (:store_id, :category_id, :product_name, :exclusivity, :sale_status, :selling_price, :purchase_price)";
+        $sql = "INSERT INTO product (store_id, category_id, product_name, exclusivity, sale_status, selling_price, purchase_price, final_price) VALUES (:store_id, :category_id, :product_name, :exclusivity, :sale_status, :selling_price, :purchase_price, :final_price)";
 
         $query = $connect->prepare($sql);
         $query->bindParam(':store_id', $this->store_id);
@@ -38,6 +39,7 @@ class Product
         $query->bindParam(':sale_status', $this->sale_status);
         $query->bindParam(':selling_price', $this->selling_price);
         $query->bindParam(':purchase_price', $this->purchase_price);
+        $query->bindParam(':final_price', $this->final_price);
 
         if ($query->execute()) {
             $last_product_id = $connect->lastInsertId();

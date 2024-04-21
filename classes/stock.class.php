@@ -11,6 +11,7 @@ class Stock
     public $stock_allocated;
     public $purchase_price;
     public $selling_price;
+    public $final_price;
     public $is_created;
     public $is_deleted;
 
@@ -23,7 +24,7 @@ class Stock
 
     function add()
     {
-        $sql = "INSERT INTO stock (product_id, variation_id, measurement_id, stock_quantity, purchase_price, selling_price) VALUES (:product_id, :variation_id, :measurement_id, :stock_quantity, :purchase_price, :selling_price)";
+        $sql = "INSERT INTO stock (product_id, variation_id, measurement_id, stock_quantity, purchase_price, selling_price, final_price) VALUES (:product_id, :variation_id, :measurement_id, :stock_quantity, :purchase_price, :selling_price, :final_price)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_id', $this->product_id);
@@ -32,6 +33,7 @@ class Stock
         $query->bindParam(':stock_quantity', $this->stock_quantity);
         $query->bindParam(':purchase_price', $this->purchase_price);
         $query->bindParam(':selling_price', $this->selling_price);
+        $query->bindParam(':final_price', $this->final_price);
         if ($query->execute()) {
             return true;
         } else {
@@ -41,13 +43,14 @@ class Stock
 
     function edit()
     {
-        $sql = "UPDATE stock SET stock_quantity=:stock_quantity, purchase_price=:purchase_price, selling_price=:selling_price WHERE stock_id = :stock_id;";
+        $sql = "UPDATE stock SET stock_quantity=:stock_quantity, purchase_price=:purchase_price, selling_price=:selling_price, final_price=:final_price WHERE stock_id = :stock_id;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':stock_id', $this->stock_id);
         $query->bindParam(':stock_quantity', $this->stock_quantity);
         $query->bindParam(':purchase_price', $this->purchase_price);
         $query->bindParam(':selling_price', $this->selling_price);
+        $query->bindParam(':final_price', $this->final_price);
 
         if ($query->execute()) {
             return true;
