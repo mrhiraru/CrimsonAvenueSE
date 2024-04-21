@@ -17,10 +17,10 @@ $price_record = $stock->price_fetch($variation_id, $measurement_id, $product_id)
 
 if ($record['sale_status'] == "On-hand" && isset($stock_record['selling_price'])) {
 
-    echo "₱ " . number_format($stock_record['selling_price'], 2, '.', ',');
+    echo "₱ " . number_format($stock_record['selling_price'] + $stock_record['commission'], 2, '.', ',');
 } else if ($record['sale_status'] == "Pre-order" && isset($price_record['selling_price'])) {
 
-    echo "₱ " . number_format($price_record['selling_price'], 2, '.', ',');
+    echo "₱ " . number_format($price_record['selling_price'] + $price_record['commission'], 2, '.', ',');
 } else {
     echo "₱ " . number_format($price, 2, '.', ',');
 }

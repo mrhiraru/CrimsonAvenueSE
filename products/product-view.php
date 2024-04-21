@@ -168,7 +168,7 @@ include_once('../includes/preloader.php');
                             </div>
                         </div>
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
-                        <p class="fs-1 text-nowrap fw-bold text-primary m-0 lh-1  text-truncate" id="price"> ₱ <?= $record['selling_price'] ?> </p>
+                        <p class="fs-1 text-nowrap fw-bold text-primary m-0 lh-1  text-truncate" id="price"> <?= '₱' . number_format($record['selling_price'] + $record['commission'], 2, '.', ',') ?> </p>
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
                         <form action="" method="post" class="col-12" id="orderForm">
                             <input type="hidden" name="product_id" value="<?= $record['product_id'] ?>">
@@ -191,7 +191,7 @@ include_once('../includes/preloader.php');
                                     } else {
                                     ?>
                                         <div class="m-0 p-0 me-1 mb-1">
-                                            <input type="radio" class="btn-check" name="variation" id="<?= "variation_" . $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= (isset($_POST['variation']) && $_POST['variation'] == $item['variation_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>); showStockId(<?= $_GET['product_id'] ?>)">
+                                            <input type="radio" class="btn-check" name="variation" id="<?= "variation_" . $item['variation_name'] ?>" value="<?= $item['variation_id'] ?>" <?= (isset($_POST['variation']) && $_POST['variation'] == $item['variation_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] + $record['commission'] ?>); showStockId(<?= $_GET['product_id'] ?>)">
                                             <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= "variation_" . $item['variation_name'] ?>"><?= $item['variation_name'] ?></label>
                                         </div>
 
@@ -224,7 +224,7 @@ include_once('../includes/preloader.php');
                                     } else {
                                     ?>
                                         <div class="m-0 p-0 me-1 mb-1">
-                                            <input type="radio" class="btn-check" name="measurement" id="<?= "measurement_" . $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= (isset($_POST['measurement']) && $_POST['measurement'] == $item['measurement_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>); showStockId(<?= $_GET['product_id'] ?>)">
+                                            <input type="radio" class="btn-check" name="measurement" id="<?= "measurement_" . $item['measurement_name'] ?>" value="<?= $item['measurement_id'] ?>" <?= (isset($_POST['measurement']) && $_POST['measurement'] == $item['measurement_id']) ? 'checked' : '' ?> onchange="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] + $record['commission'] ?>); showStockId(<?= $_GET['product_id'] ?>)">
                                             <label class="btn btn-product-size btn-sm btn-outline-primary rounded-2 px-2 py-1 fs-7" for="<?= "measurement_" . $item['measurement_name'] ?>"><?= $item['measurement_name'] . ' ' . $item['value_unit'] ?></label>
                                         </div>
 
