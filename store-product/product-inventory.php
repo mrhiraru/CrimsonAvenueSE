@@ -45,9 +45,9 @@ if (isset($_POST['add'])) {
     $stock->selling_price = htmlentities($_POST['selling_price']);
 
     if ($admin_data['commission_type'] == "Fixed") {
-        $stock->final_price = $stock->selling_price + $admin_data['commission'];
+        $stock->commission = $stock->selling_price + $admin_data['commission'];
     } else if ($admin_data['commission_type'] == "Percentage") {
-        $stock->final_price = $stock->selling_price + ($stock->selling_price * ($admin_data['commission'] * 0.01));
+        $stock->commission = $stock->selling_price * ($admin_data['commission'] * 0.01);
     }
 
     $stock->product_id = $pro_record['product_id'];
@@ -74,9 +74,9 @@ if (isset($_POST['add'])) {
     $stock->selling_price = htmlentities($_POST['selling_price']);
 
     if ($admin_data['commission_type'] == "Fixed") {
-        $stock->final_price = $stock->selling_price + $admin_data['commission'];
+        $stock->commission = $stock->selling_price + $admin_data['commission'];
     } else if ($admin_data['commission_type'] == "Percentage") {
-        $stock->final_price = $stock->selling_price + ($stock->selling_price * ($admin_data['commission'] * 0.01));
+        $stock->commission = $stock->selling_price * ($admin_data['commission'] * 0.01);
     }
 
     $stock->stock_id = $_GET['stock_id'];
@@ -117,6 +117,12 @@ if (isset($_POST['add'])) {
     $stock->variation_id = $var_record['variation_id'];
     $stock->measurement_id = $mea_record['measurement_id'];
 
+    if ($admin_data['commission_type'] == "Fixed") {
+        $stock->commission = $stock->selling_price + $admin_data['commission'];
+    } else if ($admin_data['commission_type'] == "Percentage") {
+        $stock->commission = $stock->selling_price * ($admin_data['commission'] * 0.01);
+    }
+
     if (
         validate_field($stock->purchase_price) && validate_number($stock->purchase_price) &&
         validate_field($stock->selling_price) && validate_number($stock->selling_price)
@@ -133,6 +139,12 @@ if (isset($_POST['add'])) {
     $stock->purchase_price = htmlentities($_POST['purchase_price']);
     $stock->selling_price = htmlentities($_POST['selling_price']);
     $price_id = htmlentities($_POST['price_id']);
+
+    if ($admin_data['commission_type'] == "Fixed") {
+        $stock->commission = $stock->selling_price + $admin_data['commission'];
+    } else if ($admin_data['commission_type'] == "Percentage") {
+        $stock->commission = $stock->selling_price * ($admin_data['commission'] * 0.01);
+    }
 
     if (
         validate_field($stock->purchase_price) && validate_number($stock->purchase_price) &&
@@ -344,7 +356,7 @@ include_once('../includes/preloader.php');
                                                 <th scope="col" class="text-center">Remaining</th>
                                                 <th scope="col" class="text-center">Total Stocks</th>
                                                 <th scope="col" class="text-center">Purchase Price</th>
-                                                <th scope="col" class="text-center">Selling Price w/ Commission</th>
+                                                <th scope="col" class="text-center">Selling Price + Commission</th>
                                                 <th scope="col"></th>
                                             </tr>
                                         </thead>
@@ -361,7 +373,7 @@ include_once('../includes/preloader.php');
                                                     <td class="text-center"><?= $item['stock_quantity'] - $item['stock_allocated'] ?></td>
                                                     <td class="text-center"><?= $item['stock_quantity'] ?></td>
                                                     <td class="text-center"><?= '₱ ' . $item['purchase_price'] ?></td>
-                                                    <td class="text-center"><?= '₱ ' . $item['final_price'] ?></td>
+                                                    <td class="text-center"><?= '₱ ' . $item['selling_price'] . " + " . $item['commission'] ?></td>
                                                     <td class="text-end text-nowrap">
                                                         <div class="m-0 p-0">
                                                             <form action="./product-inventory.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] . '&variation_id=' . $var_record['variation_id'] . '&measurement_id=' . $mea_record['measurement_id'] . '&stock_id=' . $item['stock_id'] ?> " method="post">
@@ -438,7 +450,15 @@ include_once('../includes/preloader.php');
                                             }
                                             ?>
                                         </div>
-                                        <div class="mb-3 p-0 col-12 col-md-6 col-lg-6 text-end">
+                                        <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
+                                            <label for="selling_price" class="text-secondary m-0 p-0">Commission:</label>
+                                            <input type="number" id="selling_price" name="selling_price" placeholder="Selling Price" class="form-control" disabled value="<?php if (isset($pri_record['commission'])) {
+                                                                                                                                                                                echo $pri_record['commission'];
+                                                                                                                                                                            } else {
+                                                                                                                                                                                echo $pro_record['commission'];
+                                                                                                                                                                            } ?>" step="any">
+                                        </div>
+                                        <div class="mb-3 p-0 col-12 col-md-6 col-lg-3 text-end">
                                             <?php
                                             if (isset($pri_record['price_id'])) {
                                             ?>
@@ -452,6 +472,9 @@ include_once('../includes/preloader.php');
                                             <?php
                                             }
                                             ?>
+                                        </div>
+                                        <div class="mb-3 p-0 ps-1 col-12">
+                                            <p class="text-secondary m-0 lh-1">Note: <?= $admin_data['commission_type'] == "Percentage" ? $admin_data['commission'] . "% is added to the original selling price as commission." : "₱" . $admin_data['commission'] . " is added to selling price as commission."  ?></p>
                                         </div>
                                     </div>
                                 </form>

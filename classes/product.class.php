@@ -11,7 +11,7 @@ class Product
     public $sale_status;
     public $purchase_price;
     public $selling_price;
-    public $final_price;
+    public $commission;
     public $restriction_status;
     public $order_quantity_limit;
     public $estimated_order_time;
@@ -29,7 +29,7 @@ class Product
         $connect = $this->db->connect();
         $connect->beginTransaction();
 
-        $sql = "INSERT INTO product (store_id, category_id, product_name, exclusivity, sale_status, selling_price, purchase_price, final_price) VALUES (:store_id, :category_id, :product_name, :exclusivity, :sale_status, :selling_price, :purchase_price, :final_price)";
+        $sql = "INSERT INTO product (store_id, category_id, product_name, exclusivity, sale_status, selling_price, purchase_price, commission) VALUES (:store_id, :category_id, :product_name, :exclusivity, :sale_status, :selling_price, :purchase_price, :commission)";
 
         $query = $connect->prepare($sql);
         $query->bindParam(':store_id', $this->store_id);
@@ -39,7 +39,7 @@ class Product
         $query->bindParam(':sale_status', $this->sale_status);
         $query->bindParam(':selling_price', $this->selling_price);
         $query->bindParam(':purchase_price', $this->purchase_price);
-        $query->bindParam(':final_price', $this->final_price);
+        $query->bindParam(':commission', $this->commission);
 
         if ($query->execute()) {
             $last_product_id = $connect->lastInsertId();
@@ -71,7 +71,7 @@ class Product
 
     function edit()
     {
-        $sql = "UPDATE product SET product_name=:product_name, category_id=:category_id, exclusivity=:exclusivity, sale_status=:sale_status, selling_price=:selling_price, purchase_price=:purchase_price, estimated_order_time=:estimated_order_time, order_quantity_limit=:order_quantity_limit WHERE product_id = :product_id;";
+        $sql = "UPDATE product SET product_name=:product_name, category_id=:category_id, exclusivity=:exclusivity, sale_status=:sale_status, selling_price=:selling_price, purchase_price=:purchase_price, estimated_order_time=:estimated_order_time, order_quantity_limit=:order_quantity_limit, commission=:commission WHERE product_id = :product_id;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_name', $this->product_name);
@@ -83,6 +83,7 @@ class Product
         $query->bindParam(':estimated_order_time', $this->estimated_order_time);
         $query->bindParam(':order_quantity_limit', $this->order_quantity_limit);
         $query->bindParam(':product_id', $this->product_id);
+        $query->bindParam(':commission', $this->commission);
 
         if ($query->execute()) {
             return true;

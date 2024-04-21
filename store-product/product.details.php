@@ -140,9 +140,9 @@ if (!isset($pro_record['store_id']) || !isset($pro_record['product_id'])) {
                 </span>
                 <br class="d-block d-md-none">
                 ₱
-                <?= $pro_record['final_price'] ?>
+                <?= $pro_record['selling_price'] . " +  ₱" . $pro_record['commission'] ?>
                 <span class="text-secondary fw-normal fs-7">
-                    (Commission Added)
+                    (Commission)
                 </span>
             </td>
         </tr>

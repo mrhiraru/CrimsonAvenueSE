@@ -10,6 +10,9 @@ require_once "../classes/admin-settings.class.php";
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
 
+$admin_settings = new AdminSettings();
+$admin_data = $admin_settings->fetch();
+
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
 } else if (!isset($_GET['store_id']) || !isset($record['store_id']) || $record['is_deleted'] == 1 || !isset($record['staff_role'])) {
@@ -17,9 +20,6 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 if (isset($_POST['create'])) {
-    $admin_settings = new AdminSettings();
-    $admin_data = $admin_settings->fetch();
-
     $product = new Product();
     $product->product_name = htmlentities($_POST['product_name']);
     $product->category_id = htmlentities($_POST['category_id']);
@@ -33,9 +33,9 @@ if (isset($_POST['create'])) {
     $product->purchase_price = htmlentities($_POST['purchase_price']);
 
     if ($admin_data['commission_type'] == "Fixed") {
-        $product->final_price = $product->selling_price + $admin_data['commission'];
+        $product->commission = $product->selling_price + $admin_data['commission'];
     } else if ($admin_data['commission_type'] == "Percentage") {
-        $product->final_price = $product->selling_price + ($product->selling_price * ($admin_data['commission'] * 0.01));
+        $product->commission = $product->selling_price * ($admin_data['commission'] * 0.01);
     }
 
     $product->store_id = $_GET['store_id'];
@@ -47,7 +47,7 @@ if (isset($_POST['create'])) {
         validate_field($product->sale_status) &&
         validate_field($product->selling_price) &&
         validate_field($product->purchase_price) &&
-        validate_field($product->final_price) &&
+        validate_field($product->commission) &&
         validate_field($product->store_id)
     ) {
         if ($product->add()) {
@@ -210,6 +210,9 @@ include_once('../includes/preloader.php');
                                     <?php
                                     }
                                     ?>
+                                </div>
+                                <div class="mb-3 p-0 ps-1 col-12">
+                                    <p class="text-secondary m-0 lh-1">Note: <?= $admin_data['commission_type'] == "Percentage" ? $admin_data['commission'] . "% is added to the original selling price as commission." : "₱" . $admin_data['commission'] . " is added to selling price as commission."  ?></p>
                                 </div>
                                 <div class="mb-3 p-0 col-12">
                                     <input type="submit" class="btn btn-primary w-100 fw-semibold" name="create" value="Save">

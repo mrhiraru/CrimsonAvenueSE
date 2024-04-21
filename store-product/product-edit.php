@@ -6,6 +6,7 @@ require_once "../classes/store.class.php";
 require_once "../classes/product.class.php";
 require_once "../classes/image.class.php";
 require_once "../classes/category.class.php";
+require_once "../classes/admin-settings.class.php";
 
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
@@ -15,6 +16,9 @@ $pro_record = $product->fetch_info($_GET['product_id'], $record['store_id']);
 
 $image = new Image();
 $category = new Category();
+
+$admin_settings = new AdminSettings();
+$admin_data = $admin_settings->fetch();
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
@@ -34,6 +38,12 @@ if (isset($_POST['edit'])) {
     $product->estimated_order_time = htmlentities($_POST['estimated_order_time']);
     $product->exclusivity = htmlentities($_POST['exclusivity']);
     $product->product_id = $pro_record['product_id'];
+
+    if ($admin_data['commission_type'] == "Fixed") {
+        $product->commission = $product->selling_price + $admin_data['commission'];
+    } else if ($admin_data['commission_type'] == "Percentage") {
+        $product->commission = $product->selling_price * ($admin_data['commission'] * 0.01);
+    }
 
     if (validate_field($product->product_name &&
         $product->category_id &&
@@ -183,10 +193,10 @@ include_once('../includes/preloader.php');
                                 <div class="mb-3 p-0 col-12">
                                     <label for="purchase_price" class="text-secondary m-0 p-0">Purchase Price:</label>
                                     <input type="number" name="purchase_price" placeholder="₱" step="any" class="form-control" value="<?php if (isset($_POST['purchase_price'])) {
-                                                                                                                                echo $_POST['purchase_price'];
-                                                                                                                            } else {
-                                                                                                                                echo $pro_record['purchase_price'];
-                                                                                                                            } ?>">
+                                                                                                                                            echo $_POST['purchase_price'];
+                                                                                                                                        } else {
+                                                                                                                                            echo $pro_record['purchase_price'];
+                                                                                                                                        } ?>">
                                     <?php
                                     if (isset($_POST['purchase_price']) && !validate_field($_POST['purchase_price'])) {
                                     ?>
@@ -202,10 +212,10 @@ include_once('../includes/preloader.php');
                                 <div class="mb-3 p-0 col-12">
                                     <label for="selling_price" class="text-secondary m-0 p-0">Selling Price:</label>
                                     <input type="number" name="selling_price" placeholder="₱" step="any" class="form-control" value="<?php if (isset($_POST['selling_price'])) {
-                                                                                                                                echo $_POST['selling_price'];
-                                                                                                                            } else {
-                                                                                                                                echo $pro_record['selling_price'];
-                                                                                                                            } ?>">
+                                                                                                                                            echo $_POST['selling_price'];
+                                                                                                                                        } else {
+                                                                                                                                            echo $pro_record['selling_price'];
+                                                                                                                                        } ?>">
                                     <?php
                                     if (isset($_POST['selling_price']) && !validate_field($_POST['selling_price'])) {
                                     ?>
@@ -217,6 +227,9 @@ include_once('../includes/preloader.php');
                                     <?php
                                     }
                                     ?>
+                                </div>
+                                <div class="mb-3 p-0 ps-1 col-12">
+                                    <p class="text-secondary m-0 lh-1">Note: <?= $admin_data['commission_type'] == "Percentage" ? $admin_data['commission'] . "% is added to the original selling price as commission." : "₱" . $admin_data['commission'] . " is added to selling price as commission."  ?></p>
                                 </div>
                                 <div class="mb-2 p-0 col-12">
                                     <label for="order_quantity_limit" class="text-secondary m-0 p-0">Limit Per Order:</label>

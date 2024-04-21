@@ -11,7 +11,7 @@ class Stock
     public $stock_allocated;
     public $purchase_price;
     public $selling_price;
-    public $final_price;
+    public $commission;
     public $is_created;
     public $is_deleted;
 
@@ -24,7 +24,7 @@ class Stock
 
     function add()
     {
-        $sql = "INSERT INTO stock (product_id, variation_id, measurement_id, stock_quantity, purchase_price, selling_price, final_price) VALUES (:product_id, :variation_id, :measurement_id, :stock_quantity, :purchase_price, :selling_price, :final_price)";
+        $sql = "INSERT INTO stock (product_id, variation_id, measurement_id, stock_quantity, purchase_price, selling_price, commission) VALUES (:product_id, :variation_id, :measurement_id, :stock_quantity, :purchase_price, :selling_price, :commission)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_id', $this->product_id);
@@ -33,7 +33,7 @@ class Stock
         $query->bindParam(':stock_quantity', $this->stock_quantity);
         $query->bindParam(':purchase_price', $this->purchase_price);
         $query->bindParam(':selling_price', $this->selling_price);
-        $query->bindParam(':final_price', $this->final_price);
+        $query->bindParam(':commission', $this->commission);
         if ($query->execute()) {
             return true;
         } else {
@@ -43,14 +43,14 @@ class Stock
 
     function edit()
     {
-        $sql = "UPDATE stock SET stock_quantity=:stock_quantity, purchase_price=:purchase_price, selling_price=:selling_price, final_price=:final_price WHERE stock_id = :stock_id;";
+        $sql = "UPDATE stock SET stock_quantity=:stock_quantity, purchase_price=:purchase_price, selling_price=:selling_price, commission=:commission WHERE stock_id = :stock_id;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':stock_id', $this->stock_id);
         $query->bindParam(':stock_quantity', $this->stock_quantity);
         $query->bindParam(':purchase_price', $this->purchase_price);
         $query->bindParam(':selling_price', $this->selling_price);
-        $query->bindParam(':final_price', $this->final_price);
+        $query->bindParam(':commission', $this->commission);
 
         if ($query->execute()) {
             return true;
@@ -86,7 +86,7 @@ class Stock
 
     function price_add()
     {
-        $sql = "INSERT INTO prices (product_id, variation_id, measurement_id, purchase_price, selling_price) VALUES (:product_id, :variation_id, :measurement_id, :purchase_price, :selling_price)";
+        $sql = "INSERT INTO prices (product_id, variation_id, measurement_id, purchase_price, selling_price, commission) VALUES (:product_id, :variation_id, :measurement_id, :purchase_price, :selling_price, :commission)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_id', $this->product_id);
@@ -94,6 +94,8 @@ class Stock
         $query->bindParam(':measurement_id', $this->measurement_id);
         $query->bindParam(':purchase_price', $this->purchase_price);
         $query->bindParam(':selling_price', $this->selling_price);
+        $query->bindParam(':commission', $this->commission);
+
         if ($query->execute()) {
             return true;
         } else {
@@ -103,12 +105,13 @@ class Stock
 
     function price_edit($price_id)
     {
-        $sql = "UPDATE prices SET purchase_price=:purchase_price, selling_price=:selling_price WHERE price_id = :price_id;";
+        $sql = "UPDATE prices SET purchase_price=:purchase_price, selling_price=:selling_price, commission=:commission WHERE price_id = :price_id;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':price_id', $price_id);
         $query->bindParam(':purchase_price', $this->purchase_price);
         $query->bindParam(':selling_price', $this->selling_price);
+        $query->bindParam(':commission', $this->commission);
 
         if ($query->execute()) {
             return true;
