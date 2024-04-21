@@ -120,8 +120,8 @@ include_once('../includes/preloader.php');
                                                         <td class=""><?= $item['variation_name'] ?></td>
                                                         <td class=""><?= $item['measurement_name'] ?></td>
                                                         <td class=""><?= $item['quantity'] ?></td>
-                                                        <td class=""><?= '₱' . number_format($item['selling_price'], 2, '.', ',') ?></td>
-                                                        <td class=""><?= '₱' . number_format($item['selling_price'] * $item['quantity'], 2, '.', ',') ?></td>
+                                                        <td class=""><?= '₱' . number_format($item['selling_price'] + $item['commission'], 2, '.', ',') ?></td>
+                                                        <td class=""><?= '₱' . number_format(($item['selling_price'] + $item['commission']) * $item['quantity'], 2, '.', ',') ?></td>
                                                         <td class="text-lg-end fs-7">
                                                             <a class="text-dark remove-btn-hover fw-semibold text-decoration-none" href="./cart.php<?= '?cart_item_id=' . $item['cart_item_id'] . '&quantity=' . $item['quantity'] . '&sale_status=' . $item['sale_status'] . '&stock_id=' . $item['stock_id'] . '&delete=True' ?>  ">Delete</a>
                                                         </td>

@@ -12,6 +12,7 @@ class Cart
     public $stock_id;
     public $quantity;
     public $selling_price;
+    public $commission;
     public $is_deleted;
     protected $db;
 
@@ -22,7 +23,7 @@ class Cart
 
     function add()
     {
-        $sql = "INSERT INTO cart_item (cart_id, product_id, variation_id, measurement_id, stock_id, quantity, selling_price) VALUES (:cart_id, :product_id, :variation_id, :measurement_id, :stock_id, :quantity, :selling_price)";
+        $sql = "INSERT INTO cart_item (cart_id, product_id, variation_id, measurement_id, stock_id, quantity, selling_price, commission) VALUES (:cart_id, :product_id, :variation_id, :measurement_id, :stock_id, :quantity, :selling_price, :commission)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':cart_id', $this->cart_id);
@@ -32,6 +33,7 @@ class Cart
         $query->bindParam(':stock_id', $this->stock_id);
         $query->bindParam(':quantity', $this->quantity);
         $query->bindParam(':selling_price', $this->selling_price);
+        $query->bindParam(':commission', $this->commission);
 
         if ($query->execute()) {
             return true;
@@ -81,7 +83,7 @@ class Cart
 
         $ids = array_map('intval', $ids);
 
-        $sql = "SELECT ci.*, p.product_name, p.sale_status, v.variation_name, m.measurement_name, i.image_file, p.selling_price AS product_selling_price, st.selling_price AS stock_selling_price, pr.*, pr.selling_price AS prices_selling_price
+        $sql = "SELECT ci.*, p.product_name, p.sale_status, v.variation_name, m.measurement_name, i.image_file, p.selling_price AS product_selling_price, p.commission AS product_commission, st.selling_price AS stock_selling_price, st.commission AS stock_commission, pr.*, pr.selling_price AS prices_selling_price, pr.commission AS prices_commission
         FROM cart_item ci
         INNER JOIN product p ON ci.product_id = p.product_id AND p.is_deleted  != 1
         INNER JOIN variation v ON ci.variation_id = v.variation_id AND v.is_deleted != 1
