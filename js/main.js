@@ -12,11 +12,19 @@ function validateinput(input) {
   input.value = input.value.replace(/[^0-9]/g, "");
 }
 
+function negativetozero(input) {
+  if (input.value < 0) {
+    input.value = 0;
+  }
+}
+
 function validateinputqty(input, limit) {
   // Remove any non-digit characters
   input.value = input.value.replace(/[^0-9]/g, "");
 
-  var available_stock = parseInt(document.getElementById("available_stock").value);
+  var available_stock = parseInt(
+    document.getElementById("available_stock").value
+  );
 
   // Convert input value to a number
   let quantity = parseInt(input.value);

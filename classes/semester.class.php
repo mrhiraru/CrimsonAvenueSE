@@ -7,6 +7,7 @@ class Semester
     public $semester_number;
     public $start_date;
     public $end_date;
+    public $status;
 
     protected $db;
 
@@ -17,12 +18,13 @@ class Semester
 
     function add()
     {
-        $sql = "INSERT INTO semester (semester_number, start_date, end_date) VALUES (:semester_number, :start_date, :end_date)";
+        $sql = "INSERT INTO semester (semester_number, start_date, end_date, status) VALUES (:semester_number, :start_date, :end_date, :status)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':semester_number', $this->semester_number);
         $query->bindParam(':start_date', $this->start_date);
         $query->bindParam(':end_date', $this->end_date);
+        $query->bindParam(':status', $this->status);
 
         if ($query->execute()) {
             return true;
@@ -33,7 +35,7 @@ class Semester
 
     function edit()
     {
-        $sql = "UPDATE property SET semester_number=:semester_number, start_date=:start_date, end_date=:end_date WHERE semester_id = :semester_id;";
+        $sql = "UPDATE semester SET semester_number=:semester_number, start_date=:start_date, end_date=:end_date WHERE semester_id = :semester_id;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':semester_number', $this->semester_number);
@@ -48,5 +50,13 @@ class Semester
         }
     }
 
-
+    function fetch()
+    {
+        $sql = "SELECT * FROM semester WHERE status = 'Current' LIMIT 1;";
+        $query = $this->db->connect()->prepare($sql);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
 }
