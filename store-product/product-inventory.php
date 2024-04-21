@@ -451,11 +451,11 @@ include_once('../includes/preloader.php');
                                             ?>
                                         </div>
                                         <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
-                                            <label for="selling_price" class="text-secondary m-0 p-0">Commission:</label>
-                                            <input type="number" id="selling_price" name="selling_price" placeholder="Selling Price" class="form-control" disabled value="<?php if (isset($pri_record['commission'])) {
-                                                                                                                                                                                echo $pri_record['commission'];
+                                            <label for="selling_price" class="text-secondary m-0 p-0">Selling Price + Commission:</label>
+                                            <input type="number" id="selling_price" name="selling_price" placeholder="Commission" class="form-control" disabled value="<?php if (isset($pri_record['commission'])) {
+                                                                                                                                                                                echo $pri_record['commission'] + $pri_record['selling_price'];
                                                                                                                                                                             } else {
-                                                                                                                                                                                echo $pro_record['commission'];
+                                                                                                                                                                                echo $pro_record['commission'] + $pro_record['selling_price'];
                                                                                                                                                                             } ?>" step="any">
                                         </div>
                                         <div class="mb-3 p-0 col-12 col-md-6 col-lg-3 text-end">
