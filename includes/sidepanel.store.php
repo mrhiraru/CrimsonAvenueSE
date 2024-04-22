@@ -85,12 +85,12 @@
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $order_page ?>" aria-current="page" href="../store-orders/index.php">
+                                <a class="nav-link text-secondary fw-semibold <?= $order_page ?>" aria-current="page" href="../store-orders/index.php?store_id=<?= $record['store_id'] ?>">
                                     Order List
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $new_order_page ?>" href="../store-orders/create-order.php">
+                                <a class="nav-link text-secondary fw-semibold <?= $new_order_page ?>" href="../store-orders/create-order.php?store_id=<?= $record['store_id'] ?>">
                                     New Order
                                 </a>
                             </li>

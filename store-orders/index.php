@@ -3,7 +3,7 @@ session_start();
 
 require_once "../tools/functions.php";
 require_once "../classes/store.class.php";
-require_once "../classes/product.class.php";
+require_once "../classes/order.class.php";
 
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
@@ -21,7 +21,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "Store Products | Crimson Avenue";
+$title = "Store Orders | Crimson Avenue";
 $order_page = "active";
 $orders_page = "active";
 require_once('../includes/head.php');
@@ -47,41 +47,45 @@ include_once('../includes/preloader.php');
                                     <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
                                 </div>
                             </div>
-                            <table id="products" class="table table-lg mt-1">
+                            <table id="orders" class="table table-lg mt-1">
                                 <thead>
                                     <tr class="align-middle">
                                         <th scope="col"></th>
                                         <th scope="col"></th>
-                                        <th scope="col" class="text-center">Product Name</th>
-                                        <th scope="col" class="text-center">Category</th>
-                                        <th scope="col" class="text-center">Exclusivity</th>
-                                        <th scope="col" class="text-center">Availability</th>
-                                        <th scope="col" class="text-center">Restriction Status</th>
-                                        <th scope="col" class="text-center">Action</th>
+                                        <th scope="col" class="">Customer Name</th>
+                                        <th scope="col" class="">Total Price</th>
+                                        <th scope="col" class="text-center">Payment Method</th>
+                                        <th scope="col" class="text-center">Order Fulfillment</th>
+                                        <th scope="col" class="text-center">Status</th>
+                                        <th scope="col" class="text-center"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                     $counter = 1;
-                                    $product = new Product();
-                                    $productArray = $product->show($record['store_id']);
-                                    foreach ($productArray as $item) {
+                                    $order = new Order();
+                                    $orderArray = $order->show_order_store($record['store_id']);
+                                    foreach ($orderArray as $item) {
                                     ?>
                                         <tr class="align-middle">
                                             <td><?= $counter ?></td>
-                                            <td> <img src="<?php if (isset($item['image_file'])) {
-                                                                echo "../images/data/" . $item['image_file'];
+                                            <td> <img src="<?php if (isset($item['profile_image'])) {
+                                                                echo "../images/data/" . $item['profile_image'];
                                                             } else {
                                                                 echo "../images/main/no-profile.jpg";
                                                             } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"> </td>
-                                            <td class="text-center"><?= $item['product_name'] ?></td>
-                                            <td class="text-center"><?= $item['category_name'] ?></td>
-                                            <td class="text-center"><?= $item['exclusivity'] ?></td>
-                                            <td class="text-center"><?= $item['sale_status'] ?></td>
-                                            <td class="text-center"><?= $item['restriction_status'] ?></td>
+                                            <td class=""><?php if (isset($item['middlename'])) {
+                                                                echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
+                                                            } else {
+                                                                echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
+                                                            } ?></td>
+                                            <td class=""><?= '₱' . number_format(($item['product_total'] + $item['commission_total'] + $item['delivery_charge']), 2, '.', ',') ?></td>
+                                            <td class="text-center"><?= $item['payment_method'] ?></td>
+                                            <td class="text-center"><?= $item['fulfillment_method'] ?></td>
+                                            <td class="text-center"><?= $item['order_status'] ?></td>
                                             <td class="text-center text-nowrap">
                                                 <div class="m-0 p-0">
-                                                    <a href="./product-view.php?store_id=<?php echo $record['store_id'] . '&product_id=' . $item['product_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
+                                                    <a href="./order-view.php?store_id=<?php echo $record['store_id'] . '&order_id=' . $item['order_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -100,7 +104,7 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/js.php');
     ?>
-    <script src="../js/store-products.datatable.js"></script>
+    <script src="../js/store-order.datatable.js"></script>
 </body>
 
 </html>

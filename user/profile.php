@@ -193,7 +193,7 @@ include_once('../includes/preloader.php');
                                 <tr class="align-middle">
                                     <td><?= $item['order_id'] ?></td>
                                     <td class=""><?= $item['store_name'] ?></td>
-                                    <td class=""><?= '₱' . number_format(($item['product_total'] + $item['commission_total'] + $item['delivery_charge']), 2, '.', ','); ?></td>
+                                    <td class=""><?= '₱' . number_format(($item['product_total'] + $item['commission_total'] + $item['delivery_charge']), 2, '.', ',') ?></td>
                                     <td class=""><?= $item['payment_method'] ?></td>
                                     <td class=""><?= $item['fulfillment_method'] ?></td>
                                     <td class=""><?= $item['order_status'] ?></td>

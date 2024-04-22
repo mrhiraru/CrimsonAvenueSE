@@ -86,6 +86,24 @@ class Order
         return $data;
     }
 
+    function show_order_store($store_id)
+    {
+        $sql = "SELECT o.*, s.store_name, a.*
+        FROM orders o
+        INNER JOIN store s ON o.store_id = s.store_id
+        INNER JOIN account a ON o.account_id = a.account_id
+        WHERE o.store_id = :store_id ORDER BY order_id ASC;
+        ";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function show_items($order_id)
     {
         $sql = "SELECT oi.*, p.*, v.*, m.*, i.*
@@ -102,6 +120,46 @@ class Order
         $data = null;
         if ($query->execute()) {
             $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function show_items_store($order_id)
+    {
+        $sql = "SELECT oi.*, p.*, v.*, m.*, i.*, o.*
+        FROM order_item oi
+        INNER JOIN orders o ON oi.order_id = o.order_id
+        INNER JOIN product p ON oi.product_id = p.product_id
+        INNER JOIN variation v ON oi.variation_id = v.variation_id
+        INNER JOIN measurement m ON oi.measurement_id = m.measurement_id
+        LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id
+        WHERE oi.order_id = :order_id AND oi.is_deleted != 1 ORDER BY order_item_id ASC;
+        ";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':order_id', $order_id);
+        $query->bindParam(':store_id', $store_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function fetch_order($order_id)
+    {
+        $sql = "SELECT o.*, s.store_name, a.*
+        FROM orders o
+        INNER JOIN store s ON o.store_id = s.store_id
+        INNER JOIN account a ON o.account_id = a.account_id
+        WHERE o.order_id = :order_id
+        ";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':order_id', $order_id);
+
+        if ($query->execute()) {
+            $data = $query->fetch();
         }
         return $data;
     }
