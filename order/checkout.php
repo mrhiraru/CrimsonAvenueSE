@@ -6,6 +6,7 @@ require_once "../classes/product.class.php";
 require_once "../classes/cart.class.php";
 require_once "../classes/order.class.php";
 require_once "../classes/stock.class.php";
+require_once "../classes/store.class.php";
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ../user/verify.php');
@@ -378,13 +379,27 @@ include_once('../includes/preloader.php');
     if (isset($_POST['confirm']) && $success == 'success') {
     ?>
         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center ">
+                        <h6 class="modal-title">Your order has been successfully placed!</h6>
+                    </div>
+                    <?php
+                    $store = new Store();
+                    $record_store = $store->fetch_this($_POST['store_id']);
+                    ?>
                     <div class="modal-body">
+                        <p class="lh-1 text-secondary fw-semibold ">Store Location: <span class="text-dark"><?= isset($record_store['store_location']) ? $record_store['store_location'] : "No Store Location" ?></span></p>
+                        <p class="lh-1 text-secondary fw-semibold">Business Hours: <span class="text-dark"><?= isset($record_store['business_time']) ? $record_store['business_time'] : "No specific Business Hours" ?></span> </p>
+                        <p class="lh-1 text-secondary fw-semibold">Store Email: <span class="text-dark"><?= isset($record_store['store_email']) ? $record_store['store_email'] : "No Email" ?> </span></p>
+                        <p class="lh-1 text-secondary fw-semibold">Store Contact: <span class="text-dark"><?= isset($record_store['store_contact']) ? $record_store['store_contact'] : "No Contact" ?></span> </p>
+                        <p class="fs-7 fw-semibold text-primary mb-0 text-center">Please visit your location to process your order!</p>
+                    </div>
+                    <div class="modal-footer  d-flex justify-content-center ">
                         <div class="row d-flex">
-                            <div class="col-12 text-center">
-                                <a href="../user/profile.php" class="text-decoration-none text-dark">
-                                    <p class="m-0 text-dark">Your order has been successfully placed! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                            <div class="col-12">
+                                <a href="../user/profile.php" class="text-decoration-none text-dark ">
+                                    <p class="m-0 text-dark"><span class="text-primary fw-bold">Click to Continue!</span></p>
                                 </a>
                             </div>
                         </div>

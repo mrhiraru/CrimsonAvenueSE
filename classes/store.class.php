@@ -83,6 +83,17 @@ class Store
         }
     }
 
+    function fetch_this($store_id)
+    {
+        $sql = "SELECT * FROM store WHERE store_id = :store_id";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
     function edit()
     {
         $sql = "UPDATE store SET store_profile = :store_profile, store_name = :store_name, college_id = :college_id, store_bio = :store_bio, store_email = :store_email, store_contact = :store_contact, store_location = :store_location, business_time = :business_time WHERE store_id = :store_id;";
