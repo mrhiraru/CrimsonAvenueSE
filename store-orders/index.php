@@ -47,7 +47,7 @@ include_once('../includes/preloader.php');
                                     <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
                                 </div>
                             </div>
-                            <table id="orders" class="table table-lg mt-1">
+                            <table id="myorders" class="table table-lg mt-1">
                                 <thead>
                                     <tr class="align-middle">
                                         <th scope="col"></th>
@@ -104,7 +104,8 @@ include_once('../includes/preloader.php');
     <?php
     require_once('../includes/js.php');
     ?>
-    <script src="../js/store-order.datatable.js"></script>
+    <script src="../js/order.datatable.js"></script>
+
 </body>
 
 </html>

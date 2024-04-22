@@ -73,7 +73,7 @@ include_once('../includes/preloader.php');
                                     <td class=""><?= $item['variation_name'] ?></td>
                                     <td class=""><?= $item['measurement_name'] ?></td>
                                     <td class="text-center"><?= $item['quantity'] . "x" ?></td>
-                                    <td class=""><?= '₱' . number_format(($item['selling_price'] + $item['commission']) * $item['quantity'], 2, '.', ','); ?></td>
+                                    <td class=""><?= '₱' . number_format($item['oi_selling_price'] + $item['oi_commission'], 2, '.', ','); ?></td>
 
                                 </tr>
                             <?php

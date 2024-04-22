@@ -89,7 +89,7 @@
                                     Order List
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item d-none">
                                 <a class="nav-link text-secondary fw-semibold <?= $new_order_page ?>" href="../store-orders/create-order.php?store_id=<?= $record['store_id'] ?>">
                                     New Order
                                 </a>
