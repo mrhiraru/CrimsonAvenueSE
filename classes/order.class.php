@@ -68,4 +68,41 @@ class Order
             return false;
         }
     }
+
+    function show($account_id)
+    {
+        $sql = "SELECT o.*, s.store_name
+        FROM orders o
+        INNER JOIN store s ON o.store_id = s.store_id
+        WHERE o.account_id = :account_id ORDER BY order_id ASC;
+        ";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function show_items($order_id)
+    {
+        $sql = "SELECT oi.*, p.*, v.*, m.*, i.*,
+        FROM order_item oi
+        INNER JOIN product p ON oi.product_id = p.product_id
+        INNER JOIN variation v ON oi.variation_id = v.variation_id
+        INNER JOIN measurement m ON oi.measurement_id = m.measurement_id
+        LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id
+        WHERE oi.order_id = :order_id AND oi.is_deleted != 1 ORDER BY order_item_id ASC;
+        ";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':order_id', $order_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }
