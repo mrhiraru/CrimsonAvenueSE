@@ -393,7 +393,7 @@ include_once('../includes/preloader.php');
                         <p class="lh-1 text-secondary fw-semibold">Business Hours: <span class="text-dark"><?= isset($record_store['business_time']) ? $record_store['business_time'] : "No specific Business Hours" ?></span> </p>
                         <p class="lh-1 text-secondary fw-semibold">Store Email: <span class="text-dark"><?= isset($record_store['store_email']) ? $record_store['store_email'] : "No Email" ?> </span></p>
                         <p class="lh-1 text-secondary fw-semibold">Store Contact: <span class="text-dark"><?= isset($record_store['store_contact']) ? $record_store['store_contact'] : "No Contact" ?></span> </p>
-                        <p class="fs-7 fw-semibold text-primary mb-0 text-center">Please visit your location to process your order!</p>
+                        <p class="fs-7 fw-semibold text-primary mb-0 text-center">Please visit our location to process your order!</p>
                     </div>
                     <div class="modal-footer  d-flex justify-content-center ">
                         <div class="row d-flex">
