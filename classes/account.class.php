@@ -107,9 +107,12 @@ class Account
 
     function add_admin()
     {
+        $connect = $this->db->connect();
+        $connect->beginTransaction();
+
         $sql = "INSERT INTO account (email, password, affiliation, firstname, middlename, lastname, gender, contact, user_role) VALUES (:email, :password, :affiliation, :firstname, :middlename, :lastname, :gender, :contact, :user_role)";
 
-        $query = $this->db->connect()->prepare($sql);
+        $query = $connect->prepare($sql);
         $query->bindParam(':email', $this->email);
         $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
         $query->bindParam(':password', $hashedPassword);
@@ -122,7 +125,20 @@ class Account
         $query->bindParam('user_role', $this->user_role);
 
         if ($query->execute()) {
-            return true;
+            $last_product_id = $connect->lastInsertId();
+
+            $sec_sql = "INSERT INTO cart (account_id) VALUES (:account_id)";
+
+            $sec_query = $connect->prepare($sec_sql);
+            $sec_query->bindParam(':account_id', $last_product_id);
+
+            if ($sec_query->execute()) {
+                $connect->commit();
+                return true;
+            } else {
+                $connect->rollBack();
+                return false;
+            }
         } else {
             return false;
         }
@@ -234,7 +250,7 @@ class Account
     }
     function count()
     {
-       
+
         $sql = "SELECT COUNT(account_id) AS account_count FROM account WHERE is_deleted != 1";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
