@@ -5,6 +5,11 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+
+require_once '../vendor/PHPMailer-master/PHPMailer-master/src/PHPMailer.php';
+require_once '../vendor/PHPMailer-master/PHPMailer-master/src/Exception.php';
+require_once '../vendor/PHPMailer-master/PHPMailer-master/src//SMTP.php';
+
 //Load Composer's autoloader
 require_once('../vendor/autoload.php');
 
