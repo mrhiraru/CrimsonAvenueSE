@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2024 at 06:24 PM
+-- Generation Time: Apr 22, 2024 at 11:25 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -70,7 +70,8 @@ INSERT INTO `account` (`account_id`, `email`, `password`, `affiliation`, `firstn
 (70, 'sirjaydee@wmsu.edu.ph', '$2y$10$eMWzttGZQ9xreuD6KBInUeSpWsLAT0OvBrvUnWZu89ZfSpr86ATCS', 'Student', 'Qwe', 'Weqw', 'We', 'Male', 28, NULL, '09222222222', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-03-13 01:59:55', '2024-03-13 01:59:55', 0),
 (71, 'qweqwe@wmsu.edu.ph', '$2y$10$SpisZe.1X1WcGgLJ0IeICe0xsfnXkVk5wl.RWH8dWMKbjb2UODf2a', 'Student', 'Qweasd', 'Zxcz', 'Zxc', 'Male', 28, NULL, '09666666666', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-03-13 02:01:56', '2024-03-13 02:01:56', 0),
 (72, 'haha@wmsu.edu.ph', '$2y$10$6.7a1Xbz1UR7qcBf8pHXJuy8EpPz7GeT9PGvgaxD8tjlZOyntC2/m', 'Student', 'Qweqwe', 'Qwe', 'Qwqrw', 'Male', 15, NULL, '09444444444', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-03-21 01:34:21', '2024-03-21 01:34:21', 0),
-(73, 'imastudent@wmsu.edu.ph', '$2y$10$eqMTJfGj6EK82aB9IxNd2O2xIOzdiUKm/rH5V42ukihpx.kct/qtu', 'Student', 'Testcartfir', 'Testcartmid', 'Testcartlas', 'Female', 23, NULL, '09222222222', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-04-15 16:30:05', '2024-04-15 16:30:05', 0);
+(73, 'imastudent@wmsu.edu.ph', '$2y$10$eqMTJfGj6EK82aB9IxNd2O2xIOzdiUKm/rH5V42ukihpx.kct/qtu', 'Student', 'Testcartfir', 'Testcartmid', 'Testcartlas', 'Female', 23, NULL, '09222222222', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-04-15 16:30:05', '2024-04-15 16:30:05', 0),
+(74, 'testingemiaer@wmsu.edu.ph', '$2y$10$QX/JuN14/ULkxaC995IW7uaLJZjcocI2XH5h6y8He0Y6tl0qNmhQG', 'Student', 'Qweqwe', 'Qweqwe', 'Qweqwe', 'Male', 22, NULL, '09222222222', NULL, NULL, 2, 'Not Verified', 'Unrestricted', '2024-04-21 17:51:22', '2024-04-21 17:51:22', 0);
 
 -- --------------------------------------------------------
 
@@ -112,7 +113,8 @@ CREATE TABLE `cart` (
 INSERT INTO `cart` (`cart_id`, `account_id`, `is_created`, `is_updated`, `is_deleted`) VALUES
 (1, 73, '2024-04-15 16:30:05', '2024-04-15 16:30:05', 0),
 (2, 54, '2024-04-15 16:33:05', '2024-04-15 16:33:05', 0),
-(3, 53, '2024-04-15 16:33:11', '2024-04-15 16:33:56', 0);
+(3, 53, '2024-04-15 16:33:11', '2024-04-15 16:33:56', 0),
+(8, 74, '2024-04-21 17:51:22', '2024-04-21 17:51:22', 0);
 
 -- --------------------------------------------------------
 
@@ -138,14 +140,17 @@ CREATE TABLE `cart_item` (
 --
 
 INSERT INTO `cart_item` (`cart_item_id`, `cart_id`, `product_id`, `variation_id`, `measurement_id`, `stock_id`, `quantity`, `is_created`, `is_updated`, `is_deleted`) VALUES
-(32, 2, 17, 32, 34, 19, 3, '2024-04-18 23:56:52', '2024-04-18 23:56:52', 0),
-(33, 2, 17, 42, 34, 21, 3, '2024-04-18 23:56:58', '2024-04-18 23:56:58', 0),
+(32, 2, 17, 32, 34, 19, 3, '2024-04-18 23:56:52', '2024-04-22 09:24:10', 1),
+(33, 2, 17, 42, 34, 21, 3, '2024-04-18 23:56:58', '2024-04-22 09:24:10', 1),
 (34, 2, 17, 43, 36, 26, 4, '2024-04-18 23:57:05', '2024-04-21 09:04:17', 1),
 (35, 2, 19, 34, 28, NULL, 13, '2024-04-18 23:59:51', '2024-04-18 23:59:51', 0),
 (36, 2, 19, 34, 28, NULL, 1, '2024-04-19 08:13:29', '2024-04-19 08:13:29', 0),
 (37, 2, 17, 43, 35, 24, 5, '2024-04-21 07:57:19', '2024-04-21 07:57:19', 0),
 (38, 2, 17, 43, 36, 26, 4, '2024-04-21 09:04:30', '2024-04-21 09:04:30', 0),
-(39, 2, 17, 43, 36, 35, 4, '2024-04-21 09:39:42', '2024-04-21 09:39:42', 0);
+(39, 2, 17, 43, 36, 35, 4, '2024-04-21 09:39:42', '2024-04-21 09:39:42', 0),
+(47, 2, 16, 31, 25, 14, 3, '2024-04-22 08:20:11', '2024-04-22 08:20:11', 0),
+(51, 2, 27, 52, 44, 31, 2, '2024-04-22 08:22:26', '2024-04-22 09:23:25', 1),
+(52, 2, 16, 31, 25, 14, 3, '2024-04-22 09:13:59', '2024-04-22 09:13:59', 0);
 
 -- --------------------------------------------------------
 
@@ -339,14 +344,28 @@ INSERT INTO `moderator` (`moderator_id`, `college_id`, `account_id`, `is_created
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `account_id` int(11) DEFAULT NULL,
-  `total_payment` decimal(12,2) NOT NULL,
+  `product_total` decimal(12,2) NOT NULL,
+  `commission_total` decimal(12,2) NOT NULL,
+  `delivery_charge` decimal(12,2) NOT NULL,
   `fulfillment_method` varchar(32) NOT NULL,
   `payment_method` varchar(32) NOT NULL,
   `order_status` varchar(16) NOT NULL,
   `is_created` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `is_deleted` int(11) DEFAULT 0
+  `is_deleted` int(11) DEFAULT 0,
+  `store_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `account_id`, `product_total`, `commission_total`, `delivery_charge`, `fulfillment_method`, `payment_method`, `order_status`, `is_created`, `is_updated`, `is_deleted`, `store_id`) VALUES
+(1713776756, 54, 40.00, 12.00, 0.00, 'Pickup', 'Cash', 'Pending', '2024-04-22 09:05:56', '2024-04-22 09:05:56', 0, 33),
+(1713776796, 54, 60.00, 18.00, 0.00, 'Pickup', 'Cash', 'Pending', '2024-04-22 09:06:36', '2024-04-22 09:06:36', 0, 33),
+(1713777150, 54, 40.00, 12.00, 0.00, 'Pickup', 'Cash', 'Pending', '2024-04-22 09:12:30', '2024-04-22 09:12:30', 0, 33),
+(1713777805, 54, 440.00, 132.00, 0.00, 'Pickup', 'Cash', 'Pending', '2024-04-22 09:23:25', '2024-04-22 09:23:25', 0, 33),
+(1713777850, 54, 138.00, 41.40, 0.00, 'Pickup', 'Cash', 'Pending', '2024-04-22 09:24:10', '2024-04-22 09:24:10', 0, 33);
 
 -- --------------------------------------------------------
 
@@ -364,8 +383,21 @@ CREATE TABLE `order_item` (
   `selling_price` decimal(12,2) NOT NULL,
   `is_created` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `is_deleted` int(11) DEFAULT 0
+  `is_deleted` int(11) DEFAULT 0,
+  `commission` decimal(12,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_item`
+--
+
+INSERT INTO `order_item` (`order_item_id`, `order_id`, `product_id`, `variation_id`, `measurement_id`, `quantity`, `selling_price`, `is_created`, `is_updated`, `is_deleted`, `commission`) VALUES
+(19, 1713776756, 16, 31, 25, 2, 40.00, '2024-04-22 09:05:56', '2024-04-22 09:05:56', 0, 12.00),
+(20, 1713776796, 16, 31, 25, 3, 60.00, '2024-04-22 09:06:37', '2024-04-22 09:06:37', 0, 18.00),
+(21, 1713777150, 16, 31, 25, 2, 40.00, '2024-04-22 09:12:30', '2024-04-22 09:12:30', 0, 12.00),
+(22, 1713777805, 27, 52, 44, 2, 440.00, '2024-04-22 09:23:25', '2024-04-22 09:23:25', 0, 132.00),
+(23, 1713777850, 17, 32, 34, 3, 69.00, '2024-04-22 09:24:10', '2024-04-22 09:24:10', 0, 20.70),
+(24, 1713777850, 17, 42, 34, 3, 69.00, '2024-04-22 09:24:10', '2024-04-22 09:24:10', 0, 20.70);
 
 -- --------------------------------------------------------
 
@@ -568,7 +600,7 @@ INSERT INTO `stock` (`stock_id`, `product_id`, `variation_id`, `measurement_id`,
 (11, 17, 32, 26, 50, 0, 2.00, 5.00, '2024-03-20 16:52:17', '2024-04-21 11:48:59', 0, 1.50),
 (12, 19, 34, 28, 5, 0, 30.00, 40.00, '2024-03-21 01:18:37', '2024-04-21 11:48:59', 0, 12.00),
 (13, 13, 28, 22, 9, 0, 2.00, 9990.00, '2024-03-21 05:19:50', '2024-04-21 11:48:59', 0, 2997.00),
-(14, 16, 31, 25, 20, 0, 10.00, 20.00, '2024-03-26 16:36:14', '2024-04-21 11:48:59', 0, 6.00),
+(14, 16, 31, 25, 20, 8, 10.00, 20.00, '2024-03-26 16:36:14', '2024-04-22 09:13:59', 0, 6.00),
 (15, 16, 31, 25, 40, 0, 10.00, 20.00, '2024-03-26 16:36:19', '2024-04-21 11:48:59', 0, 6.00),
 (16, 16, 31, 25, 15, 0, 10.00, 20.00, '2024-03-26 16:36:25', '2024-04-21 11:48:59', 0, 6.00),
 (17, 16, 31, 25, 25, 0, 10.00, 20.00, '2024-03-26 16:50:54', '2024-04-21 11:48:59', 0, 6.00),
@@ -585,7 +617,7 @@ INSERT INTO `stock` (`stock_id`, `product_id`, `variation_id`, `measurement_id`,
 (28, 14, 29, 23, 400, 4, 40.00, 500.00, '2024-04-15 17:44:56', '2024-04-21 11:48:59', 0, 150.00),
 (29, 14, 29, 23, 300, 0, 400.00, 500.00, '2024-04-16 02:40:04', '2024-04-21 11:48:59', 0, 150.00),
 (30, 17, 43, 36, 30, 0, 20.00, 30.00, '2024-04-19 08:24:38', '2024-04-21 11:48:59', 1, 9.00),
-(31, 27, 52, 44, 23, 0, 200.00, 220.00, '2024-04-21 06:27:15', '2024-04-21 11:48:59', 0, 66.00),
+(31, 27, 52, 44, 23, 2, 200.00, 220.00, '2024-04-21 06:27:15', '2024-04-22 08:22:26', 0, 66.00),
 (32, 27, 52, 44, 20, 0, 200.00, 230.00, '2024-04-21 06:55:58', '2024-04-21 11:48:59', 0, 69.00),
 (33, 17, 32, 36, 23, 0, 2.00, 10.00, '2024-04-21 07:29:14', '2024-04-21 11:48:59', 0, 3.00),
 (34, 17, 42, 36, 23, 0, 2.00, 30.00, '2024-04-21 07:29:34', '2024-04-21 11:48:59', 0, 9.00),
@@ -614,20 +646,21 @@ CREATE TABLE `store` (
   `is_created` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `is_deleted` int(11) NOT NULL DEFAULT 0,
-  `delivery_charge` decimal(12,2) DEFAULT NULL
+  `delivery_charge` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `store_profile` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `store`
 --
 
-INSERT INTO `store` (`store_id`, `college_id`, `store_name`, `store_email`, `store_contact`, `store_location`, `store_bio`, `business_time`, `certificate`, `restriction_status`, `verification_status`, `registration_status`, `is_created`, `is_updated`, `is_deleted`, `delivery_charge`) VALUES
-(33, NULL, 'Test', NULL, NULL, NULL, NULL, NULL, 'Acer_Wallpaper_04_3840x2400.jpg', 'Unrestricted', 'Verified', 'Registered', '2024-03-12 15:14:40', '2024-03-21 05:18:08', 0, NULL),
-(34, 16, 'Wilfred Sari Sari', NULL, NULL, NULL, NULL, NULL, 'Acer_Wallpaper_03_3840x2400.jpg', 'Unrestricted', 'Verified', 'Registered', '2024-03-12 15:51:01', '2024-03-12 15:51:01', 0, NULL),
-(35, 18, 'CCS Ihawan', NULL, NULL, NULL, NULL, NULL, 'c++.jpg', 'Unrestricted', 'Verified', 'Registered', '2024-03-20 17:17:05', '2024-03-20 17:17:05', 0, NULL),
-(36, NULL, 'Your Store', NULL, NULL, NULL, NULL, NULL, 'Screenshot (12).png', 'Unrestricted', 'Not Verified', 'Not Registered', '2024-03-23 03:07:04', '2024-04-21 12:13:10', 0, NULL),
-(37, 15, '123oin', NULL, NULL, NULL, NULL, NULL, 'Screenshot (12).png', 'Unrestricted', 'Not Verified', 'Not Registered', '2024-03-23 03:07:32', '2024-03-23 03:07:32', 0, NULL),
-(38, 15, '23234', NULL, NULL, NULL, NULL, NULL, 'Screenshot (13).png', 'Unrestricted', 'Verified', 'Registered', '2024-03-23 03:08:54', '2024-03-23 03:08:54', 0, NULL);
+INSERT INTO `store` (`store_id`, `college_id`, `store_name`, `store_email`, `store_contact`, `store_location`, `store_bio`, `business_time`, `certificate`, `restriction_status`, `verification_status`, `registration_status`, `is_created`, `is_updated`, `is_deleted`, `delivery_charge`, `store_profile`) VALUES
+(33, NULL, 'Test', NULL, NULL, NULL, NULL, NULL, 'Acer_Wallpaper_04_3840x2400.jpg', 'Unrestricted', 'Verified', 'Registered', '2024-03-12 15:14:40', '2024-03-21 05:18:08', 0, 0.00, ''),
+(34, 16, 'Wilfred Sari Sari', NULL, NULL, NULL, NULL, NULL, 'Acer_Wallpaper_03_3840x2400.jpg', 'Unrestricted', 'Verified', 'Registered', '2024-03-12 15:51:01', '2024-03-12 15:51:01', 0, 0.00, ''),
+(35, 18, 'CCS Ihawan', 'ccsihawan@email.com', '09222222222', 'Campus B, Behind College of Computing Studies Building', 'Hi this is CCS Ihawan a place where you can find not existing foods in \r\n       College of Computing Studies :&gt; \r\n           Bili na kayo dito masarap na mura at mapapamura ka pa!                                 213123', '3:00PM to 7:00PM', '6625cd45378d14.78761671.png', 'Unrestricted', 'Verified', 'Registered', '2024-03-20 17:17:05', '2024-04-22 02:36:53', 0, 50.00, '6625c9e46ed206.05520099.jpg'),
+(36, NULL, 'Your Store', NULL, NULL, NULL, NULL, NULL, 'Screenshot (12).png', 'Unrestricted', 'Not Verified', 'Not Registered', '2024-03-23 03:07:04', '2024-04-21 12:13:10', 0, 0.00, ''),
+(37, 15, '123oin', NULL, NULL, NULL, NULL, NULL, 'Screenshot (12).png', 'Unrestricted', 'Not Verified', 'Not Registered', '2024-03-23 03:07:32', '2024-03-23 03:07:32', 0, 0.00, ''),
+(38, 15, '23234', NULL, NULL, NULL, NULL, NULL, 'Screenshot (13).png', 'Unrestricted', 'Verified', 'Registered', '2024-03-23 03:08:54', '2024-03-23 03:08:54', 0, 0.00, '');
 
 -- --------------------------------------------------------
 
@@ -779,7 +812,8 @@ ALTER TABLE `moderator`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
-  ADD KEY `fk_ordacc` (`account_id`);
+  ADD KEY `fk_ordacc` (`account_id`),
+  ADD KEY `fk_ordsto` (`store_id`);
 
 --
 -- Indexes for table `order_item`
@@ -867,7 +901,7 @@ ALTER TABLE `variation`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `admin_settings`
@@ -879,13 +913,13 @@ ALTER TABLE `admin_settings`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `cart_item`
 --
 ALTER TABLE `cart_item`
-  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -921,13 +955,13 @@ ALTER TABLE `moderator`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
 
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `prices`
@@ -998,6 +1032,12 @@ ALTER TABLE `cart`
 --
 ALTER TABLE `cart_item`
   ADD CONSTRAINT `fk_citsto` FOREIGN KEY (`stock_id`) REFERENCES `stock` (`stock_id`);
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `fk_ordsto` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
