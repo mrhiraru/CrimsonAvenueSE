@@ -284,4 +284,14 @@ class Store
             return false;
         }
     }
+    function count()
+    {
+        $sql = "SELECT COUNT(store_id) AS store_count   FROM store WHERE is_deleted != 1";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }

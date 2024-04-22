@@ -66,6 +66,19 @@ class College
         return $data;
     }
 
+    function count()
+{
+    // Note: Update query to count stores per college!
+    $sql = "SELECT COUNT(college_id) AS college_count FROM college WHERE is_deleted != 1";
+    $query = $this->db->connect()->prepare($sql);
+    $data = null;
+    if ($query->execute()) {
+        $data = $query->fetchAll();
+    }
+    return $data;
+}
+
+
     function delete()
     {
         $sql = "UPDATE college SET is_deleted=:is_deleted WHERE college_id = :college_id;";

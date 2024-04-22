@@ -33,6 +33,16 @@ class Semester
         }
     }
 
+    function show()
+    {
+        $sql = "SELECT * FROM semester WHERE status = 'Current' LIMIT 1";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
     function edit()
     {
         $sql = "UPDATE semester SET semester_number=:semester_number, start_date=:start_date, end_date=:end_date WHERE semester_id = :semester_id;";

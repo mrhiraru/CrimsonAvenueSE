@@ -426,4 +426,16 @@ class Product
         }
         return $data;
     }
+    function count()
+    {
+       
+        $sql = "SELECT COUNT(product_id) AS product_count FROM product WHERE is_deleted != 1";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
 }

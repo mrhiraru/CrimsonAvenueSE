@@ -232,4 +232,15 @@ class Account
             return false;
         }
     }
+    function count()
+    {
+       
+        $sql = "SELECT COUNT(account_id) AS account_count FROM account WHERE is_deleted != 1";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }
