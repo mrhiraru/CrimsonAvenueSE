@@ -88,7 +88,7 @@ class Order
 
     function show_items($order_id)
     {
-        $sql = "SELECT oi.*, p.*, v.*, m.*, i.*,
+        $sql = "SELECT oi.*, p.*, v.*, m.*, i.*
         FROM order_item oi
         INNER JOIN product p ON oi.product_id = p.product_id
         INNER JOIN variation v ON oi.variation_id = v.variation_id

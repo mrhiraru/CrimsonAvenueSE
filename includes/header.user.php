@@ -123,8 +123,8 @@
                             <li class="nav-item text-lg-center text-start">
                                 <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $store_page ?>" href="../stores/stores.php">Stores</a>
                             </li>
-                            <li class="nav-item text-lg-center text-start">
-                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $message_page ?>" href="../message-inbox.php">Messages</a>
+                            <li class="nav-item text-lg-center text-start d-none">
+                                <a class="nav-link px-4 py-2 py-lg-1 px-lg-0 my-1 text-secondary fw-bold <?= $message_page ?> " href="../message-inbox.php">Messages</a>
                             </li>
                         </ul>
                     </div>

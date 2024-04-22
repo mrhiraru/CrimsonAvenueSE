@@ -174,13 +174,13 @@ include_once('../includes/preloader.php');
                     <table id="myorders" class="table table-lg mt-1">
                         <thead>
                             <tr class="align-middle">
-                                <th scope="col">Order Number</th>
-                                <th scope="col">Store Name</th>
-                                <th scope="col" class="">Total Price</th>
-                                <th scope="col" class="">Payment Method</th>
-                                <th scope="col" class="">Fulfillment</th>
-                                <th scope="col" class="">Status</th>
-                                <th scope="col" class="text-center"></th>
+                                <th scope="col" class="fs-7">Order Number</th>
+                                <th scope="col" class="fs-7">Store Name</th>
+                                <th scope="col" class="fs-7">Total Price</th>
+                                <th scope="col" class="fs-7">Payment Method</th>
+                                <th scope="col" class="fs-7">Fulfillment</th>
+                                <th scope="col" class="fs-7">Status</th>
+                                <th scope="col" class="fs-7 text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -198,8 +198,8 @@ include_once('../includes/preloader.php');
                                     <td class=""><?= $item['fulfillment_method'] ?></td>
                                     <td class=""><?= $item['order_status'] ?></td>
                                     <td class="text-center text-nowrap">
-                                        <div class="m-0 p-0">
-                                            <a href="./order-view.php?order_id=<?= $item['order_id'] ?>" type="button" class="text-primary border-0 fw-semibold text-decoration-none">View Order</a>
+                                        <div class="m-0 p-0 text-end">
+                                            <a href="./order-view.php?order_id=<?= $item['order_id'] ?>" type="button" class="text-primary border-0 fw-semibold text-decoration-none fs-7">View Order</a>
                                         </div>
                                     </td>
                                 </tr>

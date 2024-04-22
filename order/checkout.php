@@ -312,7 +312,7 @@ include_once('../includes/preloader.php');
                                         Cash Payment
                                     </label>
                                 </div>
-                                <div class="m-0 p-0 col-auto ms-2 mb-2 text-center">
+                                <div class="m-0 p-0 col-auto ms-2 mb-2 text-center d-none">
                                     <input class="form-check-input  btn-check" type="radio" name="method" id="GCash" value="GCash">
                                     <label class="btn btn-outline-primary btn-small fw-semibold fs-7 lh-sm" for="GCash">
                                         GCash Payment
@@ -329,7 +329,7 @@ include_once('../includes/preloader.php');
                                         Pickup
                                     </label>
                                 </div>
-                                <div class="m-0 p-0 col-auto ms-2 mb-2 text-center">
+                                <div class="m-0 p-0 col-auto ms-2 mb-2 text-center d-none">
                                     <input class="form-check-input  btn-check" type="radio" name="fulfillment" id="Delivery" value="Delivery">
                                     <label class="btn btn-outline-primary btn-small fw-semibold fs-7 lh-sm" for="Delivery">
                                         Delivery

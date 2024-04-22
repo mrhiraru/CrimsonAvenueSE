@@ -132,7 +132,7 @@
                     </div>
                 </div>
             </div>
-            <div class="accordion-item border-0">
+            <div class="accordion-item border-0 d-none">
                 <h2 class="accordion-header" id="flush-headingFive">
                     <button class="accordion-button px-2 pt-3 pb-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
                         <p class="nav-link text-secondary fw-semibold m-0 <?= $messages_page ?>" href="../admin/message-inbox.php">
@@ -166,7 +166,7 @@
                     </div>
                 </div>
             </div>
-            <div class="accordion-item border-0">
+            <div class="accordion-item border-0 d-none">
                 <h2 class="accordion-header" id="flush-headingSix">
                     <button class="accordion-button px-2 pt-3 pb-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
                         <p class="nav-link text-secondary fw-semibold m-0 <?= $reports_page ?>" href="../admin/report.php">
