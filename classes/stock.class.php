@@ -163,7 +163,7 @@ class Stock
 
     function take_stock()
     {
-        $sql = "UPDATE stock SET stock_allocated=:stock_allocated WHERE stock_id = :stock_id;";
+        $sql = "UPDATE stock SET stock_allocated = (stock_allocated + :stock_allocated) WHERE stock_id = :stock_id;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':stock_id', $this->stock_id);

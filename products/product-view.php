@@ -57,7 +57,7 @@ if (isset($_POST['add'])) {
     ) {
         if ($cart->add()) {
             $stock = new Stock();
-            $stock->stock_allocated = $record_checkout['stock_allocated'] + $cart->quantity;
+            $stock->stock_allocated = $cart->quantity;
             $stock->stock_id = $record_checkout['stock_id'];
             if ($record_checkout['sale_status'] == "On-hand") {
                 if ($stock->take_stock()) {
@@ -86,7 +86,7 @@ require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>
 
-<body onload="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>)">
+<body onload="showStocks(<?= $_GET['product_id'] ?>); showPrice(<?= $_GET['product_id'] ?>, <?= $record['selling_price'] ?>); showStockId(<?= $_GET['product_id'] ?>)">
     <?php
     require_once('../includes/header.user.php');
     ?>

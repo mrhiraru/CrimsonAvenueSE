@@ -386,7 +386,7 @@ class Product
 
     function checkout($product_id, $variation_id, $measurement_id)
     {
-        $sql = "SELECT st.delivery_charge, p.sale_status, p.product_name, p.selling_price AS product_selling_price, p.commission AS product_commission, i.image_file, v.variation_name, m.measurement_name, s.*, s.selling_price AS stock_selling_price, s.commission AS stock_commission, pr.*, pr.selling_price AS prices_selling_price, pr.commission AS prices_commission
+        $sql = "SELECT st.delivery_charge, st.store_id, s.stock_id AS stock_id, p.product_id AS check_product_id, v.variation_id AS check_variation_id, m.measurement_id AS check_measurement_id, p.sale_status, p.product_name, p.selling_price AS product_selling_price, p.commission AS product_commission, i.image_file, v.variation_name, m.measurement_name, s.*, s.selling_price AS stock_selling_price, s.commission AS stock_commission, pr.*, pr.selling_price AS prices_selling_price, pr.commission AS prices_commission
         FROM product p 
         LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
         INNER JOIN store st ON p.store_id = st.store_id AND st.is_deleted != 1
@@ -428,7 +428,7 @@ class Product
     }
     function count()
     {
-       
+
         $sql = "SELECT COUNT(product_id) AS product_count FROM product WHERE is_deleted != 1";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
@@ -437,6 +437,5 @@ class Product
         }
         return $data;
     }
-     
 
 }
