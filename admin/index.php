@@ -216,7 +216,7 @@ include_once('../includes/preloader.php');
                                     </div>
                                 </div></a>
                                 <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
-                                    <a href="../admin-settings/index.php" class=" text-decoration-none"><div class="card shadow border-0">
+                                    <a href="../admin-settings/department.php" class=" text-decoration-none"><div class="card shadow border-0">
                                         <div class="card-body d-flex flex-column">
                                             <div class="row m-0 h-100">
                                                 <p class="col-12 m-0 fw-semibold fs-4  text-primary">Total Number of Department:</p>

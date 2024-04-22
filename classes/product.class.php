@@ -437,4 +437,5 @@ class Product
         }
         return $data;
     }
+
 }

@@ -305,4 +305,31 @@ class Store
         }
         return $data;
     }
+    
+    function show_verification($store_id) {
+        $sql = "SELECT verification_status FROM store WHERE store_id = :store_id";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(":store_id", $store_id);
+        $data = null;
+        
+        if ($query->execute()) {
+            $data = $query->fetch(PDO::FETCH_ASSOC);
+        }
+        
+        return $data['verification_status'];
+    }
+    function count_products_store($store_id) {
+        $sql = "SELECT COUNT(*) AS num_products FROM product WHERE store_id = :store_id";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(":store_id", $store_id);
+        
+        if ($query->execute()) {
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            return $result['num_products'];
+        } else {
+            
+            return false;
+        }
+    }
+
 }

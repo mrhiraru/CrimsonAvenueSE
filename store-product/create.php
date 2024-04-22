@@ -13,6 +13,23 @@ $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
 $admin_settings = new AdminSettings();
 $admin_data = $admin_settings->fetch();
 
+
+
+
+if(isset($_GET['store_id'])) {
+    $store_id = $_GET['store_id'];
+    $store = new Store();
+    $store_verification_status = $store->show_verification($store_id);
+    if ($store_verification_status !== 'Verified') {
+        header("location: ../store/index.php?store_id=$store_id");
+        exit; 
+    }
+} else {
+    exit;
+}
+
+
+
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
 } else if (!isset($_GET['store_id']) || !isset($record['store_id']) || $record['is_deleted'] == 1 || !isset($record['staff_role'])) {
