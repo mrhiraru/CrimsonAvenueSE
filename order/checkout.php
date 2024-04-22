@@ -64,6 +64,7 @@ include_once('../includes/preloader.php');
                         </thead>
                         <tbody>
                             <?php
+                            $delivery_charge = 0;
                             $product_total = 0;
                             if (isset($_POST['counter']) && isset($_POST['checkout' . $_POST['counter']])) {
                                 $counter = 1;
@@ -98,6 +99,7 @@ include_once('../includes/preloader.php');
                                                         ?></td>
                                     </tr>
                                 <?php
+                                    $delivery_charge = $item['delivery_charge'];
                                     $counter++;
                                     if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
                                         $product_total += ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
@@ -138,6 +140,7 @@ include_once('../includes/preloader.php');
                                                     ?></td>
                                 </tr>
                             <?php
+                                $delivery_charge = $record['delivery_charge'];
                                 if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
                                     $product_total += ($record['stock_selling_price']  + $record['stock_commission']) * $_POST['quantity'];
                                 } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
@@ -196,7 +199,6 @@ include_once('../includes/preloader.php');
                                 <span class="text-dark fw-semibold fs-6"><?= '₱' . number_format($product_total, 2, '.', ',') ?> </span>
                             </p>
                             <?php
-                            $delivery_charge = 0;
                             $total_payment = $product_total + $delivery_charge;
                             ?>
                             <p class="mb-1 lh-1 text-secondary fs-7 d-flex align-items-start justify-content-between">

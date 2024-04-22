@@ -141,7 +141,7 @@ include_once('../includes/preloader.php');
                                 </div>
                                 <div class="mb-3 p-0 col-12">
                                     <!-- Upload image or pdf copy of your certificate to verify that you are a WMSU student. -->
-                                    <label for="certificate" class="fs-8 text-dark lh-sm ms-2">Upload image or pdf copy of certificate to verify the owner as WMSU student or faculty.</label>
+                                    <label for="certificate" class="fs-8 text-dark lh-sm ms-2">Upload image copy of certificate to verify the owner as WMSU student or faculty.</label>
                                     <input type="file" id="certificate" name="certificate" placeholder="Certificate" class="form-control" value="<?php if (isset($_POST['cetificate'])) {
                                                                                                                                                         echo $_POST['cetificate'];
                                                                                                                                                     } ?>">
