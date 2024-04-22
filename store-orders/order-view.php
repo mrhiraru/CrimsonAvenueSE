@@ -23,6 +23,23 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./index.php?store_id=' . $record['store_id']);
 }
 
+if (isset($_POST['order_status'])) {
+
+    $order->order_status = htmlentities($_POST['order_status']);
+    $order->order_id = $ord_record['order_id'];
+
+    if (validate_field($order->order_status)) {
+        if ($order->update_status()) {
+
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -130,7 +147,7 @@ include_once('../includes/preloader.php');
                             </div>
                         </div>
                     </div>
-                    <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
+                    <div class="container-fluid bg-white shadow rounded m-0 mb-4 p-3 h-100">
                         <div class="row h-auto d-flex justify-content-center m-0 p-0">
                             <table id="myorders" class="table table-lg mt-1">
                                 <thead>
@@ -174,8 +191,25 @@ include_once('../includes/preloader.php');
                     </div>
                     <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
                         <div class="row h-auto d-flex justify-content-center m-0 p-0">
-                            <form action="">
-                                
+                            <form action="" method="post" class="row d-flex justify-content-evenly" id="orderStatusForm">
+                                <div class="col-12 col-md-6 col-lg-3 m-0 p-1 d-flex">
+                                    <input type="radio" class="btn-check" name="order_status" id="Pending" value="Pending" <?= $ord_record['order_status'] == "Pending" ? "checked" : "" ?> onchange="autoSubmitStatus()">
+                                    <label class="btn btn-outline-secondary flex-fill fw-semibold " for="Pending">Pending</label>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3 m-0 p-1 d-flex">
+                                    <input type="radio" class="btn-check" name="order_status" id="Processing" value="Processing" <?= $ord_record['order_status'] == "Processing" ? "checked" : "" ?> onchange="autoSubmitStatus()">
+                                    <label class="btn btn-outline-secondary flex-fill fw-semibold " for="Processing">Processing</label>
+
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3 m-0 p-1 d-flex">
+                                    <input type="radio" class="btn-check" name="order_status" id="Ready" value="Ready" <?= $ord_record['order_status'] == "Ready" ? "checked" : "" ?> onchange="autoSubmitStatus()">
+                                    <label class="btn btn-outline-secondary flex-fill fw-semibold " for="Ready">Ready</label>
+
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3 m-0 p-1 d-flex">
+                                    <input type="radio" class="btn-check" name="order_status" id="Completed" value="Completed" <?= $ord_record['order_status'] == "Completed" ? "checked" : "" ?> onchange="autoSubmitStatus()">
+                                    <label class="btn btn-outline-secondary flex-fill fw-semibold " for="Completed">Completed</label>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -184,9 +218,36 @@ include_once('../includes/preloader.php');
         </div>
     </main>
     <?php
+    if (isset($_POST['order_status']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a class="text-decoration-none text-dark" href="./order-view.php?<?= 'store_id=' . $record['store_id'] . '&order_id=' . $ord_record['order_id'] ?>">
+                                    <p class="m-0">Order status is successfully updated!</br><span class="text-primary fw-bold">Click to continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
+    <?php
     require_once('../includes/js.php');
     ?>
     <script src="../js/order.datatable.js"></script>
+    <script>
+        function autoSubmitStatus() {
+            var formObject = document.forms['orderStatusForm'];
+            formObject.submit();
+        }
+    </script>
 </body>
 
 </html>

@@ -133,6 +133,18 @@ input:focus, input:active, select:focus, select:active, button:focus, button:act
     color: var(--primary) !important;
 }
 
+.btn-outline-secondary {
+    border: 1px solid var(--secondary) !important;
+    color: var(--light) !important;
+    background-color: var(--secondary) !important;
+}
+
+.btn-check:checked+.btn-outline-secondary, .btn-outline-secondary:hover {
+    border: 1px solid var(--primary) !important;
+    background-color: var(--primary) !important;
+    color: var(--light) !important;
+}
+
 .btn-primary:disabled{
     background-color: var(--secondary);
     border: 1px solid var(--secondary) !important;
