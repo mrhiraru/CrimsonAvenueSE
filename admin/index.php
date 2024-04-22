@@ -251,7 +251,7 @@ include_once('../includes/preloader.php');
  
                                                      if (!empty($data)) {
                                                          foreach ($data as $row) {
-                                                            echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $row['commission'] . '</p>';
+                                                            echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $row['commission'] .'%'. '</p>';
                                                          }
                                                      } else {
                                                          echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">No data available</p>';
