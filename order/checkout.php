@@ -5,6 +5,7 @@ require_once "../tools/functions.php";
 require_once "../classes/product.class.php";
 require_once "../classes/cart.class.php";
 require_once "../classes/order.class.php";
+require_once "../classes/stock.class.php";
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ../user/verify.php');
@@ -67,22 +68,7 @@ if (isset($_POST['confirm'])) {
                 $order->selling_price = htmlentities($_POST['selling_price' . $i]);
                 $order->commission = htmlentities($_POST['commission' . $i]);
 
-                echo "product_id";
-                var_dump($order->product_id);
-                echo "variation_id";
-                var_dump($order->variation_id);
-                echo "measurement_id";
-                var_dump($order->measurement_id);
-                echo "quantity";
-                var_dump($order->quantity);
-                echo "selling_price";
-                var_dump($order->selling_price);
-                echo "commission";
-                var_dump($order->commission);
-                if (isset($_POST['stock_id' . $i])) {
-                    echo "stock_id";
-                    var_dump($_POST['stock_id' . $i]);
-                }
+
                 if (
                     validate_field($order->product_id) &&
                     validate_field($order->variation_id) &&
@@ -92,11 +78,18 @@ if (isset($_POST['confirm'])) {
                     validate_field($order->commission)
                 ) {
                     if ($order->add_items()) {
+                        if (isset($_POST['stock_id' . $counter])) {
+                            $stock = new Stock();
+                            $stock->stock_allocated = $order->quantity;
+                            $stock->stock_id = $_POST['stock_id' . $counter];
 
-                        echo "Sucess Sucess HAHA";
+                            if ($stock->take_stock()) {
+                                $success = 'success';
+                                echo "stock taken";
+                            }
+                        }
                         $success = 'success';
                     } else {
-                        echo "failed failed HAHA";
                         $success = 'failed';
                     }
                 }

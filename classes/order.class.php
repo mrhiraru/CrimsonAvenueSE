@@ -29,7 +29,7 @@ class Order
 
     function add()
     {
-        $sql = "INSERT INTO orders (order_id, account_id, store_id, product_total, commission_total, delivery_charge, order_status) VALUES (:order_id, :account_id, :store_id, :product_total, :commission_total, :delivery_charge, :order_status)";
+        $sql = "INSERT INTO orders (order_id, account_id, store_id, product_total, commission_total, delivery_charge, order_status, fulfillment_method, payment_method ) VALUES (:order_id, :account_id, :store_id, :product_total, :commission_total, :delivery_charge, :order_status, :fulfillment_method, :payment_method)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':order_id', $this->order_id);
@@ -39,6 +39,8 @@ class Order
         $query->bindParam(':commission_total', $this->commission_total);
         $query->bindParam(':delivery_charge', $this->delivery_charge);
         $query->bindParam(':order_status', $this->order_status);
+        $query->bindParam(':fulfillment_method', $this->fulfillment_method);
+        $query->bindParam(':payment_method', $this->payment_method);
 
         if ($query->execute()) {
             return true;
