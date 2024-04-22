@@ -79,4 +79,16 @@ class Category
             return false;
         }
     }
+    function count()
+    {
+        // Note: Update query to count stores per college!
+        $sql = "SELECT COUNT(category_id) AS category_count FROM category WHERE is_deleted != 1";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+    
 }

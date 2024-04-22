@@ -70,4 +70,15 @@ class AdminSettings
         }
         return $data;
     }
+
+    function show()
+    {
+        $sql = "SELECT * FROM admin_settings WHERE settings_id = 1 LIMIT 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }
