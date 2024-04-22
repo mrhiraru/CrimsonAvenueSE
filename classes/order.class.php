@@ -156,4 +156,25 @@ class Order
             return false;
         }
     }
+    function count($store_id) {
+        $sql = "SELECT COUNT(order_id) AS order_count FROM orders WHERE store_id = :store_id AND order_status != 'Completed'";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchColumn();
+        }
+        return $data;
+    }
+    function count_solds($store_id) {
+        $sql = "SELECT COUNT(order_id) AS order_count FROM orders WHERE store_id = :store_id AND order_status = 'Completed'";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchColumn();
+        }
+        return $data;
+    }
+    
 }

@@ -141,19 +141,21 @@ include_once('../includes/preloader.php');
                                         <div class="row m-0 h-100">
                                             <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Solds</p>
                                             <?php
-                                                if(isset($_GET['store_id']) && $_GET['store_id'] !== null) {
+                                                require_once('../classes/order.class.php');
+                                                 if(isset($_GET['store_id']) && $_GET['store_id'] !== null) {
                                                     $store_id = $_GET['store_id'];
-                                                    $store = new Store();
-                                                    $num_products = $store->count_products_store($store_id);
+                                                    $orders = new Order();
+                                                    $num_orders = $orders->count_solds($store_id);
                                                     
-                                                    if ($num_products !== false) {
-                                                        echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $num_products . '</p>';
+                                                    if ($num_orders !== null) {
+                                                        echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $num_orders . '</p>';
                                                     } else {
-                                                        echo "Failed to retrieve the total number of products.";
+                                                        echo "Failed to retrieve the total number of orders.";
                                                     }
                                                 } else {
                                                     echo "Store ID parameter is missing or null in the URL.";
                                                 }
+                                                
                                             ?>
                                         </div>
                                     </div>
@@ -165,19 +167,22 @@ include_once('../includes/preloader.php');
                                         <div class="row m-0 h-100">
                                             <p class="col-12 m-0 fw-semibold fs-4 text-primary">Orders</p>
                                             <?php
+                                                require_once('../classes/order.class.php');
+
                                                 if(isset($_GET['store_id']) && $_GET['store_id'] !== null) {
                                                     $store_id = $_GET['store_id'];
-                                                    $store = new Store();
-                                                    $num_products = $store->count_products_store($store_id);
+                                                    $order = new Order();
+                                                    $num_orders = $order->count($store_id);
                                                     
-                                                    if ($num_products !== false) {
-                                                        echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $num_products . '</p>';
+                                                    if ($num_orders !== null) {
+                                                        echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $num_orders . '</p>';
                                                     } else {
-                                                        echo "Failed to retrieve the total number of products.";
+                                                        echo "Failed to retrieve the total number of orders.";
                                                     }
                                                 } else {
                                                     echo "Store ID parameter is missing or null in the URL.";
                                                 }
+                                                
                                             ?>
                                         </div>
                                     </div>
