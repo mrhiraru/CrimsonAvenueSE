@@ -66,31 +66,31 @@
             </div>
             <div class="accordion-item border-0">
                 <h2 class="accordion-header" id="flush-headingThree">
-                    <button class="accordion-button px-2 pt-3 pb-2 <?php if (!isset($stores_page)) {
+                    <button class="accordion-button px-2 pt-3 pb-2 <?php if (!isset($orders_page)) {
                                                                         echo 'collapsed';
-                                                                    }  ?>" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="<?php if (isset($stores_page)) {
+                                                                    }  ?>" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="<?php if (isset($orders_page)) {
                                                                                                                                                                             echo 'true';
                                                                                                                                                                         } else {
                                                                                                                                                                             echo 'false';
                                                                                                                                                                         } ?>" aria-controls="flush-collapseThree">
-                        <p class="nav-link text-secondary fw-semibold m-0 <?= $stores_page ?>" href="../admin/store.php">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $orders_page ?>" href="../admin/store.php">
                             <i class="fa-solid fa-list-check"></i>
                             Orders
                         </p>
                     </button>
                 </h2>
-                <div id="flush-collapseThree" class="accordion-collapse collapse <?php if (isset($stores_page)) {
+                <div id="flush-collapseThree" class="accordion-collapse collapse <?php if (isset($orders_page)) {
                                                                                         echo 'show';
                                                                                     } ?>" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $store_page ?>" aria-current="page" href="../admin-stores/index.php">
+                                <a class="nav-link text-secondary fw-semibold <?= $order_page ?>" aria-current="page" href="../store-orders/index.php">
                                     Order List
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $registration_page ?>" href="../admin-stores/registration.php">
+                                <a class="nav-link text-secondary fw-semibold <?= $new_order_page ?>" href="../store-orders/create-order.php">
                                     New Order
                                 </a>
                             </li>
