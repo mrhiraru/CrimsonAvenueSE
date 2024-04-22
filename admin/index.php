@@ -98,9 +98,8 @@ include_once('../includes/preloader.php');
                                         $colle = new College();
                                         $countResult = $colle->count();
 
-                                        // Check if $countResult is not empty and if it contains exactly one row
+                                       
                                         if (!empty($countResult) && count($countResult) === 1) {
-                                            // Fetch the count from the first (and only) row
                                             $totalCount = $countResult[0][0];
                                             echo $totalCount;
                                         } else {
@@ -131,9 +130,9 @@ include_once('../includes/preloader.php');
                                                     $acc = new Account();
                                                     $countResult = $acc->count();
 
-                                                    // Check if $countResult is not empty and if it contains exactly one row
+                                                   
                                                     if (!empty($countResult) && count($countResult) === 1) {
-                                                        // Fetch the count from the first (and only) row
+
                                                         $totalCount = $countResult[0][0];
                                                         echo $totalCount;
                                                     } else {
@@ -155,9 +154,8 @@ include_once('../includes/preloader.php');
                                                     $stores = new Store();
                                                     $countResult = $stores->count();
 
-                                                    // Check if $countResult is not empty and if it contains exactly one row
                                                     if (!empty($countResult) && count($countResult) === 1) {
-                                                        // Fetch the count from the first (and only) row
+                                                        
                                                         $totalCount = $countResult[0][0];
                                                         echo $totalCount;
                                                     } else {
@@ -179,9 +177,9 @@ include_once('../includes/preloader.php');
                                                     $prod = new Product();
                                                     $countResult = $prod->count();
 
-                                                    // Check if $countResult is not empty and if it contains exactly one row
+                                                    
                                                     if (!empty($countResult) && count($countResult) === 1) {
-                                                        // Fetch the count from the first (and only) row
+                                                       
                                                         $totalCount = $countResult[0][0];
                                                         echo $totalCount;
                                                     } else {
