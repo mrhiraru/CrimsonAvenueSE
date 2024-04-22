@@ -57,7 +57,7 @@ if (isset($_POST['add'])) {
     ) {
         if ($cart->add()) {
             $stock = new Stock();
-            $stock->stock_allocated = $record_checkout['stock_allocated'] + $cart->quantity;
+            $stock->stock_allocated = $cart->quantity;
             $stock->stock_id = $record_checkout['stock_id'];
             if ($record_checkout['sale_status'] == "On-hand") {
                 if ($stock->take_stock()) {

@@ -68,7 +68,6 @@ if (isset($_POST['confirm'])) {
                 $order->selling_price = htmlentities($_POST['selling_price' . $i]);
                 $order->commission = htmlentities($_POST['commission' . $i]);
 
-
                 if (
                     validate_field($order->product_id) &&
                     validate_field($order->variation_id) &&
@@ -78,14 +77,22 @@ if (isset($_POST['confirm'])) {
                     validate_field($order->commission)
                 ) {
                     if ($order->add_items()) {
-                        if (isset($_POST['stock_id' . $counter])) {
+                        if (isset($_POST['stock_id' . $i])) {
                             $stock = new Stock();
                             $stock->stock_allocated = $order->quantity;
-                            $stock->stock_id = $_POST['stock_id' . $counter];
+                            $stock->stock_id = $_POST['stock_id' . $i];
 
                             if ($stock->take_stock()) {
                                 $success = 'success';
-                                echo "stock taken";
+                            }
+                        }
+                        if (isset($_POST['cart_item_id' . $i])) {
+                            $carte = new Cart();
+                            $carte->cart_item_id = $_POST['cart_item_id' . $i];
+                            $carte->is_deleted = 1;
+
+                            if ($carte->delete()) {
+                                $success = 'success';
                             }
                         }
                         $success = 'success';
@@ -197,6 +204,7 @@ include_once('../includes/preloader.php');
                                                                                                         echo $item['product_commission'] * $item['quantity'];
                                                                                                     }
                                                                                                     ?>">
+                                    <input type="hidden" name="cart_item_id<?= $counter ?>" value="<?= $item['cart_item_id'] ?>">
                                 <?php
                                     $delivery_charge = $item['delivery_charge'];
                                     $counter++;
@@ -298,7 +306,7 @@ include_once('../includes/preloader.php');
                                     <p class="m-0 p-0 fs-7 fw-semibold text-secondary lh-1">Payment Method:</p>
                                 </div>
                                 <div class="m-0 p-0 col-auto ms-2 mb-2 text-center">
-                                    <input class="form-check-input btn-check" type="radio" name="method" id="Cash" value="Cash">
+                                    <input class="form-check-input btn-check" type="radio" name="method" id="Cash" value="Cash" checked>
                                     <label class="btn btn-outline-primary btn-small fw-semibold fs-7 lh-sm" for="Cash">
                                         Cash Payment
                                     </label>
@@ -315,7 +323,7 @@ include_once('../includes/preloader.php');
                                     <p class="m-0 p-0 fs-7 fw-semibold text-secondary lh-1">Order Fulfillment:</p>
                                 </div>
                                 <div class="m-0 p-0 col-auto ms-2 mb-2 text-center">
-                                    <input class="form-check-input btn-check" type="radio" name="fulfillment" id="Pickup" value="Pickup">
+                                    <input class="form-check-input btn-check" type="radio" name="fulfillment" id="Pickup" value="Pickup" checked>
                                     <label class="btn btn-outline-primary btn-small fw-semibold fs-7 lh-sm" for="Pickup">
                                         Pickup
                                     </label>
@@ -366,6 +374,27 @@ include_once('../includes/preloader.php');
             </section>
         </form>
     </div>
+    <?php
+    if (isset($_POST['confirm']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="../user/profile.php" class="text-decoration-none text-dark">
+                                    <p class="m-0 text-dark">Your order has been successfully placed! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
     <?php
     require_once('../includes/footer.php');
     require_once('../includes/js.php');
