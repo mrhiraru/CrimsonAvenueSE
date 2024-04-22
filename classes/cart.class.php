@@ -81,11 +81,12 @@ class Cart
 
         $ids = array_map('intval', $ids);
 
-        $sql = "SELECT ci.*, p.product_name, p.sale_status, v.variation_name, m.measurement_name, i.image_file, p.selling_price AS product_selling_price, p.commission AS product_commission, st.selling_price AS stock_selling_price, st.commission AS stock_commission, pr.*, pr.selling_price AS prices_selling_price, pr.commission AS prices_commission
+        $sql = "SELECT ci.*, s.delivery_charge, p.product_name, p.sale_status, v.variation_name, m.measurement_name, i.image_file, p.selling_price AS product_selling_price, p.commission AS product_commission, st.selling_price AS stock_selling_price, st.commission AS stock_commission, pr.*, pr.selling_price AS prices_selling_price, pr.commission AS prices_commission
         FROM cart_item ci
         INNER JOIN product p ON ci.product_id = p.product_id AND p.is_deleted  != 1
         INNER JOIN variation v ON ci.variation_id = v.variation_id AND v.is_deleted != 1
         INNER JOIN measurement m ON ci.measurement_id = m.measurement_id AND m.is_deleted != 1
+        INNER JOIN store s ON p.store_id = s.store_id AND m.is_deleted != 1
         LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id
         LEFT JOIN (SELECT * FROM stock WHERE is_deleted != 1 ORDER BY stock_id ASC) st ON ci.stock_id = st.stock_id
         LEFT JOIN (SELECT * FROM prices WHERE is_deleted != 1) pr ON p.product_id = pr.product_id AND pr.product_id = p.product_id AND pr.variation_id = v.variation_id AND pr.measurement_id = m.measurement_id

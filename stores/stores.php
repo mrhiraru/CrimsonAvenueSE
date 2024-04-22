@@ -84,7 +84,11 @@ include_once('../includes/preloader.php');
                                 <a class="card store-card p-3 text-decoration-none overflow-hidden" href="./store-view.php?store_id=<?= $item['store_id'] ?>">
                                     <div class="row m-0 mb-2 p-0 d-flex align-items-center">
                                         <div class="col-auto m-0 mb-1 p-0">
-                                            <img src="../images/main/no-profile.jpg" width="60" height="60" alt="" class="border border-secondary border-opacity-25 rounded ">
+                                            <img src="<?php if (isset($item['store_profile'])) {
+                                                            echo "../images/data/" . $item['store_profile'];
+                                                        } else {
+                                                            echo "../images/main/no-profile.jpg";
+                                                        } ?>" width="60" height="60" alt="" class="border border-secondary border-opacity-25 rounded ">
                                         </div>
                                         <div class="col-6 m-0 p-0 ps-3 flex-fill">
                                             <p class="fs-5 text-nowrap fw-semibold text-dark m-0 p-0 lh-sm  text-truncate"><?= ucwords(strtolower($item['store_name'])) ?></p>
