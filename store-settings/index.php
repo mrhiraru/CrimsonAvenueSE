@@ -27,18 +27,89 @@ if (isset($_POST['save-info'])) {
     $store->business_time = htmlentities($_POST['business_time']);
     $store->store_id = $record['store_id'];
 
+    $uploaddir = '../images/data/';
+    $uploadname = $_FILES[htmlentities('store_profile')]['name'];
+    $uploadext = explode('.', $uploadname);
+    $uploadnewext = strtolower(end($uploadext));
+    $allowed = array('jpg', 'jpeg', 'png');
+
+    if (in_array($uploadnewext, $allowed)) {
+
+        $uploadenewname = uniqid('', true) . "." . $uploadnewext;
+        $uploadfile = $uploaddir . $uploadenewname;
+
+        if (move_uploaded_file($_FILES[htmlentities('store_profile')]['tmp_name'], $uploadfile)) {
+            $store->store_profile = $uploadenewname;
+
+            if (
+                validate_field($store->store_name) &&
+                validate_field($store->store_bio) &&
+                validate_field($store->store_email) &&
+                validate_field($store->store_contact) &&
+                validate_field($store->store_location) &&
+                validate_field($store->business_time)
+            ) {
+                if ($store->edit()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['save-delivery'])) {
+
+    $store->delivery_charge = htmlentities($_POST['delivery_charge']);
+    $store->store_id = $record['store_id'];
+
     if (
-        validate_field($store->store_name) &&
-        validate_field($store->store_bio) &&
-        validate_field($store->store_email) &&
-        validate_field($store->store_contact) &&
-        validate_field($store->store_location) &&
-        validate_field($store->business_time)
+        validate_field($store->delivery_charge) &&
+        validate_number($store->delivery_charge)
     ) {
-        if ($store->edit()) {
+        if ($store->update_delivery()) {
             $success = 'success';
         } else {
             echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['save-cert'])) {
+
+    $uploaddir = '../images/data/';
+    $uploadname = $_FILES[htmlentities('certificate')]['name'];
+    $uploadext = explode('.', $uploadname);
+    $uploadnewext = strtolower(end($uploadext));
+    $allowed = array('jpg', 'jpeg', 'png');
+
+    if (in_array($uploadnewext, $allowed)) {
+
+        $uploadenewname = uniqid('', true) . "." . $uploadnewext;
+        $uploadfile = $uploaddir . $uploadenewname;
+
+        if (move_uploaded_file($_FILES[htmlentities('certificate')]['tmp_name'], $uploadfile)) {
+            $store->certificate = $uploadenewname;
+            $store->store_id = $record['store_id'];
+
+            if (
+                validate_field($store->certificate)
+            ) {
+                if ($store->update_certificate()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
+        } else {
+            $success = 'failed';
         }
     } else {
         $success = 'failed';
@@ -80,8 +151,23 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="my-2">
                             </div>
-                            <form method="post" action="" class="col-12">
+                            <form method="post" action="" class="col-12" enctype="multipart/form-data">
                                 <div class="row">
+                                    <div class="mb-2 p-0 col-12">
+                                        <div class="p-0 pe-md-2 col-12 col-md-6">
+                                            <span class="m-1">Store Profile:</span>
+                                            <input type="file" class="form-control" id="store_profile" name="store_profile" accept=".jpg, .jpeg, .png">
+                                            <?php
+                                            if (isset($_POST['save-info']) && isset($success) && $success == 'failed') {
+                                            ?>
+                                                <div class="mb-2 col-auto mb-2 p-0">
+                                                    <p class="fs-7 text-primary m-0 ps-2">Image file is required.</p>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
                                     <div class="mb-2 p-0 pe-md-2 col-12 col-md-6">
                                         <span class="m-1">Store Name:</span>
                                         <input type="text" class="form-control" id="store_name" name="store_name" required value="<?= isset($_POST['store_name']) ? $_POST['store_name'] : $record['store_name'] ?>">
@@ -188,17 +274,34 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="my-2">
                             </div>
-                            <form method="post" action="" class="col-12">
+                            <form method="post" action="" class="col-12" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="mb-2 p-0 pe-md-2 col-12 col-md-6 col-lg-4">
-                                        file input
+                                        <span class="m-1">Certificate File (.jpg, .jpeg, .png): </span>
+                                        <input type="file" class="form-control" id="certificate" name="certificate" accept=".jpg, .jpeg, .png">
+                                        <?php
+                                        if (isset($_POST['save-cert']) && isset($success) && $success == 'failed') {
+                                        ?>
+                                            <div class="mb-2 col-auto mb-2 p-0">
+                                                <p class="fs-7 text-primary m-0 ps-2">Certificate is required.</p>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                     <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-8 text-end">
                                         <br>
-                                        <input type="submit" class="btn btn-primary btn-settings-size" name="save-delivery" value="Save">
+                                        <input type="submit" class="btn btn-primary btn-settings-size" name="save-cert" value="Save">
                                     </div>
                                 </div>
                             </form>
+                            <div class="col-12 m-0 p-0 d-flex flex-column align-items-center">
+                                <img src="<?php if (isset($record['certificate'])) {
+                                                echo "../images/data/" . $record['certificate'];
+                                            } else {
+                                                echo "../images/main/no-profile.jpg";
+                                            } ?>" alt="" class="img-fluid border border-secondary-subtle rounded-2">
+                            </div>
                         </div>
                     </div>
                     <div class="container-fluid bg-white shadow rounded m-0 mb-3 p-3">
@@ -215,11 +318,11 @@ include_once('../includes/preloader.php');
                                 <div class="row">
                                     <div class="mb-2 p-0 pe-md-2 col-12 col-md-6 col-lg-4">
                                         <span for="delivery_charge" class="form-label m-1">Delivery Charge:</span>
-                                        <input type="number" class="form-control" id="deliver_fee" name="deliver_fee" require step="any" oninput="negativetozero(this)" value="<?= isset($_POST['delivery_charge']) ? $_POST['delivery_charge'] : $record['delivery_charge'] ?>">
+                                        <input type="number" class="form-control" id="delivery_charge" name="delivery_charge" require step="any" oninput="negativetozero(this)" value="<?= isset($_POST['delivery_charge']) ? $_POST['delivery_charge'] : $record['delivery_charge'] ?>">
                                         <?php
                                         if (isset($_POST['delivery_charge']) && !validate_field($_POST['delivery_charge'])) {
                                         ?>
-                                            <p class="fs-7 text-primary m-0 ps-2">Delivery fee is required.</p>
+                                            <p class="fs-7 text-primary m-0 ps-2">Delivery charge is required.</p>
                                         <?php
                                         }
                                         ?>
@@ -248,6 +351,42 @@ include_once('../includes/preloader.php');
                             <div class="col-12 text-center">
                                 <a href="./index.php?store_id=<?= $_GET['store_id'] ?>" class="text-decoration-none text-dark">
                                     <p class="m-0">Store information is successfully updated! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['save-delivery']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./index.php?store_id=<?= $_GET['store_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Delivery charge is successfully updated! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['save-cert']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./index.php?store_id=<?= $_GET['store_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Certificate is successfully updated! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
                         </div>

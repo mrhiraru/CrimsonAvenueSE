@@ -19,7 +19,8 @@ class Store
     public $is_created;
     public $is_deleted;
     public $staff_role;
-
+    public $delivery_charge;
+    public $store_profile;
     protected $db;
 
     function __construct()
@@ -84,9 +85,10 @@ class Store
 
     function edit()
     {
-        $sql = "UPDATE store SET store_name = :store_name, college_id = :college_id, store_bio = :store_bio, store_email = :store_email, store_contact = :store_contact, store_location = :store_location, business_time = :business_time WHERE store_id = :store_id;";
+        $sql = "UPDATE store SET store_profile = :store_profile, store_name = :store_name, college_id = :college_id, store_bio = :store_bio, store_email = :store_email, store_contact = :store_contact, store_location = :store_location, business_time = :business_time WHERE store_id = :store_id;";
 
         $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_profile', $this->store_profile);
         $query->bindParam(':store_name', $this->store_name);
         $query->bindParam(':college_id', $this->college_id);
         $query->bindParam(':store_bio', $this->store_bio);
@@ -94,6 +96,21 @@ class Store
         $query->bindParam(':store_contact', $this->store_contact);
         $query->bindParam(':store_location', $this->store_location);
         $query->bindParam(':business_time', $this->business_time);
+        $query->bindParam(':store_id', $this->store_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function update_certificate()
+    {
+        $sql = "UPDATE store SET certificate = :certificate WHERE store_id = :store_id;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':certificate', $this->certificate);
         $query->bindParam(':store_id', $this->store_id);
 
         if ($query->execute()) {
@@ -251,5 +268,20 @@ class Store
             $data = $query->fetchAll();
         }
         return $data;
+    }
+
+    function update_delivery()
+    {
+        $sql = "UPDATE store SET delivery_charge = :delivery_charge WHERE store_id = :store_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':delivery_charge', $this->delivery_charge);
+        $query->bindParam(':store_id', $this->store_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

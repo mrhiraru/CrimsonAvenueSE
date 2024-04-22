@@ -114,8 +114,8 @@ include_once('../includes/preloader.php');
                                 <hr class="mb-0">
                             </div>
                             <div class="col-12 col-lg-auto m-0 p-3 d-flex flex-column align-items-center">
-                                <img src="<?php if (isset($pro_record['profile_image'])) {
-                                                echo "../images/data/" . $pro_record['profile_image'];
+                                <img src="<?php if (isset($record['store_profile'])) {
+                                                echo "../images/data/" . $record['store_profile'];
                                             } else {
                                                 echo "../images/main/no-profile.jpg";
                                             } ?>" alt="" class="profile-size border border-secondary-subtle rounded-2">
