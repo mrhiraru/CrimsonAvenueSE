@@ -94,4 +94,16 @@ class Department
             return false;
         }
     }
+    function count()
+    {
+        // Note: Update query to count stores per college!
+        $sql = "SELECT COUNT(department_id) AS departnent_count FROM department WHERE is_deleted != 1";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+    
 }
