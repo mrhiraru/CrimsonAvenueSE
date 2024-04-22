@@ -4,6 +4,7 @@ session_start();
 require_once "../tools/functions.php";
 require_once "../classes/store.class.php";
 
+
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
 

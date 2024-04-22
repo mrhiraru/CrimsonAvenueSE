@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
 }
@@ -21,6 +20,8 @@ include_once('./includes/preloader.php');
     <?php
     require_once('./includes/header.user.php');
     ?>
+
+    
     <div class="container-fluid col-md-9 mt-4 mx-sm-auto min-vh-100 ">
         <main>
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
@@ -45,8 +46,9 @@ include_once('./includes/preloader.php');
                 </button>
             </div>
         </main>
-        <section>
 
+        <section>
+            
         </section>
     </div>
     <?php

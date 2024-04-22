@@ -462,4 +462,8 @@ body {
         max-width: 300px !important;
     }
 }
+.bg-maroon {
+    border: 1px solid maroon ;
+    border-radius: 5px;
+}
      
