@@ -26,20 +26,40 @@ if (isset($_POST['register'])) {
     } else {
         $store->college_id = htmlentities($_POST['college_id']);
     }
-    $store->certificate = htmlentities($_POST['certificate']);
     $store->verification_status = 'Not Verified';
     $store->registration_status = 'Not Registered';
 
-    if (
-        validate_field($store->store_name) &&
-        validate_field($store->account_id) &&
-        validate_field($store->certificate) &&
-        validate_field($store->verification_status)
-    ) {
-        if ($store->add()) {
-            $success = 'success';
+
+    $uploaddir = '../images/data/';
+    $uploadname = $_FILES[htmlentities('certificate')]['name'];
+    $uploadext = explode('.', $uploadname);
+    $uploadnewext = strtolower(end($uploadext));
+    $allowed = array('jpg', 'jpeg', 'png');
+
+    if (in_array($uploadnewext, $allowed)) {
+
+        $uploadenewname = uniqid('', true) . "." . $uploadnewext;
+        $uploadfile = $uploaddir . $uploadenewname;
+
+        if (move_uploaded_file($_FILES[htmlentities('certificate')]['tmp_name'], $uploadfile)) {
+            $store->certificate = $uploadenewname;
+
+            if (
+                validate_field($store->store_name) &&
+                validate_field($store->account_id) &&
+                validate_field($store->certificate) &&
+                validate_field($store->verification_status)
+            ) {
+                if ($store->add()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
         } else {
-            echo 'An error occured while adding in the database.';
+            $success = 'failed';
         }
     } else {
         $success = 'failed';
