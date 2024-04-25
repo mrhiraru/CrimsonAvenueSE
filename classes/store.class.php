@@ -331,5 +331,26 @@ class Store
             return false;
         }
     }
+    function show_profile($store_id) {
+        try {
+            // Prepare the SQL statement with a parameter placeholder
+            $sql = "SELECT * FROM store WHERE store_id = :store_id";
+            
+            // Prepare and execute the query
+            $query = $this->db->connect()->prepare($sql);
+            $query->bindParam(":store_id", $store_id, PDO::PARAM_INT); // Assuming store_id is an integer
+            $query->execute();
+            
+            // Fetch the result as an associative array
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            
+            return $result; // Return the result (even if it's false)
+        } catch (PDOException $e) {
+            // Handle any database errors
+            echo "Database Error: " . $e->getMessage();
+            return false; // Return false on error
+        }
+    }
+    
 
 }
