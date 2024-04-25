@@ -274,59 +274,58 @@ include_once('../includes/preloader.php');
                                         </thead>
                                         <tbody id="orderTableBody">
                                         <?php
-require_once('../classes/order.class.php');
-require_once('../classes/database.php');
+                                            require_once('../classes/order.class.php');
+                                            require_once('../classes/database.php');
 
-$order = new Order();
+                                            $order = new Order();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['update'])) {
-        $order->updateCommissionStatusForCompletedOrders();
-        echo "Commission status updated successfully.";
-    }
-}
+                                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                                if (isset($_POST['update'])) {
+                                                    $order->updateCommissionStatusForCompletedOrders();
+                                                    echo "Commission status updated successfully.";
+                                                }
+                                            }
 
-if (isset($_GET['id'])) {
-    $store_id = $_GET['id'];
-    $orders = $order->show_order_stat($store_id);
-    $total_unpaid_commission = 0;
+                                            if (isset($_GET['id'])) {
+                                                $store_id = $_GET['id'];
+                                                $orders = $order->show_order_stat($store_id);
+                                                $total_unpaid_commission = 0;
 
-    if ($orders) {
-        foreach ($orders as $orderItem) {
-            $updated_order = $order->get_order_by_id($orderItem['order_id']);
-            if ($updated_order['order_status'] == 'Completed') {
-                if ($updated_order['commission_status'] == 'Unpaid') {
-                    $total_unpaid_commission += $updated_order['commission_total'];
-                }
-?>
-                <tr>
-                    <th scope='row'><?php echo $updated_order['order_id']; ?></th>
-                    <td><?php echo $updated_order['order_status']; ?></td>
-                    <td><?php echo number_format($updated_order['commission_total'], 2); ?> ₱</td>
-                    <td><?php echo $updated_order['commission_status']; ?></td>
-                </tr>
-<?php
-            }
-        }
-?>
-        <!-- Button row -->
-        <tr>
-            <td colspan="2" style="text-align: right;">Total Unpaid Commission: ₱</td>
-            <td><?php echo number_format($total_unpaid_commission, 2); ?>₱</td>
-            <td colspan="3" >
-                <form method='post'>
-                    <button type='submit' name='update' class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none" <?php echo ($total_unpaid_commission > 0) ? '' : 'disabled'; ?>>Paid</button>
-                </form>
-            </td>
-        </tr>
-<?php
-    } else {
-        echo "<tr><td colspan='4'>No completed orders found for store ID: $store_id</td></tr>";
-    }
-} else {
-    echo "<tr><td colspan='4'>Store ID is not available</td></tr>";
-}
-?>
+                                                if ($orders) {
+                                                    foreach ($orders as $orderItem) {
+                                                        $updated_order = $order->get_order_by_id($orderItem['order_id']);
+                                                        if ($updated_order['order_status'] == 'Completed') {
+                                                            if ($updated_order['commission_status'] == 'Unpaid') {
+                                                                $total_unpaid_commission += $updated_order['commission_total'];
+                                                            }
+                                            ?>
+                                                            <tr>
+                                                                <th scope='row'><?php echo $updated_order['order_id']; ?></th>
+                                                                <td><?php echo $updated_order['order_status']; ?></td>
+                                                                <td><?php echo number_format($updated_order['commission_total'], 2); ?> ₱</td>
+                                                                <td><?php echo $updated_order['commission_status']; ?></td>
+                                                            </tr>
+                                            <?php
+                                                        }
+                                                    }
+                                            ?>
+                                        <tr>
+                                            <td colspan="2" style="text-align: right;">Total Unpaid Commission: ₱</td>
+                                            <td><?php echo number_format($total_unpaid_commission, 2); ?></td>
+                                            <td colspan="3" >
+                                                <form method='post'>
+                                                    <button type='submit' name='update' class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none" <?php echo ($total_unpaid_commission > 0) ? '' : 'disabled'; ?>>Paid</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                <?php
+                                    } else {
+                                        echo "<tr><td colspan='4'>No completed orders found for store ID: $store_id</td></tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='4'>Store ID is not available</td></tr>";
+                                }
+                                ?>          
 
                                 </div>
                             </div>
