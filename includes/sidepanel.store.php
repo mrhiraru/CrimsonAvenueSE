@@ -191,6 +191,11 @@
                                     Main
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $staff_page ?>" aria-current="page" href="../store-settings/staff.php?store_id=<?= $record['store_id'] ?>">
+                                    Staff
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
