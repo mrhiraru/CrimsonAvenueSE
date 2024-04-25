@@ -88,7 +88,7 @@ include_once('../includes/preloader.php');
                     <p class="m-0 mb-3 p-0 text-center fs-3 fw-semibold text-primary">
                         Store Registration
                     </p>
-                    <form action="" method="post" class="row d-flex p-2 p-md-0 m-0 col-lg-5">
+                    <form action="" method="post" class="row d-flex p-2 p-md-0 m-0 col-lg-5" enctype="multipart/form-data">
                         <div class="mb-3 p-0 col-12">
                             <input type="text" name="store-name" placeholder="Store Name" class="form-control" value="<?php if (isset($_POST['store-name'])) {
                                                                                                                             echo $_POST['store-name'];
