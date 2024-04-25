@@ -176,5 +176,48 @@ class Order
         }
         return $data;
     }
+    function show_order_stat($store_id) {
+    $sql = "SELECT * FROM orders WHERE store_id = :store_id AND (order_status = 'Completed' OR order_status = 'Pending') ORDER BY FIELD(commission_status, 'unpaid', 'paid')";
+    $query = $this->db->connect()->prepare($sql);
+    $query->bindParam(':store_id', $store_id);
+    $query->execute();
+    return $query->fetchAll(); 
+}
+
+    
+    function updateCommissionStatus($order_id, $commission_status) {
+        $sql = "UPDATE orders SET commission_status = :commission_status WHERE order_id = :order_id";
+    
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':commission_status', $commission_status);
+        $query->bindParam(':order_id', $order_id);
+    
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function get_order_by_id($order_id) {
+        $sql = "SELECT * FROM orders WHERE order_id = :order_id";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':order_id', $order_id);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch(PDO::FETCH_ASSOC);
+        }
+        return $data;
+    }
+    function updateCommissionStatusForCompletedOrders() {
+        $sql = "UPDATE orders SET commission_status = 'Paid' WHERE order_status = 'Completed'";
+        
+        $query = $this->db->connect()->prepare($sql);
+        
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
 }
