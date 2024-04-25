@@ -313,7 +313,7 @@ if (isset($_GET['id'])) {
         <tr>
             <td colspan="2" style="text-align: right;">Total Unpaid Commission: ₱</td>
             <td><?php echo number_format($total_unpaid_commission, 2); ?>₱</td>
-            <td colspan="3" style="text-align: ;">
+            <td colspan="3" >
                 <form method='post'>
                     <button type='submit' name='update' class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none" <?php echo ($total_unpaid_commission > 0) ? '' : 'disabled'; ?>>Paid</button>
                 </form>
