@@ -181,7 +181,7 @@
                         </p>
                     </button>
                 </h2>
-                <div id="flush-collapseSeven" class="accordion-collapse collapse <?php if (isset($settingsindex_page)) {
+                <div id="flush-collapseSeven" class="accordion-collapse collapse <?php if (isset($settings_page)) {
                                                                                         echo 'show';
                                                                                     } ?>" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body px-0 pt-1 py-2">
@@ -191,7 +191,7 @@
                                     Main
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item d-none">
                                 <a class="nav-link text-secondary fw-semibold <?= $staff_page ?>" aria-current="page" href="../store-settings/staff.php?store_id=<?= $record['store_id'] ?>">
                                     Staff
                                 </a>
