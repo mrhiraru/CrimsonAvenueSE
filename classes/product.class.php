@@ -319,11 +319,13 @@ class Product
             }
         }
 
-        $sql = "SELECT p.*, s.store_name, i.image_file, pd.desc_value, c.category_name
+        $sql = "SELECT p.*, s.store_name, i.image_file, pd.desc_value, pd.desc_value, c.category_name, v.variation_name, m.measurement_name, m.value_unit
         FROM product p 
         LEFT JOIN store s ON p.store_id = s.store_id 
         LEFT JOIN category c ON p.category_id = c.category_id 
-        LEFT JOIN (SELECT product_id, desc_value FROM product_desc WHERE is_deleted != 1) pd ON p.product_id = pd.product_id
+        LEFT JOIN (SELECT product_id, desc_label, desc_value FROM product_desc WHERE is_deleted != 1) pd ON p.product_id = pd.product_id
+        LEFT JOIN (SELECT product_id, variation_name FROM variation WHERE is_deleted != 1) v ON p.product_id = v.product_id
+        LEFT JOIN (SELECT product_id, measurement_name, value_unit FROM measurement WHERE is_deleted != 1) m ON p.product_id = m.product_id
         LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
         WHERE p.is_deleted != 1";
 
@@ -346,6 +348,46 @@ class Product
                     $sql .= " OR pd.desc_value LIKE :search_$key";
                 }
                 $second_counter++;
+            }
+            $sql .= ")";
+            $third_counter = 0;
+            foreach ($searches as $key => $word) {
+                if ($third_counter == 0) {
+                    $sql .= " OR (pd.desc_label LIKE :search_$key";
+                } else {
+                    $sql .= " OR pd.desc_label LIKE :search_$key";
+                }
+                $third_counter++;
+            }
+            $sql .= ")";
+            $fourth_counter = 0;
+            foreach ($searches as $key => $word) {
+                if ($fourth_counter == 0) {
+                    $sql .= " OR (v.variation_name LIKE :search_$key";
+                } else {
+                    $sql .= " OR v.variation_name LIKE :search_$key";
+                }
+                $fourth_counter++;
+            }
+            $sql .= ")";
+            $fifth_counter = 0;
+            foreach ($searches as $key => $word) {
+                if ($fifth_counter == 0) {
+                    $sql .= " OR (m.measurement_name LIKE :search_$key";
+                } else {
+                    $sql .= " OR m.measurement_name LIKE :search_$key";
+                }
+                $fifth_counter++;
+            }
+            $sql .= ")";
+            $sixth_counter = 0;
+            foreach ($searches as $key => $word) {
+                if ($sixth_counter == 0) {
+                    $sql .= " OR (m.value_unit LIKE :search_$key";
+                } else {
+                    $sql .= " OR m.value_unit LIKE :search_$key";
+                }
+                $sixth_counter++;
             }
             $sql .= "))";
         }
@@ -438,5 +480,4 @@ class Product
         }
         return $data;
     }
-
 }
