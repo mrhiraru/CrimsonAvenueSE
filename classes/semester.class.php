@@ -35,7 +35,7 @@ class Semester
 
     function show()
     {
-        $sql = "SELECT * FROM semester WHERE status = 'Current' LIMIT 1";
+        $sql = "SELECT * FROM semester";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {
@@ -43,6 +43,7 @@ class Semester
         }
         return $data;
     }
+
     function edit()
     {
         $sql = "UPDATE semester SET semester_number=:semester_number, start_date=:start_date, end_date=:end_date WHERE semester_id = :semester_id;";
@@ -68,5 +69,18 @@ class Semester
             $data = $query->fetch();
         }
         return $data;
+    }
+
+    function semester_ended($semester_id)
+    {
+        $sql = "UPDATE semester SET status = 'Ended', view_status = 'Inactive' WHERE semester_id = :semester_id";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':semester_id', $semester_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

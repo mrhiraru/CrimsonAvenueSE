@@ -11,8 +11,12 @@ require_once('../tools/functions.php');
 require_once('../classes/semester.class.php');
 require_once('../classes/admin-settings.class.php');
 
+
+$semester = new Semester();
+$current_sem = $semester->fetch();
+
+
 if (isset($_POST['save-sem'])) {
-    $semester = new Semester();
 
     $semester->semester_number = htmlentities($_POST['sem']);
     $semester->start_date = htmlentities($_POST['sdate']);
@@ -35,7 +39,6 @@ if (isset($_POST['save-sem'])) {
         $success = 'failed';
     }
 } else if (isset($_POST['edit-sem'])) {
-    $semester = new Semester();
 
     $semester->semester_number = htmlentities($_POST['sem']);
     $semester->start_date = htmlentities($_POST['sdate']);
@@ -121,10 +124,6 @@ include_once('../includes/preloader.php');
                             </div>
                             <form method="post" action="" class="col-12">
                                 <div class="row">
-                                    <?php
-                                    $sem = new Semester();
-                                    $current_sem = $sem->fetch();
-                                    ?>
                                     <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
                                         <span class="m-1">Start Date:</span>
                                         <input type="date" class="form-control" id="sdate" name="sdate" placeholder="YYYY-MM-DD" value="<?php if (isset($current_sem['start_date'])) {
@@ -156,7 +155,7 @@ include_once('../includes/preloader.php');
                                         }
                                         ?>
                                     </div>
-                                    <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3">
+                                    <div class="mb-3 p-0 pe-md-2 col-8 col-md-6 col-lg-3">
                                         <span class="m-1" id="basic-addon1">Semester:</span>
                                         <input type="number" min="1" max="3" pattern="[1-3]" class="form-control" id="sem" name="sem" placeholder="Semester" oninput="validateinputsem(this)" value="<?php if (isset($current_sem['semester_number'])) {
                                                                                                                                                                                                             echo $current_sem['semester_number'];
@@ -171,7 +170,7 @@ include_once('../includes/preloader.php');
                                         }
                                         ?>
                                     </div>
-                                    <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-3 text-end">
+                                    <div class="mb-3 p-0 col-4 col-md-6 col-lg-3 text-end">
                                         <br>
                                         <?php
                                         if (isset($current_sem['semester_id'])) {
@@ -188,6 +187,62 @@ include_once('../includes/preloader.php');
                                     </div>
                                 </div>
                             </form>
+                            <hr>
+                            <div class="search-keyword col-12 mb-2 p-0 d-flex justify-content-end">
+                                <div class="m-0 p-0  col-4">
+                                    <div class="input-group">
+                                        <input type="text" name="keyword" id="keyword" placeholder="" class="form-control">
+                                        <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="colleges" class="table table-lg mt-1">
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col"></th>
+                                        <th scope="col">Start Date</th>
+                                        <th scope="col">End Date</th>
+                                        <th scope="col" class="text-center">Semester No.</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $counter = 1;
+                                    $semArray = $semester->show();
+                                    foreach ($semArray as $item) {
+                                    ?>
+                                        <tr class="align-middle">
+                                            <td><?= $counter ?></td>
+                                            <td><?= date('F d Y', strtotime($item['start_date'])) ?> </td>
+                                            <td><?= date('F d Y', strtotime($item['end_date'])) ?></td>
+                                            <td class="text-center"><?= $item['semester_number'] ?></td>
+                                            <td><?= $item['status'] ?></td>
+                                            <td class="text-end">
+                                                <div class="m-0 p-0">
+                                                    <?php
+                                                    if ($item['view_status'] == "Active") {
+                                                    ?>
+                                                        <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="" name="" value="Active"></input>
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <form action="" method="post">
+                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="sem-edit" name="edit" value="View"></input>
+                                                        </form>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        $counter++;
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="container-fluid bg-white shadow rounded m-0 mb-4 p-3">
