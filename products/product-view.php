@@ -262,14 +262,28 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 mb-1 p-0 d-flex flex-row flex-wrap align-items-center text-secondary">
                                 <?php
                                 if ($record['restriction_status'] == "Unrestricted") {
+                                    if (isset($_SESSION['affiliation']) && (($_SESSION['affiliation'] == "Non-student") && ($record['exclusivity'] == "WMSU Users"))) {
                                 ?>
-                                    <div class="col-12 m-0 p-0 me-1 mt-2 d-flex justify-content-evenly">
-                                        <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 me-1" value="Add to Cart" name="add" id="add">
-                                        <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 ms-1" value="<?= $record['sale_status'] == "On-hand" ? "Buy Now" : "Pre Order" ?>" name="buy" id="buy">
-                                    </div>
-                                <?php
+                                        <div class="col-12 m-0 p-0 me-1 mt-2 d-flex justify-content-evenly">
+                                            This product is exclusive only for WMSU users.
+                                        </div>
+                                    <?php
+                                    } else if (!isset($_SESSION['college_name']) || (isset($_SESSION['college_name']) && ($record['exclusivity'] != $_SESSION['college_name']))) {
+                                    ?>
+                                        <div class="col-12 m-0 p-0 me-1 mt-2 d-flex justify-content-evenly">
+                                            This product is exclusive only for <?= $record['college_name'] ?> users.
+                                        </div>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <div class="col-12 m-0 p-0 me-1 mt-2 d-flex justify-content-evenly">
+                                            <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 me-1" value="Add to Cart" name="add" id="add">
+                                            <input type="submit" class="btn btn-primary fw-semibold flex-grow-1 ms-1" value="<?= $record['sale_status'] == "On-hand" ? "Buy Now" : "Pre Order" ?>" name="buy" id="buy">
+                                        </div>
+                                    <?php
+                                    }
                                 } else if ($record['restriction_status'] == "Restricted") {
-                                ?>
+                                    ?>
                                     <div class="col-12 m-0 p-0 me-1 mt-2 d-flex justify-content-evenly">
                                         This product is currently restricted.
                                     </div>
