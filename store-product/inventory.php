@@ -71,7 +71,7 @@ include_once('../includes/preloader.php');
                                     ?>
                                         <tr class="align-middle">
                                             <td><?= $counter ?></td>
-                                            <td> 23 </td>
+                                            <td></td>
                                             <td><?= $item['product_name'] ?></td>
                                             <td><?= $item['variation_name'] ?></td>
                                             <td><?= $item['measurement_name'] ?></td>
