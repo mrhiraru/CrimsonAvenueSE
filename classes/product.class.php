@@ -94,7 +94,60 @@ class Product
 
     function show($store_id)
     {
-        $sql = "SELECT p.*, c.category_name, i.image_file FROM product p INNER JOIN category c ON p.category_id = c.category_id AND c.is_deleted != 1 LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id  WHERE p.store_id = :store_id AND p.is_deleted != 1 ORDER BY p.product_id ASC";
+        $sql = "SELECT p.*, c.category_name, i.image_file 
+        FROM product p 
+        INNER JOIN category c ON p.category_id = c.category_id AND c.is_deleted != 1 
+        LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id  
+        WHERE p.store_id = :store_id AND p.is_deleted != 1 
+        ORDER BY p.product_id ASC";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function show_inv($store_id)
+    {
+        $sql = "SELECT 
+        p.*, 
+        v.variation_id, 
+        v.variation_name, 
+        m.measurement_id, 
+        m.measurement_name, 
+        st.stock_id, 
+        SUM(st.stock_quantity) AS Total_Stock, 
+        COALESCE(ot.Total_Sold, 0) AS Total_Sold
+    FROM 
+        product p 
+    INNER JOIN 
+        variation v ON p.product_id = v.product_id AND v.is_deleted != 1 
+    INNER JOIN 
+        measurement m ON p.product_id = m.product_id AND m.is_deleted != 1 
+    INNER JOIN 
+        stock st ON p.product_id = st.product_id AND v.variation_id = st.variation_id AND m.measurement_id = st.measurement_id AND st.is_deleted != 1
+    LEFT JOIN 
+        (SELECT 
+             product_id, 
+             variation_id, 
+             measurement_id, 
+             SUM(quantity) AS Total_Sold
+         FROM 
+             order_item
+         WHERE 
+             is_deleted != 1
+         GROUP BY 
+             product_id, variation_id, measurement_id
+        ) ot ON p.product_id = ot.product_id AND v.variation_id = ot.variation_id AND m.measurement_id = ot.measurement_id
+    WHERE 
+        p.is_deleted != 1 AND p.store_id = :store_id
+    GROUP BY 
+        p.product_id, v.variation_id, m.measurement_id
+    ORDER BY 
+        p.product_id, v.variation_id, m.measurement_id;";
+
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':store_id', $store_id);
 
