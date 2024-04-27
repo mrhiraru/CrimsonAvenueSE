@@ -129,6 +129,15 @@ include_once('../includes/preloader.php');
                                     <tr>
                                         <td class="fw-semibold text-dark">
                                             <span class="text-secondary fw-normal">
+                                                Store:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $record['store_name'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
                                                 Category:
                                             </span>
                                             <br class="d-block d-md-none">
