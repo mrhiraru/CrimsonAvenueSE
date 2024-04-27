@@ -142,7 +142,7 @@ class Product
              product_id, variation_id, measurement_id
         ) ot ON p.product_id = ot.product_id AND v.variation_id = ot.variation_id AND m.measurement_id = ot.measurement_id
     WHERE 
-        p.is_deleted != 1 AND p.store_id = :store_id
+        p.is_deleted != 1 AND p.sale_status = 'On-hand' AND p.store_id = :store_id 
     GROUP BY 
         p.product_id, v.variation_id, m.measurement_id
     ORDER BY 
