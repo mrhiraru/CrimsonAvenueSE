@@ -154,8 +154,7 @@ include_once('../includes/preloader.php');
                                                     }
                                                 } else {
                                                     echo "Store ID parameter is missing or null in the URL.";
-                                                }
-                                                
+                                                }                                               
                                             ?>
                                         </div>
                                     </div>

@@ -339,24 +339,108 @@ class Store
     }
     function show_profile($store_id) {
         try {
-            // Prepare the SQL statement with a parameter placeholder
+
             $sql = "SELECT * FROM store WHERE store_id = :store_id";
             
-            // Prepare and execute the query
             $query = $this->db->connect()->prepare($sql);
-            $query->bindParam(":store_id", $store_id, PDO::PARAM_INT); // Assuming store_id is an integer
+            $query->bindParam(":store_id", $store_id, PDO::PARAM_INT);
             $query->execute();
             
-            // Fetch the result as an associative array
             $result = $query->fetch(PDO::FETCH_ASSOC);
             
-            return $result; // Return the result (even if it's false)
+            return $result;
         } catch (PDOException $e) {
-            // Handle any database errors
             echo "Database Error: " . $e->getMessage();
-            return false; // Return false on error
+            return false;
         }
     }
-    
 
+    
+    function store_rank() {
+        $sql= "SELECT
+        s.store_name,
+        c.college_name,
+        COUNT(DISTINCT p.product_id) AS products,
+        SUM(oi.quantity) AS solds,
+        SUM(oi.selling_price + oi.commission) AS sales
+    FROM
+        store s
+        LEFT JOIN college c ON s.college_id = c.college_id
+        LEFT JOIN product p ON s.store_id = p.store_id
+        LEFT JOIN order_item oi ON p.product_id = oi.product_id
+        LEFT JOIN orders o ON oi.order_id = o.order_id
+    GROUP BY
+        s.store_id,
+        c.college_id
+    HAVING
+        solds = (
+            SELECT MAX(solds)
+            FROM (
+                SELECT 
+                    s.store_id,
+                    SUM(oi.quantity) AS solds
+                FROM 
+                    store s
+                    LEFT JOIN product p ON s.store_id = p.store_id
+                    LEFT JOIN order_item oi ON p.product_id = oi.product_id
+                    LEFT JOIN orders o ON oi.order_id = o.order_id
+                GROUP BY
+                    s.store_id
+            ) AS max_sold
+        );";
+
+    $query = $this->db->connect()->prepare($sql);
+    if ($query->execute()) {
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    } else {
+        return false;
+    }
+    
+}
+function store_rank_filtered($start_date, $end_date) {
+    $sql = "SELECT
+                s.store_name,
+                c.college_name,
+                COUNT(DISTINCT p.product_id) AS products,
+                SUM(oi.quantity) AS solds,
+                SUM(oi.selling_price + oi.commission) AS sales
+            FROM
+                store s
+                LEFT JOIN college c ON s.college_id = c.college_id
+                LEFT JOIN product p ON s.store_id = p.store_id
+                LEFT JOIN order_item oi ON p.product_id = oi.product_id
+                LEFT JOIN orders o ON oi.order_id = o.order_id
+            WHERE
+                o.order_status = 'completed' AND
+                DATE(o.is_updated) BETWEEN :start_date AND :end_date
+            GROUP BY
+                s.store_id,
+                c.college_id
+            HAVING
+                solds = (
+                    SELECT MAX(solds)
+                    FROM (
+                        SELECT 
+                            s.store_id,
+                            SUM(oi.quantity) AS solds
+                        FROM 
+                            store s
+                            LEFT JOIN product p ON s.store_id = p.store_id
+                            LEFT JOIN order_item oi ON p.product_id = oi.product_id
+                            LEFT JOIN orders o ON oi.order_id = o.order_id
+                        WHERE
+                            o.order_status = 'completed' AND
+                            DATE(o.is_updated) BETWEEN :start_date AND :end_date
+                        GROUP BY
+                            s.store_id
+                    ) AS max_sold
+                )";
+
+    $query = $this->db->connect()->prepare($sql);
+    $query->execute(array(':start_date' => $start_date, ':end_date' => $end_date));
+    $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    return $data;
+}
 }
