@@ -133,7 +133,13 @@ class Store
 
     function show()
     {
-        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name FROM store s INNER JOIN store_staff ss ON s.store_id = ss.store_id AND staff_role = 0 LEFT JOIN account a ON ss.account_id = a.account_id AND a.is_deleted != 1 LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 WHERE s.registration_status = 'Registered' AND s.is_deleted != 1 ORDER BY s.store_id ASC;";
+        $sql = "SELECT s.*, a.firstname, a.middlename, a.lastname, c.college_name 
+        FROM store s 
+        INNER JOIN store_staff ss ON s.store_id = ss.store_id AND staff_role = 0 
+        LEFT JOIN account a ON ss.account_id = a.account_id AND a.is_deleted != 1 
+        LEFT JOIN college c ON s.college_id = c.college_id AND c.is_deleted != 1 
+        WHERE s.registration_status = 'Registered' AND s.is_deleted != 1 AND s.is_created < (SELECT end_date FROM semester WHERE view_status = 'Active')
+        ORDER BY s.store_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {
@@ -297,7 +303,7 @@ class Store
     }
     function count()
     {
-        $sql = "SELECT COUNT(store_id) AS store_count   FROM store WHERE is_deleted != 1";
+        $sql = "SELECT COUNT(store_id) AS store_count   FROM store WHERE is_deleted != 1 AND is_created <= (SELECT end_date FROM semester WHERE view_status = 'Active')";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {

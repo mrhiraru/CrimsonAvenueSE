@@ -48,7 +48,11 @@ class Department
 
     function show()
     {
-        $sql = "SELECT d.*, c.college_name FROM department d JOIN college c ON d.college_id = c.college_id WHERE d.is_deleted != 1 AND c.is_deleted != 1 ORDER BY d.department_id ASC;";
+        $sql = "SELECT d.*, c.college_name 
+        FROM department d 
+        JOIN college c ON d.college_id = c.college_id 
+        WHERE d.is_deleted != 1 AND c.is_deleted != 1 AND d.is_created < (SELECT end_date FROM semester WHERE view_status = 'Active')
+         ORDER BY d.department_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {
@@ -97,7 +101,7 @@ class Department
     function count()
     {
         // Note: Update query to count stores per college!
-        $sql = "SELECT COUNT(department_id) AS departnent_count FROM department WHERE is_deleted != 1";
+        $sql = "SELECT COUNT(department_id) AS departnent_count FROM department WHERE is_deleted != 1 AND is_created <= (SELECT end_date FROM semester WHERE view_status = 'Active')";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {

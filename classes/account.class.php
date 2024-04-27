@@ -140,6 +140,7 @@ class Account
                 return false;
             }
         } else {
+            $connect->rollBack();
             return false;
         }
     }
@@ -187,7 +188,9 @@ class Account
 
     function show()
     {
-        $sql = "SELECT * FROM account WHERE is_deleted != 1 ORDER BY account_id ASC;";
+        $sql = "SELECT * FROM account 
+        WHERE is_deleted != 1 AND is_created < (SELECT end_date FROM semester WHERE view_status = 'Active')
+        ORDER BY account_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {
@@ -251,7 +254,7 @@ class Account
     function count()
     {
 
-        $sql = "SELECT COUNT(account_id) AS account_count FROM account WHERE is_deleted != 1";
+        $sql = "SELECT COUNT(account_id) AS account_count FROM account WHERE is_deleted != 1 AND is_created <= (SELECT end_date FROM semester WHERE view_status = 'Active')";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {

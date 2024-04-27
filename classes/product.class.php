@@ -106,7 +106,12 @@ class Product
 
     function show_admin()
     {
-        $sql = "SELECT p.*, s.store_name, c.category_name, i.image_file FROM product p INNER JOIN store s ON p.store_id = s.store_id AND s.is_deleted != 1 INNER JOIN category c ON p.category_id = c.category_id AND c.is_deleted != 1 LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id  WHERE p.is_deleted != 1 ORDER BY p.product_id ASC";
+        $sql = "SELECT p.*, s.store_name, c.category_name, i.image_file 
+        FROM product p INNER JOIN store s ON p.store_id = s.store_id AND s.is_deleted != 1 
+        INNER JOIN category c ON p.category_id = c.category_id AND c.is_deleted != 1 
+        LEFT JOIN ( SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id  
+        WHERE p.is_deleted != 1 AND p.is_created < (SELECT end_date FROM semester WHERE view_status = 'Active')
+        ORDER BY p.product_id ASC";
         $query = $this->db->connect()->prepare($sql);
 
 
@@ -472,7 +477,7 @@ class Product
     function count()
     {
 
-        $sql = "SELECT COUNT(product_id) AS product_count FROM product WHERE is_deleted != 1";
+        $sql = "SELECT COUNT(product_id) AS product_count FROM product WHERE is_deleted != 1 AND is_created <= (SELECT end_date FROM semester WHERE view_status = 'Active')";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {

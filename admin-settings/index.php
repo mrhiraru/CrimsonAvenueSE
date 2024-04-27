@@ -87,6 +87,18 @@ if (isset($_POST['save-sem'])) {
     } else {
         $success = 'failed';
     }
+} else if (isset($_POST['view'])) {
+    $semester->semester_id = htmlentities($_POST['semester_id']);
+
+    if (validate_field($semester->semester_id)) {
+        if ($semester->view_semester()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
 }
 ?>
 
@@ -229,7 +241,8 @@ include_once('../includes/preloader.php');
                                                     } else {
                                                     ?>
                                                         <form action="" method="post">
-                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="sem-edit" name="edit" value="View"></input>
+                                                            <input type="hidden" name="semester_id" value="<?= $item['semester_id'] ?>">
+                                                            <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="view" name="view" value="View"></input>
                                                         </form>
                                                     <?php
                                                     }

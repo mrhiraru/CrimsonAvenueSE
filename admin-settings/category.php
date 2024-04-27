@@ -135,7 +135,7 @@ include_once('../includes/preloader.php');
                                     <tr class="align-middle">
                                         <th scope="col"></th>
                                         <th scope="col">Category Name</th>
-                                        <th scope="col" class="text-center">Action</th>
+                                        <th scope="col" class="text-end"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -147,7 +147,7 @@ include_once('../includes/preloader.php');
                                         <tr class="align-middle">
                                             <td><?= $counter ?></td>
                                             <td> <?= $item['category_name'] ?> </td>
-                                            <td class="text-center text-nowrap">
+                                            <td class="text-end text-nowrap">
                                                 <div class="m-0 p-0">
                                                     <form action="./category.php?id=<?= $item['category_id'] ?>" method="post">
                                                         <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="edit" value="Edit"></input>

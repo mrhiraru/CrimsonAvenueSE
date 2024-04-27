@@ -45,7 +45,7 @@ class Category
 
     function show()
     {
-        $sql = "SELECT * FROM category WHERE is_deleted != 1 ORDER BY category_id ASC;";
+        $sql = "SELECT * FROM category WHERE is_deleted != 1 AND is_created < (SELECT end_date FROM semester WHERE view_status = 'Active') ORDER BY category_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {
@@ -82,7 +82,7 @@ class Category
     function count()
     {
         // Note: Update query to count stores per college!
-        $sql = "SELECT COUNT(category_id) AS category_count FROM category WHERE is_deleted != 1";
+        $sql = "SELECT COUNT(category_id) AS category_count FROM category WHERE is_deleted != 1 AND is_created <= (SELECT end_date FROM semester WHERE view_status = 'Active')";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {

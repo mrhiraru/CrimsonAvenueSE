@@ -60,7 +60,12 @@ class Moderator
 
     function show_assigned()
     {
-        $sql = "SELECT m.*, a.firstname, a.middlename, a.lastname, c.college_name FROM moderator m INNER JOIN account a ON m.account_id = a.account_id AND a.is_deleted != 1 AND a.user_role = 1 INNER JOIN college c ON m.college_id = c.college_id AND c.is_deleted != 1 WHERE m.is_deleted != 1 ORDER BY m.moderator_id ASC;";
+        $sql = "SELECT m.*, a.firstname, a.middlename, a.lastname, c.college_name 
+        FROM moderator m 
+        INNER JOIN account a ON m.account_id = a.account_id AND a.is_deleted != 1 AND a.user_role = 1 
+        INNER JOIN college c ON m.college_id = c.college_id AND c.is_deleted != 1 
+        WHERE m.is_deleted != 1
+        ORDER BY m.moderator_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {

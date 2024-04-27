@@ -8,6 +8,13 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 require_once('../tools/functions.php');
 require_once('../classes/semester.class.php');
+require_once('../classes/college.class.php');
+require_once('../classes/account.class.php');
+require_once('../classes/store.class.php');
+require_once('../classes/product.class.php');
+require_once('../classes/category.class.php');
+require_once('../classes/admin-settings.class.php');
+require_once('../classes/department.class.php');
 
 $sem = new Semester();
 $current_sem = $sem->fetch();
@@ -16,9 +23,9 @@ if (isset($current_sem['semester_id'])) {
     $current_sem_date = date('Y-m-d', strtotime($current_sem['end_date']));
 
     $current = new DateTime($current_date);
-    $current_endddate = new DateTime($current_sem_date);
+    $current_enddate = new DateTime($current_sem_date);
 
-    if (isset($current_endddate) && isset($current) && ($current > $current_enddate)) {
+    if ($current > $current_enddate) {
         if ($sem->semester_ended($current_sem['semester_id'])) {
             $sem_check = "Ended";
         }
@@ -53,25 +60,9 @@ include_once('../includes/preloader.php');
                 <main class="col-md-9 col-lg-10 p-4 row m-0">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
                         <div class="row h-auto d-flex justify-content-center m-0 p-0">
-
                             <?php
-
-                            require_once('../classes/semester.class.php');
-                            require_once('../classes/college.class.php');
-                            require_once('../classes/account.class.php');
-                            require_once('../classes/store.class.php');
-                            require_once('../classes/product.class.php');
-                            require_once('../classes/category.class.php');
-                            require_once('../classes/admin-settings.class.php');
-                            require_once('../classes/department.class.php');
-
-                            $sem = new Semester();
-                            $data = $sem->fetch();
-
-
-
+                            $data = $sem->fetch_db();
                             ?>
-
                             <div class="row h-auto mb-4 d-flex justify-content-center">
                                 <a href="../admin-settings/index.php" class=" text-decoration-none">
                                     <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
@@ -80,11 +71,8 @@ include_once('../includes/preloader.php');
                                                 <div class="row m-0 h-100">
                                                     <p class="col-12 m-0 fw-semibold fs-4 text-primary">Semester:</p>
                                                     <?php
-
                                                     if (!empty($data)) {
-                                                        foreach ($data as $row) {
-                                                            echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $row['semester_number'] . '</p>';
-                                                        }
+                                                            echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $data['semester_number'] . '</p>';
                                                     } else {
                                                         echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">No data available</p>';
                                                     }
@@ -102,9 +90,8 @@ include_once('../includes/preloader.php');
                                             <?php
 
                                             if (!empty($data)) {
-                                                foreach ($data as $row) {
-                                                    echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $row['start_date'] . ' - ' . $row['end_date'] . '</p>';
-                                                }
+                                                    echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . date('F d Y', strtotime($data['start_date'])) . ' - ' . date('F d Y', strtotime($data['end_date'])) . '</p>';
+                                                
                                             } else {
                                                 echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">No data available</p>';
                                             }
@@ -322,24 +309,24 @@ include_once('../includes/preloader.php');
         </div>
     <?php
     } else if (isset($sem_check) && $sem_check == 'No Sem') {
-        ?>
-            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="row d-flex">
-                                <div class="col-12 text-center">
-                                    <a href="../admin-settings/index.php" class="text-decoration-none text-dark">
-                                        <p class="m-0"><span class="text-primary fw-bold">Click to Set new Semester</span>.</p>
-                                    </a>
-                                </div>
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="../admin-settings/index.php" class="text-decoration-none text-dark">
+                                    <p class="m-0"><span class="text-primary fw-bold">Click to Set new Semester</span>.</p>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        <?php
-        }
+        </div>
+    <?php
+    }
     ?>
     <?php
     require_once('../includes/js.php');

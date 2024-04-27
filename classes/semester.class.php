@@ -35,7 +35,7 @@ class Semester
 
     function show()
     {
-        $sql = "SELECT * FROM semester";
+        $sql = "SELECT * FROM semester ORDER BY semester_id DESC";
         $query = $this->db->connect()->prepare($sql);
         $data = null;
         if ($query->execute()) {
@@ -61,9 +61,19 @@ class Semester
         }
     }
 
+    function fetch_db()
+    {
+        $sql = "SELECT * FROM semester WHERE view_status = 'Active' AND start_date < (SELECT end_date FROM semester WHERE view_status = 'Active')  AND end_date <= (SELECT end_date FROM semester WHERE view_status = 'Active') LIMIT 1;";
+        $query = $this->db->connect()->prepare($sql);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
     function fetch()
     {
-        $sql = "SELECT * FROM semester WHERE status = 'Current' LIMIT 1;";
+        $sql = "SELECT * FROM semester WHERE status = 'Current'  LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         if ($query->execute()) {
             $data = $query->fetch();
@@ -80,6 +90,35 @@ class Semester
         if ($query->execute()) {
             return true;
         } else {
+            return false;
+        }
+    }
+
+    function view_semester()
+    {
+        $connect = $this->db->connect();
+        $connect->beginTransaction();
+
+        $sql = "UPDATE semester SET view_status = 'Inactive'";
+
+
+        $query = $connect->prepare($sql);
+
+        if ($query->execute()) {
+            $sec_sql = "UPDATE semester SET view_status = 'Active' WHERE semester_id = :semester_id";
+
+            $sec_query = $connect->prepare($sec_sql);
+            $sec_query->bindParam(':semester_id', $this->semester_id);
+
+            if ($sec_query->execute()) {
+                $connect->commit();
+                return true;
+            } else {
+                $connect->rollBack();
+                return false;
+            }
+        } else {
+            $connect->rollBack();
             return false;
         }
     }
