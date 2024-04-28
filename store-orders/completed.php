@@ -51,13 +51,14 @@ include_once('../includes/preloader.php');
                                 <thead>
                                     <tr class="align-middle">
                                         <th scope="col"></th>
-                                        <th scope="col"></th>
+                                      
                                         <th scope="col" class="">Customer Name</th>
                                         <th scope="col" class="">Total Price</th>
                                         <th scope="col" class="text-center">Payment Method</th>
                                         <th scope="col" class="text-center">Order Fulfillment</th>
                                         <th scope="col" class="text-center">Status</th>
-                                        <th scope="col" class="text-center"></th>
+                                          <th scope="col">Date</th>
+                                        <th scope="col" class="text-end"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -69,11 +70,7 @@ include_once('../includes/preloader.php');
                                     ?>
                                         <tr class="align-middle">
                                             <td><?= $counter ?></td>
-                                            <td> <img src="<?php if (isset($item['profile_image'])) {
-                                                                echo "../images/data/" . $item['profile_image'];
-                                                            } else {
-                                                                echo "../images/main/no-profile.jpg";
-                                                            } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"> </td>
+
                                             <td class=""><?php if (isset($item['middlename'])) {
                                                                 echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
                                                             } else {
@@ -83,7 +80,8 @@ include_once('../includes/preloader.php');
                                             <td class="text-center"><?= $item['payment_method'] ?></td>
                                             <td class="text-center"><?= $item['fulfillment_method'] ?></td>
                                             <td class="text-center"><?= $item['order_status'] ?></td>
-                                            <td class="text-center text-nowrap">
+                                            <td><?= date('F d Y', strtotime($item['is_created'])) ?></td>
+                                            <td class="text-end text-nowrap">
                                                 <div class="m-0 p-0">
                                                     <a href="./order-view.php?store_id=<?php echo $record['store_id'] . '&order_id=' . $item['order_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
                                                 </div>

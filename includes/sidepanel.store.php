@@ -61,7 +61,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $invent_page ?>" aria-current="page" href="../store-product/index.php?store_id=<?= $record['store_id'] ?>">
+                                <a class="nav-link text-secondary fw-semibold <?= $invent_page ?>" aria-current="page" href="../store-product/inventory.php?store_id=<?= $record['store_id'] ?>">
                                     Inventory
                                 </a>
                             </li>
@@ -118,34 +118,39 @@
                     </div>
                 </div>
             </div>
-            <div class="accordion-item border-0 d-none">
+            <div class="accordion-item border-0">
                 <h2 class="accordion-header" id="flush-headingFour">
-                    <button class="accordion-button px-2 pt-3 pb-2 <?php if (!isset($users_page)) {
+                    <button class="accordion-button px-2 pt-3 pb-2 <?php if (!isset($sales_page)) {
                                                                         echo 'collapsed';
-                                                                    }  ?>" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="<?php if (isset($users_page)) {
+                                                                    }  ?>" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="<?php if (isset($sales_page)) {
                                                                                                                                                                             echo 'true';
                                                                                                                                                                         } else {
                                                                                                                                                                             echo 'false';
                                                                                                                                                                         } ?>" aria-controls="flush-collapseFour">
-                        <p class="nav-link text-secondary fw-semibold m-0 <?= $users_page ?>">
-                            <i class="fa-solid fa-truck"></i>
-                            Delivery
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $sales_page ?>">
+                            <i class="fa-solid fa-chart-column"></i>
+                            Sales
                         </p>
                     </button>
                 </h2>
-                <div id="flush-collapseFour" class="accordion-collapse collapse <?php if (isset($users_page)) {
+                <div id="flush-collapseFour" class="accordion-collapse collapse <?php if (isset($sales_page)) {
                                                                                     echo 'show';
                                                                                 } ?>" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $user_page ?>" aria-current="page" href="../admin-users/index.php">
-                                    User List
+                                <a class="nav-link text-secondary fw-semibold <?= $daily_page ?>" aria-current="page" href="../store-sales/index.php?store_id=<?= $record['store_id'] ?>">
+                                    Daily
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $create_page ?>" href="../admin-users/create.php">
-                                    Create Account
+                                <a class="nav-link text-secondary fw-semibold <?= $monthly_page ?>" href="../store-sales/monthly.php?store_id=<?= $record['store_id'] ?>">
+                                    Monthly
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $yearly_page ?>" href="../store-sales/yearly.php?store_id=<?= $record['store_id'] ?>">
+                                    Yearly
                                 </a>
                             </li>
                         </ul>
