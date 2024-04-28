@@ -40,7 +40,7 @@ include_once('../includes/preloader.php');
                         </p>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <button class="dropdown-item border-0 bg-white" data-bs-toggle="modal" data-bs-target="#userRoleModal">Settings</button>
+                                <button class="dropdown-item border-0 bg-white" onclick="window.location.href = 'edit_profile.php'">Settings</button>
                             </li>
                         </ul>
                     </div>

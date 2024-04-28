@@ -262,4 +262,25 @@ class Account
         }
         return $data;
     }
+
+    function edit(){
+        $sql = "UPDATE account SET firstname=:firstname, 
+                                   lastname=:lastname, 
+                                   middlename=:middlename
+                WHERE account_id = :account_id;";
+    
+        $query=$this->db->connect()->prepare($sql);
+        $query->bindParam(':firstname', $this->firstname);
+        $query->bindParam(':lastname', $this->lastname);
+        $query->bindParam(':middlename', $this->middlename);
+        
+        $query->bindParam(':account_id', $this->account_id);
+        
+        if($query->execute()){
+          return true;
+        }
+        else{
+          return false;
+        }   
+      }
 }
