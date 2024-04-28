@@ -99,5 +99,15 @@ class Moderator
             return false;
         }
     }
-    
+
+    function fetch_college_assigned($college_assigned)
+    {
+        $sql = "SELECT college_name FROM college WHERE college_id = :college_id";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_id', $college_assigned);
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
 }

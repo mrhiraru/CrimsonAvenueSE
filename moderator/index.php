@@ -108,18 +108,18 @@ include_once('../includes/preloader.php');
                                         <div class="card-body d-flex flex-column">
                                             <div class="row m-0 h-100">
                                                 <p class="col-12 m-0 fw-semibold fs-4 text-primary">College:</p>
+                                                <?php
+                                                $mod = new Moderator();
+                                                $col_data = $mod->fetch_college_assigned($_SESSION['college_assigned']);
+                                                ?>
                                                 <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
-                                                    college name assigned
-
+                                                    <?= $col_data['college_name'] ?>
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </div>
-
-
-
                             <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
                                 <a href="../admin-users/index.php" class=" text-decoration-none">
                                     <div class="card shadow border-0 mb-3">
@@ -129,7 +129,7 @@ include_once('../includes/preloader.php');
                                                 <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
                                                     <?php
                                                     $acc = new Account();
-                                                    $countResult = $acc->count();
+                                                    $countResult = $acc->count_mod($_SESSION['college_assigned']);
 
 
                                                     if (!empty($countResult) && count($countResult) === 1) {
@@ -137,7 +137,7 @@ include_once('../includes/preloader.php');
                                                         $totalCount = $countResult[0][0];
                                                         echo $totalCount;
                                                     } else {
-                                                        echo "Error: Unable to fetch total count of User.";
+                                                        echo "No Users";
                                                     }
                                                     ?>
                                                 </p>

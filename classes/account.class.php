@@ -263,6 +263,20 @@ class Account
         return $data;
     }
 
+    
+    function count_mod($college_id)
+    {
+
+        $sql = "SELECT COUNT(account_id) AS account_count FROM account WHERE is_deleted != 1 AND college_id = :college_id AND is_created <= (SELECT end_date FROM semester WHERE view_status = 'Active')";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_id', $college_id);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function edit(){
         $sql = "UPDATE account SET firstname=:firstname, 
                                    lastname=:lastname, 
