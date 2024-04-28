@@ -17,6 +17,7 @@ class Product
     public $estimated_order_time;
     public $discount_amount;
     public $discount_type;
+    public $listing_status;
     public $is_deleted;
 
     protected $db;
@@ -541,7 +542,7 @@ class Product
         return $data;
     }
 
-    
+
     function count_mod($college_id)
     {
 
@@ -569,5 +570,37 @@ class Product
         } else {
             return false;
         }
+    }
+
+    function update_listing()
+    {
+        $sql = "UPDATE product SET listing_status = :listing_status WHERE product_id = :product_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':product_id', $this->product_id);
+        $query->bindParam(':listing_status', $this->listing_status);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function check_info($product_id)
+    {
+        $sql = "SELECT 
+        (SELECT COUNT(*) FROM product_images WHERE product_id = :product_id) AS image_count,
+        (SELECT COUNT(*) FROM variation WHERE product_id = :product_id) AS variation_count,
+        (SELECT COUNT(*) FROM product_desc WHERE product_id = :product_id) AS description_count,
+        (SELECT COUNT(*) FROM measurement WHERE product_id = :product_id) AS measurement_count;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':product_id', $product_id);
+
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
     }
 }

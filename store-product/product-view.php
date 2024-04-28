@@ -23,6 +23,36 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./index.php?store_id=' . $record['store_id']);
 }
 
+if (isset($_POST['listing_status'])) {
+
+    $product_check = $product->check_info($pro_record['product_id']);
+    if (
+        $product_check['image_count'] > 0 &&
+        $product_check['variation_count'] > 0 &&
+        $product_check['description_count'] > 0 &&
+        $product_check['measurement_count'] > 0
+    ) {
+        $product->listing_status = htmlentities($_POST['listing_status']);
+        $product->product_id = $pro_record['product_id'];
+
+        if (validate_field($product->listing_status)) {
+            if ($product->update_listing()) {
+                if ($product->listing_status == "Listed") {
+                    $success = "success listed";
+                } else {
+                    $success = "success unlisted";
+                }
+            } else {
+                $success = "failed";
+            }
+        } else {
+            $success = "failed";
+        }
+    } else {
+        $success = "failed";
+    }
+}
+
 include_once('./product.configuration-process.php');
 
 ?>
@@ -51,6 +81,22 @@ include_once('../includes/preloader.php');
                     <div class="container-fluid bg-white shadow rounded m-0 p-3">
                         <div class="row d-flex justify-content-center m-0 p-0">
                             <?php include_once('./product.details.php'); ?>
+                        </div>
+                    </div>
+                    <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
+                        <div class="row d-flex justify-content-between m-0 p-0">
+                            <div class="col-12 m-0 p-0 px-2">
+                                <form action="" method="post" class="row d-flex justify-content-center" id="sellForm">
+                                    <div class="col-12 col-md-6 col-lg-3 m-0 p-1 d-flex">
+                                        <input type="radio" class="btn-check" name="listing_status" id="Unlisted" value="Unlisted" <?= $pro_record['listing_status'] == "Unlisted" ? "checked" : "" ?> onchange="autoSubmitStatus()">
+                                        <label class="btn btn-outline-secondary flex-fill fw-semibold " for="Unlisted">Unlist Product</label>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-3 m-0 p-1 d-flex">
+                                        <input type="radio" class="btn-check" name="listing_status" id="Listed" value="Listed" <?= $pro_record['listing_status'] == "Listed" ? "checked" : "" ?> onchange="autoSubmitStatus()">
+                                        <label class="btn btn-outline-secondary flex-fill fw-semibold " for="Listed">List Product</label>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
@@ -507,10 +553,73 @@ include_once('../includes/preloader.php');
         </div>
     </main>
     <?php
+    if (isset($_POST['listing_status']) && $success == 'success listed') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="<?= './product-view.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Product has been successfully listed for sale!<br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['listing_status']) && $success == 'success unlisted') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="<?= './product-view.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Product has been successfully unlisted!<br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    } else if (isset($_POST['listing_status']) && $success == 'failed') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="<?= './product-view.php?store_id=' . $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Product listing failed!<br> Please ensure your product is configured completely.<br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
+    <?php
     include_once('./product.configuration-modals.php');
     require_once('../includes/js.php');
     ?>
     <script src="../js/product-conguration.datatable.js"></script>
+    <script>
+        function autoSubmitStatus() {
+            var formObject = document.forms['sellForm'];
+            formObject.submit();
+        }
+    </script>
 </body>
 
 </html>
