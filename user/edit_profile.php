@@ -193,11 +193,7 @@ include_once('../includes/preloader.php');
                                             Contact:
                                         </span>
                                         <div class="col-12 col-md-6">
-                                            <input type="text" class="form-control" id="contact" placeholder="+63" name="contact" aria-describedby="contact" value="<?php if (isset($_POST['contact'])) {
-                                                                                                                                                                            echo $_POST['contact'];
-                                                                                                                                                                          } else if (isset($account->contact)) {
-                                                                                                                                                                            echo $account->contact;
-                                                                                                                                                                          } ?>">
+                                            <input type="text" class="form-control" id="contact" placeholder="+63" name="contact" aria-describedby="contact" value="<?= $_SESSION['contact'] ?>">
                                         </div>
                                     </td>
                                 </tr>
@@ -207,11 +203,7 @@ include_once('../includes/preloader.php');
                                             Address:
                                         </span>
                                         <div class="col-12 col-md-6">
-                                        <input type="text" class="form-control" id="address" name="address" aria-describedby="address" value="<?php if (isset($_POST['address'])) {
-                                                                                                                                                      echo $_POST['address'];
-                                                                                                                                                    } else if (isset($account->address)) {
-                                                                                                                                                      echo $account->address;
-                                                                                                                                                    } ?>">
+                                        <input type="text" class="form-control" id="address" name="address" aria-describedby="address" value="<?= $_SESSION['address'] ?>">
                                         </div>
                                     </td>
                                 </tr>
