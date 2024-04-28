@@ -81,7 +81,7 @@ class Cart
 
         $ids = array_map('intval', $ids);
 
-        $sql = "SELECT ci.*, ci.product_id AS cart_product_id, ci.variation_id AS cart_variation_id, ci.measurement_id AS cart_measurement_id, s.delivery_charge, s.store_id, p.product_name, p.sale_status, v.variation_name, m.measurement_name, i.image_file, p.selling_price AS product_selling_price, p.commission AS product_commission, st.selling_price AS stock_selling_price, st.commission AS stock_commission, pr.*, pr.selling_price AS prices_selling_price, pr.commission AS prices_commission
+        $sql = "SELECT ci.*, ci.product_id AS cart_product_id, ci.variation_id AS cart_variation_id, ci.measurement_id AS cart_measurement_id, s.delivery_charge, s.store_id, p.product_name, p.sale_status, p.discount_amount, p.discount_type, v.variation_name, m.measurement_name, i.image_file, p.selling_price AS product_selling_price, p.commission AS product_commission, st.selling_price AS stock_selling_price, st.commission AS stock_commission, pr.*, pr.selling_price AS prices_selling_price, pr.commission AS prices_commission
         FROM cart_item ci
         INNER JOIN product p ON ci.product_id = p.product_id AND p.is_deleted  != 1
         INNER JOIN variation v ON ci.variation_id = v.variation_id AND v.is_deleted != 1
