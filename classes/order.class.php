@@ -343,7 +343,7 @@ class Order
         }
         return $data;
     }
-     function calculateTotalCommission()
+    function calculateTotalCommission()
     {
         $sql = "SELECT SUM(commission_total) AS total_commission
                 FROM orders
@@ -358,7 +358,8 @@ class Order
             return false;
         }
     }
-    function calculateTotalSales() {
+    function calculateTotalSales()
+    {
         $sql = "SELECT SUM(oi.selling_price + oi.commission) AS total_sales
                 FROM orders o
                 INNER JOIN order_item oi ON o.order_id = oi.order_id
@@ -376,7 +377,8 @@ class Order
             return false;
         }
     }
-    function calculateTotalUnpaid() {
+    function calculateTotalUnpaid()
+    {
         $sql = "SELECT SUM(oi.commission) AS total_unpaid_commission
                 FROM orders o
                 INNER JOIN order_item oi ON o.order_id = oi.order_id
@@ -393,7 +395,17 @@ class Order
             return false;
         }
     }
-    
-    
 
+    function fetch_status($order_id)
+    {
+        $sql = "SELECT order_status FROM orders WHERE order_id = :order_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':order_id', $order_id);
+
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
 }

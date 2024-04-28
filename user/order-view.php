@@ -17,7 +17,7 @@ require_once "../classes/order.class.php";
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "Profile | Crimson Avenue";
+$title = "Order View | Crimson Avenue";
 $user_profile = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
@@ -38,12 +38,18 @@ include_once('../includes/preloader.php');
                         <p class="m-0 p-0 fs-6 fw-bold text-dark align-bottom "><span class="text-secondary fw-semibold">Order No:</span> <?= $_GET['order_id'] ?></p>
                     </div>
                     <div class="col-12 m-0 p-0">
-                        <hr class="mb-0">
+                        <hr class="mb-3">
+                    </div>
+                    <?php
+                    $order = new Order();
+                    $record = $order->fetch_status($_GET['order_id']);
+                    ?>
+                    <div class="col-12 m-0 p-0 <?= $record['order_status'] != "Completed" ? "d-none" : "" ?>">
+                        <div id="MyButtons" class=""></div>
                     </div>
                     <table id="myorders" class="table table-lg mt-1">
                         <thead>
                             <tr class="align-middle">
-                                <th scope="col" class="fs-7"></th>
                                 <th scope="col" class="fs-7"></th>
                                 <th scope="col" class="fs-7">Product Name</th>
                                 <th scope="col" class="fs-7">Variation</th>
@@ -62,13 +68,6 @@ include_once('../includes/preloader.php');
                             ?>
                                 <tr class="align-middle">
                                     <td><?= $counter ?></td>
-                                    <td class="">
-                                        <img src=" <?php if (isset($item['image_file'])) {
-                                                        echo "../images/data/" . $item['image_file'];
-                                                    } else {
-                                                        echo "../images/main/no-profile.jpg";
-                                                    } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1">
-                                    </td>
                                     <td class=""><?= $item['product_name'] ?></td>
                                     <td class=""><?= $item['variation_name'] ?></td>
                                     <td class=""><?= $item['measurement_name'] ?></td>
@@ -90,7 +89,7 @@ include_once('../includes/preloader.php');
     require_once('../includes/footer.php');
     require_once('../includes/js.php');
     ?>
-    <script src="../js/order.datatable.js"></script>
+    <script src="../js/order-view.datable.js"></script>
 </body>
 
 </html>
