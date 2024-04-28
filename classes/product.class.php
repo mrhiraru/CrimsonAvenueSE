@@ -388,7 +388,7 @@ class Product
         LEFT JOIN (SELECT product_id, variation_name FROM variation WHERE is_deleted != 1) v ON p.product_id = v.product_id
         LEFT JOIN (SELECT product_id, measurement_name, value_unit FROM measurement WHERE is_deleted != 1) m ON p.product_id = m.product_id
         LEFT JOIN (SELECT product_id, image_file FROM product_images WHERE is_deleted != 1 GROUP BY product_id) i ON p.product_id = i.product_id 
-        WHERE p.is_deleted != 1";
+        WHERE p.is_deleted != 1 AND p.listing_status = 'Listed'";
 
         if (isset($search) && $search != '') {
             $first_counter = 0;
