@@ -56,7 +56,7 @@ include_once('../includes/preloader.php');
                                         <th scope="col">Category</th>
                                         <th scope="col">Exclusivity</th>
                                         <th scope="col">Availability</th>
-                                        <th scope="col">Restriction Status</th>
+                                        <th scope="col">Listing Status</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -78,7 +78,7 @@ include_once('../includes/preloader.php');
                                             <td ><?= $item['category_name'] ?></td>
                                             <td ><?= $item['exclusivity'] ?></td>
                                             <td ><?= $item['sale_status'] ?></td>
-                                            <td ><?= $item['restriction_status'] ?></td>
+                                            <td ><?= $item['listing_status'] ?></td>
                                             <td class="text-center text-nowrap">
                                                 <div class="m-0 p-0">
                                                     <a href="./product-view.php?store_id=<?php echo $record['store_id'].'&product_id='.$item['product_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
