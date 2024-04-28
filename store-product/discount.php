@@ -28,14 +28,14 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 if (isset($_POST['save-discount'])) {
-    $product->product_id = htmlentities($_POST['product_id']);
+    $product->product_id = $pro_record['product_id'];
     $product->discount_amount = htmlentities($_POST['discount_amount']);
     $product->discount_type = htmlentities($_POST['discount_type']);
 
     if (
-        validate_field($stock->$product->product_id) &&
-        validate_field($stock->discount_amount) &&
-        validate_field($stock->discount_type)
+        validate_field($product->product_id) &&
+        validate_field($product->discount_amount) &&
+        validate_field($product->discount_type)
     ) {
         if ($product->update_discount()) {
             $success = 'success';
@@ -113,7 +113,7 @@ include_once('../includes/preloader.php');
                                     <div class="row">
                                         <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-4">
                                             <span for="discount_amount" class="form-label">Discount Amount:</span>
-                                            <input type="number" class="form-control" id="discount_amount" name="discount_amount" require step="any" oninput="negativetozero(this)" value="<?php if (isset($admin_data['discount_amount'])) {
+                                            <input type="number" class="form-control" id="discount_amount" name="discount_amount" require step="any" oninput="negativetozero(this)" value="<?php if (isset($pro_record['discount_amount'])) {
                                                                                                                                                                                                 echo $pro_record['discount_amount'];
                                                                                                                                                                                             } else if (isset($_POST['discount_amount'])) {
                                                                                                                                                                                                 echo $_POST['discount_amount'];
