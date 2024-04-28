@@ -769,6 +769,12 @@ include_once('../includes/preloader.php');
                                         Cash Payment
                                     </label>
                                 </div>
+                                <div class="m-0 p-0 col-auto ms-2 mb-2 text-center d-none">
+                                    <input class="form-check-input  btn-check" type="radio" name="method" id="GCash" value="GCash">
+                                    <label class="btn btn-outline-primary btn-small fw-semibold d-none fs-7 lh-sm" for="GCash">
+                                        GCash Payment
+                                    </label>
+                                </div>
                             </div>
                             <div class="form-group m-0 p-0 row col-12 d-flex justify-content-end align-items-start">
                                 <div class="col-auto m-0 p-0 mb-2 flex-fill">
