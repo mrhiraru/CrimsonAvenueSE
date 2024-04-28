@@ -8,7 +8,8 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/store.class.php')
+require_once('../classes/store.class.php');
+
 ?>
 
 <!DOCTYPE html>
