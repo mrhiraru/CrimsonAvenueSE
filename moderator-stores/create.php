@@ -113,10 +113,10 @@ include_once('../includes/preloader.php');
                                 </div>
                                 <div class="mb-2 p-0 col-12">
                                     <select name="account_id" id="account_id" class="form-select" list="names">
-                                        <option value="">Select Owner (Email)</option>
+                                        <option value="">Select Owner</option>
                                         <?php
                                         $account = new Account();
-                                        $accountArray = $account->show();
+                                        $accountArray = $account->show_mod($_SESSION['college_assigned']);
                                         foreach ($accountArray as $item) { ?>
                                             <option value="<?= $item['account_id'] ?>" <?php if ((isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id'])) {
                                                                                             echo 'selected';
@@ -126,7 +126,7 @@ include_once('../includes/preloader.php');
                                                                                                     echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
                                                                                                 } else {
                                                                                                     echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
-                                                                                                } */ echo $item['email'] ?></option>
+                                                                                                } */ echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])) .' | '. $item['email']; ?></option>
                                         <?php
                                         }
                                         ?>

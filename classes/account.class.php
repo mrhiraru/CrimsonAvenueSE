@@ -198,6 +198,21 @@ class Account
         }
         return $data;
     }
+
+    function show_mod($college_id)
+    {
+        $sql = "SELECT * FROM account 
+        WHERE is_deleted != 1 AND college_id = :college_id AND is_created < (SELECT end_date FROM semester WHERE view_status = 'Active')
+        ORDER BY account_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_id', $college_id);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function show_moderator($college_assigned)
     {
         $sql = "SELECT * FROM account WHERE is_deleted != 1 AND college_id = :college_assigned ORDER BY account_id ASC;";
@@ -263,7 +278,7 @@ class Account
         return $data;
     }
 
-    
+
     function count_mod($college_id)
     {
 
@@ -277,27 +292,28 @@ class Account
         return $data;
     }
 
-    function edit(){
+    function edit()
+    {
         $sql = "UPDATE account SET firstname=:firstname, 
                                    lastname=:lastname, 
                                    middlename=:middlename
                 WHERE account_id = :account_id;";
-    
-        $query=$this->db->connect()->prepare($sql);
+
+        $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':firstname', $this->firstname);
         $query->bindParam(':lastname', $this->lastname);
         $query->bindParam(':middlename', $this->middlename);
-        
+
         $query->bindParam(':account_id', $this->account_id);
-        
-        if($query->execute()){
-          return true;
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
         }
-        else{
-          return false;
-        }   
-      }
-      function update($account_id, $data) {
+    }
+    function update($account_id, $data)
+    {
 
         $sql = "UPDATE account SET 
                     firstname = :firstname,
@@ -323,8 +339,7 @@ class Account
         if ($query->execute()) {
             return true;
         } else {
-            return false; 
+            return false;
         }
     }
-
 }
