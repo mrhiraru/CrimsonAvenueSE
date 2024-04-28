@@ -15,6 +15,8 @@ class Product
     public $restriction_status;
     public $order_quantity_limit;
     public $estimated_order_time;
+    public $discount_amount;
+    public $discount_type;
     public $is_deleted;
 
     protected $db;
@@ -537,5 +539,21 @@ class Product
             $data = $query->fetchAll();
         }
         return $data;
+    }
+
+    function update_discount()
+    {
+        $sql = "UPDATE product SET discount_amount = :discount_amount, discount_type = :discount_type WHERE product_id = :product_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':discount_amount', $this->discount_amount);
+        $query->bindParam(':discount_type', $this->discount_type);
+        $query->bindParam(':product_id', $this->product_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

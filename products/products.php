@@ -90,7 +90,27 @@ include_once('../includes/preloader.php');
                                         <div class="col-12 m-0 mt-1 p-0 d-flex flex-column">
                                             <p class="fs-6 text-nowrap fw-semibold text-dark m-0 p-0 lh-sm text-truncate"> <?= ucwords(strtolower($item['product_name'])) ?> </p>
                                             <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> By <span class="text-primary"><?= $item['store_name'] ?></span> </p>
-                                            <p class="fs-5 text-nowrap fw-bold text-primary m-0 mt-1 lh-1  text-truncate"><?= '₱' . number_format($item['selling_price'] + $item['commission'], 2, '.', ',') ?></p>
+                                            <?php
+                                            if (isset($item['discount_amount']) && isset($item['discount_type'])) {
+                                                if ($item['discount_type'] == "Percentage") {
+                                                    $original_price = ($item['selling_price'] + $item['commission']);
+                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount'] / 100));
+                                            ?>
+                                                    <p class="fs-5 text-nowrap fw-bold text-white m-0 mt-1 lh-1  text-truncate bg-primary p-1 rounded-1 "><?= '₱' . number_format($discounted_price, 2, '.', ',') ?><span class="fs-7"><?= ' ' . $item['discount_amount'] . '% Discount' ?></span></p>
+                                                <?php
+                                                } else if ($item['discount_type'] == "Fixed") {
+                                                    $original_price = ($item['selling_price'] + $item['commission']);
+                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                ?>
+                                                    <p class="fs-5 text-nowrap fw-bold text-white m-0 mt-1 lh-1  text-truncate bg-primary p-1 rounded-1 "><?= '₱' . number_format($discounted_price, 2, '.', ',') ?><span class="fs-7"><?= ' ₱' . $item['discount_amount'] . ' Discount' ?></span></p>
+                                                <?php
+                                                }
+                                            } else {
+                                                ?>
+                                                <p class="fs-5 text-nowrap fw-bold text-primary m-0 mt-1 lh-1  text-truncate"><?= '₱' . number_format($item['selling_price'] + $item['commission'], 2, '.', ',') ?></p>
+                                            <?php
+                                            }
+                                            ?>
                                             <p class="fs-7 text-nowrap fw-semibold text-secondary m-0 mt-1 p-0 lh-sm  text-truncate"> For <span class="text-primary"><?= $item['exclusivity'] ?></span> </p>
                                         </div>
                                     </a>

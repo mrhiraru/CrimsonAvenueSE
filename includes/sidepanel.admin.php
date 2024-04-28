@@ -71,6 +71,13 @@
                         <p class="nav-link text-secondary fw-semibold m-0 <?= $stores_page ?>">
                             <i class="fa-solid fa-store"></i>
                             Stores
+                            <?php 
+                                        require_once('../classes/store.class.php');
+                                        $store = new Store();
+                                        $storeCountToVerify = $store->countStoresToVerify();
+                                        if ($storeCountToVerify > 0) { ?>
+                                    <span class="badge bg-danger rounded-circle"><?php echo min($storeCountToVerify, 99); ?></span>
+                            <?php } ?>
                         </p>
                     </button>
                 </h2>
@@ -80,13 +87,21 @@
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $store_page ?>" aria-current="page" href="../admin-stores/index.php">
-                                    Store List
-                                </a>
+                            <a class="nav-link text-secondary fw-semibold <?= $store_page ?>" aria-current="page" href="../admin-stores/index.php">
+                                Store List
+                            </a>
+
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-secondary fw-semibold <?= $registration_page ?>" href="../admin-stores/registrations.php">
                                     Registrations
+                                    <?php 
+                                        require_once('../classes/store.class.php');
+                                        $store = new Store();
+                                        $storeCountToVerify = $store->countStoresToVerify();
+                                        if ($storeCountToVerify > 0) { ?>
+                                    <span class="badge bg-danger rounded-circle"><?php echo min($storeCountToVerify, 99); ?></span>
+                                <?php } ?>
                                 </a>
                             </li>
                             <li class="nav-item">

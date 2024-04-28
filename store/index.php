@@ -105,7 +105,7 @@ include_once('../includes/preloader.php');
                                 </div>
                             </div>
 
-                            <div class="row h-auto d-flex justify-content-center m-0 p-0">
+                            <div class="row h-auto mb-4 d-flex justify-content-center">  
                                 <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
                                     <div class="card shadow border-0">
                                         <div class="card-body d-flex flex-column">
@@ -132,59 +132,129 @@ include_once('../includes/preloader.php');
                                 </div>
 
                                 <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
-                                    <div class="card shadow border-0">
-                                        <div class="card-body d-flex flex-column">
-                                            <div class="row m-0 h-100">
-                                                <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Solds</p>
-                                                <?php
-                                                require_once('../classes/order.class.php');
-                                                if (isset($_GET['store_id']) && $_GET['store_id'] !== null) {
-                                                    $store_id = $_GET['store_id'];
-                                                    $orders = new Order();
-                                                    $num_orders = $orders->count_solds($store_id);
+                                        <div class="card shadow border-0">
+                                            <div class="card-body d-flex flex-column">
+                                                <div class="row m-0 h-100">
+                                                    <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Solds</p>
+                                                    <?php
+                                                    require_once('../classes/order.class.php');
+                                                    if (isset($_GET['store_id']) && $_GET['store_id'] !== null) {
+                                                        $store_id = $_GET['store_id'];
+                                                        $orders = new Order();
+                                                        $num_orders = $orders->count_solds($store_id);
 
-                                                    if ($num_orders !== null) {
-                                                        echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $num_orders . '</p>';
+                                                        if ($num_orders !== null) {
+                                                            echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $num_orders . '</p>';
+                                                        } else {
+                                                            echo "Failed to retrieve the total number of orders.";
+                                                        }
                                                     } else {
-                                                        echo "Failed to retrieve the total number of orders.";
+                                                        echo "Store ID parameter is missing or null in the URL.";
                                                     }
-                                                } else {
-                                                    echo "Store ID parameter is missing or null in the URL.";
-                                                }
-                                                
-                                            ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
-                                <div class="card shadow border-0">
-                                    <div class="card-body d-flex flex-column">
-                                        <div class="row m-0 h-100">
-                                            <p class="col-12 m-0 fw-semibold fs-4 text-primary">Orders</p>
-                                            <?php
-                                                require_once('../classes/order.class.php');
-
-                                                if (isset($_GET['store_id']) && $_GET['store_id'] !== null) {
-                                                    $store_id = $_GET['store_id'];
-                                                    $order = new Order();
-                                                    $num_orders = $order->count($store_id);
-
-                                                    if ($num_orders !== null) {
-                                                        echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $num_orders . '</p>';
-                                                    } else {
-                                                        echo "Failed to retrieve the total number of orders.";
-                                                    }
-                                                } else {
-                                                    echo "Store ID parameter is missing or null in the URL.";
-                                                }
-
+                                                    
                                                 ?>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
+                                    <div class="card shadow border-0">
+                                        <div class="card-body d-flex flex-column">
+                                            <div class="row m-0 h-100">
+                                                <p class="col-12 m-0 fw-semibold fs-4 text-primary">Orders</p>
+                                                <?php
+                                                    require_once('../classes/order.class.php');
+
+                                                    if (isset($_GET['store_id']) && $_GET['store_id'] !== null) {
+                                                        $store_id = $_GET['store_id'];
+                                                        $order = new Order();
+                                                        $num_orders = $order->count($store_id);
+
+                                                        if ($num_orders !== null) {
+                                                            echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">' . $num_orders . '</p>';
+                                                        } else {
+                                                            echo "Failed to retrieve the total number of orders.";
+                                                        }
+                                                    } else {
+                                                        echo "Store ID parameter is missing or null in the URL.";
+                                                    }
+
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
                             </div>
+                            <?php
+                                $store_id = isset($_GET['store_id']) ? $_GET['store_id'] : null;
+                                $store = new Store();
+                                $totalSales = $store->calculateTotalSalesByStore($store_id);
+                                ?>
+                            <div class="row h-auto mb-4 d-flex justify-content-center">  
+                                <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
+                                    <div class="card shadow border-0">
+                                        <div class="card-body d-flex flex-column">
+                                            <div class="row m-0 h-100">
+                                                <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Sales</p>
+                                                <?php if ($totalSales !== false) : ?>
+                                                    <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">₱ <?php echo $totalSales; ?></p>
+                                                <?php else : ?>
+                                                    <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">Error: Unable to fetch total sales.</p>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
+                                    <div class="card shadow border-0">
+                                        <div class="card-body d-flex flex-column">
+                                            <div class="row m-0 h-100">
+                                                <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Paid Commission</p>
+                                                <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
+                                                    <?php
+                                                    $store_id = $_GET['store_id']; 
+                                                    $orders = new Store();
+                                                    $totalPaidCommission = $orders->calculateTotalPaidCommissionByStore($store_id);
+                                                    if ($totalPaidCommission !== false) {
+                                                        echo '₱ ' . number_format($totalPaidCommission, 2); 
+                                                    } else {
+                                                        echo "Error: Unable to fetch total paid commission.";
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
+                                <div class="card shadow border-0">
+                                    <div class="card-body d-flex flex-column">
+                                        <div class="row m-0 h-100">
+                                            <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Unpaid Commission</p>
+                                            <?php
+                                            $order = new Store();
+                                            $store_id = $_GET['store_id']; 
+                                            $totalUnpaidCommission = $order->calculateTotalUnpaidCommissionByStore($store_id);
+                                            if ($totalUnpaidCommission !== false) {
+                                                echo '<p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">₱ ' . $totalUnpaidCommission . '</p>';
+                                            } else {
+                                                echo '<p class="col-12 m-0 text-danger">Error: Unable to fetch total unpaid commission.</p>';
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </div>
+                                
+                           
 
 
 

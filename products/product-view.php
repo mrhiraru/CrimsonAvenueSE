@@ -158,7 +158,35 @@ include_once('../includes/preloader.php');
                             </div>
                         </div>
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
-                        <p class="fs-1 text-nowrap fw-bold text-primary m-0 lh-1  text-truncate" id="price"> <?= '₱' . number_format($record['selling_price'] + $record['commission'], 2, '.', ',') ?> </p>
+                        <p class="fs-1 text-nowrap fw-bold text-primary m-0 lh-1  text-truncate" id="price"> <?php
+                                                                                                                if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                                                                                    if ($record['discount_type'] == "Percentage") {
+                                                                                                                        $original_price = ($record['selling_price'] + $record['commission']);
+                                                                                                                        $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+
+                                                                                                                        echo "₱ " . number_format($discounted_price, 2, '.', ',');
+                                                                                                                    } else if ($record['discount_type'] == "Fixed") {
+                                                                                                                        $original_price = ($record['selling_price'] + $record['commission']);
+                                                                                                                        $discounted_price = $original_price - $record['discount_amount'];
+
+                                                                                                                        echo "₱ " . number_format($discounted_price, 2, '.', ',');
+                                                                                                                    }
+                                                                                                                } else {
+                                                                                                                    echo "₱ " . number_format($record['selling_price'] + $record['commission'], 2, '.', ',');
+                                                                                                                }
+                                                                                                                ?>
+                            <span class="fs-4">
+                                <?php
+                                if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                    if ($record['discount_type'] == "Percentage") {
+                                        echo  ' ' . $record['discount_amount'] . '% Discount';
+                                    } else if ($record['discount_type'] == "Fixed") {
+                                        echo ' ₱' . $record['discount_amount'] . ' Discount';
+                                    }
+                                }
+                                ?>
+                            </span>
+                        </p>
                         <div class="col-12 m-0 my-1 p-0 border-top"></div>
                         <form action="" method="post" class="col-12" id="orderForm">
                             <input type="hidden" name="product_id" value="<?= $record['product_id'] ?>">

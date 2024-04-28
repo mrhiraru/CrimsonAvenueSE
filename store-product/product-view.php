@@ -60,6 +60,9 @@ include_once('../includes/preloader.php');
                                     <li class="nav-item">
                                         <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-decoration-underline active disabled" aria-current="page" href="">Configuration</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link py-0 px-3 px-lg-5 fw-bold text-secondary" aria-current="page" href="./discount.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>">Discount</a>
+                                    </li>
                                     <li class="nav-item text-truncate">
                                         <?php
                                         $first_variation = $variation->get_first($pro_record['product_id']);
