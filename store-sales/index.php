@@ -21,7 +21,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "Pending Orders | Crimson Avenue";
+$title = "Daily Sales | Crimson Avenue";
 $sales_page = "active";
 $daily_page = "active";
 require_once('../includes/head.php');
