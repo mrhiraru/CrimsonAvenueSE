@@ -256,7 +256,7 @@ class Account
 
     function fetch($account_id)
     {
-        $sql = "SELECT a.*, c.college_name, d.department_name FROM account a LEFT JOIN college c ON a.college_id = c.college_id LEFT JOIN department d ON a.department_id = d.department_id WHERE account_id = :account_id LIMIT 1;";
+        $sql = "SELECT a.*, c.college_name, c.college_id, d.department_id, d.department_name FROM account a LEFT JOIN college c ON a.college_id = c.college_id LEFT JOIN department d ON a.department_id = d.department_id WHERE account_id = :account_id LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $account_id);
         if ($query->execute()) {

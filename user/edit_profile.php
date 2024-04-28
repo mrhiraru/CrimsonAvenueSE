@@ -12,8 +12,11 @@ require_once "../classes/store.class.php";
 require_once "../classes/order.class.php";
 require_once "../classes/account.class.php";
 
-$store = new Account();
-$record = $store->fetch($_SESSION['account_id']);
+require_once('../classes/college.class.php');
+require_once('../classes/department.class.php');
+
+$account = new Account();
+$record = $account->fetch($_SESSION['account_id']);
 
 
 ?>
@@ -47,8 +50,6 @@ include_once('../includes/preloader.php');
                     </div>
                     <div class="col-12 col-lg-auto m-0 p-2 d-flex justify-content-start align-items-start flex-fill row">
                         <?php
-                        require_once('../classes/college.class.php');
-                        require_once('../classes/department.class.php');
 
 
                         if (isset($_POST['edit_account'])) {
@@ -172,9 +173,9 @@ include_once('../includes/preloader.php');
                                                 $college = new College();
                                                 $collegeArray = $college->show();
                                                 foreach ($collegeArray as $item) { ?>
-                                                    <option value="<?= $item['college_id'] ?>" <?php if ((isset($_POST['college_id']) && $_POST['college_id'] == $item['college_id'])) {
+                                                    <option value="<?= $item['college_id'] ?>" <?php if (isset($_POST['college_id']) && $_POST['college_id'] == $item['college_id']) {
                                                                                                     echo 'selected';
-                                                                                                } else if ((isset($_SESSION['college_id']) && $_SESSION['college_id'] == $item['college_id'])) {
+                                                                                                } else if (isset($record['college_id']) && $record['college_id'] == $item['college_id']) {
                                                                                                     echo 'selected';
                                                                                                 } ?>><?= $item['college_name'] ?></option>
                                                 <?php
@@ -196,9 +197,9 @@ include_once('../includes/preloader.php');
                                                 $department = new Department();
                                                 $departmentArray = $department->show();
                                                 foreach ($departmentArray as $item) { ?>
-                                                    <option value="<?= $item['department_id'] ?>" <?php if ((isset($_POST['department_id']) && $_POST['department_id'] == $item['department_id'])) {
+                                                    <option value="<?= $item['department_id'] ?>" <?php if (isset($_POST['department_id']) && $_POST['department_id'] == $item['department_id']) {
                                                                                                         echo 'selected';
-                                                                                                    } else if ((isset($_SESSION['department_id']) && $_SESSION['department_id'] == $item['department_id'])) {
+                                                                                                    } else if (isset($record['department_id']) && $record['department_id'] == $item['department_id']) {
                                                                                                         echo 'selected';
                                                                                                     } ?>><?= $item['department_name'] ?></option>
                                                 <?php
