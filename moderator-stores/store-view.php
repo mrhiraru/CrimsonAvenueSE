@@ -234,6 +234,83 @@ include_once('../includes/preloader.php');
                             </div>
                         </div>
                     </div>
+                    <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3" id="orderListContainer">
+                        <div class="row d-flex justify-content-center m-0 p-0">
+                            <div class="col-12 m-0 p-0 px-2">
+                                <p class="m-0 p-0 fs-5 fw-bold text-dark lh-1 flex-fill">
+                                    Commission Status
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-center m-0 p-0">
+                            <div class="col col-12 m-0 p-0 px-2">
+                                <table class="table" id="orderTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Order</th>
+                                            <th scope="col">Order Status</th>
+                                            <th scope="col">Commission</th>
+                                            <th scope="col">Commision Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="orderTableBody">
+                                        <?php
+                                        require_once('../classes/order.class.php');
+                                        require_once('../classes/database.php');
+
+                                        $order = new Order();
+
+                                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                            if (isset($_POST['update'])) {
+                                                $order->updateCommissionStatusForCompletedOrders();
+                                                echo "Commission status updated successfully.";
+                                            }
+                                        }
+
+                                        if (isset($_GET['id'])) {
+                                            $store_id = $_GET['id'];
+                                            $orders = $order->show_order_stat($store_id);
+                                            $total_unpaid_commission = 0;
+
+                                            if ($orders) {
+                                                foreach ($orders as $orderItem) {
+                                                    $updated_order = $order->get_order_by_id($orderItem['order_id']);
+                                                    if ($updated_order['order_status'] == 'Completed') {
+                                                        if ($updated_order['commission_status'] == 'Unpaid') {
+                                                            $total_unpaid_commission += $updated_order['commission_total'];
+                                                        }
+                                        ?>
+                                                        <tr>
+                                                            <th scope='row'><?php echo $updated_order['order_id']; ?></th>
+                                                            <td><?php echo $updated_order['order_status']; ?></td>
+                                                            <td><?php echo number_format($updated_order['commission_total'], 2); ?> ₱</td>
+                                                            <td><?php echo $updated_order['commission_status']; ?></td>
+                                                        </tr>
+                                                <?php
+                                                    }
+                                                }
+                                                ?>
+                                                <tr>
+                                                    <td colspan="2" style="text-align: right;">Total Unpaid Commission: ₱</td>
+                                                    <td><?php echo number_format($total_unpaid_commission, 2); ?></td>
+                                                    <td colspan="3">
+                                                        <form method='post'>
+                                                            <button type='submit' name='update' class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none" <?php echo ($total_unpaid_commission > 0) ? '' : 'disabled'; ?>>Paid</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                        <?php
+                                            } else {
+                                                echo "<tr><td colspan='4'>No completed orders found for store ID: $store_id</td></tr>";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='4'>Store ID is not available</td></tr>";
+                                        }
+                                        ?>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     <div class="container-fluid bg-white shadow rounded m-0 mt-4 p-3">
                         <div class="row d-flex justify-content-center m-0 p-0">
                             <div class="col-12 m-0 p-0 px-2">
