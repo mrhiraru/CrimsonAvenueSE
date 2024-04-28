@@ -358,6 +358,25 @@ class Order
             return false;
         }
     }
+
+    function calculateTotalCommission_mod($college_id)
+    {
+        $sql = "SELECT SUM(commission_total) AS total_commission
+                FROM orders o
+                INNER JOIN store s ON o.store_id = s.store_id
+                WHERE commission_status = 'Paid' AND s.college_id = :college_id";
+        $query = $this->db->connect()->prepare($sql);
+
+        $query->bindParam(':college_id', $college_id);
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($result !== false && isset($result['total_commission'])) {
+            return $result['total_commission'];
+        } else {
+            return false;
+        }
+    }
     function calculateTotalSales()
     {
         $sql = "SELECT SUM(oi.selling_price + oi.commission) AS total_sales
@@ -377,6 +396,31 @@ class Order
             return false;
         }
     }
+
+
+    function calculateTotalSales_mod($college_id)
+    {
+        $sql = "SELECT SUM(oi.selling_price + oi.commission) AS total_sales
+                FROM orders o
+                INNER JOIN order_item oi ON o.order_id = oi.order_id
+                INNER JOIN store s ON o.store_id = s.store_id
+                WHERE o.order_status = 'Completed' AND s.college_id = :college_id";
+        $query = $this->db->connect()->prepare($sql);
+
+        $query->bindParam(':college_id', $college_id);
+        if ($query->execute()) {
+
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return $result['total_sales'];
+            } else {
+                return 0;
+            }
+        } else {
+            return false;
+        }
+    }
+
     function calculateTotalUnpaid()
     {
         $sql = "SELECT SUM(oi.commission) AS total_unpaid_commission
@@ -384,6 +428,29 @@ class Order
                 INNER JOIN order_item oi ON o.order_id = oi.order_id
                 WHERE o.commission_status = 'Unpaid'";
         $query = $this->db->connect()->prepare($sql);
+        if ($query->execute()) {
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return $result['total_unpaid_commission'];
+            } else {
+                return 0;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    function calculateTotalUnpaid_mod($college_id)
+    {
+        $sql = "SELECT SUM(oi.commission) AS total_unpaid_commission
+                FROM orders o
+                INNER JOIN order_item oi ON o.order_id = oi.order_id
+            
+                INNER JOIN store s ON o.store_id = s.store_id
+                WHERE o.commission_status = 'Unpaid' AND s.college_id = :college_id";
+        $query = $this->db->connect()->prepare($sql);
+
+        $query->bindParam(':college_id', $college_id);
         if ($query->execute()) {
             $result = $query->fetch(PDO::FETCH_ASSOC);
             if ($result) {
