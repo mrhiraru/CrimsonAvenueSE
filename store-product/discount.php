@@ -27,6 +27,26 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./index.php?store_id=' . $record['store_id']);
 }
 
+if (isset($_POST['save-discount'])) {
+    $product->product_id = htmlentities($_POST['product_id']);
+    $product->discount_amount = htmlentities($_POST['discount_amount']);
+    $product->discount_type = htmlentities($_POST['discount_type']);
+
+    if (
+        validate_field($stock->$product->product_id) &&
+        validate_field($stock->discount_amount) &&
+        validate_field($stock->discount_type)
+    ) {
+        if ($product->update_discount()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -142,7 +162,27 @@ include_once('../includes/preloader.php');
             </div>
         </div>
     </main>
-
+    <?php
+    if (isset($_POST['save-discount']) && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row d-flex">
+                            <div class="col-12 text-center">
+                                <a href="./discount.php?store_id=<?= $pro_record['store_id'] . '&product_id=' . $pro_record['product_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Discount is succesfully added to this product! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    ?>
     <?php
     require_once('../includes/js.php');
     ?>
