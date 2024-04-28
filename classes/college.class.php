@@ -71,6 +71,24 @@ class College
         return $data;
     }
 
+    function show_mod($college_id)
+    {
+        // Note: Update query to count stores per college!
+        $sql = "SELECT c.*, COALESCE(d.dept_count, 0) as dept_count, COALESCE(s.store_count, 0) as store_count
+        FROM college c 
+        LEFT JOIN (SELECT college_id, COUNT(*) as dept_count FROM department WHERE is_deleted != 1 GROUP BY college_id) d ON c.college_id = d.college_id 
+        LEFT JOIN (SELECT college_id, COUNT(*) as store_count FROM store WHERE is_deleted != 1 GROUP BY college_id) s ON c.college_id = s.college_id 
+        WHERE c.is_deleted != 1 AND c.college_id = :college_id AND c.is_created < (SELECT end_date FROM semester WHERE view_status = 'Active')  ORDER BY c.college_id ASC;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_id', $college_id);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function count()
     {
         // Note: Update query to count stores per college!

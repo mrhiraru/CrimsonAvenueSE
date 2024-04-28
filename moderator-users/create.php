@@ -264,7 +264,7 @@ include_once('../includes/preloader.php');
                                         <option value="">Select College</option>
                                         <?php
                                         $college = new College();
-                                        $collegeArray = $college->show();
+                                        $collegeArray = $college->show_mod($_SESSION['college_assigned']);
                                         foreach ($collegeArray as $item) { ?>
                                             <option value="<?= $item['college_id'] ?>" <?php if ((isset($_POST['college']) && $_POST['college'] == $item['college_id'])) {
                                                                                             echo 'selected';
