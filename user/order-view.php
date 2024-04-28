@@ -35,7 +35,7 @@ include_once('../includes/preloader.php');
                         <a href="./profile.php" class="text-primary fw-semibold fs-6 text-decoration-none "> <i class="fa-solid fa-arrow-left"></i> Back</a>
                     </div>
                     <div class="col-9 m-0 p-0 text-end">
-                        <p class="m-0 p-0 fs-6 fw-bold text-dark align-bottom "><span class="text-secondary fw-semibold">Order No:</span> <?= $_GET['order_id'] ?></p>
+                        <p class="m-0 p-0 fs-6 fw-bold text-dark align-bottom d-none"><span class="text-secondary fw-semibold">Order No:</span> <?= $_GET['order_id'] ?></p>
                     </div>
                     <div class="col-12 m-0 p-0">
                         <hr class="mb-3">
@@ -85,16 +85,16 @@ include_once('../includes/preloader.php');
                                 <td class=""></td>
                                 <td></td>
                                 <td class=""></td>
-                                <td class="text-end">Total Payment:</td>
-                                <td class=""><?= '₱' . number_format($total_payment, 2, '.', ',') ?></td>
+                                <td class="text-end text-secondary">Total Payment:</td>
+                                <td class="fw-semibold"><?= '₱' . number_format($total_payment, 2, '.', ',') ?></td>
                             </tr>
                             <tr class="align-middle">
-                                <td class="">Order ID:</td>
-                                <td class=""><?= $_GET['order_id'] ?></td>
+                                <td class="text-secondary">Order ID:</td>
+                                <td class="fw-semibold"><?= $_GET['order_id'] ?></td>
                                 <td class=""></td>
                                 <td class=""></td>
-                                <td class="text-end">Store:</td>
-                                <td class=""><?= $record['store_name'] ?></td>
+                                <td class="text-end text-secondary">Store:</td>
+                                <td class="fw-semibold"><?= $record['store_name'] ?></td>
                             </tr>
                         </tbody>
                     </table>
