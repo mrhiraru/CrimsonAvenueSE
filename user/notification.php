@@ -39,16 +39,17 @@ include_once('../classes/order.class.php');
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                                require_once('../classes/order.class.php');
-                                require_once('../classes/store.class.php');
+                        <?php
+                            require_once('../classes/order.class.php');
+                            require_once('../classes/store.class.php');
+                            require_once('../classes/stock.class.php');
 
-                                $order = new Order();
+                            $order = new Order();
+                            $store = new Store();
+                            $stock = new Stock();
+                            if(isset($_SESSION['account_id'])) {
                                 $user_id = $_SESSION['account_id'];
-
-                                $store = new Store();
                                 $store_id = $store->getStoreIdByAccountId($user_id);
-
                                 if ($store_id) {
                                     $new_orders_count = $store->checkForNewOrders($store_id);
 
@@ -58,9 +59,19 @@ include_once('../classes/order.class.php');
                                         echo "<p class='ps-3'>No new orders in your store.</p>";
                                     }
                                 } else {
-                                    echo "<p class='ps-3'></p>";
+                                    echo "<p class='ps-3'>Store ID not found for the current user.</p>";
                                 }
-
+                                $low_stock_products = $stock->getLowStockProducts($store_id);
+                                if ($low_stock_products) {
+                                    foreach ($low_stock_products as $product) {
+                                        $product_name = $product['product_name'];
+                                        $variation_name = $product['variation_name'];
+                                        $stock_quantity = $product['stock_quantity'];
+                                        echo "<p class='ps-3'>Low stock alert: Product '$product_name', Variation '$variation_name' is low on stock. Current stock quantity: $stock_quantity.</p>";
+                                    }
+                                } else {
+                                    echo "<p class='ps-3'>No low stock products found.</p>";
+                                }
                                 if ($order->checkOrderStatusUpdateByAccount($user_id)) {
                                     $orders = $order->getOrdersByAccount($user_id);
 
@@ -83,17 +94,16 @@ include_once('../classes/order.class.php');
                                             default:
                                                 $notification_message = "Your Order is still pending. Please wait for the seller to accept.";
                                         }
-                                ?>
-                                <tr class="align-middle">
-                                    <td></td>
-                                    <td><?= $notification_message ?></td>
-                                    <td></td>
-                                    <td><?= date("F j, Y h:i:s A", strtotime($order_update_time)) ?></td>
-                                </tr>
-                                <?php
+                                        echo "<p class='ps-3'>$notification_message - " . date("F j, Y h:i:s A", strtotime($order_update_time)) . "</p>";
                                     }
                                 }
-                                ?>
+                            } else {
+                                echo "<p class='ps-3'>User not logged in or account ID not set in session.</p>";
+                            }
+                            ?>
+
+
+
 
 
 

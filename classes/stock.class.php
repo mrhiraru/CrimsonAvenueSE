@@ -190,4 +190,28 @@ class Stock
             return false;
         }
     }
+    function getLowStockProducts($store_id) {
+        $low_stock_threshold_percentage = 5; // Threshold percentage for low stock
+        $sql = "SELECT p.product_name, v.variation_name, s.stock_quantity
+                FROM stock s
+                INNER JOIN product p ON s.product_id = p.product_id
+                INNER JOIN variation v ON s.variation_id = v.variation_id
+                WHERE p.store_id = :store_id
+                AND s.stock_quantity <= (s.stock_quantity * :threshold)";
+        
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id, PDO::PARAM_INT);
+        $threshold = $low_stock_threshold_percentage / 100; // Convert percentage to decimal
+        $query->bindParam(':threshold', $threshold, PDO::PARAM_STR);
+        
+        if ($query->execute()) {
+            $low_stock_products = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $low_stock_products;
+        } else {
+            return false;
+        }
+    }
+    
+    
+    
 }
