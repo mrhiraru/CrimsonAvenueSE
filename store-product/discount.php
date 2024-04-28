@@ -88,6 +88,54 @@ include_once('../includes/preloader.php');
                             <div class="col-12 m-0 p-0">
                                 <hr class="mb-3">
                             </div>
+                            <div class="col-12 m-0 p-0 px-3">
+                                <form method="post" action="" class="col-12">
+                                    <div class="row">
+                                        <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-4">
+                                            <span for="discount_amount" class="form-label">Discount Amount:</span>
+                                            <input type="number" class="form-control" id="discount_amount" name="discount_amount" require step="any" oninput="negativetozero(this)" value="<?php if (isset($admin_data['discount_amount'])) {
+                                                                                                                                                                                                echo $pro_record['discount_amount'];
+                                                                                                                                                                                            } else if (isset($_POST['discount_amount'])) {
+                                                                                                                                                                                                echo $_POST['discount_amount'];
+                                                                                                                                                                                            } ?>">
+                                            <?php
+                                            if (isset($_POST['discount_amount']) && !validate_field($_POST['discount_amount'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">Discount amount is required.</p>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-4">
+                                            <span for="discount_type" class="form-label">Discount Type:</span>
+                                            <select class="form-select" id="discount_type" name="discount_type">
+                                                <option value=""> </option>
+                                                <option value="Percentage" <?php if ((isset($_POST['discount_type']) && $_POST['discount_type'] == "Percentage")) {
+                                                                                echo 'selected';
+                                                                            } else if ((isset($pro_record['discount_type']) && $pro_record['discount_type'] == "Percentage")) {
+                                                                                echo 'selected';
+                                                                            } ?>>Percentage</option>
+                                                <option value="Fixed" <?php if ((isset($_POST['discount_type']) && $_POST['discount_type'] == "Fixed")) {
+                                                                            echo 'selected';
+                                                                        } else if ((isset($pro_record['discount_type']) && $pro_record['discount_type'] == "Fixed")) {
+                                                                            echo 'selected';
+                                                                        } ?>>Fixed</option>
+                                            </select>
+                                            <?php
+                                            if (isset($_POST['discount_type']) && !validate_field($_POST['discount_type'])) {
+                                            ?>
+                                                <p class="fs-7 text-primary m-0 ps-2">No discount type is selected.</p>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="mb-3 p-0 pe-md-2 col-12 col-md-6 col-lg-4 text-end">
+                                            <br>
+                                            <input type="submit" class="btn btn-primary btn-settings-size" value="Update" name="save-discount">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </main>
