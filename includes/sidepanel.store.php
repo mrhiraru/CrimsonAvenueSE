@@ -60,6 +60,11 @@
                                     Add Product
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $invent_page ?>" aria-current="page" href="../store-product/index.php?store_id=<?= $record['store_id'] ?>">
+                                    Inventory
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

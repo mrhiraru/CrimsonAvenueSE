@@ -25,7 +25,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 // Change title for each page.
 $title = "Store Inventory | Crimson Avenue";
 $product_page = "active";
-$products_page = "active";
+$invent_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>
@@ -53,12 +53,12 @@ include_once('../includes/preloader.php');
                                 <thead>
                                     <tr class="align-middle">
                                         <th scope="col"></th>
-                                        <th scope="col"></th>
                                         <th scope="col">Product Name</th>
                                         <th scope="col">Variation</th>
                                         <th scope="col">Measurement</th>
-                                        <th scope="col">Total Stock</th>
-                                        <th scope="col">Total Sold</th>
+                                        <th scope="col" class="text-center">Total Stock</th>
+                                        <th scope="col" class="text-center">Total Sold</th>
+                                        <th scope="col"></th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -71,21 +71,16 @@ include_once('../includes/preloader.php');
                                     ?>
                                         <tr class="align-middle">
                                             <td><?= $counter ?></td>
-                                            <td></td>
+
                                             <td><?= $item['product_name'] ?></td>
                                             <td><?= $item['variation_name'] ?></td>
                                             <td><?= $item['measurement_name'] ?></td>
-                                            <td><?= $item['Total_Stock'] ?></td>
-                                            <td><?= $item['Total_Sold'] ?></td>
+                                            <td class="text-center"><?= $item['Total_Stock'] ?></td>
+                                            <td class="text-center"><?= $item['Total_Sold'] ?></td>
+                                            <td></td>
                                             <td class="text-center text-nowrap">
-                                                <?php
-                                                $variation = new Variation();
-                                                $first_variation = $variation->get_first($item['product_id']);
-                                                $measurement = new Measurement();
-                                                $first_measurement = $measurement->get_first($item['product_id']);
-                                                ?>
                                                 <div class="m-0 p-0">
-                                                    <a href="./product-inventory.php?store_id=<?php echo $record['store_id'] . '&product_id=' . $item['product_id'] . '&variation_id=' . $first_variation['variation_id'] . '&measurement_id=' . $first_measurement['measurement_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">View</a>
+                                                    <a href="./product-inventory.php?store_id=<?php echo $record['store_id'] . '&product_id=' . $item['product_id'] . '&variation_id=' . $item['variation_id'] . '&measurement_id=' . $item['measurement_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">View</a>
                                                 </div>
                                             </td>
                                         </tr>
