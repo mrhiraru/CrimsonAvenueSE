@@ -110,11 +110,48 @@ include_once('../includes/preloader.php');
                                                         <td class="">
                                                             <input class="form-check-input" type="checkbox" name="<?= $counter ?>" value="<?= $item['cart_item_id'] ?>" data-subtotal="<?php
                                                                                                                                                                                         if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
-                                                                                                                                                                                            echo ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
+                                                                                                                                                                                            if (isset($item['discount_amount']) && isset($item['discount_type'])) {
+                                                                                                                                                                                                if ($item['discount_type'] == "Percentage") {
+                                                                                                                                                                                                    $original_price = ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
+                                                                                                                                                                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount'] / 100));
+                                                                                                                                                                                                    echo $discounted_price;
+                                                                                                                                                                                                } else if ($item['discount_type'] == "Fixed") {
+                                                                                                                                                                                                    $original_price = ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
+                                                                                                                                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                                                                                                                                    echo $discounted_price;
+                                                                                                                                                                                                }
+                                                                                                                                                                                            } else {
+                                                                                                                                                                                                echo ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
+                                                                                                                                                                                            }
                                                                                                                                                                                         } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
-                                                                                                                                                                                            echo ($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'];
+
+                                                                                                                                                                                            if (isset($item['discount_amount']) && isset($item['discount_type'])) {
+                                                                                                                                                                                                if ($item['discount_type'] == "Percentage") {
+                                                                                                                                                                                                    $original_price = ($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'];
+                                                                                                                                                                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount'] / 100));
+                                                                                                                                                                                                    echo $discounted_price;
+                                                                                                                                                                                                } else if ($item['discount_type'] == "Fixed") {
+                                                                                                                                                                                                    $original_price = ($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'];
+                                                                                                                                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                                                                                                                                    echo $discounted_price;
+                                                                                                                                                                                                }
+                                                                                                                                                                                            } else {
+                                                                                                                                                                                                echo ($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'];
+                                                                                                                                                                                            }
                                                                                                                                                                                         } else {
-                                                                                                                                                                                            echo ($item['product_selling_price'] + $item['product_commission']) * $item['quantity'];
+                                                                                                                                                                                            if (isset($item['discount_amount']) && isset($item['discount_type'])) {
+                                                                                                                                                                                                if ($item['discount_type'] == "Percentage") {
+                                                                                                                                                                                                    $original_price = ($item['product_selling_price'] + $item['product_commission']) * $item['quantity'];
+                                                                                                                                                                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount'] / 100));
+                                                                                                                                                                                                    echo $discounted_price;
+                                                                                                                                                                                                } else if ($item['discount_type'] == "Fixed") {
+                                                                                                                                                                                                    $original_price = ($item['product_selling_price'] + $item['product_commission']) * $item['quantity'];
+                                                                                                                                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                                                                                                                                    echo $discounted_price;
+                                                                                                                                                                                                }
+                                                                                                                                                                                            } else {
+                                                                                                                                                                                                echo ($item['product_selling_price'] + $item['product_commission']) * $item['quantity'];
+                                                                                                                                                                                            }
                                                                                                                                                                                         }
                                                                                                                                                                                         ?>" data-counter="<?= $counter ?>" onchange="updateTotal(this, <?= $counter ?>)">
                                                         </td>
@@ -129,19 +166,94 @@ include_once('../includes/preloader.php');
                                                         <td class=""><?= $item['measurement_name'] ?></td>
                                                         <td class=""><?= $item['quantity'] ?></td>
                                                         <td class=""><?php if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
-                                                                            echo '₱' . number_format($item['stock_selling_price'] + $item['stock_commission'], 2, '.', ',');
+
+                                                                            if (isset($item['discount_amount']) && isset($item['discount_type'])) {
+                                                                                if ($item['discount_type'] == "Percentage") {
+                                                                                    $original_price = ($item['stock_selling_price'] + $item['stock_commission']);
+                                                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount'] / 100));
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                } else if ($item['discount_type'] == "Fixed") {
+                                                                                    $original_price = ($item['stock_selling_price'] + $item['stock_commission']);
+                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                }
+                                                                            } else {
+                                                                                echo '₱' . number_format($item['stock_selling_price'] + $item['stock_commission'], 2, '.', ',');
+                                                                            }
                                                                         } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
-                                                                            echo '₱' . number_format($item['prices_selling_price'] + $item['prices_commission'], 2, '.', ',');
+
+                                                                            if (isset($item['discount_amount']) && isset($item['discount_type'])) {
+                                                                                if ($item['discount_type'] == "Percentage") {
+                                                                                    $original_price = ($item['prices_selling_price'] + $item['prices_commission']);
+                                                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount'] / 100));
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                } else if ($item['discount_type'] == "Fixed") {
+                                                                                    $original_price = ($item['prices_selling_price'] + $item['prices_commission']);
+                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                }
+                                                                            } else {
+                                                                                echo '₱' . number_format($item['prices_selling_price'] + $item['prices_commission'], 2, '.', ',');
+                                                                            }
                                                                         } else {
-                                                                            echo '₱' . number_format($item['product_selling_price'] + $item['product_commission'], 2, '.', ',');
+                                                                            if (isset($item['discount_amount']) && isset($item['discount_type'])) {
+                                                                                if ($item['discount_type'] == "Percentage") {
+                                                                                    $original_price = ($item['product_selling_price'] + $item['product_commission']);
+                                                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount'] / 100));
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                } else if ($item['discount_type'] == "Fixed") {
+                                                                                    $original_price = ($item['product_selling_price'] + $item['product_commission']);
+                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                }
+                                                                            } else {
+                                                                                echo '₱' . number_format($item['product_selling_price'] + $item['product_commission'], 2, '.', ',');
+                                                                            }
                                                                         } ?></td>
                                                         <td class=""><?php
                                                                         if (isset($item['stock_selling_price']) && $item['sale_status'] == "On-hand") {
-                                                                            echo '₱' . number_format(($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'], 2, '.', ',');
+                                                                            if (isset($item['discount_amount']) && isset($item['discount_type'])) {
+                                                                                if ($item['discount_type'] == "Percentage") {
+                                                                                    $original_price = ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
+                                                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount'] / 100));
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                } else if ($item['discount_type'] == "Fixed") {
+                                                                                    $original_price = ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
+                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                }
+                                                                            } else {
+                                                                                echo '₱' . number_format(($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'], 2, '.', ',');
+                                                                            }
                                                                         } else if (isset($item['prices_selling_price']) && $item['sale_status'] == "Pre-order") {
-                                                                            echo '₱' . number_format(($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'], 2, '.', ',');
+
+                                                                            if (isset($item['discount_amount']) && isset($item['discount_type'])) {
+                                                                                if ($item['discount_type'] == "Percentage") {
+                                                                                    $original_price = ($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'];
+                                                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount'] / 100));
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                } else if ($item['discount_type'] == "Fixed") {
+                                                                                    $original_price = ($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'];
+                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                }
+                                                                            } else {
+                                                                                echo '₱' . number_format(($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'], 2, '.', ',');
+                                                                            }
                                                                         } else {
-                                                                            echo '₱' . number_format(($item['product_selling_price'] + $item['product_commission']) * $item['quantity'], 2, '.', ',');
+                                                                            if (isset($item['discount_amount']) && isset($item['discount_type'])) {
+                                                                                if ($item['discount_type'] == "Percentage") {
+                                                                                    $original_price = ($item['product_selling_price'] + $item['product_commission']) * $item['quantity'];
+                                                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount'] / 100));
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                } else if ($item['discount_type'] == "Fixed") {
+                                                                                    $original_price = ($item['product_selling_price'] + $item['product_commission']) * $item['quantity'];
+                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                    echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                                                }
+                                                                            } else {
+                                                                                echo '₱' . number_format(($item['product_selling_price'] + $item['product_commission']) * $item['quantity'], 2, '.', ',');
+                                                                            }
                                                                         }
                                                                         ?></td>
                                                         <td class="text-lg-end fs-7">

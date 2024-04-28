@@ -40,7 +40,7 @@ class Cart
 
     function show($cart_id)
     {
-        $sql = "SELECT ci.*, p.product_name, p.sale_status, s.store_name, s.store_id, v.variation_name, m.measurement_name, i.image_file, p.selling_price AS product_selling_price, p.commission AS product_commission, st.selling_price AS stock_selling_price, st.commission AS stock_commission, pr.*, pr.selling_price AS prices_selling_price, pr.commission AS prices_commission
+        $sql = "SELECT ci.*, p.product_name, p.sale_status, p.discount_amount, p.discount_type, s.store_name, s.store_id, v.variation_name, m.measurement_name, i.image_file, p.selling_price AS product_selling_price, p.commission AS product_commission, st.selling_price AS stock_selling_price, st.commission AS stock_commission, pr.*, pr.selling_price AS prices_selling_price, pr.commission AS prices_commission
         FROM cart_item ci 
         INNER JOIN product p ON p.product_id = ci.product_id AND p.is_deleted != 1 
         INNER JOIN store s ON s.store_id = p.store_id AND s.is_deleted != 1
