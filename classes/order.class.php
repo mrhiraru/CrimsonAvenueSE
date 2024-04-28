@@ -380,7 +380,7 @@ class Order
         $sql = "SELECT SUM(oi.commission) AS total_unpaid_commission
                 FROM orders o
                 INNER JOIN order_item oi ON o.order_id = oi.order_id
-                WHERE o.order_status = 'Pending' OR o.order_status = 'Processing'";
+                WHERE o.commission_status = 'Unpaid'";
         $query = $this->db->connect()->prepare($sql);
         if ($query->execute()) {
             $result = $query->fetch(PDO::FETCH_ASSOC);
