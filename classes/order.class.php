@@ -483,10 +483,8 @@ class Order
         $query->bindParam(':account_id', $account_id, PDO::PARAM_INT);
 
         if ($query->execute()) {
-            // Fetch the results
             $results = $query->fetchAll(PDO::FETCH_ASSOC);
             if ($results) {
-                // Check if any order has been updated
                 foreach ($results as $result) {
                     if ($result['order_status'] !== 'Pending') {
                         return true;
@@ -501,7 +499,7 @@ class Order
         }
     }
     function getOrdersByAccount($account_id) {
-        $sql = "SELECT oi.product_id, p.product_name, s.store_name, o.order_status
+        $sql = "SELECT oi.product_id, p.product_name, s.store_name, o.order_status,  o.is_updated
                 FROM orders o
                 INNER JOIN store s ON o.store_id = s.store_id
                 INNER JOIN order_item oi ON o.order_id = oi.order_id
@@ -519,5 +517,7 @@ class Order
             return false;
         }
     }
+  
+
 }
 

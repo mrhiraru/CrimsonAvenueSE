@@ -33,53 +33,71 @@ include_once('../classes/order.class.php');
                         <thead>
                             <tr class="align-middle">
                                 <th scope="col"></th>
-                                <th scope="col">Notification</th>
                                 <th scope="col"></th>
-                                <th scope="col">Date</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
-                        <?php
-                            require_once('../classes/order.class.php');
-
-                            $order = new Order();
-                            $user_id = $_SESSION['account_id'];
-
-                            if ($order->checkOrderStatusUpdateByAccount($user_id)) {
-                                $orders = $order->getOrdersByAccount($user_id);
-
-                                foreach ($orders as $order) {
-                                    $product_name = $order['product_name'];
-                                    $store_name = $order['store_name'];
-                                    $order_status = $order['order_status'];
-
-                                    switch ($order_status) {
-                                        case 'Processing':
-                                            $notification_message = "Your order for <strong>$product_name</strong> from <strong>$store_name</strong> is currently processing.";
-                                            break;
-                                        case 'Ready':
-                                            $notification_message = "Your order for <strong>$product_name</strong> from <strong>$store_name</strong> is ready to pick up.";
-                                            break;
-                                        case 'Completed':
-                                            $notification_message = "Thank you for ordering with us from <strong>$store_name</strong>.";
-                                            break;
-                                        default:
-                                            $notification_message = "Your Order is still pending. Please wait for the seller to accept.";
-                                    }
-                                    
-                            ?>
-                            <tr class="align-middle">
-                                <td></td>
-                                <td><?= $notification_message ?></td>
-                                <td></td>
-                                <td><?= date("F j, Y h:i:s A") ?></td>
-
-
-                            </tr>
                             <?php
+                                require_once('../classes/order.class.php');
+                                require_once('../classes/store.class.php');
+
+                                $order = new Order();
+                                $user_id = $_SESSION['account_id'];
+
+                                $store = new Store();
+                                $store_id = $store->getStoreIdByAccountId($user_id);
+
+                                if ($store_id) {
+                                    $new_orders_count = $store->checkForNewOrders($store_id);
+
+                                    if ($new_orders_count > 0) {
+                                        echo "<p class='ps-3'>You have $new_orders_count new orders in your store.</p>";
+                                    } else {
+                                        echo "<p class='ps-3'>No new orders in your store.</p>";
+                                    }
+                                } else {
+                                    echo "<p class='ps-3'></p>";
                                 }
-                            }
-                            ?>
+
+                                if ($order->checkOrderStatusUpdateByAccount($user_id)) {
+                                    $orders = $order->getOrdersByAccount($user_id);
+
+                                    foreach ($orders as $order) {
+                                        $product_name = $order['product_name'];
+                                        $store_name = $order['store_name'];
+                                        $order_status = $order['order_status'];
+                                        $order_update_time = $order['is_updated'];
+
+                                        switch ($order_status) {
+                                            case 'Processing':
+                                                $notification_message = "Your order for <strong>$product_name</strong> from <strong>$store_name</strong> is currently processing.";
+                                                break;
+                                            case 'Ready':
+                                                $notification_message = "Your order for <strong>$product_name</strong> from <strong>$store_name</strong> is ready to pick up.";
+                                                break;
+                                            case 'Completed':
+                                                $notification_message = "Thank you for ordering with us from <strong>$store_name</strong>.";
+                                                break;
+                                            default:
+                                                $notification_message = "Your Order is still pending. Please wait for the seller to accept.";
+                                        }
+                                ?>
+                                <tr class="align-middle">
+                                    <td></td>
+                                    <td><?= $notification_message ?></td>
+                                    <td></td>
+                                    <td><?= date("F j, Y h:i:s A", strtotime($order_update_time)) ?></td>
+                                </tr>
+                                <?php
+                                    }
+                                }
+                                ?>
+
+
+
+
 
                         </tbody>
                     </table>
