@@ -63,6 +63,34 @@ class Account
         }
     }
 
+    function refresh_sessions($email)
+    {
+        $sql = "SELECT a.*, c.college_name, d.department_name, m.college_id AS college_assigned, ct.cart_id FROM account a LEFT JOIN college c ON a.college_id = c.college_id LEFT JOIN department d ON a.department_id = d.department_id LEFT JOIN moderator m ON a.account_id = m.account_id AND m.is_deleted !=1 INNER JOIN cart ct ON a.account_id = ct.account_id WHERE email = :email LIMIT 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':email', $email);
+
+        if ($query->execute()) {
+            $accountData = $query->fetch(PDO::FETCH_ASSOC);
+            $this->account_id = $accountData['account_id'];
+            $this->user_role = $accountData['user_role'];
+            $this->firstname = $accountData['firstname'];
+            $this->middlename = $accountData['middlename'];
+            $this->lastname = $accountData['lastname'];
+            $this->email = $accountData['email'];
+            $this->affiliation = $accountData['affiliation'];
+            $this->verification_status = $accountData['verification_status'];
+            $this->gender = $accountData['gender'];
+            $this->contact = $accountData['contact'];
+            $this->address = $accountData['address'];
+            $this->college_name = $accountData['college_name'];
+            $this->department_name = $accountData['department_name'];
+            $this->college_assigned = $accountData['college_assigned'];
+            $this->cart_id = $accountData['cart_id'];
+
+            return true;
+        }
+    }
+
 
     function add()
     {
