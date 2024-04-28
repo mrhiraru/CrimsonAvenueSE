@@ -430,4 +430,23 @@ function store_rank_filtered($start_date, $end_date) {
 
     return $data;
 }
+
+function countStoresToVerify() 
+{
+    $sql = "SELECT COUNT(*) AS store_count
+            FROM store
+            WHERE verification_status = 'Not Verified'";
+    $query = $this->db->connect()->prepare($sql);
+    if ($query->execute()) {
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return $result['store_count'];
+        } else {
+            return 0;
+        }
+    } else {
+        return false;
+    }
+}
+
 }

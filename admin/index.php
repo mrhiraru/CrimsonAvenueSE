@@ -335,7 +335,6 @@ include_once('../includes/preloader.php');
                                                         echo '₱' . number_format($totalunpaidCommission, 2);
                                                     } else {
                                                         echo "There are no  Unpaid commissions.";
-
                                                     }
                                                     ?>
                                                 </p>
