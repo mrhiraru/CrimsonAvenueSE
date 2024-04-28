@@ -280,12 +280,12 @@ include_once('../includes/preloader.php');
                                             <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
                                                 <?php
                                                 $sales = new Order();
-                                                $totalSales = $sales->calculateTotalSales();
+                                                $totalSales = $sales->calculateTotalSales_mod($_SESSION['college_assigned']);
 
                                                 if ($totalSales !== false) {
                                                     echo '₱' . number_format($totalSales, 2);
                                                 } else {
-                                                    echo "Error: Unable to fetch total sales.";
+                                                    echo "₱0.00";
                                                 }
                                                 ?>
                                             </p>
@@ -301,12 +301,12 @@ include_once('../includes/preloader.php');
                                             <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
                                                 <?php
                                                 $commission = new Order();
-                                                $totalCommission = $commission->calculateTotalCommission();
+                                                $totalCommission = $commission->calculateTotalCommission_mod($_SESSION['college_assigned']);
 
                                                 if ($totalCommission !== false) {
                                                     echo '₱' . number_format($totalCommission, 2);
                                                 } else {
-                                                    echo "Error: Unable to fetch total commission.";
+                                                    echo "₱0.00";
                                                 }
                                                 ?>
                                             </p>
@@ -322,12 +322,12 @@ include_once('../includes/preloader.php');
                                             <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
                                                 <?php
                                                 $commissionsi = new Order();
-                                                $totalunpaidCommission = $commissionsi->calculateTotalUnpaid();
+                                                $totalunpaidCommission = $commissionsi->calculateTotalUnpaid_mod($_SESSION['college_assigned']);
 
                                                 if ($totalunpaidCommission !== false) {
                                                     echo '₱' . number_format($totalunpaidCommission, 2);
                                                 } else {
-                                                    echo "Error: Unable to fetch total commission.";
+                                                    echo "₱0.00";
                                                 }
                                                 ?>
                                             </p>
