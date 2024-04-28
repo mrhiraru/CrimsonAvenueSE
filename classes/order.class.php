@@ -278,13 +278,49 @@ class Order
         }
     }
 
-    function store_sales($store_id)
+    function store_sales_days($store_id)
     {
-        $sql = "SELECT product_name, SUM(oi.quantity), SUM(oi.selling_price), SUM(oi.commission)
+        $sql = "SELECT o.is_created AS sales_date, SUM(oi.selling_price) AS revenue, SUM(oi.commission) AS commission
         FROM orders o
-        INNER JOIN (SELECT * FROM order_item GROUP BY product_id) oi ON o.order_id = oi.order_id
+        INNER JOIN (SELECT * FROM order_item) oi ON o.order_id = oi.order_id
         INNER JOIN product p ON oi.product_id = p.product_id 
-        WHERE o.store_id = :store_id GROUP BY p.product_id";
+        WHERE o.store_id = :store_id GROUP BY DATE(o.is_created) DESC";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function store_sales_month($store_id)
+    {
+        $sql = "SELECT o.is_created AS sales_date, SUM(oi.selling_price) AS revenue, SUM(oi.commission) AS commission
+        FROM orders o
+        INNER JOIN (SELECT * FROM order_item) oi ON o.order_id = oi.order_id
+        INNER JOIN product p ON oi.product_id = p.product_id 
+        WHERE o.store_id = :store_id GROUP BY YEAR(o.is_created) DESC, MONTH(o.is_created) DESC";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function store_sales_year($store_id)
+    {
+        $sql = "SELECT o.is_created AS sales_date, SUM(oi.selling_price) AS revenue, SUM(oi.commission) AS commission
+        FROM orders o
+        INNER JOIN (SELECT * FROM order_item) oi ON o.order_id = oi.order_id
+        INNER JOIN product p ON oi.product_id = p.product_id 
+        WHERE o.store_id = :store_id GROUP BY YEAR(o.is_created) DESC";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':store_id', $store_id);

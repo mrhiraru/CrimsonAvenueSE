@@ -51,11 +51,10 @@ include_once('../includes/preloader.php');
                                 <thead>
                                     <tr class="align-middle">
                                         <th scope="col"></th>
-                                        <th scope="col" class="">Product Name</th>
-                                        <th scope="col" class="">Stock Sold</th>
-                                        <th scope="col" class="text-center">Total Sales</th>
-                                        <th scope="col" class="text-center">Revenue</th>
-                                        <th scope="col" class="text-center">Commission</th>
+                                        <th scope="col" class="">Day</th>
+                                        <th scope="col" class="">Total Sales</th>
+                                        <th scope="col" class="">Revenue</th>
+                                        <th scope="col" class="">Commission</th>
                                         <th scope="col" class="text-end"></th>
                                     </tr>
                                 </thead>
@@ -63,19 +62,19 @@ include_once('../includes/preloader.php');
                                     <?php
                                     $counter = 1;
                                     $order = new Order();
-                                    $orderArray = $order->show_order_pending($record['store_id']);
+                                    $orderArray = $order->store_sales_days($record['store_id']);
                                     foreach ($orderArray as $item) {
                                     ?>
                                         <tr class="align-middle">
-                                            <td><?= $counter ?></td>
-                                            <td class="text-center"><?= $item['payment_method'] ?></td>
-                                            <td class="text-center"><?= $item['fulfillment_method'] ?></td>
-                                            <td class="text-center"><?= $item['order_status'] ?></td>
-
-                                            <td> </td>
+                                            <td> <?= $counter ?></td>
+                                            <td><?= date('F d Y', strtotime($item['sales_date'])) ?></td>
+                                            <td class=""><?= '₱' . number_format($item['revenue'] + $item['commission'], 2, '.', ',') ?> </td>
+                                            <td class=""><?= '₱' . number_format($item['revenue'], 2, '.', ',') ?> </td>
+                                            <td class=""><?= '₱' . number_format($item['commission'], 2, '.', ',') ?> </td>
                                             <td class="text-end text-nowrap">
                                                 <div class="m-0 p-0">
-                                                    <a href="./order-view.php?store_id=<?php echo $record['store_id'] . '&order_id=' . $item['order_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
+                                                    <a href="./order-view.php?store_id=<?php //echo $record['store_id'] . '&order_id=' . $item['order_id'] 
+                                                                                        ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
                                                 </div>
                                             </td>
                                         </tr>
