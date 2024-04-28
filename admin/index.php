@@ -291,7 +291,7 @@ include_once('../includes/preloader.php');
                                                 if ($totalSales !== false) {
                                                     echo '₱' . number_format($totalSales, 2);
                                                 } else {
-                                                    echo "Error: Unable to fetch total sales.";
+                                                    echo "There no sales made.";
                                                 }
                                                 ?>
                                             </p>
@@ -312,7 +312,8 @@ include_once('../includes/preloader.php');
                                                     if ($totalCommission !== false) {
                                                         echo '₱' . number_format($totalCommission, 2);
                                                     } else {
-                                                        echo "Error: Unable to fetch total commission.";
+                                                        echo "There are no Paid commissions.";
+
                                                     }
                                                     ?>
                                                 </p>
@@ -333,7 +334,8 @@ include_once('../includes/preloader.php');
                                                     if ($totalunpaidCommission !== false) {
                                                         echo '₱' . number_format($totalunpaidCommission, 2);
                                                     } else {
-                                                        echo "Error: Unable to fetch total commission.";
+                                                        echo "There are no  Unpaid commissions.";
+
                                                     }
                                                     ?>
                                                 </p>
