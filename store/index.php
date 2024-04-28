@@ -251,17 +251,6 @@ include_once('../includes/preloader.php');
                                     </div>
                                 </div>
                             </div>
-
-                            </div>
-                                
-                           
-
-
-
-
-
-                        </div>
-
                         <a href="../admin-settings/index.php" class="text-decoration-none"></a>
                     </div>
             </div>
