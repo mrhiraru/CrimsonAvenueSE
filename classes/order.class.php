@@ -477,4 +477,47 @@ class Order
         }
         return $data;
     }
+    function checkOrderStatusUpdateByAccount($account_id) {
+        $sql = "SELECT order_status FROM orders WHERE account_id = :account_id";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id, PDO::PARAM_INT);
+
+        if ($query->execute()) {
+            // Fetch the results
+            $results = $query->fetchAll(PDO::FETCH_ASSOC);
+            if ($results) {
+                // Check if any order has been updated
+                foreach ($results as $result) {
+                    if ($result['order_status'] !== 'Pending') {
+                        return true;
+                    }
+                }
+                return false;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    function getOrdersByAccount($account_id) {
+        $sql = "SELECT oi.product_id, p.product_name, s.store_name, o.order_status
+                FROM orders o
+                INNER JOIN store s ON o.store_id = s.store_id
+                INNER JOIN order_item oi ON o.order_id = oi.order_id
+                INNER JOIN product p ON oi.product_id = p.product_id
+                WHERE o.account_id = :account_id
+                ORDER BY o.is_updated DESC";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id, PDO::PARAM_INT);
+
+        if ($query->execute()) {
+            $orders = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $orders;
+        } else {
+            return false;
+        }
+    }
 }
+
