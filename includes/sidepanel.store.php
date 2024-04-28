@@ -90,8 +90,23 @@
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $order_page ?>" aria-current="page" href="../store-orders/index.php?store_id=<?= $record['store_id'] ?>">
-                                    Order List
+                                <a class="nav-link text-secondary fw-semibold <?= $pending_page ?>" aria-current="page" href="../store-orders/index.php?store_id=<?= $record['store_id'] ?>">
+                                    Pending
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $processing_page ?>" aria-current="page" href="../store-orders/processing.php?store_id=<?= $record['store_id'] ?>">
+                                    Processing
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $ready_page ?>" aria-current="page" href="../store-orders/ready.php?store_id=<?= $record['store_id'] ?>">
+                                    Ready
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $completed_page ?>" aria-current="page" href="../store-orders/completed.php?store_id=<?= $record['store_id'] ?>">
+                                    Completed
                                 </a>
                             </li>
                             <li class="nav-item d-none">

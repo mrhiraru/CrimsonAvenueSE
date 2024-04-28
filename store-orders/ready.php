@@ -21,9 +21,9 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 <html lang="en">
 <?php
 // Change title for each page.
-$title = "Pending Orders | Crimson Avenue";
+$title = "Ready Orders | Crimson Avenue";
 $orders_page = "active";
-$pending_page = "active";
+$ready_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>
@@ -64,7 +64,7 @@ include_once('../includes/preloader.php');
                                     <?php
                                     $counter = 1;
                                     $order = new Order();
-                                    $orderArray = $order->show_order_pending($record['store_id']);
+                                    $orderArray = $order->show_order_ready($record['store_id']);
                                     foreach ($orderArray as $item) {
                                     ?>
                                         <tr class="align-middle">
