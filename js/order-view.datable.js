@@ -8,7 +8,7 @@ $(document).ready(function () {
       {
         extend: "pdfHtml5",
         text: "Download Receipt",
-        title: "Crimson Avenue Purchase Receipt",
+        title: "Crimson Avenue Receipt",
         pageSize: "LEGAL",
         customize: function (doc) {
           doc.styles.tableHeader.fontSize = 11;

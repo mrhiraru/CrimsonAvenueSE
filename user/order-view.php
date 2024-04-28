@@ -50,7 +50,7 @@ include_once('../includes/preloader.php');
                     <table id="myorders" class="table table-lg mt-1">
                         <thead>
                             <tr class="align-middle">
-                                <th scope="col" class="fs-7"></th>
+                                <th scope="col" class="fs-7 text-start">No.</th>
                                 <th scope="col" class="fs-7">Product Name</th>
                                 <th scope="col" class="fs-7">Variation</th>
                                 <th scope="col" class="fs-7">Measurement</th>
@@ -63,11 +63,11 @@ include_once('../includes/preloader.php');
                             $counter = 1;
                             $order = new Order();
                             $orderArray = $order->show_items($_GET['order_id']);
-                            $counter = 1;
+                            $total_payment = 0;
                             foreach ($orderArray as $item) {
                             ?>
                                 <tr class="align-middle">
-                                    <td><?= $counter ?></td>
+                                    <td class="text-start"><?= $counter ?></td>
                                     <td class=""><?= $item['product_name'] ?></td>
                                     <td class=""><?= $item['variation_name'] ?></td>
                                     <td class=""><?= $item['measurement_name'] ?></td>
@@ -76,9 +76,26 @@ include_once('../includes/preloader.php');
 
                                 </tr>
                             <?php
+                                $total_payment += $item['oi_selling_price'] + $item['oi_commission'];
                                 $counter++;
                             }
                             ?>
+                            <tr class="align-middle">
+                                <td></td>
+                                <td class=""></td>
+                                <td></td>
+                                <td class=""></td>
+                                <td class="text-end">Total Payment:</td>
+                                <td class=""><?= '₱' . number_format($total_payment, 2, '.', ',') ?></td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td class="">Order ID:</td>
+                                <td class=""><?= $_GET['order_id'] ?></td>
+                                <td class=""></td>
+                                <td class=""></td>
+                                <td class="text-end">Store:</td>
+                                <td class=""><?= $record['store_name'] ?></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

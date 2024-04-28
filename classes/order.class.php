@@ -398,7 +398,9 @@ class Order
 
     function fetch_status($order_id)
     {
-        $sql = "SELECT order_status FROM orders WHERE order_id = :order_id";
+        $sql = "SELECT o.order_status, s.store_name FROM orders o
+        INNER JOIN store s ON s.store_id = o.store_id
+        WHERE order_id = :order_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':order_id', $order_id);
