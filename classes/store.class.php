@@ -358,46 +358,33 @@ class Store
     
     function store_rank() {
         $sql= "SELECT
-        s.store_name,
-        c.college_name,
-        COUNT(DISTINCT p.product_id) AS products,
-        SUM(oi.quantity) AS solds,
-        SUM(oi.selling_price + oi.commission) AS sales
-    FROM
-        store s
-        LEFT JOIN college c ON s.college_id = c.college_id
-        LEFT JOIN product p ON s.store_id = p.store_id
-        LEFT JOIN order_item oi ON p.product_id = oi.product_id
-        LEFT JOIN orders o ON oi.order_id = o.order_id
-    GROUP BY
-        s.store_id,
-        c.college_id
-    HAVING
-        solds = (
-            SELECT MAX(solds)
-            FROM (
-                SELECT 
-                    s.store_id,
-                    SUM(oi.quantity) AS solds
-                FROM 
+                    s.store_name,
+                    c.college_name,
+                    COUNT(DISTINCT p.product_id) AS products,
+                    SUM(oi.quantity) AS solds,
+                    SUM(oi.selling_price + oi.commission) AS sales
+                FROM
                     store s
+                    LEFT JOIN college c ON s.college_id = c.college_id
                     LEFT JOIN product p ON s.store_id = p.store_id
                     LEFT JOIN order_item oi ON p.product_id = oi.product_id
                     LEFT JOIN orders o ON oi.order_id = o.order_id
+                WHERE 
+                    o.order_status = 'Completed' 
                 GROUP BY
-                    s.store_id
-            ) AS max_sold
-        );";
-
-    $query = $this->db->connect()->prepare($sql);
-    if ($query->execute()) {
-        $data = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $data;
-    } else {
-        return false;
+                    s.store_id,
+                    c.college_id";
+    
+        $query = $this->db->connect()->prepare($sql);
+        if ($query->execute()) {
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        } else {
+            return false;
+        }
     }
     
-}
+    
 function store_rank_filtered($start_date, $end_date) {
     $sql = "SELECT
                 s.store_name,
@@ -430,7 +417,7 @@ function store_rank_filtered($start_date, $end_date) {
                             LEFT JOIN order_item oi ON p.product_id = oi.product_id
                             LEFT JOIN orders o ON oi.order_id = o.order_id
                         WHERE
-                            o.order_status = 'completed' AND
+                            o.order_status = 'Completed' AND
                             DATE(o.is_updated) BETWEEN :start_date AND :end_date
                         GROUP BY
                             s.store_id

@@ -15,6 +15,7 @@ require_once('../classes/product.class.php');
 require_once('../classes/category.class.php');
 require_once('../classes/admin-settings.class.php');
 require_once('../classes/department.class.php');
+require_once('../classes/order.class.php');
 
 $sem = new Semester();
 $current_sem = $sem->fetch();
@@ -277,7 +278,71 @@ include_once('../includes/preloader.php');
                                     </div>
                                 </a>
                             </div>
-                        </div>
+                        <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
+                                    <div class="card shadow border-0 mb-3">
+                                        <div class="card-body d-flex flex-column">
+                                        <div class="row m-0 h-100">
+                                            <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Sales:</p>
+                                            <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
+                                                <?php
+                                                $sales = new Order();
+                                                $totalSales = $sales->calculateTotalSales();
+
+                                                if ($totalSales !== false) {
+                                                    echo '₱' . number_format($totalSales, 2);
+                                                } else {
+                                                    echo "Error: Unable to fetch total sales.";
+                                                }
+                                                ?>
+                                            </p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
+                                    <div class="card shadow border-0 mb-3">
+                                        <div class="card-body d-flex flex-column">
+                                            <div class="row m-0 h-100">
+                                                <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Commission:</p>
+                                                <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
+                                                    <?php
+                                                    $commission = new Order();
+                                                    $totalCommission = $commission->calculateTotalCommission();
+
+                                                    if ($totalCommission !== false) {
+                                                        echo '₱' . number_format($totalCommission, 2);
+                                                    } else {
+                                                        echo "Error: Unable to fetch total commission.";
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
+                                    <div class="card shadow border-0 mb-3">
+                                        <div class="card-body d-flex flex-column">
+                                            <div class="row m-0 h-100">
+                                                <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Unpaid Commission:</p>
+                                                <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
+                                                    <?php
+                                                    $commissionsi = new Order();
+                                                    $totalunpaidCommission = $commissionsi->calculateTotalUnpaid();
+
+                                                    if ($totalunpaidCommission !== false) {
+                                                        echo '₱' . number_format($totalunpaidCommission, 2);
+                                                    } else {
+                                                        echo "Error: Unable to fetch total commission.";
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            
 
                         <section class="tablesforlife p-4 mt-5">
                             <div class="container-fluid p-0">
@@ -296,7 +361,7 @@ include_once('../includes/preloader.php');
                                             }
                                         }
                                     }
-                                    ?>
+                                    ?>  
                                     <form action="" method="post" class="d-flex flex-row justify-content-between mb-4 mt-4">
                                         <p class="h2 fw-semibold fs-2 ms-3 text-primary col-4">Top Selling Store</p>
                                         <p>From</p>

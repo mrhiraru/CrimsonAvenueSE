@@ -80,7 +80,13 @@
                                                                                                                                                                         } ?>" aria-controls="flush-collapseThree">
                         <p class="nav-link text-secondary fw-semibold m-0 <?= $orders_page ?>" href="../admin/store.php">
                             <i class="fa-solid fa-list-check"></i>
-                            Orders
+                            Orders<?php 
+                            require_once('../classes/order.class.php');
+                            $pending = new order();
+                            $pending_count = $pending->countPendingOrdersForStore($record['store_id']);
+                            if ($pending_count > 0) { ?>
+                                <span class="badge bg-danger rounded-circle"><?php echo min($pending_count, 99); ?></span>
+                            <?php } ?>
                         </p>
                     </button>
                 </h2>
@@ -90,9 +96,16 @@
                     <div class="accordion-body px-0 pt-1 py-2">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $pending_page ?>" aria-current="page" href="../store-orders/index.php?store_id=<?= $record['store_id'] ?>">
-                                    Pending
-                                </a>
+                            <a class="nav-link text-secondary fw-semibold <?= $pending_page ?>" aria-current="page" href="../store-orders/index.php?store_id=<?= $record['store_id'] ?>">
+                            Pending <?php 
+                            require_once('../classes/order.class.php');
+                            $pending = new order();
+                            $pending_count = $pending->countPendingOrdersForStore($record['store_id']);
+                            if ($pending_count > 0) { ?>
+                                <span class="badge bg-danger rounded-circle"><?php echo min($pending_count, 99); ?></span>
+                            <?php } ?>
+                        </a>
+                        </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-secondary fw-semibold <?= $processing_page ?>" aria-current="page" href="../store-orders/processing.php?store_id=<?= $record['store_id'] ?>">
