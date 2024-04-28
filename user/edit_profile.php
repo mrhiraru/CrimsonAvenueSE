@@ -12,45 +12,10 @@ require_once "../classes/store.class.php";
 require_once "../classes/order.class.php";
 require_once "../classes/account.class.php";
 
+$store = new Account();
+$record = $store->fetch($_SESSION['account_id']);
 
-if(isset($_GET['account_id'])){
-    $account = new Account();
-    $record = $account->fetch($_GET['account_id']);
-    $account->firstname = $record['firstname'];
-    $account->lastname = $record['lastname'];
-    $account->middlename = $record['middlename'];
-    $account->gender = $record['gender'];
-    $account->contact = $record['contact'];
-    $account->address = $record['address'];
 
-    $account->account_id = $_GET['account_id'];
-}
-
-if (isset($_POST['edit_account'])) {
-    try {
-      $account = new Account();
-      //sanitize
-      $account->account_id = $_GET['account_id'];
-      $account->firstname = htmlentities($_POST['firstname']);
-      $account->lastname = htmlentities($_POST['lastname']);
-      $account->middlename = htmlentities($_POST['middlename']);
-  
-      if (empty($errors)) {
-        if ($account->edit()) {
-          $redirect_url = isset($_GET['account_id']) ? "./profile.php?account_id={$_GET['account_id']}" : "./profile.php";
-          header("Location: $redirect_url");
-          $message = 'Profile successfully edited.';
-          exit;
-        } else {
-          $message = 'Something went wrong editiong profile.';
-        }
-      } else {
-        throw new Exception(implode('<br>', $errors));
-      }
-    } catch (Exception $e) {
-      $error_message = $e->getMessage();
-    }
-  }
 ?>
 
 
@@ -81,7 +46,41 @@ include_once('../includes/preloader.php');
                       <hr class="mb-0">
                     </div>
                     <div class="col-12 col-lg-auto m-0 p-2 d-flex justify-content-start align-items-start flex-fill row">
-                        <form action="#" method="post">
+                    <?php
+                        require_once('../classes/college.class.php');
+                        require_once('../classes/department.class.php');
+
+
+                        if (isset($_POST['edit_account'])) {
+
+                            $firstname = $_POST['firstname'];
+                            $middlename = $_POST['middlename'];
+                            $lastname = $_POST['lastname'];
+                            $gender = $_POST['gender'];
+                            $college_id = $_POST['college_id'];
+                            $department_id = $_POST['department_id'];
+                            $contact = $_POST['contact'];
+                            $address = $_POST['address'];
+                            $account = new Account();
+                            $data = array(
+                                'firstname' => $firstname,
+                                'middlename' => $middlename,
+                                'lastname' => $lastname,
+                                'gender' => $gender,
+                                'college_id' => $college_id,
+                                'department_id' => $department_id,
+                                'contact' => $contact,
+                                'address' => $address
+                            );
+                            if ($account->update($_SESSION['account_id'], $data)) {
+                                echo "Please Relogin.";
+                            } else {
+                                echo "Error: Failed to update user data.";
+                            }
+                        }
+                        ?>
+
+                        <form method="post" action="" class="col-12" enctype="multipart/form-data">
                             <table class="table-sm m-0 w-100">
                                 <tr>
                                     <td class=" row fw-semibold text-dark">
@@ -89,32 +88,21 @@ include_once('../includes/preloader.php');
                                             <span class="text-secondary fw-normal">
                                                 First Name:
                                             </span>
-                                            <input type="text" class="form-control" id="firstname" name="firstname" aria-describedby="firstname" value="<?php if (isset($_POST['firstname'])) {
-                                                                                                                                                                echo $_POST['firstname'];
-                                                                                                                                                              } else if (isset($account->firstname)) {
-                                                                                                                                                                echo $account->firstname;
-                                                                                                                                                              } ?>">
+                                            <input type="text" class="form-control" id="firstname" name="firstname" aria-describedby="firstname" value="<?= isset($_POST['firstname']) ? $_POST['firstname'] : $record['firstname'] ?>">
                                         </div>
                                         <div class="col-6 col-md-4">
                                             <span class="text-secondary fw-normal">
                                                 Middle Name: *
                                             </span>
-                                            <input type="text" class="form-control" id="middlename" name="middlename" aria-describedby="middlename" value="<?php if (isset($_POST['middlename'])) {
-                                                                                                                                                                   echo $_POST['middlename'];
-                                                                                                                                                                 } else if (isset($account->middlename)) {
-                                                                                                                                                                   echo $account->middlename;
-                                                                                                                                                                 } ?>">
+                                            <input type="text" class="form-control" id="middlename" name="middlename" aria-describedby="middlename" value="<?= isset($_POST['middlename']) ? $_POST['middlename'] : $record['middlename'] ?>">
                                         </div>
                                         <div class="col-6 col-md-4">
                                             <span class="text-secondary fw-normal">
                                                 Last Name:
                                             </span>
-                                            <input type="text" class="form-control" id="lastname" name="lastname" aria-describedby="lastname" value="<?php if (isset($_POST['lastname'])) {
-                                                                                                                                                             echo $_POST['lastname'];
-                                                                                                                                                           } else if (isset($account->lastname)) {
-                                                                                                                                                             echo $account->lastname;
-                                                                                                                                                           } ?>">
+                                            <input type="text" class="form-control" id="lastname" name="lastname" aria-describedby="lastname" value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : $record['lastname'] ?>">
                                         </div>
+                                        
                                     </td>
                                 </tr>
                                 <tr>
@@ -125,36 +113,29 @@ include_once('../includes/preloader.php');
                                         <div class="d-flex justify-content-center justify-content-md-start">
                                             <div class="form-check me-3">
                                                 <input type="radio" class="form-check-input" id="male" name="gender" value="Male" <?php if(isset($_POST['gender']) && $_POST['gender'] == 'Male') { 
-                                                                                                                                                        echo 'checked'; 
-                                                                                                                                                     } else if(isset($account->gender) && $account->gender == 'Male'){ 
-                                                                                                                                                        echo 'checked';
-                                                                                                                                                     } ?>>
+                                                                                                                        echo 'checked'; 
+                                                                                                                    } else if(isset($record['gender']) && $record['gender'] == 'Male'){ 
+                                                                                                                        echo 'checked';
+                                                                                                                    } ?>>
                                                 <label class="form-check-label" for="male">Male</label>
                                             </div>
                                             <div class="form-check me-3">
                                                 <input type="radio" class="form-check-input" id="female" name="gender" value="Female" <?php if(isset($_POST['gender']) && $_POST['gender'] == 'Female') { 
-                                                                                                                                                        echo 'checked'; 
-                                                                                                                                                     } else if(isset($account->gender) && $account->gender == 'Female'){ 
-                                                                                                                                                        echo 'checked';
-                                                                                                                                                     } ?>>
+                                                                                                                            echo 'checked'; 
+                                                                                                                        } else if(isset($record['gender']) && $record['gender'] == 'Female'){ 
+                                                                                                                            echo 'checked';
+                                                                                                                        } ?>>
                                                 <label class="form-check-label" for="female">Female</label>
                                             </div>
                                             <div class="form-check me-3">
                                                 <input type="radio" class="form-check-input" id="other" name="gender" value="Other" <?php if(isset($_POST['gender']) && $_POST['gender'] == 'Other') { 
-                                                                                                                                                        echo 'checked'; 
-                                                                                                                                                     } else if(isset($account->gender) && $account->gender == 'Other'){ 
-                                                                                                                                                        echo 'checked';
-                                                                                                                                                     } ?>>
+                                                                                                                            echo 'checked'; 
+                                                                                                                        } else if(isset($record['gender']) && $record['gender'] == 'Other'){ 
+                                                                                                                            echo 'checked';
+                                                                                                                        } ?>>
                                                 <label class="form-check-label" for="other">Other</label>
                                             </div>
                                         </div>
-                                        <?php
-                                            if((!isset($_POST['availability']) && isset($_POST['save'])) || (isset($_POST['availability']) && !validate_field($_POST['availability']))){
-                                        ?>
-                                                <p class="text-danger my-1">Select availability of the product</p>
-                                        <?php
-                                            }
-                                        ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -163,12 +144,20 @@ include_once('../includes/preloader.php');
                                             College:
                                         </span>
                                         <div class="col-12 col-md-6">
-                                            <select type="button" class="dropdown-toggle form-select" data-bs-toggle="dropdown" id="college" name="college">
-                                                <!-- <option value="">Select Rank</option> -->
-                                                <option value="College of Computer Science" <?php if(isset($_POST['college']) && $_POST['college'] == 'College of Computer Science') { echo 'selected'; } else if(isset($account->college) && $account->college == 'College of Computer Science'){ echo 'selected'; } ?>>College of Computer Science</option>
-                                                <option value="Ikaw na to" <?php if(isset($_POST['college']) && $_POST['college'] == 'Ikaw na to') { echo 'selected'; } else if(isset($account->college) && $account->college == 'Ikaw na to'){ echo 'selected'; } ?>>Ikaw na to</option>
-                                                <option value="maglagay Dito" <?php if(isset($_POST['college']) && $_POST['college'] == 'maglagay Dito') { echo 'selected'; } else if(isset($account->college) && $account->college == 'maglagay Dito'){ echo 'selected'; } ?>>maglagay Dito</option>
-                                                <option value="Laman HEHE" <?php if(isset($_POST['college']) && $_POST['college'] == 'Laman HEHE') { echo 'selected'; } else if(isset($account->college) && $account->college == 'Laman HEHE'){ echo 'selected'; } ?>>Laman HEHE</option>
+                                            <select name="college_id" id="college_id" class="form-select" required>
+                                                <option value=""></option>
+                                                <?php
+                                                $college = new College();
+                                                $collegeArray = $college->show();
+                                                foreach ($collegeArray as $item) { ?>
+                                                    <option value="<?= $item['college_id'] ?>" <?php if ((isset($_POST['college_id']) && $_POST['college_id'] == $item['college_id'])) {
+                                                                                                    echo 'selected';
+                                                                                                } else if ((isset($record['college_id']) && $record['college_id'] == $item['college_id'])) {
+                                                                                                    echo 'selected';
+                                                                                                } ?>><?= $item['college_name'] ?></option>
+                                                <?php
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </td>
@@ -179,10 +168,20 @@ include_once('../includes/preloader.php');
                                             Department:
                                         </span>
                                         <div class="col-12 col-md-6">
-                                            <select type="button" class="dropdown-toggle form-select" data-bs-toggle="dropdown" id="department" name="department">
-                                                <!-- <option value="">Select Rank</option> -->
-                                                <option value="Information Techonology" <?php if(isset($_POST['department']) && $_POST['department'] == 'Information Techonology') { echo 'selected'; } else if(isset($account->department) && $account->department == 'Information Techonology'){ echo 'selected'; } ?>>Information Techonology</option>
-                                                <option value="Computer Science" <?php if(isset($_POST['department']) && $_POST['department'] == 'Computer Science') { echo 'selected'; } else if(isset($account->department) && $account->department == 'Computer Science'){ echo 'selected'; } ?>>Computer Science</option>
+                                            <select name="department_id" id="department_id" class="form-select" required>
+                                                <option value=""></option>
+                                                <?php
+                                                $department = new Department();
+                                                $departmentArray = $department->show();
+                                                foreach ($departmentArray as $item) { ?>
+                                                    <option value="<?= $item['department_id'] ?>" <?php if ((isset($_POST['department_id']) && $_POST['department_id'] == $item['department_id'])) {
+                                                                                                    echo 'selected';
+                                                                                                } else if ((isset($record['department_id']) && $record['department_id'] == $item['department_id'])) {
+                                                                                                    echo 'selected';
+                                                                                                } ?>><?= $item['department_name'] ?></option>
+                                                <?php
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </td>
@@ -193,7 +192,7 @@ include_once('../includes/preloader.php');
                                             Contact:
                                         </span>
                                         <div class="col-12 col-md-6">
-                                            <input type="text" class="form-control" id="contact" placeholder="+63" name="contact" aria-describedby="contact" value="<?= $_SESSION['contact'] ?>">
+                                            <input type="text" class="form-control" id="contact" placeholder="+63" name="contact" aria-describedby="contact" value="<?= isset($_POST['contact']) ? $_POST['contact'] : $_SESSION['contact'] ?>">
                                         </div>
                                     </td>
                                 </tr>
@@ -203,7 +202,7 @@ include_once('../includes/preloader.php');
                                             Address:
                                         </span>
                                         <div class="col-12 col-md-6">
-                                        <input type="text" class="form-control" id="address" name="address" aria-describedby="address" value="<?= $_SESSION['address'] ?>">
+                                        <input type="text" class="form-control" id="address" name="address" aria-describedby="address" value="<?= isset($_POST['address']) ? $_POST['address'] : $_SESSION['address'] ?>">
                                         </div>
                                     </td>
                                 </tr>
@@ -216,6 +215,7 @@ include_once('../includes/preloader.php');
                                 </tr>
                             </table>
                         </form>
+
                     </div>
                 </div>
             </div>

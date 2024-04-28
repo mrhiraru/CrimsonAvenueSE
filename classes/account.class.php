@@ -297,4 +297,34 @@ class Account
           return false;
         }   
       }
+      function update($account_id, $data) {
+
+        $sql = "UPDATE account SET 
+                    firstname = :firstname,
+                    middlename = :middlename,
+                    lastname = :lastname,
+                    gender = :gender,
+                    college_id = :college_id,
+                    department_id = :department_id,
+                    contact = :contact,
+                    address = :address
+                WHERE account_id = :account_id";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id, PDO::PARAM_INT);
+        $query->bindParam(':firstname', $data['firstname'], PDO::PARAM_STR);
+        $query->bindParam(':middlename', $data['middlename'], PDO::PARAM_STR);
+        $query->bindParam(':lastname', $data['lastname'], PDO::PARAM_STR);
+        $query->bindParam(':gender', $data['gender'], PDO::PARAM_STR);
+        $query->bindParam(':college_id', $data['college_id'], PDO::PARAM_INT);
+        $query->bindParam(':department_id', $data['department_id'], PDO::PARAM_INT);
+        $query->bindParam(':contact', $data['contact'], PDO::PARAM_STR);
+        $query->bindParam(':address', $data['address'], PDO::PARAM_STR);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false; 
+        }
+    }
+
 }
