@@ -323,43 +323,46 @@ class Store
         }
         return $data;
     }
-    
-    function show_verification($store_id) {
+
+    function show_verification($store_id)
+    {
         $sql = "SELECT verification_status FROM store WHERE store_id = :store_id";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(":store_id", $store_id);
         $data = null;
-        
+
         if ($query->execute()) {
             $data = $query->fetch(PDO::FETCH_ASSOC);
         }
-        
+
         return $data['verification_status'];
     }
-    function count_products_store($store_id) {
+    function count_products_store($store_id)
+    {
         $sql = "SELECT COUNT(*) AS num_products FROM product WHERE store_id = :store_id";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(":store_id", $store_id);
-        
+
         if ($query->execute()) {
             $result = $query->fetch(PDO::FETCH_ASSOC);
             return $result['num_products'];
         } else {
-            
+
             return false;
         }
     }
-    function show_profile($store_id) {
+    function show_profile($store_id)
+    {
         try {
 
             $sql = "SELECT * FROM store WHERE store_id = :store_id";
-            
+
             $query = $this->db->connect()->prepare($sql);
             $query->bindParam(":store_id", $store_id, PDO::PARAM_INT);
             $query->execute();
-            
+
             $result = $query->fetch(PDO::FETCH_ASSOC);
-            
+
             return $result;
         } catch (PDOException $e) {
             echo "Database Error: " . $e->getMessage();
@@ -367,9 +370,10 @@ class Store
         }
     }
 
-    
-    function store_rank() {
-        $sql= "SELECT
+
+    function store_rank()
+    {
+        $sql = "SELECT
                     s.store_name,
                     c.college_name,
                     COUNT(DISTINCT p.product_id) AS products,
@@ -386,7 +390,7 @@ class Store
                 GROUP BY
                     s.store_id,
                     c.college_id";
-    
+
         $query = $this->db->connect()->prepare($sql);
         if ($query->execute()) {
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -395,10 +399,42 @@ class Store
             return false;
         }
     }
-    
-    
-function store_rank_filtered($start_date, $end_date) {
-    $sql = "SELECT
+
+    function store_rank_mod($college_id)
+    {
+        $sql = "SELECT
+                    s.store_name,
+                    c.college_name,
+                    COUNT(DISTINCT p.product_id) AS products,
+                    SUM(oi.quantity) AS solds,
+                    SUM(oi.selling_price + oi.commission) AS sales
+                FROM
+                    store s
+                    LEFT JOIN college c ON s.college_id = c.college_id
+                    LEFT JOIN product p ON s.store_id = p.store_id
+                    LEFT JOIN order_item oi ON p.product_id = oi.product_id
+                    LEFT JOIN orders o ON oi.order_id = o.order_id
+                WHERE 
+                    o.order_status = 'Completed' AND s.college_id = :college_id
+                GROUP BY
+                    s.store_id,
+                    c.college_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        
+        $query->bindParam(":college_id", $college_id);
+        if ($query->execute()) {
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        } else {
+            return false;
+        }
+    }
+
+
+    function store_rank_filtered($start_date, $end_date)
+    {
+        $sql = "SELECT
                 s.store_name,
                 c.college_name,
                 COUNT(DISTINCT p.product_id) AS products,
@@ -436,72 +472,122 @@ function store_rank_filtered($start_date, $end_date) {
                     ) AS max_sold
                 )";
 
-    $query = $this->db->connect()->prepare($sql);
-    $query->execute(array(':start_date' => $start_date, ':end_date' => $end_date));
-    $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':start_date' => $start_date, ':end_date' => $end_date));
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    return $data;
-}
+        return $data;
+    }
 
-function countStoresToVerify() 
-{
-    $sql = "SELECT COUNT(*) AS store_count
+    function store_rank_filtered_mod($start_date, $end_date, $college_id)
+    {
+        $sql = "SELECT
+                s.store_name,
+                c.college_name,
+                COUNT(DISTINCT p.product_id) AS products,
+                SUM(oi.quantity) AS solds,
+                SUM(oi.selling_price + oi.commission) AS sales
+            FROM
+                store s
+                LEFT JOIN college c ON s.college_id = c.college_id
+                LEFT JOIN product p ON s.store_id = p.store_id
+                LEFT JOIN order_item oi ON p.product_id = oi.product_id
+                LEFT JOIN orders o ON oi.order_id = o.order_id
+            WHERE
+                o.order_status = 'completed' AND s.college_id = :college_id AND
+                DATE(o.is_updated) BETWEEN :start_date AND :end_date
+            GROUP BY
+                s.store_id,
+                c.college_id
+            HAVING
+                solds = (
+                    SELECT MAX(solds)
+                    FROM (
+                        SELECT 
+                            s.store_id,
+                            SUM(oi.quantity) AS solds
+                        FROM 
+                            store s
+                            LEFT JOIN product p ON s.store_id = p.store_id
+                            LEFT JOIN order_item oi ON p.product_id = oi.product_id
+                            LEFT JOIN orders o ON oi.order_id = o.order_id
+                        WHERE
+                            o.order_status = 'Completed' AND
+                            DATE(o.is_updated) BETWEEN :start_date AND :end_date
+                        GROUP BY
+                            s.store_id
+                    ) AS max_sold
+                )";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':start_date' => $start_date, ':end_date' => $end_date, ':college_id' => $college_id));
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        return $data;
+    }
+
+    function countStoresToVerify()
+    {
+        $sql = "SELECT COUNT(*) AS store_count
             FROM store
             WHERE verification_status = 'Not Verified'";
-    $query = $this->db->connect()->prepare($sql);
-    if ($query->execute()) {
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            return $result['store_count'];
+        $query = $this->db->connect()->prepare($sql);
+        if ($query->execute()) {
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return $result['store_count'];
+            } else {
+                return 0;
+            }
         } else {
-            return 0;
+            return false;
         }
-    } else {
-        return false;
     }
-}
 
-function calculateTotalSalesByStore($store_id) {
-    $sql = "SELECT SUM(oi.selling_price) AS total_sales
+    function calculateTotalSalesByStore($store_id)
+    {
+        $sql = "SELECT SUM(oi.selling_price) AS total_sales
     FROM orders o
     INNER JOIN order_item oi ON o.order_id = oi.order_id
     INNER JOIN product p ON oi.product_id = p.product_id
     WHERE o.order_status = 'Completed' AND p.store_id = :store_id";
 
-    $query = $this->db->connect()->prepare($sql);
-    $query->bindParam(':store_id', $store_id, PDO::PARAM_INT);
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id, PDO::PARAM_INT);
 
-    if ($query->execute()) {
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            return $result['total_sales'];
+        if ($query->execute()) {
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return $result['total_sales'];
+            } else {
+                return 0;
+            }
         } else {
-            return 0;
+            return false;
         }
-    } else {
-        return false;
     }
-}
-function calculateTotalPaidCommissionByStore($store_id) {
-    $sql = "SELECT SUM(commission_total) AS total_paid_commission
+    function calculateTotalPaidCommissionByStore($store_id)
+    {
+        $sql = "SELECT SUM(commission_total) AS total_paid_commission
             FROM orders
             WHERE commission_status = 'Paid' AND store_id = :store_id";
 
-    $query = $this->db->connect()->prepare($sql);
-    $query->bindParam(':store_id', $store_id, PDO::PARAM_INT);
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id, PDO::PARAM_INT);
 
-    if ($query->execute()) {
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            return $result['total_paid_commission'];
+        if ($query->execute()) {
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return $result['total_paid_commission'];
+            } else {
+                return 0;
+            }
         } else {
-            return 0;
+            return false;
         }
-    } else {
-        return false;
     }
-}
-    function calculateTotalUnpaidCommissionByStore($store_id) {
+    function calculateTotalUnpaidCommissionByStore($store_id)
+    {
         $sql = "SELECT SUM(commission_total) AS total_unpaid_commission
                 FROM orders
                 WHERE store_id = :store_id AND commission_status = 'Unpaid'";
@@ -518,5 +604,4 @@ function calculateTotalPaidCommissionByStore($store_id) {
             return false;
         }
     }
-
 }

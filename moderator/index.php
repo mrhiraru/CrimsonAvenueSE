@@ -349,7 +349,7 @@ include_once('../includes/preloader.php');
                                                 $error_message = "Invalid End Date";
                                             } else {
                                                 $dataFetcher = new Store();
-                                                $data = $dataFetcher->store_rank_filtered($start_date, $end_date);
+                                                $data = $dataFetcher->store_rank_filtered_mod($start_date, $end_date, $_SESSION['college_assigned']);
                                                 if (empty($data)) {
                                                     $no_sales_message = "No sales made within the specified date range.";
                                                 }
@@ -384,10 +384,10 @@ include_once('../includes/preloader.php');
                                         $start_date = $_POST['start_date'];
                                         $end_date = $_POST['end_date'];
                                         $dataFetcher = new Store();
-                                        $data = $dataFetcher->store_rank_filtered($start_date, $end_date);
+                                        $data = $dataFetcher->store_rank_filtered_mod($start_date, $end_date, $_SESSION['college_assigned']);
                                     } else {
                                         $dataFetcher = new Store();
-                                        $data = $dataFetcher->store_rank();
+                                        $data = $dataFetcher->store_rank_mod($_SESSION['college_assigned']);
                                     }
                                     ?>
                                     <div class="table-container" style="max-height: 400px; overflow-y: auto;">
