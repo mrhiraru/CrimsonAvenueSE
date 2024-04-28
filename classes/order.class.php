@@ -277,4 +277,24 @@ class Order
             return false;
         }
     }
+    function countPendingOrdersForStore($store_id)
+{
+    // SQL query to count pending orders for the specified store
+    $sql = "SELECT COUNT(*) AS pending_count 
+            FROM orders 
+            WHERE order_status = 'Pending' 
+            AND store_id = :store_id";
+
+    // Prepare and execute the query
+    $query = $this->db->connect()->prepare($sql);
+    $query->bindParam(':store_id', $store_id);
+    $query->execute();
+
+    // Fetch the result
+    $result = $query->fetch(PDO::FETCH_ASSOC);
+
+    // Return the pending count
+    return isset($result['pending_count']) ? $result['pending_count'] : 0;
+}
+
 }
