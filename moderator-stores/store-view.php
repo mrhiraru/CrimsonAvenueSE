@@ -9,7 +9,7 @@ $record = $store->fetch($_GET['id']);
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
-} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
+} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1 || !isset($_SESSION['college_assigned'])) {
     header('location: ../index.php');
 } else if (!isset($_GET['id']) || $record['is_deleted'] == 1 || !isset($record['store_id'])) {
     header('location: ./index.php');

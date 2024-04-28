@@ -3,7 +3,7 @@ session_start();
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ./user/verify.php');
-} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
+} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1 || !isset($_SESSION['college_assigned'])) {
     header('location: ../index.php');
 }
 
@@ -59,7 +59,7 @@ include_once('../includes/preloader.php');
         <div class="container-fluid">
             <div class="row">
                 <?php
-                require_once('../includes/sidepanel.admin.php');
+                require_once('../includes/sidepanel.moderator.php');
                 ?>
                 <main class="col-md-9 col-lg-10 p-4 row m-0">
                     <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
@@ -272,9 +272,9 @@ include_once('../includes/preloader.php');
                                     </div>
                                 </a>
                             </div>
-                        <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
-                                    <div class="card shadow border-0 mb-3">
-                                        <div class="card-body d-flex flex-column">
+                            <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
+                                <div class="card shadow border-0 mb-3">
+                                    <div class="card-body d-flex flex-column">
                                         <div class="row m-0 h-100">
                                             <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Sales:</p>
                                             <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
@@ -290,136 +290,136 @@ include_once('../includes/preloader.php');
                                                 ?>
                                             </p>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
+                                <div class="card shadow border-0 mb-3">
+                                    <div class="card-body d-flex flex-column">
+                                        <div class="row m-0 h-100">
+                                            <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Commission:</p>
+                                            <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
+                                                <?php
+                                                $commission = new Order();
+                                                $totalCommission = $commission->calculateTotalCommission();
+
+                                                if ($totalCommission !== false) {
+                                                    echo '₱' . number_format($totalCommission, 2);
+                                                } else {
+                                                    echo "Error: Unable to fetch total commission.";
+                                                }
+                                                ?>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
-                                    <div class="card shadow border-0 mb-3">
-                                        <div class="card-body d-flex flex-column">
-                                            <div class="row m-0 h-100">
-                                                <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Commission:</p>
-                                                <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
-                                                    <?php
-                                                    $commission = new Order();
-                                                    $totalCommission = $commission->calculateTotalCommission();
+                                <div class="card shadow border-0 mb-3">
+                                    <div class="card-body d-flex flex-column">
+                                        <div class="row m-0 h-100">
+                                            <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Unpaid Commission:</p>
+                                            <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
+                                                <?php
+                                                $commissionsi = new Order();
+                                                $totalunpaidCommission = $commissionsi->calculateTotalUnpaid();
 
-                                                    if ($totalCommission !== false) {
-                                                        echo '₱' . number_format($totalCommission, 2);
-                                                    } else {
-                                                        echo "Error: Unable to fetch total commission.";
-                                                    }
-                                                    ?>
-                                                </p>
-                                            </div>
+                                                if ($totalunpaidCommission !== false) {
+                                                    echo '₱' . number_format($totalunpaidCommission, 2);
+                                                } else {
+                                                    echo "Error: Unable to fetch total commission.";
+                                                }
+                                                ?>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            <div class="col-lg-4 col-md-6 mb-md-4 mb-lg-0 pt-1 pt-md-0">
-                                    <div class="card shadow border-0 mb-3">
-                                        <div class="card-body d-flex flex-column">
-                                            <div class="row m-0 h-100">
-                                                <p class="col-12 m-0 fw-semibold fs-4 text-primary">Total Unpaid Commission:</p>
-                                                <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
-                                                    <?php
-                                                    $commissionsi = new Order();
-                                                    $totalunpaidCommission = $commissionsi->calculateTotalUnpaid();
-
-                                                    if ($totalunpaidCommission !== false) {
-                                                        echo '₱' . number_format($totalunpaidCommission, 2);
-                                                    } else {
-                                                        echo "Error: Unable to fetch total commission.";
-                                                    }
-                                                    ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
                             </div>
 
-                            
 
-                        <section class="tablesforlife p-4 mt-5">
-                            <div class="container-fluid p-0">
-                                <div class="row">
-                                    <?php
-                                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                        $start_date = $_POST['start_date'];
-                                        $end_date = $_POST['end_date'];
-                                        if ($end_date < $start_date) {
-                                            $error_message = "Invalid End Date";
-                                        } else {
-                                            $dataFetcher = new Store();
-                                            $data = $dataFetcher->store_rank_filtered($start_date, $end_date);
-                                            if (empty($data)) {
-                                                $no_sales_message = "No sales made within the specified date range.";
+
+                            <section class="tablesforlife p-4 mt-5">
+                                <div class="container-fluid p-0">
+                                    <div class="row">
+                                        <?php
+                                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                            $start_date = $_POST['start_date'];
+                                            $end_date = $_POST['end_date'];
+                                            if ($end_date < $start_date) {
+                                                $error_message = "Invalid End Date";
+                                            } else {
+                                                $dataFetcher = new Store();
+                                                $data = $dataFetcher->store_rank_filtered($start_date, $end_date);
+                                                if (empty($data)) {
+                                                    $no_sales_message = "No sales made within the specified date range.";
+                                                }
                                             }
                                         }
+                                        ?>
+                                        <form action="" method="post" class="d-flex flex-row justify-content-between mb-4 mt-4">
+                                            <p class="h2 fw-semibold fs-2 ms-3 text-primary col-4">Top Selling Store</p>
+                                            <p>From</p>
+                                            <div class="col-2">
+                                                <input type="date" class="form-control" id="start-date" name="start_date" value="<?php echo isset($_POST['start_date']) ? $_POST['start_date'] : ''; ?>" required>
+                                            </div>
+                                            <p>To</p>
+                                            <div class="col-2">
+                                                <input type="date" class="form-control" id="end-date" name="end_date" value="<?php echo isset($_POST['end_date']) ? $_POST['end_date'] : ''; ?>" required>
+                                                <?php if (isset($error_message)) : ?>
+                                                    <p style="color: red;" class="fs-6"><?php echo $error_message; ?></p>
+                                                <?php endif; ?>
+                                                <?php if (isset($no_sales_message)) : ?>
+                                                    <p style="color: red;" class="fs-6"><?php echo $no_sales_message; ?></p>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="submit" class="btn btn-primary" name="filter">Filter</button>
+
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <?php
+                                    if (isset($_POST['filter'])) {
+                                        $start_date = $_POST['start_date'];
+                                        $end_date = $_POST['end_date'];
+                                        $dataFetcher = new Store();
+                                        $data = $dataFetcher->store_rank_filtered($start_date, $end_date);
+                                    } else {
+                                        $dataFetcher = new Store();
+                                        $data = $dataFetcher->store_rank();
                                     }
-                                    ?>  
-                                    <form action="" method="post" class="d-flex flex-row justify-content-between mb-4 mt-4">
-                                        <p class="h2 fw-semibold fs-2 ms-3 text-primary col-4">Top Selling Store</p>
-                                        <p>From</p>
-                                        <div class="col-2">
-                                            <input type="date" class="form-control" id="start-date" name="start_date" value="<?php echo isset($_POST['start_date']) ? $_POST['start_date'] : ''; ?>" required>
-                                        </div>
-                                        <p>To</p>
-                                        <div class="col-2">
-                                            <input type="date" class="form-control" id="end-date" name="end_date" value="<?php echo isset($_POST['end_date']) ? $_POST['end_date'] : ''; ?>" required>
-                                            <?php if (isset($error_message)) : ?>
-                                                <p style="color: red;" class="fs-6"><?php echo $error_message; ?></p>
-                                            <?php endif; ?>
-                                            <?php if (isset($no_sales_message)) : ?>
-                                                <p style="color: red;" class="fs-6"><?php echo $no_sales_message; ?></p>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="col-2">
-                                            <button type="submit" class="btn btn-primary" name="filter">Filter</button>
+                                    ?>
+                                    <div class="table-container" style="max-height: 400px; overflow-y: auto;">
 
-                                        </div>
-
-                                    </form>
-                                </div>
-                                <?php
-                                if (isset($_POST['filter'])) {
-                                    $start_date = $_POST['start_date'];
-                                    $end_date = $_POST['end_date'];
-                                    $dataFetcher = new Store();
-                                    $data = $dataFetcher->store_rank_filtered($start_date, $end_date);
-                                } else {
-                                    $dataFetcher = new Store();
-                                    $data = $dataFetcher->store_rank();
-                                }
-                                ?>
-                                <div class="table-container" style="max-height: 400px; overflow-y: auto;">
-
-                                    <table class="table border">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"></th>
-                                                <th scope="col">Store</th>
-                                                <th scope="col">College</th>
-                                                <th scope="col">Products</th>
-                                                <th scope="col">Solds</th>
-                                                <th scope="col">Sales</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="table-body">
-                                            <?php foreach ($data as $index => $row) : ?>
-                                                <tr <?php if ($index >= 10) echo 'class="d-none"'; ?>>
-                                                    <th scope="row"><?php echo $index + 1; ?></th>
-                                                    <td><?php echo $row['store_name']; ?></td>
-                                                    <td><?php echo $row['college_name']; ?></td>
-                                                    <td><?php echo $row['products']; ?></td>
-                                                    <td><?php echo $row['solds']; ?></td>
-                                                    <td>₱ <?php echo $row['sales']; ?></td>
+                                        <table class="table border">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"></th>
+                                                    <th scope="col">Store</th>
+                                                    <th scope="col">College</th>
+                                                    <th scope="col">Products</th>
+                                                    <th scope="col">Solds</th>
+                                                    <th scope="col">Sales</th>
                                                 </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody id="table-body">
+                                                <?php foreach ($data as $index => $row) : ?>
+                                                    <tr <?php if ($index >= 10) echo 'class="d-none"'; ?>>
+                                                        <th scope="row"><?php echo $index + 1; ?></th>
+                                                        <td><?php echo $row['store_name']; ?></td>
+                                                        <td><?php echo $row['college_name']; ?></td>
+                                                        <td><?php echo $row['products']; ?></td>
+                                                        <td><?php echo $row['solds']; ?></td>
+                                                        <td>₱ <?php echo $row['sales']; ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                        </section>
-                    </div>
+                            </section>
+                        </div>
                 </main>
             </div>
         </div>

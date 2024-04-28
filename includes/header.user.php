@@ -18,7 +18,13 @@
                                         echo "../images/main/no-profile.jpg";
                                     } ?>" alt="" width="38" height="38" class="d-inline rounded-5 border border-light border-2 me-2">
                         <div class="align-bottom">
-                            <p class="text-light fs-7 fw-bold p-0 m-0"><?= $_SESSION['name'] ?> </p>
+                            <?php
+                            if (isset($_SESSION['name'])) {
+                            ?>
+                                <p class="text-light fs-7 fw-bold p-0 m-0"><?= $_SESSION['name'] ?> </p>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </button>
 
@@ -32,7 +38,7 @@
                             ?>
                                 <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../admin/index.php">Admin Panel</a></li>
                             <?php
-                            } else if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1) {
+                            } else if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1 && isset($_SESSION['college_assigned'])) {
                             ?>
                                 <li><a class="dropdown-item text-secondary fw-bold py-1 px-3 " href="../moderator/index.php">Moderator Panel</a></li>
                             <?php
