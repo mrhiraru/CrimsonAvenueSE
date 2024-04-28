@@ -465,19 +465,96 @@ include_once('../includes/preloader.php');
                                     <td class=""><?= $record['measurement_name'] ?></td>
                                     <td class=""><?= $_POST['quantity'] ?></td>
                                     <td class=""><?php if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
-                                                        echo '₱' . number_format($record['stock_selling_price'] + $record['stock_commission'], 2, '.', ',');
+
+                                                        if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                            if ($record['discount_type'] == "Percentage") {
+                                                                $original_price = ($record['stock_selling_price'] + $record['stock_commission']);
+                                                                $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            } else if ($record['discount_type'] == "Fixed") {
+                                                                $original_price = ($record['stock_selling_price'] + $record['stock_commission']);
+                                                                $discounted_price = $original_price - $record['discount_amount'];
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            }
+                                                        } else {
+                                                            echo '₱' . number_format($record['stock_selling_price'] + $record['stock_commission'], 2, '.', ',');
+                                                        }
                                                     } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
-                                                        echo '₱' . number_format($record['prices_selling_price'] + $record['prices_commission'], 2, '.', ',');
+
+                                                        if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                            if ($record['discount_type'] == "Percentage") {
+                                                                $original_price = ($record['prices_selling_price'] + $record['prices_commission']);
+                                                                $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            } else if ($record['discount_type'] == "Fixed") {
+                                                                $original_price = ($record['prices_selling_price'] + $record['prices_commission']);
+                                                                $discounted_price = $original_price - $record['discount_amount'];
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            }
+                                                        } else {
+                                                            echo '₱' . number_format($record['prices_selling_price'] + $record['prices_commission'], 2, '.', ',');
+                                                        }
                                                     } else {
-                                                        echo '₱' . number_format($record['product_selling_price'] + $record['product_commission'], 2, '.', ',');
-                                                    } ?></td>
+                                                        if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                            if ($record['discount_type'] == "Percentage") {
+                                                                $original_price = ($record['product_selling_price'] + $record['product_commission']);
+                                                                $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            } else if ($record['discount_type'] == "Fixed") {
+                                                                $original_price = ($record['product_selling_price'] + $record['product_commission']);
+                                                                $discounted_price = $original_price - $record['discount_amount'];
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            }
+                                                        } else {
+                                                            echo '₱' . number_format($record['product_selling_price'] + $record['product_commission'], 2, '.', ',');
+                                                        }
+                                                    }
+                                                    ?></td>
                                     <td class=""><?php
+
                                                     if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
-                                                        echo '₱' . number_format(($record['stock_selling_price'] + $record['stock_commission']) * $_POST['quantity'], 2, '.', ',');
+                                                        if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                            if ($record['discount_type'] == "Percentage") {
+                                                                $original_price = ($record['stock_selling_price']  + $record['stock_commission']) * $_POST['quantity'];
+                                                                $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            } else if ($record['discount_type'] == "Fixed") {
+                                                                $original_price = ($record['stock_selling_price']  + $record['stock_commission']) * $_POST['quantity'];
+                                                                $discounted_price = $original_price - $record['discount_amount'];
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            }
+                                                        } else {
+                                                            echo '₱' . number_format(($record['stock_selling_price']  + $record['stock_commission']) * $_POST['quantity'], 2, '.', ',');
+                                                        }
                                                     } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
-                                                        echo '₱' . number_format(($record['prices_selling_price'] + $record['prices_commission']) * $_POST['quantity'], 2, '.', ',');
+
+                                                        if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                            if ($record['discount_type'] == "Percentage") {
+                                                                $original_price = ($record['prices_selling_price'] + $record['prices_commission']) * $_POST['quantity'];
+                                                                $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            } else if ($record['discount_type'] == "Fixed") {
+                                                                $original_price = ($record['prices_selling_price'] + $record['prices_commission']) * $_POST['quantity'];
+                                                                $discounted_price = $original_price - $record['discount_amount'];
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            }
+                                                        } else {
+                                                            echo '₱' . number_format(($record['prices_selling_price'] + $record['prices_commission']) * $_POST['quantity'], 2, '.', ',');
+                                                        }
                                                     } else {
-                                                        echo '₱' . number_format(($record['product_selling_price'] + $record['product_commission']) * $_POST['quantity'], 2, '.', ',');
+                                                        if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                            if ($record['discount_type'] == "Percentage") {
+                                                                $original_price = ($record['product_selling_price'] + $record['product_commission']) * $_POST['quantity'];
+                                                                $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            } else if ($record['discount_type'] == "Fixed") {
+                                                                $original_price = ($record['product_selling_price'] + $record['product_commission']) * $_POST['quantity'];
+                                                                $discounted_price = $original_price - $record['discount_amount'];
+                                                                echo '₱' . number_format($discounted_price, 2, '.', ',');
+                                                            }
+                                                        } else {
+                                                            echo '₱' . number_format(($record['product_selling_price'] + $record['product_commission']) * $_POST['quantity'], 2, '.', ',');
+                                                        }
                                                     }
                                                     ?></td>
                                 </tr>
@@ -486,34 +563,187 @@ include_once('../includes/preloader.php');
                                 <input type="hidden" name="measurement_id<?= $counter ?>" value="<?= $record['check_measurement_id'] ?>">
                                 <input type="hidden" name="quantity<?= $counter ?>" value="<?= $_POST['quantity'] ?>">
                                 <input type="hidden" name="selling_price<?= $counter ?>" value="<?php if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
-                                                                                                    echo $record['stock_selling_price'] * $_POST['quantity'];
+
+                                                                                                    if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                                                                        if ($record['discount_type'] == "Percentage") {
+                                                                                                            $original_price = $record['stock_selling_price'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                                                            echo $discounted_price;
+                                                                                                        } else if ($record['discount_type'] == "Fixed") {
+                                                                                                            $original_price = $record['stock_selling_price'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - $record['discount_amount'];
+                                                                                                            echo $discounted_price;
+                                                                                                        }
+                                                                                                    } else {
+                                                                                                        echo $record['stock_selling_price'] * $_POST['quantity'];
+                                                                                                    }
                                                                                                 } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
-                                                                                                    echo $record['prices_selling_price'] * $_POST['quantity'];
+
+                                                                                                    if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                                                                        if ($record['discount_type'] == "Percentage") {
+                                                                                                            $original_price = $record['prices_selling_price'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                                                            echo $discounted_price;
+                                                                                                        } else if ($record['discount_type'] == "Fixed") {
+                                                                                                            $original_price = $record['prices_selling_price'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - $record['discount_amount'];
+                                                                                                            echo $discounted_price;
+                                                                                                        }
+                                                                                                    } else {
+                                                                                                        echo $record['prices_selling_price'] * $_POST['quantity'];
+                                                                                                    }
                                                                                                 } else {
-                                                                                                    echo $record['product_selling_price'] * $_POST['quantity'];
-                                                                                                } ?>">
+                                                                                                    if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                                                                        if ($record['discount_type'] == "Percentage") {
+                                                                                                            $original_price = $record['product_selling_price'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                                                            echo $discounted_price;
+                                                                                                        } else if ($record['discount_type'] == "Fixed") {
+                                                                                                            $original_price = $record['product_selling_price'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - $record['discount_amount'];
+                                                                                                            echo $discounted_price;
+                                                                                                        }
+                                                                                                    } else {
+                                                                                                        echo $record['product_selling_price'] * $_POST['quantity'];
+                                                                                                    }
+                                                                                                }  ?>">
                                 <input type="hidden" name="commission<?= $counter ?>" value="<?php
                                                                                                 if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
-                                                                                                    echo  $record['stock_commission'] * $_POST['quantity'];
+
+                                                                                                    if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                                                                        if ($record['discount_type'] == "Percentage") {
+                                                                                                            $original_price = $record['stock_commission'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                                                            echo $discounted_price;
+                                                                                                        } else if ($record['discount_type'] == "Fixed") {
+                                                                                                            $original_price = $record['stock_commission'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - $record['discount_amount'];
+                                                                                                            echo $discounted_price;
+                                                                                                        }
+                                                                                                    } else {
+                                                                                                        echo $record['stock_commission'] * $_POST['quantity'];
+                                                                                                    }
                                                                                                 } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
-                                                                                                    echo $record['prices_commission'] * $_POST['quantity'];
+
+                                                                                                    if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                                                                        if ($record['discount_type'] == "Percentage") {
+                                                                                                            $original_price = $record['prices_commission'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                                                            echo $discounted_price;
+                                                                                                        } else if ($record['discount_type'] == "Fixed") {
+                                                                                                            $original_price = $record['prices_commission'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - $record['discount_amount'];
+                                                                                                            echo $discounted_price;
+                                                                                                        }
+                                                                                                    } else {
+                                                                                                        echo $record['prices_commission'] * $_POST['quantity'];
+                                                                                                    }
                                                                                                 } else {
-                                                                                                    echo  $record['product_commission'] * $_POST['quantity'];
+                                                                                                    if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                                                                                        if ($record['discount_type'] == "Percentage") {
+                                                                                                            $original_price = $record['product_commission'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+                                                                                                            echo $discounted_price;
+                                                                                                        } else if ($record['discount_type'] == "Fixed") {
+                                                                                                            $original_price = $record['product_commission'] * $_POST['quantity'];
+                                                                                                            $discounted_price = $original_price - $record['discount_amount'];
+                                                                                                            echo $discounted_price;
+                                                                                                        }
+                                                                                                    } else {
+                                                                                                        echo $record['product_commission'] * $_POST['quantity'];
+                                                                                                    }
                                                                                                 }
                                                                                                 ?>">
                                 <input type="hidden" name="stock_id<?= $counter ?>" value="<?= $record['stock_id'] ?>">
                                 <?php
                                 $delivery_charge = $record['delivery_charge'];
                                 $counter++;
+
                                 if (isset($record['stock_selling_price']) && $record['sale_status'] == "On-hand") {
-                                    $product_total += $record['stock_selling_price'] * $_POST['quantity'];
-                                    $commission_total +=  $record['stock_commission'] * $_POST['quantity'];
+
+                                    if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                        if ($record['discount_type'] == "Percentage") {
+
+                                            $original_price = $record['stock_selling_price'] * $_POST['quantity'];
+                                            $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+
+                                            $original_com = $record['stock_commission'] * $_POST['quantity'];
+                                            $discounted_com = $original_com - ($original_com * ($record['discount_amount'] / 100));
+
+                                            $product_total += $discounted_price;
+                                            $commission_total += $discounted_com;
+                                        } else if ($record['discount_type'] == "Fixed") {
+
+                                            $original_price = $record['stock_selling_price'] * $_POST['quantity'];
+                                            $discounted_price = $original_price - $record['discount_amount'];
+
+                                            $original_com = $record['stock_commission'] * $_POST['quantity'];
+                                            $discounted_com = $original_price - $record['discount_amount'];
+
+
+                                            $product_total += $discounted_price;
+                                            $commission_total += $discounted_com;
+                                        }
+                                    } else {
+                                        $product_total += $record['stock_selling_price'] * $_POST['quantity'];
+                                        $commission_total += $record['stock_commission'] * $_POST['quantity'];
+                                    }
                                 } else if (isset($record['prices_selling_price']) && $record['sale_status'] == "Pre-order") {
-                                    $product_total += $record['prices_selling_price'] * $_POST['quantity'];
-                                    $commission_total +=  $record['prices_commission'] * $_POST['quantity'];
+                                    if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                        if ($record['discount_type'] == "Percentage") {
+
+                                            $original_price = $record['prices_selling_price'] * $_POST['quantity'];
+                                            $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+
+                                            $original_com = $record['prices_commission'] * $_POST['quantity'];
+                                            $discounted_com = $original_com - ($original_com * ($record['discount_amount'] / 100));
+
+                                            $product_total += $discounted_price;
+                                            $commission_total += $discounted_com;
+                                        } else if ($record['discount_type'] == "Fixed") {
+
+                                            $original_price = $record['prices_selling_price'] * $_POST['quantity'];
+                                            $discounted_price = $original_price - $record['discount_amount'];
+
+                                            $original_com = $record['prices_commission'] * $_POST['quantity'];
+                                            $discounted_com = $original_price - $record['discount_amount'];
+
+
+                                            $product_total += $discounted_price;
+                                            $commission_total += $discounted_com;
+                                        }
+                                    } else {
+                                        $product_total += $record['prices_selling_price'] * $_POST['quantity'];
+                                        $commission_total += $record['prices_commission'] * $_POST['quantity'];
+                                    }
                                 } else {
-                                    $product_total += $record['product_selling_price'] * $_POST['quantity'];
-                                    $commission_total += $record['product_commission'] * $_POST['quantity'];
+                                    if (isset($record['discount_amount']) && isset($record['discount_type'])) {
+                                        if ($record['discount_type'] == "Percentage") {
+
+                                            $original_price = $record['product_selling_price'] * $_POST['quantity'];
+                                            $discounted_price = $original_price - ($original_price * ($record['discount_amount'] / 100));
+
+                                            $original_com = $record['product_commission'] * $_POST['quantity'];
+                                            $discounted_com = $original_com - ($original_com * ($record['discount_amount'] / 100));
+
+                                            $product_total += $discounted_price;
+                                            $commission_total += $discounted_com;
+                                        } else if ($record['discount_type'] == "Fixed") {
+
+                                            $original_price = $record['product_selling_price'] * $_POST['quantity'];
+                                            $discounted_price = $original_price - $record['discount_amount'];
+
+                                            $original_com = $record['product_commission'] * $_POST['quantity'];
+                                            $discounted_com = $original_price - $record['discount_amount'];
+
+
+                                            $product_total += $discounted_price;
+                                            $commission_total += $discounted_com;
+                                        }
+                                    } else {
+                                        $product_total += $record['product_selling_price'] * $_POST['quantity'];
+                                        $commission_total += $record['product_commission'] * $_POST['quantity'];
+                                    }
                                 }
                                 ?>
                                 <input type="hidden" name="counter" value="<?= $counter ?>">
