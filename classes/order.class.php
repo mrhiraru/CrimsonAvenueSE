@@ -343,4 +343,57 @@ class Order
         }
         return $data;
     }
+     function calculateTotalCommission()
+    {
+        $sql = "SELECT SUM(commission_total) AS total_commission
+                FROM orders
+                WHERE commission_status = 'Paid'";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($result !== false && isset($result['total_commission'])) {
+            return $result['total_commission'];
+        } else {
+            return false;
+        }
+    }
+    function calculateTotalSales() {
+        $sql = "SELECT SUM(oi.selling_price + oi.commission) AS total_sales
+                FROM orders o
+                INNER JOIN order_item oi ON o.order_id = oi.order_id
+                WHERE o.order_status = 'Completed'";
+        $query = $this->db->connect()->prepare($sql);
+        if ($query->execute()) {
+
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return $result['total_sales'];
+            } else {
+                return 0;
+            }
+        } else {
+            return false;
+        }
+    }
+    function calculateTotalUnpaid() {
+        $sql = "SELECT SUM(oi.commission) AS total_unpaid_commission
+                FROM orders o
+                INNER JOIN order_item oi ON o.order_id = oi.order_id
+                WHERE o.order_status = 'Pending' OR o.order_status = 'Processing'";
+        $query = $this->db->connect()->prepare($sql);
+        if ($query->execute()) {
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return $result['total_unpaid_commission'];
+            } else {
+                return 0;
+            }
+        } else {
+            return false;
+        }
+    }
+    
+    
+
 }
