@@ -88,7 +88,7 @@ class Order
 
     function show_order_ready($store_id)
     {
-        $sql = "SELECT o.*, s.store_name, a.*
+        $sql = "SELECT o.*, o.is_created AS order_date, s.store_name, a.*
         FROM orders o
         INNER JOIN store s ON o.store_id = s.store_id
         INNER JOIN account a ON o.account_id = a.account_id
@@ -105,7 +105,7 @@ class Order
     }
     function show_order_completed($store_id)
     {
-        $sql = "SELECT o.*, s.store_name, a.*
+        $sql = "SELECT o.*, o.is_created AS order_date, s.store_name, a.*
         FROM orders o
         INNER JOIN store s ON o.store_id = s.store_id
         INNER JOIN account a ON o.account_id = a.account_id
@@ -122,7 +122,7 @@ class Order
     }
     function show_order_pending($store_id)
     {
-        $sql = "SELECT o.*, s.store_name, a.*
+        $sql = "SELECT o.*, o.is_created AS order_date, s.store_name, a.*
         FROM orders o
         INNER JOIN store s ON o.store_id = s.store_id
         INNER JOIN account a ON o.account_id = a.account_id
@@ -139,7 +139,7 @@ class Order
     }
     function show_order_processing($store_id)
     {
-        $sql = "SELECT o.*, s.store_name, a.*
+        $sql = "SELECT o.*, o.is_created AS order_date,  s.store_name, a.*
         FROM orders o
         INNER JOIN store s ON o.store_id = s.store_id
         INNER JOIN account a ON o.account_id = a.account_id
@@ -229,6 +229,7 @@ class Order
         }
         return $data;
     }
+
     function show_order_stat($store_id)
     {
         $sql = "SELECT * FROM orders WHERE store_id = :store_id AND (order_status = 'Completed' OR order_status = 'Pending') ORDER BY FIELD(commission_status, 'unpaid', 'paid')";
@@ -275,5 +276,23 @@ class Order
         } else {
             return false;
         }
+    }
+
+    function store_sales($store_id)
+    {
+        $sql = "SELECT product_name, SUM(oi.quantity), SUM(oi.selling_price), SUM(oi.commission)
+        FROM orders o
+        INNER JOIN (SELECT * FROM order_item GROUP BY product_id) oi ON o.order_id = oi.order_id
+        INNER JOIN product p ON oi.product_id = p.product_id 
+        WHERE o.store_id = :store_id GROUP BY p.product_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
     }
 }

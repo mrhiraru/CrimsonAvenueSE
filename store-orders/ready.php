@@ -80,7 +80,7 @@ include_once('../includes/preloader.php');
                                             <td class="text-center"><?= $item['payment_method'] ?></td>
                                             <td class="text-center"><?= $item['fulfillment_method'] ?></td>
                                             <td class="text-center"><?= $item['order_status'] ?></td>
-                                            <td><?= date('F d Y', strtotime($item['is_created'])) ?> </td>
+                                            <td><?= date('F d Y', strtotime($item['order_date'])) ?> </td>
                                             <td class="text-end text-nowrap">
                                                 <div class="m-0 p-0">
                                                     <a href="./order-view.php?store_id=<?php echo $record['store_id'] . '&order_id=' . $item['order_id'] ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>

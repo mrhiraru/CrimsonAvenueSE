@@ -54,9 +54,8 @@ include_once('../includes/preloader.php');
                                         <th scope="col" class="">Product Name</th>
                                         <th scope="col" class="">Stock Sold</th>
                                         <th scope="col" class="text-center">Total Sales</th>
-                                        <th scope="col" class="text-center">Order Fulfillment</th>
-                                        <th scope="col" class="text-center">Status</th>
-                                        <th scope="col"></th>
+                                        <th scope="col" class="text-center">Revenue</th>
+                                        <th scope="col" class="text-center">Commission</th>
                                         <th scope="col" class="text-end"></th>
                                     </tr>
                                 </thead>
@@ -69,13 +68,6 @@ include_once('../includes/preloader.php');
                                     ?>
                                         <tr class="align-middle">
                                             <td><?= $counter ?></td>
-
-                                            <td class=""><?php if (isset($item['middlename'])) {
-                                                                echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
-                                                            } else {
-                                                                echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
-                                                            } ?></td>
-                                            <td class=""><?= '₱' . number_format(($item['product_total'] + $item['commission_total'] + $item['delivery_charge']), 2, '.', ',') ?></td>
                                             <td class="text-center"><?= $item['payment_method'] ?></td>
                                             <td class="text-center"><?= $item['fulfillment_method'] ?></td>
                                             <td class="text-center"><?= $item['order_status'] ?></td>
