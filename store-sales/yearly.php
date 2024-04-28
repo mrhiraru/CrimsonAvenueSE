@@ -47,7 +47,7 @@ include_once('../includes/preloader.php');
                                     <span class="input-group-text text-white bg-primary border-primary btn-settings-size fw-semibold" id="basic-addon1"><span class="mx-auto">Search</span></span>
                                 </div>
                             </div>
-                            <table id="myorders" class="table table-lg mt-1">
+                            <table id="mysales" class="table table-lg mt-1">
                                 <thead>
                                     <tr class="align-middle">
                                         <th scope="col"></th>
@@ -55,7 +55,6 @@ include_once('../includes/preloader.php');
                                         <th scope="col" class="">Total Sales</th>
                                         <th scope="col" class="">Revenue</th>
                                         <th scope="col" class="">Commission</th>
-                                        <th scope="col" class="text-end"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,12 +70,6 @@ include_once('../includes/preloader.php');
                                             <td class=""><?= '₱' . number_format($item['revenue'] + $item['commission'], 2, '.', ',') ?> </td>
                                             <td class=""><?= '₱' . number_format($item['revenue'], 2, '.', ',') ?> </td>
                                             <td class=""><?= '₱' . number_format($item['commission'], 2, '.', ',') ?> </td>
-                                            <td class="text-end text-nowrap">
-                                                <div class="m-0 p-0">
-                                                    <a href="./order-view.php?store_id=<?php //echo $record['store_id'] . '&order_id=' . $item['order_id'] 
-                                                                                        ?>" type="button" class="btn btn-primary btn-settings-size rounded border-0 fw-semibold text-decoration-none">Details</a>
-                                                </div>
-                                            </td>
                                         </tr>
                                     <?php
                                         $counter++;
