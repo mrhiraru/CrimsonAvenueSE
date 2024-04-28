@@ -73,7 +73,7 @@ include_once('../includes/preloader.php');
                                 'address' => $address
                             );
                             if ($account->update($_SESSION['account_id'], $data)) {
-                                echo "User data updated successfully.";
+                                echo "Please Relogin.";
                             } else {
                                 echo "Error: Failed to update user data.";
                             }
@@ -102,6 +102,7 @@ include_once('../includes/preloader.php');
                                             </span>
                                             <input type="text" class="form-control" id="lastname" name="lastname" aria-describedby="lastname" value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : $record['lastname'] ?>">
                                         </div>
+                                        
                                     </td>
                                 </tr>
                                 <tr>
