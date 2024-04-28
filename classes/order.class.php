@@ -265,11 +265,11 @@ class Order
         }
         return $data;
     }
-        function updateCommissionStatusForCompletedOrders()
-        {
-            $sql = "UPDATE orders SET commission_status = 'Paid' WHERE order_status = 'Completed'";
+    function updateCommissionStatusForCompletedOrders()
+    {
+        $sql = "UPDATE orders SET commission_status = 'Paid' WHERE order_status = 'Completed'";
 
-            $query = $this->db->connect()->prepare($sql);
+        $query = $this->db->connect()->prepare($sql);
 
         if ($query->execute()) {
             return true;
@@ -277,7 +277,7 @@ class Order
             return false;
         }
     }
-        function countPendingOrdersForStore($store_id)
+    function countPendingOrdersForStore($store_id)
     {
         $sql = "SELECT COUNT(*) AS pending_count 
                 FROM orders 
@@ -290,4 +290,57 @@ class Order
         return isset($result['pending_count']) ? $result['pending_count'] : 0;
     }
 
+    function store_sales_days($store_id)
+    {
+        $sql = "SELECT o.is_created AS sales_date, SUM(oi.selling_price) AS revenue, SUM(oi.commission) AS commission
+        FROM orders o
+        INNER JOIN (SELECT * FROM order_item) oi ON o.order_id = oi.order_id
+        INNER JOIN product p ON oi.product_id = p.product_id 
+        WHERE o.store_id = :store_id GROUP BY DATE(o.is_created) DESC";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function store_sales_month($store_id)
+    {
+        $sql = "SELECT o.is_created AS sales_date, SUM(oi.selling_price) AS revenue, SUM(oi.commission) AS commission
+        FROM orders o
+        INNER JOIN (SELECT * FROM order_item) oi ON o.order_id = oi.order_id
+        INNER JOIN product p ON oi.product_id = p.product_id 
+        WHERE o.store_id = :store_id GROUP BY YEAR(o.is_created) DESC, MONTH(o.is_created) DESC";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function store_sales_year($store_id)
+    {
+        $sql = "SELECT o.is_created AS sales_date, SUM(oi.selling_price) AS revenue, SUM(oi.commission) AS commission
+        FROM orders o
+        INNER JOIN (SELECT * FROM order_item) oi ON o.order_id = oi.order_id
+        INNER JOIN product p ON oi.product_id = p.product_id 
+        WHERE o.store_id = :store_id GROUP BY YEAR(o.is_created) DESC";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }
