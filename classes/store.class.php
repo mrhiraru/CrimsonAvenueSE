@@ -604,4 +604,55 @@ class Store
             return false;
         }
     }
+
+
+ function getStoreIdByAccountId($account_id) {
+    $sql = "SELECT store_id FROM store_staff WHERE account_id = :account_id";
+    $query = $this->db->connect()->prepare($sql);
+    $query->bindParam(':account_id', $account_id, PDO::PARAM_INT);
+
+    if ($query->execute()) {
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return $result['store_id'];
+        } else {
+            return false; 
+        }
+    } else {
+        return false;
+    }
+}
+
+ function checkForNewOrders($store_id) {
+    $sql = "SELECT COUNT(*) AS new_orders_count
+            FROM orders
+            WHERE store_id = :store_id
+            AND order_status = 'Pending'";
+    $query = $this->db->connect()->prepare($sql);
+    $query->bindParam(':store_id', $store_id, PDO::PARAM_INT);
+
+    if ($query->execute()) {
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return $result['new_orders_count'];
+        } else {
+            return 0; 
+        }
+    } else {
+        return false; 
+    }
+}
+
+ function checkForNewOrdersByStaff($account_id) {
+    $store_id = $this->getStoreIdByAccountId($account_id);
+
+    if ($store_id) {
+        $new_orders_count = $this->checkForNewOrders($store_id);
+
+        return $new_orders_count;
+    } else {
+        return false;
+    }
+}
+
 }
