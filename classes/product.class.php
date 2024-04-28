@@ -541,6 +541,20 @@ class Product
         return $data;
     }
 
+    
+    function count_mod($college_id)
+    {
+
+        $sql = "SELECT COUNT(product_id) AS product_count FROM product p INNER JOIN store s ON p.store_id = s.store_id WHERE p.is_deleted != 1 AND s.college_id = :college_id AND p.is_created <= (SELECT end_date FROM semester WHERE view_status = 'Active')";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_id', $college_id);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function update_discount()
     {
         $sql = "UPDATE product SET discount_amount = :discount_amount, discount_type = :discount_type WHERE product_id = :product_id";

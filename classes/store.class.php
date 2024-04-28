@@ -311,6 +311,18 @@ class Store
         }
         return $data;
     }
+
+    function count_mod($college_id)
+    {
+        $sql = "SELECT COUNT(store_id) AS store_count   FROM store WHERE is_deleted != 1 AND college_id = :college_id AND is_created <= (SELECT end_date FROM semester WHERE view_status = 'Active')";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':college_id', $college_id);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
     
     function show_verification($store_id) {
         $sql = "SELECT verification_status FROM store WHERE store_id = :store_id";

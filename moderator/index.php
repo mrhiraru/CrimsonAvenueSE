@@ -155,14 +155,14 @@ include_once('../includes/preloader.php');
                                                 <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
                                                     <?php
                                                     $stores = new Store();
-                                                    $countResult = $stores->count();
+                                                    $countResult = $stores->count_mod($_SESSION['college_assigned']);
 
                                                     if (!empty($countResult) && count($countResult) === 1) {
 
                                                         $totalCount = $countResult[0][0];
                                                         echo $totalCount;
                                                     } else {
-                                                        echo "Error: Unable to fetch total count of Store.";
+                                                        echo "No Stores.";
                                                     }
                                                     ?>
                                                 </p>
@@ -180,7 +180,7 @@ include_once('../includes/preloader.php');
                                                 <p class="col-12 m-0 fw-bold fs-5 text-secondary text-end">
                                                     <?php
                                                     $prod = new Product();
-                                                    $countResult = $prod->count();
+                                                    $countResult = $prod->count_mod($_SESSION['college_assigned']);
 
 
                                                     if (!empty($countResult) && count($countResult) === 1) {
@@ -188,7 +188,7 @@ include_once('../includes/preloader.php');
                                                         $totalCount = $countResult[0][0];
                                                         echo $totalCount;
                                                     } else {
-                                                        echo "Error: Unable to fetch total count of Product.";
+                                                        echo "No Products.";
                                                     }
                                                     ?>
                                                 </p>
@@ -232,7 +232,7 @@ include_once('../includes/preloader.php');
                                                 <p class="col-12 m-0 fw-bold fs-5  text-secondary text-end">
                                                     <?php
                                                     $dep = new Department();
-                                                    $countResult = $dep->count();
+                                                    $countResult = $dep->count_mod($_SESSION['college_assigned']);
 
 
                                                     if (!empty($countResult) && count($countResult) === 1) {
@@ -240,7 +240,7 @@ include_once('../includes/preloader.php');
                                                         $totalCount = $countResult[0][0];
                                                         echo $totalCount;
                                                     } else {
-                                                        echo "Error: Unable to fetch total count of Department.";
+                                                        echo "No Departments";
                                                     }
                                                     ?>
                                                 </p>

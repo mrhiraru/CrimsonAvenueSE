@@ -109,5 +109,19 @@ class Department
         }
         return $data;
     }
+
+    function count_mod($college_id)
+    {
+        // Note: Update query to count stores per college!
+        $sql = "SELECT COUNT(department_id) AS departnent_count FROM department WHERE is_deleted != 1 AND college_id = :college_id AND is_created <= (SELECT end_date FROM semester WHERE view_status = 'Active')";
+        $query = $this->db->connect()->prepare($sql);
+        
+        $query->bindParam(':college_id', $college_id);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
     
 }
