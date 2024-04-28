@@ -590,10 +590,10 @@ class Product
     function check_info($product_id)
     {
         $sql = "SELECT 
-        (SELECT COUNT(*) FROM product_images WHERE product_id = :product_id) AS image_count,
-        (SELECT COUNT(*) FROM variation WHERE product_id = :product_id) AS variation_count,
-        (SELECT COUNT(*) FROM product_desc WHERE product_id = :product_id) AS description_count,
-        (SELECT COUNT(*) FROM measurement WHERE product_id = :product_id) AS measurement_count;";
+        (SELECT COUNT(*) FROM product_images WHERE product_id = :product_id  AND is_deleted != 1) AS image_count,
+        (SELECT COUNT(*) FROM variation WHERE product_id = :product_id  AND is_deleted != 1) AS variation_count,
+        (SELECT COUNT(*) FROM product_desc WHERE product_id = :product_id  AND is_deleted != 1) AS description_count,
+        (SELECT COUNT(*) FROM measurement WHERE product_id = :product_id  AND is_deleted != 1) AS measurement_count;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':product_id', $product_id);
