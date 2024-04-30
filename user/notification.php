@@ -94,11 +94,6 @@ include_once('../classes/order.class.php');
                                     }
                                 }
                                 ?>
-
-
-
-
-
                         </tbody>
                     </table>
                 </div>
