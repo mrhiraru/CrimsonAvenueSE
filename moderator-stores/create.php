@@ -88,13 +88,10 @@ include_once('../includes/preloader.php');
                                 </div>
                                 <div class="mb-2 p-0 col-12">
                                     <select name="college_id" id="college_id" class="form-select">
-                                        <option value="">Select College</option>
-                                        <option value="null" <?php if ((isset($_POST['college_id']) && $_POST['college_id'] == 'null')) {
-                                                                    echo 'selected';
-                                                                } ?>>Independent (No College)</option>
+                                       
                                         <?php
                                         $college = new College();
-                                        $collegeArray = $college->show();
+                                        $collegeArray = $college->show_mod($_SESSION['college_assigned']);
                                         foreach ($collegeArray as $item) { ?>
                                             <option value="<?= $item['college_id'] ?>" <?php if ((isset($_POST['college_id']) && $_POST['college_id'] == $item['college_id'])) {
                                                                                             echo 'selected';
@@ -126,7 +123,7 @@ include_once('../includes/preloader.php');
                                                                                                     echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
                                                                                                 } else {
                                                                                                     echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
-                                                                                                } */ echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])) .' | '. $item['email']; ?></option>
+                                                                                                } */ echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])) . ' | ' . $item['email']; ?></option>
                                         <?php
                                         }
                                         ?>
