@@ -101,12 +101,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $completed_page ?>" aria-current="page" href="../store-orders/picked-up.php?store_id=<?= $record['store_id'] ?>">
+                                <a class="nav-link text-secondary fw-semibold <?= $completed_pickedup_page ?>" aria-current="page" href="../store-orders/picked-up.php?store_id=<?= $record['store_id'] ?>">
                                     Picked Up
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $completed_page ?>" aria-current="page" href="../store-orders/delivered.php?store_id=<?= $record['store_id'] ?>">
+                                <a class="nav-link text-secondary fw-semibold <?= $completed_delivered_page ?>" aria-current="page" href="../store-orders/delivered.php?store_id=<?= $record['store_id'] ?>">
                                     Delivered
                                 </a>
                             </li>
