@@ -24,7 +24,9 @@ if (isset($_POST['counter']) && isset($_POST['checkout' . $_POST['counter']])) {
     $product = new Product();
     $record = $product->checkout($_POST['product_id'], $_POST['variation'], $_POST['measurement']);
 } else {
-    header('location: ../products/products.php');
+    if (!isset($_POST['confirm'])) {
+        header('location: ../products/products.php');
+    }
 }
 
 if (isset($_POST['confirm'])) {
@@ -842,7 +844,7 @@ include_once('../includes/preloader.php');
         </form>
     </div>
     <?php
-    if (isset($_POST['confirm']) && $_POST['fulfillment_method'] == "Pickup" && $success == 'success') {
+    if (isset($_POST['confirm']) && $_POST['fulfillment'] == "Pickup" && $success == 'success') {
     ?>
         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered">
@@ -860,6 +862,35 @@ include_once('../includes/preloader.php');
                         <p class="lh-1 text-secondary fw-semibold">Store Email: <span class="text-dark"><?= isset($record_store['store_email']) ? $record_store['store_email'] : "No Email" ?> </span></p>
                         <p class="lh-1 text-secondary fw-semibold">Store Contact: <span class="text-dark"><?= isset($record_store['store_contact']) ? $record_store['store_contact'] : "No Contact" ?></span> </p>
                         <p class="fs-7 fw-semibold text-primary mb-0 text-center">Please visit our location to process your order!</p>
+                    </div>
+                    <div class="modal-footer  d-flex justify-content-center ">
+                        <div class="row d-flex">
+                            <div class="col-12">
+                                <a href="../user/profile.php" class="text-decoration-none text-dark ">
+                                    <p class="m-0 text-dark"><span class="text-primary fw-bold">Click to Continue!</span></p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }
+    if (isset($_POST['confirm']) && $_POST['fulfillment'] == "Delivery" && $success == 'success') {
+    ?>
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-center ">
+                        <h6 class="modal-title">Your order has been successfully placed!</h6>
+                    </div>
+                    <?php
+                    //$store = new Store();
+                    //$record_store = $store->fetch_this($_POST['store_id']);
+                    ?>
+                    <div class="modal-body">
+                        <p class="lh-1 text-secondary fw-semibold ">Ano ipakita dito wilfredo?? <span class="text-dark">//</span></p>
                     </div>
                     <div class="modal-footer  d-flex justify-content-center ">
                         <div class="row d-flex">
