@@ -23,6 +23,8 @@ if (isset($_POST['counter']) && isset($_POST['checkout' . $_POST['counter']])) {
 
     $product = new Product();
     $record = $product->checkout($_POST['product_id'], $_POST['variation'], $_POST['measurement']);
+} else {
+    header('location: ../products/products.php');
 }
 
 if (isset($_POST['confirm'])) {
@@ -771,7 +773,7 @@ include_once('../includes/preloader.php');
                                 </div>
                                 <div class="m-0 p-0 col-auto ms-2 mb-2 text-center d-none">
                                     <input class="form-check-input  btn-check" type="radio" name="method" id="GCash" value="GCash">
-                                    <label class="btn btn-outline-primary btn-small fw-semibold d-none fs-7 lh-sm" for="GCash">
+                                    <label class="btn btn-outline-primary btn-small fw-semibold fs-7 lh-sm" for="GCash">
                                         GCash Payment
                                     </label>
                                 </div>
@@ -792,6 +794,13 @@ include_once('../includes/preloader.php');
                                         Delivery
                                     </label>
                                 </div>
+                                <?php
+                                if ((!isset($_POST['fulfillment']) && isset($_POST['confirm'])) || (isset($_POST['fulfillment']) && !validate_field($_POST['fulfillment']))) {
+                                ?>
+                                    <p class="fs-7 text-primary m-0 ps-2 col-12">Please select order fulfillment method to confirm your order.</p>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="m-0 p-0 col-12 col-lg-4 ps-lg-2 border-checkout">
@@ -814,7 +823,7 @@ include_once('../includes/preloader.php');
                             <input type="hidden" name="commission_total" value="<?= $commission_total ?>">
                             <input type="hidden" name="delivery_charge" value="">
                             <div class="col-12 m-0 p-0 mb-1 d-flex justify-content-evenly">
-                                <input type="submit" class="btn btn-primary fw-semibold flex-grow-1" value="Place Order" name="confirm" id="Confirm">
+                                <input type="submit" class="btn btn-primary fw-semibold flex-grow-1" disabled value="Place Order" id="confirm" name="confirm" id="Confirm">
                             </div>
                             <?php
                             if (isset($_POST['counter']) && isset($_POST['checkout' . $_POST['counter']])) {
@@ -833,7 +842,7 @@ include_once('../includes/preloader.php');
         </form>
     </div>
     <?php
-    if (isset($_POST['confirm']) && $success == 'success') {
+    if (isset($_POST['confirm']) && $_POST['fulfillment_method'] == "Pickup" && $success == 'success') {
     ?>
         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered">
@@ -890,6 +899,24 @@ include_once('../includes/preloader.php');
                 maximumFractionDigits: 2
             });
         }
+
+
+        function enableSubmit() {
+            var fulfillmentSelected = document.querySelector('input[name="fulfillment"]:checked');
+            var methodSelected = document.querySelector('input[name="method"]:checked');
+            var submitButton = document.getElementById('confirm');
+
+            if (fulfillmentSelected && methodSelected) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        }
+
+        // Add event listeners to both radio button groups
+        document.querySelectorAll('input[name="fulfillment"], input[name="method"]').forEach(function(radio) {
+            radio.addEventListener('change', enableSubmit);
+        });
     </script>
 </body>
 
