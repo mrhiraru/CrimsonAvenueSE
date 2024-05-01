@@ -74,7 +74,7 @@ class Order
         $sql = "SELECT o.*, s.store_name
         FROM orders o
         INNER JOIN store s ON o.store_id = s.store_id
-        WHERE o.account_id = :account_id ORDER BY order_id ASC;
+        WHERE o.account_id = :account_id ORDER BY order_id DESC;
         ";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $account_id);

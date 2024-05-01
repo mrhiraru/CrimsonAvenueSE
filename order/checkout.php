@@ -781,13 +781,13 @@ include_once('../includes/preloader.php');
                                     <p class="m-0 p-0 fs-7 fw-semibold text-secondary lh-1">Order Fulfillment:</p>
                                 </div>
                                 <div class="m-0 p-0 col-auto ms-2 mb-2 text-center">
-                                    <input class="form-check-input btn-check" type="radio" name="fulfillment" id="Pickup" value="Pickup" checked>
+                                    <input class="form-check-input btn-check" type="radio" name="fulfillment" id="Pickup" value="Pickup" data-delivery="0" onchange="handleFulfillmentChange(this)">
                                     <label class="btn btn-outline-primary btn-small fw-semibold fs-7 lh-sm" for="Pickup">
                                         Pickup
                                     </label>
                                 </div>
-                                <div class="m-0 p-0 col-auto ms-2 mb-2 text-center d-none">
-                                    <input class="form-check-input  btn-check" type="radio" name="fulfillment" id="Delivery" value="Delivery">
+                                <div class="m-0 p-0 col-auto ms-2 mb-2 text-center">
+                                    <input class="form-check-input  btn-check" type="radio" name="fulfillment" id="Delivery" value="Delivery" data-delivery="<?= $delivery_charge ?>" onchange="handleFulfillmentChange(this)">
                                     <label class="btn btn-outline-primary btn-small fw-semibold fs-7 lh-sm" for="Delivery">
                                         Delivery
                                     </label>
@@ -800,19 +800,19 @@ include_once('../includes/preloader.php');
                                 <span class="text-dark fw-semibold fs-6"><?= '₱' . number_format($product_total + $commission_total, 2, '.', ',') ?> </span>
                             </p>
                             <?php
-                            $total_payment = $product_total + $commission_total + $delivery_charge;
+                            $total_payment = $product_total + $commission_total;
                             ?>
                             <p class="mb-1 lh-1 text-secondary fs-7 d-flex align-items-start justify-content-between">
                                 Delivery Charge:
-                                <span class="text-dark fw-semibold fs-6"><?= '₱' . number_format($delivery_charge, 2, '.', ',') ?> </span>
+                                <span class="text-dark fw-semibold fs-6" id="delivery_display"><?= '₱' . number_format(0, 2, '.', ',') ?> </span>
                             </p>
                             <p class="mb-1 lh-1 text-secondary fs-7 d-flex align-items-start justify-content-between">
                                 Total Payment:
-                                <span class="text-primary fw-bold fs-5"><?= '₱' . number_format($total_payment, 2, '.', ',') ?> </span>
+                                <span class="text-primary fw-bold fs-5" id="total_payment"><?= '₱' . number_format($total_payment, 2, '.', ',') ?> </span>
                             </p>
                             <input type="hidden" name="product_total" value="<?= $product_total ?>">
                             <input type="hidden" name="commission_total" value="<?= $commission_total ?>">
-                            <input type="hidden" name="delivery_charge" value="<?= $delivery_charge ?>">
+                            <input type="hidden" name="delivery_charge" value="">
                             <div class="col-12 m-0 p-0 mb-1 d-flex justify-content-evenly">
                                 <input type="submit" class="btn btn-primary fw-semibold flex-grow-1" value="Place Order" name="confirm" id="Confirm">
                             </div>
@@ -871,6 +871,26 @@ include_once('../includes/preloader.php');
     require_once('../includes/footer.php');
     require_once('../includes/js.php');
     ?>
+    <script>
+        function handleFulfillmentChange(radio) {
+            delivery = parseFloat(radio.getAttribute('data-delivery'));
+            hidden_delivery = document.querySelector('input[name="delivery_charge"][type="hidden"]');
+            delivery_display = document.getElementById('delivery_display');
+            product_total = parseFloat(document.querySelector('input[name="product_total"][type="hidden"]').value);
+            commission_total = parseFloat(document.querySelector('input[name="commission_total"][type="hidden"]').value);
+            total_display = document.getElementById('total_payment');
+
+            hidden_delivery.value = delivery;
+            delivery_display.innerHTML = "₱" + delivery.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            total_display.innerHTML = "₱" + (product_total + commission_total + delivery).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+    </script>
 </body>
 
 </html>
