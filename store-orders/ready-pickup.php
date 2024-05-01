@@ -22,7 +22,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 <?php
 // Change title for each page.
 $title = "Ready Orders | Crimson Avenue";
-$orders_page = "active";
+$fulfill_page = "active";
 $ready_pickup_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
