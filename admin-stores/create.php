@@ -116,17 +116,11 @@ include_once('../includes/preloader.php');
                                         <option value="">Select Owner</option>
                                         <?php
                                         $account = new Account();
-                                        $accountArray = $account->show();
+                                        $accountArray = $account->show_admin();
                                         foreach ($accountArray as $item) { ?>
                                             <option value="<?= $item['account_id'] ?>" <?php if ((isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id'])) {
                                                                                             echo 'selected';
-                                                                                        } ?>> <?php /* if ((isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id'])) {
-                                                                                            echo 'selected';
-                                                                                        } ?>><?php if (isset($item['middlename'])) {
-                                                                                                    echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
-                                                                                                } else {
-                                                                                                    echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
-                                                                                                } */ echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])) . ' | ' . $item['email']; ?></option>
+                                                                                        } ?>> <?php echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])) . ' | ' . $item['email']; ?></option>
                                         <?php
                                         }
                                         ?>

@@ -4,12 +4,28 @@ session_start();
 require_once "../tools/functions.php";
 require_once "../classes/store.class.php";
 require_once "../classes/image.class.php";
-require_once "../classes/college.class.php";
+require_once "../classes/account.class.php";
+
 
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
 
+if (isset($_POST['add'])) {
 
+    $store->store_id = htmlentities($record['store_id']);
+    $store->account_id = htmlentities($_POST['account_id']);
+    $store->staff_role = htmlentities($_POST['staff_role']);
+
+    if (validate_field($store->account_id) && validate_field($store->staff_role) && validate_field($store->store_id)) {
+        if ($store->add_staff()) {
+            $success = 'success';
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
 
 ?>
 
@@ -42,58 +58,50 @@ include_once('../includes/preloader.php');
                                     <div class="input-group mb-2 p-0 col-12">
                                         <?php
                                         if (isset($_POST['edit']) || isset($_POST['save'])) {
-                                            $record = $moderator->fetch($_GET['id']);
+                                            $record = $account->fetch($_GET['id']);
                                         ?>
-                                            <select id="acc-id" name="acc-id" class="form-select">
-                                                <option value="<?= $record['account_id'] ?>" selected><?php if (isset($record['middlename'])) {
-                                                                                                            echo ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname']));
-                                                                                                        } else {
-                                                                                                            echo ucwords(strtolower($record['firstname'] . ' ' . $record['lastname']));
-                                                                                                        } ?></option>
-                                            </select>
-                                            <select id="col-id" name="col-id" class="form-select">
-                                                <option value="">Select College</option>
+                                            <select id="account_id" name="account_id" class="form-select">
+                                                <option value="" selected>Select User</option>
                                                 <?php
-                                                $college = new College();
-                                                $collegeArray = $college->show();
-                                                foreach ($collegeArray as $item) { ?>
-                                                    <option value="<?= $item['college_id'] ?>" <?php if ((isset($_POST['col-id']) && $_POST['col-id'] == $item['college_id']) || (isset($_POST['edit']) && $record['college_id'] == $item['college_id'])) {
+                                                $account = new Account();
+                                                $accountArray = $account->show_user_store();
+                                                foreach ($accountArray as $item) { ?>
+                                                    <option value="<?= $item['account_id'] ?>" <?php if ((isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id']) || (isset($_POST['edit']) && $record['account_id'] == $item['account_id'])) {
                                                                                                     echo 'selected';
-                                                                                                } ?>><?= $item['college_name'] ?></option>
+                                                                                                } ?>> <?php echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])) . ' | ' . $item['email']; ?></option>
                                                 <?php
                                                 }
                                                 ?>
+                                            </select>
+                                            <select id="staff_role" name="staff_role" class="form-select">
+                                                <option value="">Select Role</option>
+                                                <option value="2" <?php if ((isset($_POST['staff_role']) && $_POST['staff_role'] == 2) || (isset($_POST['edit']) && $record['staff_role'] == '2')) {
+                                                                        echo 'selected';
+                                                                    } ?>>Courier</option>
                                             </select>
                                             <input type="submit" class="btn btn-primary-opposite btn-settings-size fw-semibold" id="basic-addon1" name="cancel" value="Cancel">
                                             <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="save" value="Save">
                                         <?php
                                         } else {
                                         ?>
-                                            <select id="acc-id" name="acc-id" class="form-select">
-                                                <option value="">Select Moderator</option>
+                                            <select id="account_id" name="account_id" class="form-select">
+                                                <option value="">Select User</option>
                                                 <?php
-                                                $moderatorArray = $moderator->show_unassigned();
-                                                foreach ($moderatorArray as $item) { ?>
-                                                    <option value="<?= $item['account_id'] ?>"><?php if (isset($item['middlename'])) {
-                                                                                                    echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
-                                                                                                } else {
-                                                                                                    echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
-                                                                                                } ?></option>
+                                                $account = new Account();
+                                                $accountArray = $account->show_user_store();
+                                                foreach ($accountArray as $item) { ?>
+                                                    <option value="<?= $item['account_id'] ?>" <?php if ((isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id'])) {
+                                                                                                    echo 'selected';
+                                                                                                } ?>> <?php echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])) . ' | ' . $item['email']; ?></option>
                                                 <?php
                                                 }
                                                 ?>
                                             </select>
-                                            <select id="col-id" name="col-id" class="form-select">
-                                                <option value="">Select College</option>
-                                                <?php
-                                                $college = new College();
-                                                $collegeArray = $college->show();
-                                                foreach ($collegeArray as $item) {
-                                                ?>
-                                                    <option value="<?= $item['college_id'] ?>"><?= $item['college_name'] ?></option>
-                                                <?php
-                                                }
-                                                ?>
+                                            <select id="staff_role" name="staff_role" class="form-select">
+                                                <option value="">Select Role</option>
+                                                <option value="2" <?php if ((isset($_POST['staff_role']) && $_POST['staff_role'] == 2)) {
+                                                                        echo 'selected';
+                                                                    } ?>>Courier</option>
                                             </select>
                                             <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="add" value="Assign">
                                         <?php
@@ -101,43 +109,43 @@ include_once('../includes/preloader.php');
                                         ?>
                                     </div>
                                     <?php
-                                    if (isset($_POST['add']) && isset($_POST['acc-id']) && isset($_POST['col-id']) && !validate_field($_POST['acc-id']) && !validate_field($_POST['col-id'])) {
+                                    if (isset($_POST['add']) && isset($_POST['account_id']) && isset($_POST['staff_role']) && !validate_field($_POST['account_id']) && !validate_field($_POST['staff_role'])) {
                                     ?>
                                         <div class="mb-2 col-auto mb-2 p-0">
-                                            <p class="fs-7 text-primary mb-2 ps-2">Please select moderator and college.</p>
+                                            <p class="fs-7 text-primary mb-2 ps-2">Please select user and staff role.</p>
                                         </div>
                                     <?php
-                                    } else if (isset($_POST['save']) && isset($_POST['acc-id']) && isset($_POST['col-id']) && !validate_field($_POST['acc-id']) && !validate_field($_POST['col-id'])) {
+                                    } else if (isset($_POST['save']) && isset($_POST['account_id']) && isset($_POST['staff_role']) && !validate_field($_POST['account_id']) && !validate_field($_POST['staff_role'])) {
                                     ?>
                                         <div class="mb-2 col-auto mb-2 p-0">
-                                            <p class="fs-7 text-primary mb-2 ps-2">Update Failed! Please select moderator and college.</p>
+                                            <p class="fs-7 text-primary mb-2 ps-2">Update Failed! Please select user and staff role.</p>
                                         </div>
                                         <?php
                                     } else {
-                                        if (isset($_POST['add']) && isset($_POST['acc-id']) && !validate_field($_POST['acc-id'])) {
+                                        if (isset($_POST['add']) && isset($_POST['account_id']) && !validate_field($_POST['account_id'])) {
                                         ?>
                                             <div class="mb-2 col-auto mb-2 p-0">
-                                                <p class="fs-7 text-primary mb-2 ps-2">No moderator selected.</p>
+                                                <p class="fs-7 text-primary mb-2 ps-2">No user selected.</p>
                                             </div>
                                         <?php
                                         }
 
-                                        if (isset($_POST['add']) && isset($_POST['col-id']) && !validate_field($_POST['col-id'])) {
+                                        if (isset($_POST['add']) && isset($_POST['staff_role']) && !validate_field($_POST['staff_role'])) {
                                         ?>
                                             <div class="mb-2 col-auto mb-2 p-0">
-                                                <p class="fs-7 text-primary mb-2 ps-2">No college selected.</p>
+                                                <p class="fs-7 text-primary mb-2 ps-2">No staff role selected selected.</p>
                                             </div>
                                         <?php
-                                        } else if (isset($_POST['save']) && isset($_POST['acc-id']) && !validate_field($_POST['acc-id'])) {
+                                        } else if (isset($_POST['save']) && isset($_POST['account_id']) && !validate_field($_POST['account_id'])) {
                                         ?>
                                             <div class="mb-2 col-auto mb-2 p-0">
-                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! No moderator selected.</p>
+                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! No user selected.</p>
                                             </div>
                                         <?php
-                                        } else if (isset($_POST['save']) && isset($_POST['col-id']) && !validate_field($_POST['col-id'])) {
+                                        } else if (isset($_POST['save']) && isset($_POST['staff_role']) && !validate_field($_POST['staff_role'])) {
                                         ?>
                                             <div class="mb-2 col-auto mb-2 p-0">
-                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! No college selected.</p>
+                                                <p class="fs-7 text-primary mb-2 ps-2">Update failed! No staff role selected.</p>
                                             </div>
                                     <?php
                                         }
@@ -155,28 +163,34 @@ include_once('../includes/preloader.php');
                                 <thead>
                                     <tr class="align-middle">
                                         <th scope="col"></th>
-                                        <th scope="col">Moderator Name</th>
-                                        <th scope="col">College Assigned</th>
-                                        <th scope="col" class="text-center">Action</th>
+                                        <th scope="col">Staff</th>
+                                        <th scope="col">Role</th>
+                                        <th scope="col" class="text-end"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                     $counter = 1;
-                                    $moderatorArray = $moderator->show_assigned();
-                                    foreach ($moderatorArray as $item) {
+                                    $staffArray = $store->show_staff($record['store_id']);
+                                    foreach ($staffArray as $item) {
                                     ?>
                                         <tr class="align-middle">
                                             <td> <?= $counter ?> </td>
-                                            <td><?php if (isset($item['middlename'])) {
-                                                    echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
-                                                } else {
-                                                    echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
-                                                } ?></td>
-                                            <td> <?= $item['college_name'] ?></td>
-                                            <td class="text-center text-nowrap">
+                                            <td> <?php if (isset($item['middlename'])) {
+                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname']));
+                                                    } else {
+                                                        echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname']));
+                                                    } ?></td>
+                                            <td> <?php if ($item['staff_role'] == 0) {
+                                                        echo "Administrator";
+                                                    } else if ($item['staff_role'] == 1) {
+                                                        echo "Moderator";
+                                                    } else if ($item['staff_role'] == 2) {
+                                                        echo "Courier";
+                                                    } ?></td>
+                                            <td class="text-end text-nowrap">
                                                 <div class="m-0 p-0">
-                                                    <form action="./moderator.php?id=<?= $item['moderator_id'] ?>" method="post">
+                                                    <form action="" method="post">
                                                         <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="edit" value="Edit"></input>
                                                         <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Remove"></input>
                                                     </form>
@@ -205,8 +219,8 @@ include_once('../includes/preloader.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a href="./moderator.php" class="text-decoration-none text-dark">
-                                    <p class="m-0">Moderator assigned succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                <a href="./staff.php?store_id=<?= $record['store_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Staff assigned succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
                         </div>
@@ -223,8 +237,8 @@ include_once('../includes/preloader.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a href="./moderator.php" class="text-decoration-none text-dark">
-                                    <p class="m-0">Moderator updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                <a href="./staff.php?store_id=<?= $record['store_id'] ?>" class="text-decoration-none text-dark">
+                                    <p class="m-0">Staff updated succesfully! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
                         </div>
@@ -241,7 +255,7 @@ include_once('../includes/preloader.php');
                     <div class="modal-body">
                         <div class="row d-flex">
                             <div class="col-12 text-center">
-                                <a href="./moderator.php" class="text-decoration-none text-dark">
+                                <a href="./staff.php?store_id=<?= $record['store_id'] ?>" class="text-decoration-none text-dark">
                                     <p class="m-0 text-dark">Moderator has been unassigned! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>

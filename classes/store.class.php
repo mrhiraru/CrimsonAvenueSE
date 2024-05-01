@@ -83,6 +83,36 @@ class Store
         }
     }
 
+    function add_staff()
+    {
+        $sql = "INSERT INTO store_staff (account_id, store_id, staff_role) VALUES (:account_id, :store_id, :staff_role);";
+
+        $query = $this->db->connect()->prepare($sql);
+
+        $query->bindParam(':account_id', $this->account_id);
+        $query->bindParam(':store_id', $this->store_id);
+        $query->bindParam(':staff_role', $this->staff_role);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function show_staff($store_id)
+    {
+        $sql = "SELECT ss.*, a.firstname, a.middlename, a.lastname FROM store_staff ss
+        INNER JOIN account a ON ss.account_id = a.account_id 
+        WHERE store_id = :store_id AND staff_role != 0";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function fetch_this($store_id)
     {
         $sql = "SELECT * FROM store WHERE store_id = :store_id";
@@ -93,6 +123,8 @@ class Store
         }
         return $data;
     }
+
+
 
     function edit()
     {
@@ -421,7 +453,7 @@ class Store
                     c.college_id";
 
         $query = $this->db->connect()->prepare($sql);
-        
+
         $query->bindParam(":college_id", $college_id);
         if ($query->execute()) {
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -606,53 +638,55 @@ class Store
     }
 
 
- function getStoreIdByAccountId($account_id) {
-    $sql = "SELECT store_id FROM store_staff WHERE account_id = :account_id";
-    $query = $this->db->connect()->prepare($sql);
-    $query->bindParam(':account_id', $account_id, PDO::PARAM_INT);
+    function getStoreIdByAccountId($account_id)
+    {
+        $sql = "SELECT store_id FROM store_staff WHERE account_id = :account_id";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id, PDO::PARAM_INT);
 
-    if ($query->execute()) {
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            return $result['store_id'];
+        if ($query->execute()) {
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return $result['store_id'];
+            } else {
+                return false;
+            }
         } else {
-            return false; 
+            return false;
         }
-    } else {
-        return false;
     }
-}
 
- function checkForNewOrders($store_id) {
-    $sql = "SELECT COUNT(*) AS new_orders_count
+    function checkForNewOrders($store_id)
+    {
+        $sql = "SELECT COUNT(*) AS new_orders_count
             FROM orders
             WHERE store_id = :store_id
             AND order_status = 'Pending'";
-    $query = $this->db->connect()->prepare($sql);
-    $query->bindParam(':store_id', $store_id, PDO::PARAM_INT);
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id, PDO::PARAM_INT);
 
-    if ($query->execute()) {
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            return $result['new_orders_count'];
+        if ($query->execute()) {
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return $result['new_orders_count'];
+            } else {
+                return 0;
+            }
         } else {
-            return 0; 
+            return false;
         }
-    } else {
-        return false; 
     }
-}
 
- function checkForNewOrdersByStaff($account_id) {
-    $store_id = $this->getStoreIdByAccountId($account_id);
+    function checkForNewOrdersByStaff($account_id)
+    {
+        $store_id = $this->getStoreIdByAccountId($account_id);
 
-    if ($store_id) {
-        $new_orders_count = $this->checkForNewOrders($store_id);
+        if ($store_id) {
+            $new_orders_count = $this->checkForNewOrders($store_id);
 
-        return $new_orders_count;
-    } else {
-        return false;
+            return $new_orders_count;
+        } else {
+            return false;
+        }
     }
-}
-
 }

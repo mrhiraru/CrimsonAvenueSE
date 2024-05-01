@@ -227,10 +227,36 @@ class Account
         return $data;
     }
 
+    function show_admin()
+    {
+        $sql = "SELECT * FROM account 
+        WHERE is_deleted != 1 AND is_created < (SELECT end_date FROM semester WHERE view_status = 'Active') AND (affiliation = 'Student' OR affiliation = 'Faculty')
+        ORDER BY account_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function show_user_store()
+    {
+        $sql = "SELECT * FROM account a
+        WHERE is_deleted != 1 AND is_created < (SELECT end_date FROM semester WHERE view_status = 'Active') AND (affiliation = 'Student' OR affiliation = 'Faculty') AND NOT EXISTS (SELECT 1 FROM store_staff ss WHERE ss.account_id = a.account_id AND ss.is_deleted != 1)
+        ORDER BY account_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function show_mod($college_id)
     {
         $sql = "SELECT * FROM account 
-        WHERE is_deleted != 1 AND college_id = :college_id AND is_created < (SELECT end_date FROM semester WHERE view_status = 'Active')
+        WHERE is_deleted != 1 AND college_id = :college_id AND is_created < (SELECT end_date FROM semester WHERE view_status = 'Active') AND (affiliation = 'Student' OR affiliation = 'Faculty')
         ORDER BY account_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':college_id', $college_id);
