@@ -152,15 +152,6 @@ include_once('../includes/preloader.php');
                                             <?= $ord_record['order_status'] ?>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="fw-semibold text-dark">
-                                            <span class="text-secondary fw-normal">
-                                                Total Price:
-                                            </span>
-                                            <br class="d-block d-md-none">
-                                            <?= '₱' . number_format(($ord_record['product_total'] + $ord_record['commission_total'] + $ord_record['delivery_charge']), 2, '.', ',') ?>
-                                        </td>
-                                    </tr>
                                 </table>
                             </div>
                         </div>
@@ -194,7 +185,7 @@ include_once('../includes/preloader.php');
                                                                 echo "../images/main/no-profile.jpg";
                                                             } ?>" alt="" class="profile-list-size border border-secondary-subtle rounded-1"> </td>
                                             <td class=""><?= $item['product_name'] ?></td>
-                                            <td class="r"><?= $item['variation_name'] ?></td>
+                                            <td class=""><?= $item['variation_name'] ?></td>
                                             <td class=""><?= $item['measurement_name'] ?></td>
                                             <td class="text-center"><?= $item['quantity'] . 'x' ?></td>
                                             <td class=""><?= '₱' . number_format($item['oi_selling_price'] + $item['oi_commission'], 2, '.', ',') ?></td>
@@ -203,6 +194,41 @@ include_once('../includes/preloader.php');
                                         $counter++;
                                     }
                                     ?>
+                                    <tr class="align-middle">
+                                        <td></td>
+                                        <td></td>
+                                        <td class=""></td>
+                                        <td class=""></td>
+                                        <td class=""></td>
+                                        <td class="text-end text-secondary"> Product Subtotal:</td>
+                                        <td class="fw-semibold"><?= '₱' . number_format($ord_record['product_total'] + $ord_record['commission_total'], 2, '.', ',') ?></td>
+                                    </tr>
+                                    <?php
+                                    $delivery_charge = 0;
+                                    if ($ord_record['fulfillment_method'] == "Delivery") {
+                                    ?>
+                                        <tr class="align-middle">
+                                            <td></td>
+                                            <td></td>
+                                            <td class=""></td>
+                                            <td class=""></td>
+                                            <td class=""></td>
+                                            <td class="text-end text-secondary">Delivery Charge:</td>
+                                            <td class="fw-semibold"><?= '₱' . number_format($ord_record['delivery_charge'], 2, '.', ',') ?></td>
+                                        </tr>
+                                    <?php
+                                        $delivery_charge += $ord_record['delivery_charge'];
+                                    }
+                                    ?>
+                                    <tr class="align-middle">
+                                        <td></td>
+                                        <td></td>
+                                        <td class=""></td>
+                                        <td class=""></td>
+                                        <td class=""></td>
+                                        <td class="text-end text-secondary"> Total Payment:</td>
+                                        <td class="fw-semibold"><?= '₱' . number_format($ord_record['product_total'] + $ord_record['commission_total'] + $delivery_charge, 2, '.', ',') ?></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
