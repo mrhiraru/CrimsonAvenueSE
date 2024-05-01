@@ -50,15 +50,23 @@ include_once('../includes/preloader.php');
                     <table id="myorders" class="table table-lg mt-1">
                         <thead>
                             <tr class="align-middle">
-                                <th scope="col" class="fs-7 text-start">No.</th>
-                                <th scope="col" class="fs-7">Product Name</th>
-                                <th scope="col" class="fs-7">Variation</th>
-                                <th scope="col" class="fs-7">Measurement</th>
-                                <th scope="col" class="fs-7 text-center">Quantity</th>
-                                <th scope="col" class="fs-7">Price</th>
+                                <th class="fw-semibold fw-bold"><?= $record['store_name'] ?></th>
+                                <th class=""></th>
+                                <th class=""></th>
+                                <th class=""></th>
+                                <th class="text-secondary fw-semibold text-end">Order ID:</th>
+                                <th class="fw-bold"><?= $_GET['order_id'] ?></th>
                             </tr>
                         </thead>
                         <tbody>
+                            <tr class="align-middle">
+                                <td scope="col" class="fw-bold fs-7 text-start">No.</td>
+                                <td scope="col" class="fw-bold fs-7">Product Name</td>
+                                <td scope="col" class="fw-bold fs-7">Variation</td>
+                                <td scope="col" class="fw-bold fs-7">Measurement</td>
+                                <td scope="col" class="fw-bold fs-7 text-center">Quantity</td>
+                                <td scope="col" class="fw-bold fs-7">Price</td>
+                            </tr>
                             <?php
                             $counter = 1;
                             $order = new Order();
@@ -80,6 +88,21 @@ include_once('../includes/preloader.php');
                                 $counter++;
                             }
                             ?>
+                            <?php
+                            if ($record['fulfillment_method'] == "Delivery") {
+                            ?>
+                                <tr class="align-middle">
+                                    <td></td>
+                                    <td class=""></td>
+                                    <td></td>
+                                    <td class=""></td>
+                                    <td class="text-end text-secondary">Delivery Charge:</td>
+                                    <td class="fw-semibold"><?= '₱' . number_format($record['delivery_charge'], 2, '.', ',') ?></td>
+                                </tr>
+                            <?php
+                                $total_payment += $record['delivery_charge'];
+                            }
+                            ?>
                             <tr class="align-middle">
                                 <td></td>
                                 <td class=""></td>
@@ -87,14 +110,6 @@ include_once('../includes/preloader.php');
                                 <td class=""></td>
                                 <td class="text-end text-secondary">Total Payment:</td>
                                 <td class="fw-semibold"><?= '₱' . number_format($total_payment, 2, '.', ',') ?></td>
-                            </tr>
-                            <tr class="align-middle">
-                                <td class="text-secondary">Order ID:</td>
-                                <td class="fw-semibold"><?= $_GET['order_id'] ?></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class="text-end text-secondary">Store:</td>
-                                <td class="fw-semibold"><?= $record['store_name'] ?></td>
                             </tr>
                         </tbody>
                     </table>

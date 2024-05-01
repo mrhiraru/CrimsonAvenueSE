@@ -465,7 +465,7 @@ class Order
 
     function fetch_status($order_id)
     {
-        $sql = "SELECT o.order_status, s.store_name FROM orders o
+        $sql = "SELECT o.order_status, o.payment_method, o.fulfillment_method, s.store_name, s.delivery_charge FROM orders o
         INNER JOIN store s ON s.store_id = o.store_id
         WHERE order_id = :order_id";
 
