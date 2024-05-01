@@ -101,8 +101,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $completed_page ?>" aria-current="page" href="../store-orders/completed.php?store_id=<?= $record['store_id'] ?>">
-                                    Completed
+                                <a class="nav-link text-secondary fw-semibold <?= $completed_page ?>" aria-current="page" href="../store-orders/picked-up.php?store_id=<?= $record['store_id'] ?>">
+                                    Picked Up
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $completed_page ?>" aria-current="page" href="../store-orders/delivered.php?store_id=<?= $record['store_id'] ?>">
+                                    Delivered
                                 </a>
                             </li>
                             <li class="nav-item d-none">
