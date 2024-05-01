@@ -12,6 +12,7 @@ $(document).ready(function () {
         pageSize: "LEGAL",
         customize: function (doc) {
           doc.styles.tableHeader.fontSize = 11;
+          doc.styles.tableHeader.fontStyle = "bold";
           doc.styles.tableHeader.fillColor = "#ffffff";
           doc.styles.tableHeader.color = "#000000";
 

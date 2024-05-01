@@ -50,7 +50,7 @@ include_once('../includes/preloader.php');
                     <table id="myorders" class="table table-lg mt-1">
                         <thead>
                             <tr class="align-middle">
-                                <th class="fw-semibold fw-bold"><?= $record['store_name'] ?></th>
+                                <th class="fw-semibold fw-bold text-start"><?= $record['store_name'] ?></th>
                                 <th class=""></th>
                                 <th class=""></th>
                                 <th class=""></th>
@@ -80,7 +80,7 @@ include_once('../includes/preloader.php');
                                     <td class=""><?= $item['variation_name'] ?></td>
                                     <td class=""><?= $item['measurement_name'] ?></td>
                                     <td class="text-center"><?= $item['quantity'] . "x" ?></td>
-                                    <td class=""><?= '₱' . number_format($item['oi_selling_price'] + $item['oi_commission'], 2, '.', ','); ?></td>
+                                    <td class=""><?= '₱' . number_format($item['oi_selling_price'] + $item['oi_commission'], 2, '.', ',') ?></td>
 
                                 </tr>
                             <?php
@@ -108,8 +108,8 @@ include_once('../includes/preloader.php');
                                 <td class=""></td>
                                 <td></td>
                                 <td class=""></td>
-                                <td class="text-end text-secondary">Total Payment:</td>
-                                <td class="fw-semibold"><?= '₱' . number_format($total_payment, 2, '.', ',') ?></td>
+                                <td class="text-end text-secondary fw-semibold">Total Payment:</td>
+                                <td class="fw-bold"><?= '₱' . number_format($total_payment, 2, '.', ',') ?></td>
                             </tr>
                         </tbody>
                     </table>
