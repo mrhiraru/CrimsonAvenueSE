@@ -14,7 +14,6 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../index.php');
 }
 
-
 ?>
 
 <!DOCTYPE html>
