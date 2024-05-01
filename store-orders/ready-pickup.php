@@ -23,7 +23,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 // Change title for each page.
 $title = "Ready Orders | Crimson Avenue";
 $orders_page = "active";
-$ready_page = "active";
+$ready_pickup_page = "active";
 require_once('../includes/head.php');
 include_once('../includes/preloader.php');
 ?>
@@ -65,7 +65,7 @@ include_once('../includes/preloader.php');
                                     <?php
                                     $counter = 1;
                                     $order = new Order();
-                                    $orderArray = $order->show_order_ready($record['store_id']);
+                                    $orderArray = $order->show_order_ready_pickup($record['store_id']);
                                     foreach ($orderArray as $item) {
                                     ?>
                                         <tr class="align-middle">

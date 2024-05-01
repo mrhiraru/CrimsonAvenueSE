@@ -86,13 +86,30 @@ class Order
         return $data;
     }
 
-    function show_order_ready($store_id)
+    function show_order_ready_pickup($store_id)
     {
         $sql = "SELECT o.*, o.is_created AS order_date, s.store_name, a.*
         FROM orders o
         INNER JOIN store s ON o.store_id = s.store_id
         INNER JOIN account a ON o.account_id = a.account_id
-        WHERE o.store_id = :store_id AND o.order_status = 'Ready' ORDER BY order_id ASC;
+        WHERE o.store_id = :store_id AND o.order_status = 'Ready' AND o.fulfillment_method = 'Pickup' ORDER BY order_id ASC;
+        ";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_id', $store_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+    function show_order_ready_deliver($store_id)
+    {
+        $sql = "SELECT o.*, o.is_created AS order_date, s.store_name, a.*
+        FROM orders o
+        INNER JOIN store s ON o.store_id = s.store_id
+        INNER JOIN account a ON o.account_id = a.account_id
+        WHERE o.store_id = :store_id AND o.order_status = 'Ready' AND o.fulfillment_method = 'Delivery' ORDER BY order_id ASC;
         ";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':store_id', $store_id);

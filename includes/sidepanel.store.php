@@ -101,8 +101,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary fw-semibold <?= $ready_page ?>" aria-current="page" href="../store-orders/ready.php?store_id=<?= $record['store_id'] ?>">
-                                    Ready
+                                <a class="nav-link text-secondary fw-semibold <?= $ready_pickup_page ?>" aria-current="page" href="../store-orders/ready-pickup.php?store_id=<?= $record['store_id'] ?>">
+                                    For Pickup
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $ready_deliver_page ?>" aria-current="page" href="../store-orders/ready-deliver.php?store_id=<?= $record['store_id'] ?>">
+                                    For Delivery
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -113,6 +118,41 @@
                             <li class="nav-item d-none">
                                 <a class="nav-link text-secondary fw-semibold <?= $new_order_page ?>" href="../store-orders/create-order.php?store_id=<?= $record['store_id'] ?>">
                                     New Order
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item border-0">
+                <h2 class="accordion-header" id="flush-headingtwenty">
+                    <button class="accordion-button px-2 pt-3 pb-2 <?php if (!isset($fulfill_page)) {
+                                                                        echo 'collapsed';
+                                                                    }  ?>" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsetwenty" aria-expanded="<?php if (isset($fulfill_page)) {
+                                                                                                                                                                            echo 'true';
+                                                                                                                                                                        } else {
+                                                                                                                                                                            echo 'false';
+                                                                                                                                                                        } ?>" aria-controls="flush-collapseThree">
+                        <p class="nav-link text-secondary fw-semibold m-0 <?= $fulfill_page ?>" href="../admin/store.php">
+                            <i class="fa-solid fa-dolly"></i>
+                            Fulfillment
+                        </p>
+                    </button>
+                </h2>
+                <div id="flush-collapsetwenty" class="accordion-collapse collapse <?php if (isset($fulfill_page)) {
+                                                                                        echo 'show';
+                                                                                    } ?>" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body px-0 pt-1 py-2">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $pickup_page ?>" aria-current="page" href="../store-orders/index.php?store_id=<?= $record['store_id'] ?>">
+                                    Pickup
+                                </a>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary fw-semibold <?= $pickup_page ?>" aria-current="page" href="../store-orders/processing.php?store_id=<?= $record['store_id'] ?>">
+                                    Deliver
                                 </a>
                             </li>
                         </ul>

@@ -92,6 +92,24 @@ include_once('../includes/preloader.php');
                                     <tr>
                                         <td class="fw-semibold text-dark">
                                             <span class="text-secondary fw-normal">
+                                                Contact:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $ord_record['contact'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
+                                                Address:
+                                            </span>
+                                            <br class="d-block d-md-none">
+                                            <?= $ord_record['address'] ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark">
+                                            <span class="text-secondary fw-normal">
                                                 Order ID:
                                             </span>
                                             <br class="d-block d-md-none">
@@ -192,21 +210,21 @@ include_once('../includes/preloader.php');
                     <div class="container-fluid bg-white shadow rounded m-0 p-3 h-100">
                         <div class="row h-auto d-flex justify-content-center m-0 p-0">
                             <form action="" method="post" class="row d-flex justify-content-evenly" id="orderStatusForm">
-                                <div class="col-12 col-md-6 col-lg-3 m-0 p-1 d-flex">
+                                <div class="col-12 col-md-6 col-lg-4 m-0 p-1 d-flex">
                                     <input type="radio" class="btn-check" name="order_status" id="Pending" value="Pending" <?= $ord_record['order_status'] == "Pending" ? "checked" : "" ?> onchange="autoSubmitStatus()">
                                     <label class="btn btn-outline-secondary flex-fill fw-semibold " for="Pending">Pending</label>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3 m-0 p-1 d-flex">
+                                <div class="col-12 col-md-6 col-lg-4 m-0 p-1 d-flex">
                                     <input type="radio" class="btn-check" name="order_status" id="Processing" value="Processing" <?= $ord_record['order_status'] == "Processing" ? "checked" : "" ?> onchange="autoSubmitStatus()">
                                     <label class="btn btn-outline-secondary flex-fill fw-semibold " for="Processing">Processing</label>
 
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3 m-0 p-1 d-flex">
+                                <div class="col-12 col-md-6 col-lg-4 m-0 p-1 d-flex">
                                     <input type="radio" class="btn-check" name="order_status" id="Ready" value="Ready" <?= $ord_record['order_status'] == "Ready" ? "checked" : "" ?> onchange="autoSubmitStatus()">
-                                    <label class="btn btn-outline-secondary flex-fill fw-semibold " for="Ready">Ready</label>
+                                    <label class="btn btn-outline-secondary flex-fill fw-semibold " for="Ready">Ready <?= $ord_record['fulfillment_method'] == 'Pickup' ? 'for Pickup' : 'for Delivery' ?></label>
 
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3 m-0 p-1 d-flex">
+                                <div class="col-12 col-md-6 col-lg-3 m-0 p-1 d-flex d-none">
                                     <input type="radio" class="btn-check" name="order_status" id="Completed" value="Completed" <?= $ord_record['order_status'] == "Completed" ? "checked" : "" ?> onchange="autoSubmitStatus()">
                                     <label class="btn btn-outline-secondary flex-fill fw-semibold " for="Completed">Completed</label>
                                 </div>
