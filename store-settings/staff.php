@@ -25,6 +25,34 @@ if (isset($_POST['add'])) {
     } else {
         $success = 'failed';
     }
+} else if (isset($_POST['save'])) {
+    $store->store_staff_id = htmlentities($_GET['store_staff_id']);
+    $store->account_id = htmlentities($_POST['account_id']);
+    $store->staff_role = htmlentities($_POST['staff_role']);
+
+    if (validate_field($store->account_id) && validate_field($store->staff_role) && validate_field($store->store_staff_id)) {
+        if ($store->update_staff()) {
+            $success = 'success';
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['cancel'])) {
+
+    header('location: ./staff.php?store_id=' . $record['store_id']);
+} else if (isset($_POST['delete'])) {
+
+    $store->store_staff_id = htmlentities($_GET['store_staff_id']);
+    $store->is_deleted = 1;
+
+    if ($store->delete_staff()) {
+        $success = 'success';
+    } else {
+        echo 'An error occured while adding in the database.';
+        $success = 'failed';
+    }
 }
 
 ?>
@@ -58,20 +86,14 @@ include_once('../includes/preloader.php');
                                     <div class="input-group mb-2 p-0 col-12">
                                         <?php
                                         if (isset($_POST['edit']) || isset($_POST['save'])) {
-                                            $record = $account->fetch($_GET['id']);
+                                            $record = $store->staff_fetch($_GET['store_staff_id']);
                                         ?>
                                             <select id="account_id" name="account_id" class="form-select">
-                                                <option value="" selected>Select User</option>
-                                                <?php
-                                                $account = new Account();
-                                                $accountArray = $account->show_user_store();
-                                                foreach ($accountArray as $item) { ?>
-                                                    <option value="<?= $item['account_id'] ?>" <?php if ((isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id']) || (isset($_POST['edit']) && $record['account_id'] == $item['account_id'])) {
-                                                                                                    echo 'selected';
-                                                                                                } ?>> <?php echo ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])) . ' | ' . $item['email']; ?></option>
-                                                <?php
-                                                }
-                                                ?>
+                                                <option value="<?= $record['account_id'] ?>" selected><?php if (isset($record['middlename'])) {
+                                                                                                            echo ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname']));
+                                                                                                        } else {
+                                                                                                            echo ucwords(strtolower($record['firstname'] . ' ' . $record['lastname']));
+                                                                                                        } ?></option>
                                             </select>
                                             <select id="staff_role" name="staff_role" class="form-select">
                                                 <option value="">Select Role</option>
@@ -103,7 +125,7 @@ include_once('../includes/preloader.php');
                                                                         echo 'selected';
                                                                     } ?>>Courier</option>
                                             </select>
-                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="add" value="Assign">
+                                            <input type="submit" class="btn btn-primary btn-settings-size fw-semibold" id="basic-addon2" name="add" value="Add">
                                         <?php
                                         }
                                         ?>
@@ -190,8 +212,8 @@ include_once('../includes/preloader.php');
                                                     } ?></td>
                                             <td class="text-end text-nowrap">
                                                 <div class="m-0 p-0">
-                                                    <form action="" method="post">
-                                                        <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="college-edit" name="edit" value="Edit"></input>
+                                                    <form action="./staff.php?store_id=<?= $record['store_id'] . "&store_staff_id=" . $item['store_staff_id'] ?>" method="post">
+                                                        <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 rounded border-0 fw-semibold" id="edit" name="edit" value="Edit"></input>
                                                         <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 rounded border-0 fw-semibold" name="warning" value="Remove"></input>
                                                     </form>
                                                 </div>
@@ -256,7 +278,7 @@ include_once('../includes/preloader.php');
                         <div class="row d-flex">
                             <div class="col-12 text-center">
                                 <a href="./staff.php?store_id=<?= $record['store_id'] ?>" class="text-decoration-none text-dark">
-                                    <p class="m-0 text-dark">Moderator has been unassigned! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
+                                    <p class="m-0 text-dark">Staff has been removed! <br><span class="text-primary fw-bold">Click to Continue</span>.</p>
                                 </a>
                             </div>
                         </div>
@@ -265,7 +287,7 @@ include_once('../includes/preloader.php');
             </div>
         </div>
     <?php
-    } else if (isset($_POST['warning']) && isset($_GET['id'])) {
+    } else if (isset($_POST['warning']) && isset($_GET['store_staff_id'])) {
     ?>
         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -274,10 +296,10 @@ include_once('../includes/preloader.php');
                         <div class="row d-flex">
                             <div class="col-12 text-center">
                                 <?php
-                                $record = $moderator->fetch($_GET['id']);
+                                $record = $store->staff_fetch($_GET['store_staff_id']);
                                 ?>
-                                <p class="m-0 text-dark">Are you sure you want to remove <span class="text-primary fw-bold"><?= ucwords(strtolower($record['firstname'] . ' ' . $record['lastname'])) ?></span> as moderator of <span class="text-primary fw-bold"><?= ucwords(strtolower($record['college_name'])) ?></span>?</p>
-                                <form action="./moderator.php?id=<?= $record['moderator_id'] ?>" method="post" class="mt-3">
+                                <p class="m-0 text-dark">Are you sure you want to remove <span class="text-primary fw-bold"><?= ucwords(strtolower($record['firstname'] . ' ' . $record['lastname'])) ?></span> as staff of this store?</p>
+                                <form action="./staff.php?store_id=<?= $record['store_id'] . "&store_staff_id=" . $record['store_staff_id'] ?>" method="post" class="mt-3">
                                     <input type="submit" class="btn btn-primary-opposite btn-settings-size py-1 px-2 me-3 rounded border-0 fw-semibold" id="college-edit" name="cancel" value="Cancel"></input>
                                     <input type="submit" class="btn btn-primary btn-settings-size py-1 px-2 ms-3 rounded border-0 fw-semibold" name="delete" value="Delete"></input>
                                 </form>

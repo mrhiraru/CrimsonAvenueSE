@@ -21,6 +21,7 @@ class Store
     public $staff_role;
     public $delivery_charge;
     public $store_profile;
+    public $store_staff_id;
     protected $db;
 
     function __construct()
@@ -100,15 +101,59 @@ class Store
         }
     }
 
+    function delete_staff(){
+        $sql = "UPDATE store_staff SET is_deleted = :is_deleted WHERE store_staff_id = :store_staff_id;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':is_deleted', $this->is_deleted);
+        $query->bindParam(':store_staff_id', $this->store_staff_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function update_staff(){
+        $sql = "UPDATE store_staff SET account_id = :account_id, staff_role = :staff_role WHERE store_staff_id = :store_staff_id";
+
+        $query = $this->db->connect()->prepare($sql);
+
+        $query->bindParam(':account_id', $this->account_id);
+        $query->bindParam(':store_staff_id', $this->store_staff_id);
+        $query->bindParam(':staff_role', $this->staff_role);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function show_staff($store_id)
     {
         $sql = "SELECT ss.*, a.firstname, a.middlename, a.lastname FROM store_staff ss
         INNER JOIN account a ON ss.account_id = a.account_id 
-        WHERE store_id = :store_id AND staff_role != 0";
+        WHERE store_id = :store_id AND staff_role != 0 AND ss.is_deleted != 1";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':store_id', $store_id);
         if ($query->execute()) {
             $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function staff_fetch($store_staff_id)
+    {
+        $sql = "SELECT ss.*, a.firstname, a.middlename, a.lastname FROM store_staff ss
+        INNER JOIN account a ON ss.account_id = a.account_id 
+        WHERE store_staff_id = :store_staff_id AND ss.is_deleted != 1";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':store_staff_id', $store_staff_id);
+        if ($query->execute()) {
+            $data = $query->fetch();
         }
         return $data;
     }
