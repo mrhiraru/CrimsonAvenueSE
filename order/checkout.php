@@ -892,13 +892,14 @@ include_once('../includes/preloader.php');
                     if (!isset($account_record['address'])) {
                     ?>
                         <div class="modal-body">
-                            <p class="lh-1 text-secondary fw-semibold ">Please add your delivery address in your settings.<span class="text-dark"></span></p>
+                            <p class="fs-7 fw-semibold text-primary mb-0 text-center">Please add your delivery address in your settings.</p>
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="modal-body">
-                            <p class="lh-1 text-secondary fw-semibold ">Please wait for the seller to Confirm you Order Thank you!<span class="text-dark"></span></p>
+                            <p class="lh-1 text-secondary fw-semibold">Delivery Address: <span class="text-dark"><?= isset($account_record['address']) ? $account_record['address'] : "" ?></span> </p>
+                            <p class="fs-7 fw-semibold text-primary mb-0 text-center">Thank you for your order! Please wait for the seller to confirm it.</p>
                         </div>
                     <?php
                     }
