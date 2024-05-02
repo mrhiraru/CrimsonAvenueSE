@@ -44,7 +44,7 @@
 </header>
 
 <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notifModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Notification</h5>
@@ -52,6 +52,7 @@
             </div>
             <div class="modal-body">
                 <?php
+                require_once("../classes/notification.class.php");
                     $notification = new Notification();
                     if(isset($_GET['store_id'])) {
                         $store_id = $_GET['store_id'];

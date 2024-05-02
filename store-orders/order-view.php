@@ -44,7 +44,7 @@ if (isset($_POST['order_status'])) {
 
                     $notif = new Notification();
 
-                    if (($order_item['Total_Stock'] - $order_item['Total_Sold']) - $item['quantity'] == 0) {
+                    if (($order_item['Total_Stock'] - $order_item['Total_Sold']) == 0) {
 
                         //ganito mag add (start) 
                         // pero before to gawa ka muna conditions depende ano gusto mo 
@@ -57,9 +57,9 @@ if (isset($_POST['order_status'])) {
                         }
                         //ganito mag add (end)
 
-                    } else if (($order_item['Total_Stock'] - $order_item['Total_Sold']) - $item['quantity'] <= 10) {
+                    } else if (($order_item['Total_Stock'] - $order_item['Total_Sold']) <= 10) {
 
-                        $notif->message = ($order_item['Total_Stock'] - $order_item['Total_Sold']) - $item['quantity'] . " stocks remaining for " . ucwords(strtolower($order_item['product_name'])) . " in " .  ucwords(strtolower($order_item['variation_name'])) . " variation and " .   ucwords(strtolower($order_item['measurement_name'])) . " measurement.";
+                        $notif->message = ($order_item['Total_Stock'] - $order_item['Total_Sold']) . " stocks remaining for " . ucwords(strtolower($order_item['product_name'])) . " in " .  ucwords(strtolower($order_item['variation_name'])) . " variation and " .   ucwords(strtolower($order_item['measurement_name'])) . " measurement.";
                         $notif->store_id = $_GET['store_id'];
 
                         if ($notif->add()) {
