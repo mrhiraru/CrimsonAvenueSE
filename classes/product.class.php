@@ -174,9 +174,9 @@ class Product
     FROM 
         product p 
     INNER JOIN 
-        variation v ON p.product_id = v.product_id AND v.is_deleted != 1 
+        variation v ON p.product_id = v.product_id AND v.is_deleted != 1 AND v.variation_id = :variation_id
     INNER JOIN 
-        measurement m ON p.product_id = m.product_id AND m.is_deleted != 1 
+        measurement m ON p.product_id = m.product_id AND m.is_deleted != 1 AND m.measurement_id = :measurement_id
     INNER JOIN 
         stock st ON p.product_id = st.product_id AND v.variation_id = st.variation_id AND m.measurement_id = st.measurement_id AND st.is_deleted != 1
     LEFT JOIN 
@@ -193,7 +193,7 @@ class Product
              product_id, variation_id, measurement_id
         ) ot ON p.product_id = ot.product_id AND v.variation_id = ot.variation_id AND m.measurement_id = ot.measurement_id
     WHERE 
-        p.is_deleted != 1 AND p.sale_status = 'On-hand' AND p.product_id = :product_id AND v.variation_id = :variation_id AND m.measurement_id = :measurement_id
+        p.is_deleted != 1 AND p.sale_status = 'On-hand' AND p.product_id = :product_id
     GROUP BY 
         p.product_id, v.variation_id, m.measurement_id
     ORDER BY 
@@ -205,7 +205,7 @@ class Product
         $query->bindParam(':measurement_id', $measurement_id);
 
         if ($query->execute()) {
-            $data = $query->fetchAll();
+            $data = $query->fetch();
         }
         return $data;
     }

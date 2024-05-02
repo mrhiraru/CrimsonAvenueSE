@@ -17,7 +17,7 @@ class Notification
 
     function add()
     {
-        $sql = "INSERT INTO store_notification (store_id, message) VALUES (:product_id, :message)";
+        $sql = "INSERT INTO store_notification (store_id, message) VALUES (:store_id, :message)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':store_id', $this->store_id);

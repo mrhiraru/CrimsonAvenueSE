@@ -9,6 +9,8 @@ require_once "../classes/variation.class.php";
 require_once "../classes/measurement.class.php";
 require_once "../classes/image.class.php";
 require_once "../classes/notification.class.php";
+require_once "../classes/product.class.php";
+
 
 $store = new Store();
 $record = $store->fetch_info($_GET['store_id'], $_SESSION['account_id']);
@@ -33,36 +35,42 @@ if (isset($_POST['order_status'])) {
         if ($order->update_status()) {
 
             // notification start
-            if ($order->order_id == "Completed") {
+            if ($order->order_status == "Completed") {
                 $orderArray = $order->show_items($_GET['order_id']);
                 foreach ($orderArray as $item) {
 
+                    $product = new Product();
                     $order_item = $product->show_inv_fetch($item['product_id'], $item['variation_id'], $item['measurement_id']);
-                    var_dump($item['product_id'], $item['variation_id'], $item['measurement_id']);
 
-                    $notif = new Notification;
+                    $notif = new Notification();
+
                     if (($order_item['Total_Stock'] - $order_item['Total_Sold']) - $item['quantity'] == 0) {
 
-                        $notif->message = "No stock remaining for " . $order_item['product_name'] . " in" . $order_item['variation_name'] . " " .  $order_item['measurement_name'];
+                        //ganito mag add (start) 
+                        // pero before to gawa ka muna conditions depende ano gusto mo 
+                        // like sa taas, usually ilagay tong notification after ng crud. mag tanong ka lng kundi mo gets
+                        $notif->message = "No stock remaining for " . ucwords(strtolower($order_item['product_name'])) . " in " .  ucwords(strtolower($order_item['variation_name'])) . " variation and " .   ucwords(strtolower($order_item['measurement_name'])) . " measurement.";
                         $notif->store_id = $_GET['store_id'];
 
                         if ($notif->add()) {
-                            echo "notification addded";
+                            $notif_success = "success";
                         }
+                        //ganito mag add (end)
+
                     } else if (($order_item['Total_Stock'] - $order_item['Total_Sold']) - $item['quantity'] <= 10) {
 
-                        $notif->message = ($order_item['Total_Stock'] - $order_item['Total_Sold']) - $item['quantity'] . " stocks remaining for " . $order_item['product_name'] . " in" . $order_item['variation_name'] . " " .  $order_item['measurement_name'];
+                        $notif->message = ($order_item['Total_Stock'] - $order_item['Total_Sold']) - $item['quantity'] . " stocks remaining for " . ucwords(strtolower($order_item['product_name'])) . " in " .  ucwords(strtolower($order_item['variation_name'])) . " variation and " .   ucwords(strtolower($order_item['measurement_name'])) . " measurement.";
                         $notif->store_id = $_GET['store_id'];
 
                         if ($notif->add()) {
-                            echo "notification addded";
+                            $notif_success = "success";
                         }
                     }
                 }
             }
             // notification end
 
-            //$success = 'success';
+            $success = 'success';
         } else {
             echo 'An error occured while adding in the database.';
         }
@@ -221,7 +229,6 @@ include_once('../includes/preloader.php');
                                             <td class=""><?= $item['measurement_name'] ?></td>
                                             <td class="text-center"><?= $item['quantity'] . 'x' ?></td>
                                             <td class=""><?= '₱' . number_format($item['oi_selling_price'] + $item['oi_commission'], 2, '.', ',') ?></td>
-                                            <?= $item['oi_selling_price'] . $item['oi_commission']; ?>
                                         </tr>
                                     <?php
                                         $counter++;
