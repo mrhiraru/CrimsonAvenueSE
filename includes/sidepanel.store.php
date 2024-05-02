@@ -1,6 +1,9 @@
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-white shadow collapse">
     <div class="position-sticky pt-3 min-vh-custom">
         <div class="accordion accordion-flush" id="accordionFlushExample">
+            <?php 
+            if ($record['staff_role'] ==)
+            ?>
             <div class="accordion-item border-0">
                 <h2 class="accordion-header" id="flush-headingOne">
                     <button class="accordion-button px-2 pt-3 pb-2 <?php if (!isset($store_page)) {

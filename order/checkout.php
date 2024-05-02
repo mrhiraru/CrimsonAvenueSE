@@ -910,13 +910,13 @@ include_once('../includes/preloader.php');
                                 <?php
                                 if (!isset($account_record['address'])) {
                                 ?>
-                                    <a href="../user/profile.php" class="text-decoration-none text-dark ">
+                                    <a href="../user/edit_profile.php" class="text-decoration-none text-dark ">
                                         <p class="m-0 text-dark"><span class="text-primary fw-bold">Go to Settings!</span></p>
                                     </a>
                                 <?php
                                 } else {
                                 ?>
-                                    <a href="../user/edit_profile.php" class="text-decoration-none text-dark ">
+                                    <a href="../user/profile.php" class="text-decoration-none text-dark ">
                                         <p class="m-0 text-dark"><span class="text-primary fw-bold">Click to Continue!</span></p>
                                     </a>
                                 <?php
