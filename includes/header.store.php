@@ -9,6 +9,7 @@
                     <img src="../images/main/ca-nospace.png" alt="" width="40" height="40" class="d-inline-block me-2">
                     <span class="d-lg-inline d-md-inline d-none"><?= $record['store_name'] ?></span>
                 </a>
+                <button class="btn mx-3 p-0 fs-4 text-light border-0" type="button" data-bs-toggle="modal" data-bs-target="#notificationModal"><i class="fa-solid fa-bell" aria-hidden="true"></i></button>
                 <div class="dropdown">
                     <button class="mx-3 text-light dropdown-toggle border-0 bg-tertiary d-flex align-items-center justify-content-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="<?php if (isset($_SESSION['profile_image'])) {
@@ -41,3 +42,17 @@
         </div>
     </nav>
 </header>
+
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notifModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Notification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- display mo dito yung notif -->
+            </div>
+        </div>
+    </div>
+</div>

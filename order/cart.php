@@ -117,7 +117,7 @@ include_once('../includes/preloader.php');
                                                                                                                                                                                                     echo $discounted_price;
                                                                                                                                                                                                 } else if ($item['discount_type'] == "Fixed") {
                                                                                                                                                                                                     $original_price = ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
-                                                                                                                                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                                                                                                                                    $discounted_price = $original_price - ($item['discount_amount']  * $item['quantity']);
                                                                                                                                                                                                     echo $discounted_price;
                                                                                                                                                                                                 }
                                                                                                                                                                                             } else {
@@ -132,7 +132,7 @@ include_once('../includes/preloader.php');
                                                                                                                                                                                                     echo $discounted_price;
                                                                                                                                                                                                 } else if ($item['discount_type'] == "Fixed") {
                                                                                                                                                                                                     $original_price = ($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'];
-                                                                                                                                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                                                                                                                                    $discounted_price = $original_price - ($item['discount_amount']  * $item['quantity']);
                                                                                                                                                                                                     echo $discounted_price;
                                                                                                                                                                                                 }
                                                                                                                                                                                             } else {
@@ -146,7 +146,7 @@ include_once('../includes/preloader.php');
                                                                                                                                                                                                     echo $discounted_price;
                                                                                                                                                                                                 } else if ($item['discount_type'] == "Fixed") {
                                                                                                                                                                                                     $original_price = ($item['product_selling_price'] + $item['product_commission']) * $item['quantity'];
-                                                                                                                                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                                                                                                                                    $discounted_price = $original_price - ($item['discount_amount']  * $item['quantity']);
                                                                                                                                                                                                     echo $discounted_price;
                                                                                                                                                                                                 }
                                                                                                                                                                                             } else {
@@ -215,11 +215,11 @@ include_once('../includes/preloader.php');
                                                                             if (isset($item['discount_amount']) && isset($item['discount_type'])) {
                                                                                 if ($item['discount_type'] == "Percentage") {
                                                                                     $original_price = ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
-                                                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount'] / 100));
+                                                                                    $discounted_price = $original_price - ($original_price * ($item['discount_amount']  / 100));
                                                                                     echo '₱' . number_format($discounted_price, 2, '.', ',');
                                                                                 } else if ($item['discount_type'] == "Fixed") {
                                                                                     $original_price = ($item['stock_selling_price']  + $item['stock_commission']) * $item['quantity'];
-                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                    $discounted_price = $original_price - ($item['discount_amount']  * $item['quantity']);
                                                                                     echo '₱' . number_format($discounted_price, 2, '.', ',');
                                                                                 }
                                                                             } else {
@@ -234,7 +234,7 @@ include_once('../includes/preloader.php');
                                                                                     echo '₱' . number_format($discounted_price, 2, '.', ',');
                                                                                 } else if ($item['discount_type'] == "Fixed") {
                                                                                     $original_price = ($item['prices_selling_price'] + $item['prices_commission']) * $item['quantity'];
-                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                    $discounted_price = $original_price - ($item['discount_amount']  * $item['quantity']);
                                                                                     echo '₱' . number_format($discounted_price, 2, '.', ',');
                                                                                 }
                                                                             } else {
@@ -248,7 +248,7 @@ include_once('../includes/preloader.php');
                                                                                     echo '₱' . number_format($discounted_price, 2, '.', ',');
                                                                                 } else if ($item['discount_type'] == "Fixed") {
                                                                                     $original_price = ($item['product_selling_price'] + $item['product_commission']) * $item['quantity'];
-                                                                                    $discounted_price = $original_price - $item['discount_amount'];
+                                                                                    $discounted_price = $original_price - ($item['discount_amount']  * $item['quantity']);
                                                                                     echo '₱' . number_format($discounted_price, 2, '.', ',');
                                                                                 }
                                                                             } else {

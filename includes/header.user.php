@@ -7,7 +7,7 @@
                     <span class="d-lg-inline d-md-inline d-none">Crimson Avenue </span>
                 </a>
                 <button class="btn mx-3 p-0 fs-4 text-light border-0" type="button" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
-                <a href="../user/notification.php" class="mx-3 text-light "><i class="fa-solid fa-bell"></i></a>
+                <a href="../user/notification.php" class="mx-3 text-light d-none"><i class="fa-solid fa-bell"></i></a>
                 <a href="../order/cart.php" class="mx-3 text-light"><i class="fa-solid fa-cart-shopping"></i></a>
 
                 <div class="dropdown d-none d-lg-block">
