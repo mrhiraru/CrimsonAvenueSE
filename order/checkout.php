@@ -886,11 +886,9 @@ include_once('../includes/preloader.php');
                         <h6 class="modal-title">Your order has been successfully placed!</h6>
                     </div>
                     <?php
-                    //$store = new Store();
-                    //$record_store = $store->fetch_this($_POST['store_id']);
                     ?>
                     <div class="modal-body">
-                        <p class="lh-1 text-secondary fw-semibold ">Ano ipakita dito wilfredo?? <span class="text-dark">//</span></p>
+                        <p class="lh-1 text-secondary fw-semibold ">Please wait for the seller to Confirm you Order Thank you!<span class="text-dark"></span></p>
                     </div>
                     <div class="modal-footer  d-flex justify-content-center ">
                         <div class="row d-flex">

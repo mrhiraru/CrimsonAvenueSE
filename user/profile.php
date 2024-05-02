@@ -134,12 +134,14 @@ include_once('../includes/preloader.php');
                                     <span class="pe-3 text-secondary fw-normal">
                                         Address:
                                     </span>
+                                    
                                     <br class="d-block d-md-none">
                                     <?php if (isset($_SESSION['address'])) {
                                         echo $_SESSION['address'];
                                     } else {
                                         echo "No Address";
-                                    } ?>
+                                    } ?> -
+                                    <span class="text-primary fw-semibold">Please note that this will serve as your delivery address!</span>
                                 </td>
                             </tr>
                             <tr>
