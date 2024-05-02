@@ -7,6 +7,7 @@ require_once "../classes/cart.class.php";
 require_once "../classes/order.class.php";
 require_once "../classes/stock.class.php";
 require_once "../classes/store.class.php";
+require_once "../classes/account.class.php";
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ../user/verify.php');
@@ -886,6 +887,9 @@ include_once('../includes/preloader.php');
                         <h6 class="modal-title">Your order has been successfully placed!</h6>
                     </div>
                     <?php
+                      $account = new Account();
+                      $account_record = $account->fetch($_SESSION['account_id']);
+                      
                     ?>
                     <div class="modal-body">
                         <p class="lh-1 text-secondary fw-semibold ">Please wait for the seller to Confirm you Order Thank you!<span class="text-dark"></span></p>
