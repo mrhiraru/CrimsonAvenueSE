@@ -126,7 +126,8 @@ include_once('../includes/preloader.php');
                                         Contact:
                                     </span>
                                     <br class="d-block d-md-none">
-                                    <?= $_SESSION['contact'] ?>
+                                    <?= $_SESSION['contact'] ?> - 
+                                    <span class="text-primary fw-semibold">Please note that this will serve as your contact number for delivery!</span>
                                 </td>
                             </tr>
                             <tr>

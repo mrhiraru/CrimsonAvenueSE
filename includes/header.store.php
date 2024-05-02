@@ -44,14 +44,39 @@
 </header>
 
 <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notifModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Notification</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- display mo dito yung notif -->
+                <?php
+                    $notification = new Notification();
+                    if(isset($_GET['store_id'])) {
+                        $store_id = $_GET['store_id'];
+                        $notifications = $notification->show($store_id);
+                        if ($notifications) {
+                            echo "<div>";
+                            foreach ($notifications as $notif) {
+                                if(isset($notif['message']) && isset($notif['is_created'])) {
+                                    $formatted_date = date("F j, Y g:i A", strtotime($notif['is_created']));
+                                    echo "<div style='margin-bottom: 10px;'>";
+                                    echo "<span style='font-weight: bold;'>{$notif['message']}</span>";
+                                    echo "<span style='color: gray; font-size: 12px;'> - {$formatted_date}</span>";
+                                    echo "</div>";
+                                } else {
+                                    echo "<div>.</div>";
+                                }
+                            }
+                            echo "</div>";
+                        } else {
+                            echo "";
+                        }
+                    } else {
+                        echo "Please Log in";
+                    }
+                ?>
             </div>
         </div>
     </div>
