@@ -887,19 +887,40 @@ include_once('../includes/preloader.php');
                         <h6 class="modal-title">Your order has been successfully placed!</h6>
                     </div>
                     <?php
-                      $account = new Account();
-                      $account_record = $account->fetch($_SESSION['account_id']);
-                      
+                    $account = new Account();
+                    $account_record = $account->fetch($_SESSION['account_id']);
+                    if (!isset($account_record['address'])) {
                     ?>
-                    <div class="modal-body">
-                        <p class="lh-1 text-secondary fw-semibold ">Please wait for the seller to Confirm you Order Thank you!<span class="text-dark"></span></p>
-                    </div>
+                        <div class="modal-body">
+                            <p class="lh-1 text-secondary fw-semibold ">Please add your delivery address in your settings.<span class="text-dark"></span></p>
+                        </div>
+                    <?php
+                    } else {
+                    ?>
+                        <div class="modal-body">
+                            <p class="lh-1 text-secondary fw-semibold ">Please wait for the seller to Confirm you Order Thank you!<span class="text-dark"></span></p>
+                        </div>
+                    <?php
+                    }
+                    ?>
                     <div class="modal-footer  d-flex justify-content-center ">
                         <div class="row d-flex">
                             <div class="col-12">
-                                <a href="../user/profile.php" class="text-decoration-none text-dark ">
-                                    <p class="m-0 text-dark"><span class="text-primary fw-bold">Click to Continue!</span></p>
-                                </a>
+                                <?php
+                                if (!isset($account_record['address'])) {
+                                ?>
+                                    <a href="../user/profile.php" class="text-decoration-none text-dark ">
+                                        <p class="m-0 text-dark"><span class="text-primary fw-bold">Go to Settings!</span></p>
+                                    </a>
+                                <?php
+                                } else {
+                                ?>
+                                    <a href="../user/edit_profile.php" class="text-decoration-none text-dark ">
+                                        <p class="m-0 text-dark"><span class="text-primary fw-bold">Click to Continue!</span></p>
+                                    </a>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
